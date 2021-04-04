@@ -54,10 +54,18 @@ namespace en_1_na0
             Console.WriteLine("*         4. PrintDiamondStar                *");
             Console.WriteLine("*                                            *");
             Console.WriteLine("==============================================");
+            Console.WriteLine("* Please Input Number");
         }
         static void Main(string[] args)
         {
+
             ShowMenu(); // 메뉴 출력
+            string stringNumber;
+            int number;
+            stringNumber = Console.ReadLine();
+            number = Convert.ToInt32(stringNumber);
+
+            
         }
     }
 }

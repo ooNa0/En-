@@ -57,22 +57,44 @@ namespace en_1_na0
             Console.WriteLine("==============================================");
             Console.Write("* Please Input Number :");
         }
-        static void Main(string[] args)
+
+        static int InputNumber()
+        {
+            string stringNumber;
+            int number;
+            while (true)
+            {
+                stringNumber = Console.ReadLine();
+                if (!(int.TryParse(stringNumber, out number)))
+                {
+                    Console.WriteLine("Please Input natural number");
+                    continue;
+                }
+                if(number < 0)
+                {
+                    Console.WriteLine("Please Input >>>>>natural<<<<<< number");
+                    continue;
+                }
+                break;
+            }
+            return number;
+        }
+        static void Main()
         {
             bool count = true;
             while (count)
             {
                 ShowMenu(); // 메뉴 출력
-                string stringNumber;
-                int number;
-                stringNumber = Console.ReadLine();
-                number = Convert.ToInt32(stringNumber);
 
+                int number = InputNumber();
+                if(number < 0 || 6 < number)
+                {
+                    Console.WriteLine("Oh,,, please select the number on the menu");
+                    continue;
+                }
                 Console.Write("* Please Input LineNumber :");
-                string stringLineNumber;
-                int LineNumber;
-                stringLineNumber = Console.ReadLine();
-                LineNumber = Convert.ToInt32(stringLineNumber);
+                
+                int LineNumber = InputNumber();
 
                 switch (number)
                 {
@@ -92,9 +114,6 @@ namespace en_1_na0
                         break;
                     case 5:
                         count = false;
-                        break;
-                    default:
-                        Console.WriteLine("Oh,,, please select the number on the menu");
                         break;
                 }
             }

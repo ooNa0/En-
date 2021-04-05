@@ -11,11 +11,10 @@ namespace en_1_na0
         private int lineNumber;
         public void StartPrinting()
         {
-            //Star star = new Star();
-
             while (true)
             {
                 ShowMenu();
+                Console.Write("Please Input from the menu number :");
                 number = InputNumber();
                
                 if (number < 0 || 6 < number)
@@ -28,25 +27,22 @@ namespace en_1_na0
                     Console.WriteLine("Ok, Bye~!!");
                     break;
                 }
+                Console.Write("Please Input from the linenumber :");
                 lineNumber = InputNumber();
-                //Console.WriteLine(number);
-                //Console.WriteLine(lineNumber);
                 switch (number)
                 {
                     case 1:
-                        PrintStar(lineNumber);
+                        PrintTriangleStar(lineNumber);
                         break;
                     case 2:
-                        PrintInvertedStar(lineNumber);
+                        PrintInvertedTriangleStar(lineNumber);
                         break;
                     case 3:
-                        PrintInvertedStar(lineNumber);
-                        PrintStar(lineNumber);
+                        PrintInvertedTriangleStar(lineNumber);
+                        PrintTriangleStar(lineNumber);
                         break;
                     case 4:
-                        PrintStar(lineNumber);
-                        for (int i = 0; i <= lineNumber; i++) Console.WriteLine("*");
-                        PrintInvertedStar(lineNumber);
+                        PrintDiamondStar(lineNumber);
                         break;
                 }
             }
@@ -69,8 +65,6 @@ namespace en_1_na0
             string stringNumber;
             while (true)
             {
-                
-                Console.Write("Please Input Number :");
                 stringNumber = Console.ReadLine();
                 if (!(int.TryParse(stringNumber, out num)))
                 {
@@ -86,7 +80,7 @@ namespace en_1_na0
             }
             return num;
         }
-        public void PrintStar(int LineNumber)
+        public void PrintTriangleStar(int LineNumber)
         {
             for (int i = 1; i <= LineNumber; i++)
             {
@@ -102,7 +96,7 @@ namespace en_1_na0
             }
         }
 
-        public void PrintInvertedStar(int LineNumber)
+        public void PrintInvertedTriangleStar(int LineNumber)
         {
 
             for (int i = LineNumber; i > 0; i--)
@@ -118,7 +112,35 @@ namespace en_1_na0
                 Console.Write("\n");
             }
         }
+        public void PrintDiamondStar(int LineNumber)
+        {
+            for (int i = 1; i <= LineNumber+1; i++)
+            {
+                for (int j = LineNumber+1; j > i; j--)
+                {
+                    Console.Write(" ");
+                }
+                for (int j = 0; j < i * 2 - 1; j++)
+                {
+                    Console.Write("*");
+                }
+                Console.Write("\n");
+            }
+            for (int i = LineNumber; i > 0; i--)
+            {
+                for (int j = LineNumber+1; j > i; j--)
+                {
+                    Console.Write(" ");
+                }
+                for (int j = 0; j < i * 2 - 1; j++)
+                {
+                    Console.Write("*");
+                }
+                Console.Write("\n");
+            }
+        }
     }
+    
 
     class Program
     {

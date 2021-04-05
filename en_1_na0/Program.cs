@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
-using System.Runtime.InteropServices;
 
 namespace en_1_na0
 {
-    class PrintingStar
+    class PrintInvertedStar
     {
-        private int number;
-        private int lineNumber;
-        public void StartPrinting()
+        public PrintInvertedStar(int LineNumber)
         {
+<<<<<<< HEAD
             while (true)
             {
                 ShowMenu();
@@ -18,15 +16,20 @@ namespace en_1_na0
                 number = InputNumber();
                
                 if (number < 0 || 6 < number)
+=======
+
+            for (int i = LineNumber; i > 0; i--)
+            {
+                for (int j = LineNumber; j > i; j--)
+>>>>>>> parent of 657fa60... 거의 다함
                 {
-                    Console.WriteLine("Oh,,, please select the number on the menu");
-                    continue;
+                    Console.Write(" ");
                 }
-                if (number == 5)
+                for (int j = 0; j < i * 2 - 1; j++)
                 {
-                    Console.WriteLine("Ok, Bye~!!");
-                    break;
+                    Console.Write("*");
                 }
+<<<<<<< HEAD
                 Console.Write("Please Input from the linenumber :");
                 lineNumber = InputNumber();
                 switch (number)
@@ -44,46 +47,78 @@ namespace en_1_na0
                     case 4:
                         PrintDiamondStar(lineNumber);
                         break;
-                }
+=======
+                Console.Write("\n");
             }
         }
-        private static void ShowMenu()
+    }
+    class PrintStar
+    {
+        //int LineNum;
+        public PrintStar(int LineNumber)
         {
-            Console.WriteLine("==============================================");
-            Console.WriteLine("|                                            |");
-            Console.WriteLine("|         1. PrintTriangleStar               |");
-            Console.WriteLine("|         2. PrintInvertedTriangleStar       |");
-            Console.WriteLine("|         3. PrintHourglassStar              |");
-            Console.WriteLine("|         4. PrintDiamondStar                |");
-            Console.WriteLine("|         5. Ending                          |");
-            Console.WriteLine("|                                            |");
-            Console.WriteLine("==============================================");
+            for (int i = 0; i < LineNumber; i++)
+            {
+                for (int j = LineNumber; j > i; j--)
+                {
+                    Console.Write(" ");
+                }
+                for (int j = 0; j < i * 2 - 1; j++)
+                {
+                    Console.Write("*");
+>>>>>>> parent of 657fa60... 거의 다함
+                }
+                Console.Write("\n");
+            }
         }
-        private int InputNumber()
+    }
+    class Program
+    {
+        static void ShowMenu()
         {
-            int num;
+            Console.WriteLine("==============================================");
+            Console.WriteLine("*                                            *");
+            Console.WriteLine("*         1. PrintTriangleStar               *");
+            Console.WriteLine("*         2. PrintInvertedTriangleStar       *");
+            Console.WriteLine("*         3. PrintHourglassStar              *");
+            Console.WriteLine("*         4. PrintDiamondStar                *");
+            Console.WriteLine("*         5. Ending~~~~~~~~~~                *");
+            Console.WriteLine("*                                            *");
+            Console.WriteLine("==============================================");
+            Console.Write("* Please Input Number :");
+        }
+
+        static int InputNumber()
+        {
             string stringNumber;
+            int number;
             while (true)
             {
                 stringNumber = Console.ReadLine();
-                if (!(int.TryParse(stringNumber, out num)))
+                if (!(int.TryParse(stringNumber, out number)))
                 {
-                    Console.Write("[!]Please Input natural number :");
+                    Console.WriteLine("Please Input natural number");
                     continue;
                 }
-                if (num <= 0)
+                if(number < 0)
                 {
-                    Console.Write("[!]Please Input >>natural<< number :");
+                    Console.WriteLine("Please Input >>>>>natural<<<<<< number");
                     continue;
                 }
                 break;
             }
-            return num;
+            return number;
         }
+<<<<<<< HEAD
         public void PrintTriangleStar(int LineNumber)
+=======
+        static void Main()
+>>>>>>> parent of 657fa60... 거의 다함
         {
-            for (int i = 1; i <= LineNumber; i++)
+            bool count = true;
+            while (count)
             {
+<<<<<<< HEAD
                 for (int j = LineNumber; j > i; j--)
                 {
                     Console.Write(" ");
@@ -98,18 +133,40 @@ namespace en_1_na0
 
         public void PrintInvertedTriangleStar(int LineNumber)
         {
+=======
+                ShowMenu(); // 메뉴 출력
+>>>>>>> parent of 657fa60... 거의 다함
 
-            for (int i = LineNumber; i > 0; i--)
-            {
-                for (int j = LineNumber; j > i; j--)
+                int number = InputNumber();
+                if(number < 0 || 6 < number)
                 {
-                    Console.Write(" ");
+                    Console.WriteLine("Oh,,, please select the number on the menu");
+                    continue;
                 }
-                for (int j = 0; j < i * 2 - 1; j++)
+                Console.Write("* Please Input LineNumber :");
+                
+                int LineNumber = InputNumber();
+
+                switch (number)
                 {
-                    Console.Write("*");
+                    case 1:
+                        PrintStar a = new PrintStar(LineNumber);
+                        break;
+                    case 2:
+                        PrintInvertedStar b = new PrintInvertedStar(LineNumber);
+                        break;
+                    case 3:
+                        PrintStar c = new PrintStar(LineNumber);
+                        PrintInvertedStar d = new PrintInvertedStar(LineNumber);
+                        break;
+                    case 4:
+                        PrintInvertedStar e = new PrintInvertedStar(LineNumber);
+                        PrintStar f = new PrintStar(LineNumber);
+                        break;
+                    case 5:
+                        count = false;
+                        break;
                 }
-                Console.Write("\n");
             }
         }
         public void PrintDiamondStar(int LineNumber)
@@ -140,6 +197,7 @@ namespace en_1_na0
             }
         }
     }
+<<<<<<< HEAD
     
 
     class Program
@@ -154,3 +212,6 @@ namespace en_1_na0
         }
     }
 }
+=======
+}
+>>>>>>> parent of 657fa60... 거의 다함

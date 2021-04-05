@@ -9,49 +9,55 @@ namespace en_1_na0
     class PrintingStar
     {
         // 변수 선언
-        private int number;
-        private int lineNumber;
+        private int _number;
+        private int _lineNumber;
         public void StartPrinting()
         {
             while (true)
             {
                 ShowMenu();
                 Console.Write("\nPlease Input from the menu number :");
-                number = InputNumber();
+                _number = InputNumber();
+
                // 메뉴 숫자번호 예외처리
-                if (number < 0 || 6 < number)
+                if (_number < 0 || 6 < _number)
                 {
                     Console.WriteLine("\nOh,,, please select the number on the menu");
                     continue;
                 }
-                if (number == 5)
+
+                if (_number == 5)
                 {
                     Console.WriteLine("\nOk, Bye~!!");
                     break;
                 }
 
                 Console.Write("\nPlease Input from the linenumber :");
-                lineNumber = InputNumber();
+                _lineNumber = InputNumber();
                 Console.WriteLine("\n\n                                           [RESULT]");
                 Console.WriteLine("============================================================================================");
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
+
                 // 케이스 나누기
-                switch (number)
+                switch (_number)
                 {
                     case 1:
-                        PrintTriangleStar(lineNumber);
+                        PrintTriangleStar(_lineNumber);
                         break;
                     case 2:
-                        PrintInvertedTriangleStar(lineNumber);
+                        PrintInvertedTriangleStar(_lineNumber);
                         break;
                     case 3: // 역삼각형별 + 삼각형별 = 모래시계별
-                        PrintInvertedTriangleStar(lineNumber);
-                        PrintTriangleStar(lineNumber);
+                        PrintInvertedTriangleStar(_lineNumber);
+                        PrintTriangleStar(_lineNumber);
                         break;
                     case 4:
-                        PrintDiamondStar(lineNumber);
+                        PrintDiamondStar(_lineNumber);
+                        break;
+                    default:
                         break;
                 }
+
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("============================================================================================");
             }
@@ -92,11 +98,13 @@ namespace en_1_na0
                     Console.Write("\n[!]Please Input natural number :");
                     continue;
                 }
+
                 if (num <= 0)
                 {
                     Console.Write("\n[!]Please Input >>natural<< number :");
                     continue;
                 }
+
                 Console.ForegroundColor = ConsoleColor.White;
                 break;
             }
@@ -148,6 +156,7 @@ namespace en_1_na0
                 }
                 Console.Write("\n");
             }
+
             for (int i = LineNumber; i > 0; i--)
             {
                 for (int j = LineNumber+1; j > i; j--)

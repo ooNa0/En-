@@ -2,3 +2,12 @@ C:\Users\구나영\Desktop\en#\en_2 TicTacToc\obj\Debug\netcoreapp3.1\en_2 TicTa
 C:\Users\구나영\Desktop\en#\en_2 TicTacToc\obj\Debug\netcoreapp3.1\en_2 TicTacToc.csproj.CoreCompileInputs.cache
 C:\Users\구나영\Desktop\en#\en_2 TicTacToc\obj\Debug\netcoreapp3.1\en_2 TicTacToc.AssemblyInfoInputs.cache
 C:\Users\구나영\Desktop\en#\en_2 TicTacToc\obj\Debug\netcoreapp3.1\en_2 TicTacToc.AssemblyInfo.cs
+C:\Users\구나영\Desktop\en#\en_2 TicTacToc\bin\Debug\netcoreapp3.1\en_2 TicTacToc.exe
+C:\Users\구나영\Desktop\en#\en_2 TicTacToc\bin\Debug\netcoreapp3.1\en_2 TicTacToc.deps.json
+C:\Users\구나영\Desktop\en#\en_2 TicTacToc\bin\Debug\netcoreapp3.1\en_2 TicTacToc.runtimeconfig.json
+C:\Users\구나영\Desktop\en#\en_2 TicTacToc\bin\Debug\netcoreapp3.1\en_2 TicTacToc.runtimeconfig.dev.json
+C:\Users\구나영\Desktop\en#\en_2 TicTacToc\bin\Debug\netcoreapp3.1\en_2 TicTacToc.dll
+C:\Users\구나영\Desktop\en#\en_2 TicTacToc\bin\Debug\netcoreapp3.1\en_2 TicTacToc.pdb
+C:\Users\구나영\Desktop\en#\en_2 TicTacToc\obj\Debug\netcoreapp3.1\en_2 TicTacToc.dll
+C:\Users\구나영\Desktop\en#\en_2 TicTacToc\obj\Debug\netcoreapp3.1\en_2 TicTacToc.pdb
+C:\Users\구나영\Desktop\en#\en_2 TicTacToc\obj\Debug\netcoreapp3.1\en_2 TicTacToc.genruntimeconfig.cache

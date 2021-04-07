@@ -29,7 +29,7 @@ namespace en_2_TicTacToc
                 switch (_number)
                 {
                     case 1:
-                        User1 = WhoAreYou()
+                        User1 = WhoAreYou();
                         PlayGameWithComputer();
                         break;
                     case 2:
@@ -55,6 +55,53 @@ namespace en_2_TicTacToc
                         break;
                 }
             }
+
+        }
+
+        private void PlayGameWithComputer()
+        {
+            // 배열 생성 및 초기화
+            char[] arrangementOX = new char[9];
+            arrangementOX = Enumerable.Repeat(' ', 9).ToArray();
+
+            Random random = new Random();
+
+            Tile(arrangementOX);
+
+            int inputNumber;
+            bool isEnd = false;
+
+            while (isEnd)
+            {
+
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine("User, Enter the number(0~8)");
+                inputNumber = int.Parse(Console.ReadLine());
+                arrangementOX[inputNumber] = 'O';
+                Tile(arrangementOX);
+                Console.ForegroundColor = ConsoleColor.Blue;
+
+                bool isExist = true;
+                int count;
+                while (isExist)
+                {
+                    count = 0;
+                    inputNumber = random.Next(9);
+                    for(int i = 0; i < 9; i++)
+                    {
+                        if(arrangementOX[i] != ' ')
+                        {
+                            count++;
+                        }
+                    }
+                    if (count == 9) isExist = false;
+                }
+                
+                arrangementOX[inputNumber] = 'X';
+                Tile(arrangementOX);
+            }
+            Console.ForegroundColor = ConsoleColor.White;
+
 
         }
 

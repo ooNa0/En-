@@ -1,0 +1,4 @@
+C:\Users\구나영\Desktop\en#\en_2 TicTacToc\obj\Debug\netcoreapp3.1\en_2 TicTacToc.csprojAssemblyReference.cache
+C:\Users\구나영\Desktop\en#\en_2 TicTacToc\obj\Debug\netcoreapp3.1\en_2 TicTacToc.csproj.CoreCompileInputs.cache
+C:\Users\구나영\Desktop\en#\en_2 TicTacToc\obj\Debug\netcoreapp3.1\en_2 TicTacToc.AssemblyInfoInputs.cache
+C:\Users\구나영\Desktop\en#\en_2 TicTacToc\obj\Debug\netcoreapp3.1\en_2 TicTacToc.AssemblyInfo.cs

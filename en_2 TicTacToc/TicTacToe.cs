@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
+// 동일 유저 네임?
 namespace en_2_TicTacToc
 {
     class TicTacToe
@@ -94,7 +95,7 @@ namespace en_2_TicTacToc
             Random random = new Random();
             
 
-            tile.Tile(arrangementOX, 10);
+           tile.Tile(arrangementOX, 10);
 
             int inputNumber;
             bool isEnd = false;
@@ -103,6 +104,10 @@ namespace en_2_TicTacToc
             while (!isEnd)
             {
                 //Console.ForegroundColor = ConsoleColor.Red;
+                //if(count == 0)
+                //{
+                //    tile.Tile(arrangementOX, 10);
+                //}
                 Console.WriteLine("\n\nUser {0}, Enter the number(0~8)", userScore[0]);
                 inputNumber = int.Parse(Console.ReadLine());
                 arrangementOX[inputNumber] = 'o';
@@ -138,7 +143,25 @@ namespace en_2_TicTacToc
                 {
                     userScore[1 + arrayNumber*3] = (int)userScore[1] + 1;
                     Console.WriteLine("User Win!!!!");
-                    isEnd = true;
+                    Console.WriteLine("Would you like to play the game again?");
+                    int anwser = EndProgram();
+                    if(anwser == 0)
+                    {
+                        Console.WriteLine("--------------");
+                        count = 0;
+                        for (int i = 0; i < 9; i++) arrangementOX[i] = (char)(i + 48);
+                        tile.Tile(arrangementOX, 10);
+                    }
+                    if(anwser == 1)
+                    {
+                        isEnd = true;
+                        Console.WriteLine("Return to the menu.");
+                    }
+                    else if(anwser == 2)
+                    {
+                        isEnd = true;
+                        Console.WriteLine("You entered it incorrectly. Return to the menu.");
+                    }   
                 }
                 else if(checkWin == 'x')
                 {
@@ -259,7 +282,7 @@ namespace en_2_TicTacToc
         }
         private int EndProgram() // 프로그램 종료 시 한번 더 물어봄
         {
-            Console.WriteLine("Are you sure you want to close the tic-tac-toe program?");
+            //Console.WriteLine("Are you sure you want to close the tic-tac-toe program?");
             Console.WriteLine("Please answer Y/N");
 
             string answer = Console.ReadLine();

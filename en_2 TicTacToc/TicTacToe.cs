@@ -36,7 +36,7 @@ namespace en_2_TicTacToc
                         PlayGameWithUser();
                         break;
                     case 3:
-                        ShowScoreboard();
+                        //ShowScoreboard();
                         break;
                     case 4:
                         _checkException = EndProgram();

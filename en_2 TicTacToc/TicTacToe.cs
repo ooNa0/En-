@@ -46,7 +46,7 @@ namespace en_2_TicTacToc
                         PlayGameWithUser();
                         break;
                     case 3:
-                        //ShowScoreboard();
+                        ShowScoreboard();
                         break;
                     case 4:
                         _checkException = EndProgram();
@@ -66,6 +66,12 @@ namespace en_2_TicTacToc
                 }
             }
         }
+
+        private void ShowScoreboard()
+        {
+            throw new NotImplementedException();
+        }
+
         private void PlayGameWithComputer()
         {
             Console.Clear();
@@ -118,12 +124,13 @@ namespace en_2_TicTacToc
                 Console.WriteLine("CheckWin = {0}", checkWin);
                 if (checkWin == 'o')
                 {
-
+                    userScore[1] = (int)userScore[1] + 1;
                     Console.WriteLine("User Win!!!!");
                     isEnd = true;
                 }
                 else if(checkWin == 'x')
                 {
+                    userScore[2] = (int)userScore[2] + 1;
                     Console.WriteLine("Computer Win!!!");
                     isEnd = true;
                 }

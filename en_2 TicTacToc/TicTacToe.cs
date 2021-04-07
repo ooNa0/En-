@@ -58,7 +58,37 @@ namespace en_2_TicTacToc
 
         }
 
+        private void PlayGameWithUser()
+        {
+            //throw new NotImplementedException();
 
+            // 배열 생성 및 초기화
+            char[] arrangementOX = new char[9];
+            arrangementOX = Enumerable.Repeat(' ', 9).ToArray();
+
+            Tile(arrangementOX);
+
+            int inputNumber;
+            bool isEnd = false;
+            while (isEnd)
+            {
+
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine("User1, Enter the number(0~8)");
+                inputNumber = int.Parse(Console.ReadLine());
+                arrangementOX[inputNumber] = 'O';
+                Tile(arrangementOX);
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("User2, Enter the number");
+                inputNumber = int.Parse(Console.ReadLine());
+                arrangementOX[inputNumber] = 'X';
+                Tile(arrangementOX);
+            }
+            Console.ForegroundColor = ConsoleColor.White;
+
+
+
+        }
 
         private void Tile(char[] arrangementOX)
         {

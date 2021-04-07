@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -13,12 +14,12 @@ namespace en_2_TicTacToc
         // 변수 선언
         
         private int _number;
+        private int arrayNumber = 0;
         private int _checkException = 1;
         private string User1;
         private string User2;
         private bool _isFinished = false;
 
-        private List<ArrayList> dataTable = new List<ArrayList>();
         public ArrayList userScore = new ArrayList();
 
         public void StartGame()
@@ -36,17 +37,17 @@ namespace en_2_TicTacToc
                 {
                     case 1:
                         //ArrayList userScore = new ArrayList();
-                        userScore[0] = WhoAreYou();//.Add(WhoAreYou());
-                        userScore[1] = 0;
-                        userScore[2] = 0;
+                        userScore.Add(WhoAreYou());//.Add(WhoAreYou());
+                        userScore.Add(0);
+                        userScore.Add(0);
                         PlayGameWithComputer();
-                        dataTable.Add(userScore);
+                        arrayNumber++;
                         break;
                     case 2:
                         PlayGameWithUser();
                         break;
                     case 3:
-                        ShowScoreboard();
+                        ShowScoreboard(arrayNumber);
                         break;
                     case 4:
                         _checkException = EndProgram();
@@ -67,9 +68,17 @@ namespace en_2_TicTacToc
             }
         }
 
-        private void ShowScoreboard()
+        private void ShowScoreboard(int arrayNumber)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            if(arrayNumber == 0)
+            {
+                Console.WriteLine("\nNo Score record. . . returning Menu");
+            }
+            for(int i = 0; i < arrayNumber; i++)
+            {
+                Console.WriteLine("{0}   {1}   {2}   {3}", i + 1, userScore[i*arrayNumber], userScore[1 + i*arrayNumber], userScore[2 + i*arrayNumber]);
+            }
         }
 
         private void PlayGameWithComputer()

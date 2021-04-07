@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,11 +11,16 @@ namespace en_2_TicTacToc
     class TicTacToe
     {
         // 변수 선언
+        
         private int _number;
         private int _checkException = 1;
         private string User1;
         private string User2;
         private bool _isFinished = false;
+
+        private List<ArrayList> dataTable = new List<ArrayList>();
+        public ArrayList userScore = new ArrayList();
+
         public void StartGame()
         {
             while (!_isFinished)
@@ -26,12 +32,15 @@ namespace en_2_TicTacToc
 
                 _number = InputNumber();
 
-
                 switch (_number)
                 {
                     case 1:
-                       // User1 = WhoAreYou();
+                        //ArrayList userScore = new ArrayList();
+                        userScore[0] = WhoAreYou();//.Add(WhoAreYou());
+                        userScore[1] = 0;
+                        userScore[2] = 0;
                         PlayGameWithComputer();
+                        dataTable.Add(userScore);
                         break;
                     case 2:
                         PlayGameWithUser();
@@ -65,17 +74,18 @@ namespace en_2_TicTacToc
             char[] arrangementOX = new char[9];
             for (int i = 0; i < 9; i++) arrangementOX[i] = (char)(i + 48);
             Random random = new Random();
+            
 
             tile.Tile(arrangementOX, 10);
 
             int inputNumber;
             bool isEnd = false;
 
+            int count = 0;
             while (!isEnd)
             {
-
                 //Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("User, Enter the number(0~8)");
+                Console.WriteLine("\n\nUser {0}, Enter the number(0~8)", userScore[0]);
                 inputNumber = int.Parse(Console.ReadLine());
                 arrangementOX[inputNumber] = 'o';
                 tile.Tile(arrangementOX, inputNumber);
@@ -84,21 +94,43 @@ namespace en_2_TicTacToc
                 Thread.Sleep(1000);
                 Console.Clear();
                 bool isExist = true;
-                //int count;
                 while (isExist)
                 {
-                    //count = 0;
-                    inputNumber = random.Next(9);
-                    if(arrangementOX[inputNumber] != 'x' && arrangementOX[inputNumber] != 'o')
+                    if(count == 5)
                     {
-                        arrangementOX[inputNumber] = 'x';
-                        tile.Tile(arrangementOX, inputNumber);
-                        isExist = false;
+                        Console.WriteLine("tie");
+                        break;
+                    }
+                    else
+                    {
+                        inputNumber = random.Next(9); // 컴퓨터는 랜덤으로 값을 입력
+                        if (arrangementOX[inputNumber] != 'x' && arrangementOX[inputNumber] != 'o')
+                        {
+                            arrangementOX[inputNumber] = 'x';
+                            tile.Tile(arrangementOX, inputNumber);
+                            isExist = false;
+                        }
                     }
                 }
+                count++;
+                Console.WriteLine("count = {0}", count);
+                char checkWin = CheckWin(arrangementOX);
+                Console.WriteLine("CheckWin = {0}", checkWin);
+                if (checkWin == 'o')
+                {
+
+                    Console.WriteLine("User Win!!!!");
+                    isEnd = true;
+                }
+                else if(checkWin == 'x')
+                {
+                    Console.WriteLine("Computer Win!!!");
+                    isEnd = true;
+                }
+                
             }
             //Console.ForegroundColor = ConsoleColor.White;
-            CheckWin(arrangementOX);
+            
 
         }
 

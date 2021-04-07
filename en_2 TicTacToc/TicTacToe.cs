@@ -62,8 +62,8 @@ namespace en_2_TicTacToc
         private int InputNumber()
         {
             // 변수 선언
-            int number;
-            string stringNumber;
+            int number = 0;
+            //string stringNumber;
             bool isException = true;
 
             //Console.ForegroundColor = ConsoleColor.Red;
@@ -79,13 +79,13 @@ namespace en_2_TicTacToc
                     Console.Write("\n[!]Please Input natural number :");
                     continue;
                 }
-
-
-
+                
+                
                 isException = false;
             }
+            return number;
         }
-        private int EndProgram()
+        private int EndProgram() // 프로그램 종료 시 한번 더 물어봄
         {
             Console.WriteLine("Are you sure you want to close the tic-tac-toe program?");
             Console.WriteLine("Please answer Y/N");

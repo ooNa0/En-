@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace en_2_TicTacToc
 {
@@ -61,12 +62,12 @@ namespace en_2_TicTacToc
         private void PlayGameWithComputer()
         {
             // 배열 생성 및 초기화
-            int[] arrangementOX = new int[9];
-            //arrangementOX = Enumerable.Repeat(' ', 9).ToArray();
-            for (int i = 0; i < 9; i++) arrangementOX[i] = i;
+            ShowTile tile = new ShowTile();
+            char[] arrangementOX = new char[9];
+            for (int i = 0; i < 9; i++) arrangementOX[i] = (char)(i + 48);
             Random random = new Random();
 
-            Tile(arrangementOX);
+            tile.Tile(arrangementOX, 10);
 
             int inputNumber;
             bool isEnd = false;
@@ -77,9 +78,10 @@ namespace en_2_TicTacToc
                 //Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("User, Enter the number(0~8)");
                 inputNumber = int.Parse(Console.ReadLine());
-                arrangementOX[inputNumber] = 0;
-                Tile(arrangementOX);
+                arrangementOX[inputNumber] = 'ㅇ';
+                tile.Tile(arrangementOX, inputNumber);
                 //Console.ForegroundColor = ConsoleColor.Blue;
+                Thread.Sleep(2000);
                 Console.Clear();
                 bool isExist = true;
                 int count;
@@ -96,9 +98,9 @@ namespace en_2_TicTacToc
                     }
                     if (count == 9) isExist = false;
                 }
-                
-                arrangementOX[inputNumber] = 0;
-                Tile(arrangementOX);
+                Console.WriteLine("\n\n Computer Turn\n");
+                arrangementOX[inputNumber] = 'X';
+                tile.Tile(arrangementOX, inputNumber);
                 
 
             }
@@ -110,30 +112,32 @@ namespace en_2_TicTacToc
         private void PlayGameWithUser()
         {
             //throw new NotImplementedException();
-
+            ShowTile tile = new ShowTile();
             // 배열 생성 및 초기화
-            int[] arrangementOX = new int[9];
-            for (int i = 0; i < 9; i++) arrangementOX[i] = i + 1;
+            char[] arrangementOX = new char[9];
+            for (int i = 0; i < 9; i++) arrangementOX[i] = (char)(i + 48);
             //arrangementOX = Enumerable.Repeat('_', 9).ToArray();
 
-            Tile(arrangementOX);
+            tile.Tile(arrangementOX, 10);
 
             int inputNumber;
             bool isEnd = false;
             while (isEnd)
             {
 
-                //Console.ForegroundColor = ConsoleColor.DarkYellow;
+                //Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("User1, Enter the number(0~8)");
                 inputNumber = int.Parse(Console.ReadLine());
-                arrangementOX[inputNumber] = 0;
-                Tile(arrangementOX);
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                arrangementOX[inputNumber] = 'ㅇ';
+                Console.ForegroundColor = ConsoleColor.White;
+                tile.Tile(arrangementOX, inputNumber);
                 Console.Clear();
                 //Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("User2, Enter the number");
                 inputNumber = int.Parse(Console.ReadLine());
-                arrangementOX[inputNumber] = 0;
-                Tile(arrangementOX);
+                arrangementOX[inputNumber] = 'X';
+                tile.Tile(arrangementOX, inputNumber);
                 Console.Clear();
             }
             Console.ForegroundColor = ConsoleColor.White;
@@ -142,18 +146,7 @@ namespace en_2_TicTacToc
 
         }
 
-        private void Tile(int[] arrangementOX)
-        {
-            Console.WriteLine("\n                                                                ");
-            Console.WriteLine("\nㅁ      ㅁ      ㅁ      ㅁ                      ");
-            Console.WriteLine("\n    {0}        {1}       {2}                           ", arrangementOX[0], arrangementOX[1], arrangementOX[2]);
-            Console.WriteLine("\nㅁ      ㅁ      ㅁ      ㅁ                      ");
-            Console.WriteLine("\n    {0}        {1}       {2}                          ", arrangementOX[3], arrangementOX[4], arrangementOX[5]);
-            Console.WriteLine("\nㅁ      ㅁ      ㅁ      ㅁ                      ");
-            Console.WriteLine("\n    {0}        {1}       {2}                          ", arrangementOX[6], arrangementOX[7], arrangementOX[8]);
-            Console.WriteLine("\nㅁ      ㅁ      ㅁ      ㅁ                     ");
-            Console.WriteLine("\n                                                                ");
-        }
+
 
         private void ShowMenu()// 메뉴 출력
         {

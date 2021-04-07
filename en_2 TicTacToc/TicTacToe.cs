@@ -8,13 +8,44 @@ namespace en_2_TicTacToc
     {
         // 변수 선언
         private int _number;
+        private int checkException = 1;
         private bool _isFinished = false;
         public void StartGame()
         {
             while (!_isFinished)
             {
+                // Menu 출력
                 ShowMenu();
-                Console.Write("\nPlease Input from the menu number :");
+
+                // menuNumber 입력
+                
+                _number = InputNumber();
+
+
+                switch (_number)
+                {
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        checkException = EndProgram();
+                        if (checkException == 0) // Y/y를 입력했을 경우
+                        {
+                            Console.WriteLine("Goodbye");
+                            return;
+                        }
+                        else if(checkException != 1) // N/n이 아닌 다른 것을 입력했을 경우
+                        {
+                            Console.WriteLine("Please choose from Y/N.");
+                            Console.WriteLine("You return to the menu selection screen.");
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
 
         }
@@ -28,5 +59,53 @@ namespace en_2_TicTacToc
             Console.WriteLine("                                  4. END THE PROGRAM                                       ");
             Console.WriteLine("                                                                                           ");
         }
+        private int InputNumber()
+        {
+            // 변수 선언
+            int number;
+            string stringNumber;
+            bool isException = true;
+
+            //Console.ForegroundColor = ConsoleColor.Red;
+            // menuNumber 예외 처리
+            while (isException)
+            {
+                Console.Write("\nPlease Input from the menu number :");
+                //stringNumber = Console.ReadLine();
+                number = int.Parse(Console.ReadLine());
+
+                if(number < 0 || number > 5)
+                {
+                    Console.Write("\n[!]Please Input natural number :");
+                    continue;
+                }
+
+
+
+                isException = false;
+            }
+        }
+        private int EndProgram()
+        {
+            Console.WriteLine("Are you sure you want to close the tic-tac-toe program?");
+            Console.WriteLine("Please answer Y/N");
+
+            string answer = Console.ReadLine();
+
+            switch (answer)
+            {
+                case "Y":
+                    return 0;
+                case "y":
+                    return 0;
+                case "N":
+                    return 1;
+                case "n":
+                    return 1;
+                default:
+                    return 2;
+            }
+        }
     }
+
 }

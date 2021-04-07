@@ -73,11 +73,14 @@ namespace en_2_TicTacToc
             //throw new NotImplementedException();
             if(arrayNumber == 0)
             {
-                Console.WriteLine("\nNo Score record. . . returning Menu");
+                Console.WriteLine("\n[!]No Score record. . . returning Menu");
+                return;
             }
-            for(int i = 0; i < arrayNumber; i++)
+            Console.WriteLine("[index]   username   win   lose");
+
+            for (int i = 0; i < arrayNumber; i++)
             {
-                Console.WriteLine("{0}   {1}   {2}   {3}", i + 1, userScore[i*arrayNumber], userScore[1 + i*arrayNumber], userScore[2 + i*arrayNumber]);
+                Console.WriteLine("[{0}]          {1}       {2}       {3}", i + 1, userScore[i*3], userScore[1 + i*3], userScore[2 + i*3]);
             }
         }
 
@@ -133,13 +136,13 @@ namespace en_2_TicTacToc
                 Console.WriteLine("CheckWin = {0}", checkWin);
                 if (checkWin == 'o')
                 {
-                    userScore[1] = (int)userScore[1] + 1;
+                    userScore[1 + arrayNumber*3] = (int)userScore[1] + 1;
                     Console.WriteLine("User Win!!!!");
                     isEnd = true;
                 }
                 else if(checkWin == 'x')
                 {
-                    userScore[2] = (int)userScore[2] + 1;
+                    userScore[2 + arrayNumber*3] = (int)userScore[2] + 1;
                     Console.WriteLine("Computer Win!!!");
                     isEnd = true;
                 }

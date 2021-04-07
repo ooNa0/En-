@@ -78,10 +78,11 @@ namespace en_2_TicTacToc
                 //Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("User, Enter the number(0~8)");
                 inputNumber = int.Parse(Console.ReadLine());
-                arrangementOX[inputNumber] = 'ㅇ';
+                arrangementOX[inputNumber] = '0';
                 tile.Tile(arrangementOX, inputNumber);
+                //Console.WriteLine("\n\n\n\n\n");
                 //Console.ForegroundColor = ConsoleColor.Blue;
-                Thread.Sleep(2000);
+                Thread.Sleep(1000);
                 Console.Clear();
                 bool isExist = true;
                 int count;
@@ -98,7 +99,7 @@ namespace en_2_TicTacToc
                     }
                     if (count == 9) isExist = false;
                 }
-                Console.WriteLine("\n\n Computer Turn\n");
+               
                 arrangementOX[inputNumber] = 'X';
                 tile.Tile(arrangementOX, inputNumber);
                 
@@ -129,7 +130,7 @@ namespace en_2_TicTacToc
                 Console.WriteLine("User1, Enter the number(0~8)");
                 inputNumber = int.Parse(Console.ReadLine());
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                arrangementOX[inputNumber] = 'ㅇ';
+                arrangementOX[inputNumber] = '0';
                 Console.ForegroundColor = ConsoleColor.White;
                 tile.Tile(arrangementOX, inputNumber);
                 Console.Clear();
@@ -145,7 +146,6 @@ namespace en_2_TicTacToc
 
 
         }
-
 
 
         private void ShowMenu()// 메뉴 출력

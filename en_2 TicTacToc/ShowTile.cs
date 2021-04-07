@@ -6,9 +6,8 @@ namespace en_2_TicTacToc
 {
     class ShowTile
     {
-        public void Tile(char[] arrangementOX, int inputNumber)
+        public void Tile(char[] arrangementOX, int inputNumber)//, int position)
         {
-            Console.WriteLine("\n");
             Console.WriteLine("\nㅁ      ㅁ      ㅁ      ㅁ\n  ");
             for (int i = 0; i < 3; i++)
             {
@@ -25,7 +24,7 @@ namespace en_2_TicTacToc
                         Console.Write("    {0}    ", arrangementOX[i * 3 + j]);
                     }
                 }
-                Console.WriteLine("\n\nㅁ      ㅁ      ㅁ      ㅁ\n  ");
+                Console.WriteLine("\n\nㅁ      ㅁ      ㅁ      ㅁ\n");
             }
         }
     }

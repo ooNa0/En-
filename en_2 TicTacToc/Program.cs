@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Net;
+using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace en_2_TicTacToc
 {
@@ -8,7 +12,7 @@ namespace en_2_TicTacToc
         {
 
             Console.Title = "TicTacToe";
-            //Console.SetWindowSize(95, 30);
+            Console.SetWindowSize(50, 35);
 
             // Creates and initializes a new ArrayList.
             //ArrayList _userScore = new ArrayList();

@@ -42,14 +42,14 @@ namespace en_2_TicTacToc
                         _checkException = EndProgram();
                         if (_checkException == 0) // Y/y를 입력했을 경우
                         {
-                            Console.WriteLine("Goodbye");
+                            Console.WriteLine("\n\nOk,, Goodbye!!!!!");
                             return;
                         }
                         else if (_checkException != 1) // N/n이 아닌 다른 것을 입력했을 경우
                         {
-                            Console.WriteLine("Please choose from Y/N.");
-                            Console.WriteLine("You return to the menu selection screen.");
+                            Console.WriteLine("Please choose from Y/N (T.T) ..............");
                         }
+                        Console.WriteLine("You return to the menu selection screen.");
                         break;
                     default:
                         break;
@@ -61,9 +61,9 @@ namespace en_2_TicTacToc
         private void PlayGameWithComputer()
         {
             // 배열 생성 및 초기화
-            char[] arrangementOX = new char[9];
-            arrangementOX = Enumerable.Repeat(' ', 9).ToArray();
-
+            int[] arrangementOX = new int[9];
+            //arrangementOX = Enumerable.Repeat(' ', 9).ToArray();
+            for (int i = 0; i < 9; i++) arrangementOX[i] = i+1;
             Random random = new Random();
 
             Tile(arrangementOX);
@@ -71,16 +71,16 @@ namespace en_2_TicTacToc
             int inputNumber;
             bool isEnd = false;
 
-            while (isEnd)
+            while (!isEnd)
             {
 
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                //Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine("User, Enter the number(0~8)");
                 inputNumber = int.Parse(Console.ReadLine());
-                arrangementOX[inputNumber] = 'O';
+                arrangementOX[inputNumber] = 0;
                 Tile(arrangementOX);
-                Console.ForegroundColor = ConsoleColor.Blue;
-
+                //Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Clear();
                 bool isExist = true;
                 int count;
                 while (isExist)
@@ -97,8 +97,10 @@ namespace en_2_TicTacToc
                     if (count == 9) isExist = false;
                 }
                 
-                arrangementOX[inputNumber] = 'X';
+                arrangementOX[inputNumber] = 0;
+                Console.Clear();
                 Tile(arrangementOX);
+
             }
             Console.ForegroundColor = ConsoleColor.White;
 
@@ -110,8 +112,9 @@ namespace en_2_TicTacToc
             //throw new NotImplementedException();
 
             // 배열 생성 및 초기화
-            char[] arrangementOX = new char[9];
-            arrangementOX = Enumerable.Repeat(' ', 9).ToArray();
+            int[] arrangementOX = new int[9];
+            for (int i = 0; i < 9; i++) arrangementOX[i] = i + 1;
+            //arrangementOX = Enumerable.Repeat('_', 9).ToArray();
 
             Tile(arrangementOX);
 
@@ -120,16 +123,18 @@ namespace en_2_TicTacToc
             while (isEnd)
             {
 
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                //Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine("User1, Enter the number(0~8)");
                 inputNumber = int.Parse(Console.ReadLine());
-                arrangementOX[inputNumber] = 'O';
+                arrangementOX[inputNumber] = 0;
                 Tile(arrangementOX);
-                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Clear();
+                //Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("User2, Enter the number");
                 inputNumber = int.Parse(Console.ReadLine());
-                arrangementOX[inputNumber] = 'X';
+                arrangementOX[inputNumber] = 0;
                 Tile(arrangementOX);
+                Console.Clear();
             }
             Console.ForegroundColor = ConsoleColor.White;
 
@@ -137,22 +142,16 @@ namespace en_2_TicTacToc
 
         }
 
-        private void Tile(char[] arrangementOX)
+        private void Tile(int[] arrangementOX)
         {
             Console.WriteLine("\n                                                                ");
-            Console.WriteLine("\n                ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ                      ");
-            Console.WriteLine("\n                ㅁ0     ㅁ1     ㅁ2     ㅁ                      ");
-            Console.WriteLine("\n                ㅁ  {0} ㅁ  {1} ㅁ  {2} ㅁ                      ", arrangementOX[0], arrangementOX[1], arrangementOX[2]);
-            Console.WriteLine("\n                ㅁ      ㅁ      ㅁ      ㅁ                      ");
-            Console.WriteLine("\n                ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ                      ");
-            Console.WriteLine("\n                ㅁ3     ㅁ4     ㅁ5     ㅁ                      ");
-            Console.WriteLine("\n                ㅁ  {0} ㅁ  {1} ㅁ  {2} ㅁ                      ", arrangementOX[3], arrangementOX[4], arrangementOX[5]);
-            Console.WriteLine("\n                ㅁ      ㅁ      ㅁ      ㅁ                      ");
-            Console.WriteLine("\n                ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ                      ");
-            Console.WriteLine("\n                ㅁ6     ㅁ7     ㅁ8     ㅁ                      ");
-            Console.WriteLine("\n                ㅁ  {0} ㅁ  {1} ㅁ  {2} ㅁ                      ", arrangementOX[6], arrangementOX[7], arrangementOX[8]);
-            Console.WriteLine("\n                ㅁ      ㅁ      ㅁ      ㅁ                      ");
-            Console.WriteLine("\n                ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ                      ");
+            Console.WriteLine("\n __________________________                      ");
+            Console.WriteLine("\n|  {0}     |  {1}     |  {2}     |                      ", arrangementOX[0], arrangementOX[1], arrangementOX[2]);
+            Console.WriteLine("\n|--------------------------|                      ");
+            Console.WriteLine("\n|  {0}     |  {1}     |  {2}     |                      ", arrangementOX[3], arrangementOX[4], arrangementOX[5]);
+            Console.WriteLine("\n|--------------------------|                      ");
+            Console.WriteLine("\n|  {0}     |  {1}     |  {2}     |                      ", arrangementOX[6], arrangementOX[7], arrangementOX[8]);
+            Console.WriteLine("\n|--------------------------|                     ");
             Console.WriteLine("\n                                                                ");
         }
 
@@ -220,12 +219,12 @@ namespace en_2_TicTacToc
 
             while (!_isException)
             {
-                Console.WriteLine("Please tell me your name");
                 Console.WriteLine("[+] Enter only in English");
                 Console.WriteLine("[+] Character limit: 1~16");
+                Console.Write("Please tell me your name :");
 
                 _userName = Console.ReadLine();
-                Console.ForegroundColor = ConsoleColor.Red;
+                //Console.ForegroundColor = ConsoleColor.Red;
                 if (!(Regex.IsMatch(_userName, "^[a-zA-Z]*$")))//0-9
                 {
                     Console.WriteLine("[!] Enter only in English");

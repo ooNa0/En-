@@ -63,7 +63,7 @@ namespace en_2_TicTacToc
             // 배열 생성 및 초기화
             int[] arrangementOX = new int[9];
             //arrangementOX = Enumerable.Repeat(' ', 9).ToArray();
-            for (int i = 0; i < 9; i++) arrangementOX[i] = i+1;
+            for (int i = 0; i < 9; i++) arrangementOX[i] = i;
             Random random = new Random();
 
             Tile(arrangementOX);
@@ -74,7 +74,7 @@ namespace en_2_TicTacToc
             while (!isEnd)
             {
 
-                //Console.ForegroundColor = ConsoleColor.DarkYellow;
+                //Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("User, Enter the number(0~8)");
                 inputNumber = int.Parse(Console.ReadLine());
                 arrangementOX[inputNumber] = 0;
@@ -98,8 +98,8 @@ namespace en_2_TicTacToc
                 }
                 
                 arrangementOX[inputNumber] = 0;
-                Console.Clear();
                 Tile(arrangementOX);
+                
 
             }
             Console.ForegroundColor = ConsoleColor.White;
@@ -145,13 +145,13 @@ namespace en_2_TicTacToc
         private void Tile(int[] arrangementOX)
         {
             Console.WriteLine("\n                                                                ");
-            Console.WriteLine("\n __________________________                      ");
-            Console.WriteLine("\n|  {0}     |  {1}     |  {2}     |                      ", arrangementOX[0], arrangementOX[1], arrangementOX[2]);
-            Console.WriteLine("\n|--------------------------|                      ");
-            Console.WriteLine("\n|  {0}     |  {1}     |  {2}     |                      ", arrangementOX[3], arrangementOX[4], arrangementOX[5]);
-            Console.WriteLine("\n|--------------------------|                      ");
-            Console.WriteLine("\n|  {0}     |  {1}     |  {2}     |                      ", arrangementOX[6], arrangementOX[7], arrangementOX[8]);
-            Console.WriteLine("\n|--------------------------|                     ");
+            Console.WriteLine("\nㅁ      ㅁ      ㅁ      ㅁ                      ");
+            Console.WriteLine("\n    {0}        {1}       {2}                           ", arrangementOX[0], arrangementOX[1], arrangementOX[2]);
+            Console.WriteLine("\nㅁ      ㅁ      ㅁ      ㅁ                      ");
+            Console.WriteLine("\n    {0}        {1}       {2}                          ", arrangementOX[3], arrangementOX[4], arrangementOX[5]);
+            Console.WriteLine("\nㅁ      ㅁ      ㅁ      ㅁ                      ");
+            Console.WriteLine("\n    {0}        {1}       {2}                          ", arrangementOX[6], arrangementOX[7], arrangementOX[8]);
+            Console.WriteLine("\nㅁ      ㅁ      ㅁ      ㅁ                     ");
             Console.WriteLine("\n                                                                ");
         }
 

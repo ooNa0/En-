@@ -9,7 +9,7 @@ namespace en_2_TicTacToc
     {
         // 변수 선언
         private int _number;
-        private int checkException = 1;
+        private int _checkException = 1;
         private bool _isFinished = false;
         public void StartGame()
         {
@@ -29,17 +29,19 @@ namespace en_2_TicTacToc
                         ShowMenu();
                         break;
                     case 2:
+                        PlayGameWithComputer playComputer = new PlayGameWithComputer();
                         break;
                     case 3:
+                        PlayGameWithUser playuser = new PlayGameWithUser();
                         break;
                     case 4:
-                        checkException = EndProgram();
-                        if (checkException == 0) // Y/y를 입력했을 경우
+                        _checkException = EndProgram();
+                        if (_checkException == 0) // Y/y를 입력했을 경우
                         {
                             Console.WriteLine("Goodbye");
                             return;
                         }
-                        else if(checkException != 1) // N/n이 아닌 다른 것을 입력했을 경우
+                        else if(_checkException != 1) // N/n이 아닌 다른 것을 입력했을 경우
                         {
                             Console.WriteLine("Please choose from Y/N.");
                             Console.WriteLine("You return to the menu selection screen.");
@@ -107,34 +109,7 @@ namespace en_2_TicTacToc
                     return 2;
             }
         }
-        
-        private string WhoAreYou()
-        {
-            string userName = null;
-            bool isException = false;
-            while (!isException)
-            {
-                Console.WriteLine("Please tell me your name");
-                Console.WriteLine("[+] Enter only in English");
-                Console.WriteLine("[+] Character limit: 1~16");
 
-                userName = Console.ReadLine();
-                Console.ForegroundColor = ConsoleColor.Red;
-                if (!(Regex.IsMatch(userName, "^[a-zA-Z]*$")))//0-9
-                {
-                    Console.WriteLine("[!] Enter only in English");
-                    continue;
-                }
-                else if (userName.Length < 0 || 16 < userName.Length)
-                {
-                    Console.WriteLine("[!] Character limit: 1~16");
-                    continue;
-                }
-                isException = true;
-                break;
-            }
-            return userName;
-        }
     }
 
 }

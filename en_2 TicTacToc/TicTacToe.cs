@@ -30,7 +30,7 @@ namespace en_2_TicTacToc
                 switch (_number)
                 {
                     case 1:
-                        User1 = WhoAreYou();
+                       // User1 = WhoAreYou();
                         PlayGameWithComputer();
                         break;
                     case 2:
@@ -56,11 +56,10 @@ namespace en_2_TicTacToc
                         break;
                 }
             }
-
         }
-
         private void PlayGameWithComputer()
         {
+            Console.Clear();
             // 배열 생성 및 초기화
             ShowTile tile = new ShowTile();
             char[] arrangementOX = new char[9];
@@ -78,36 +77,59 @@ namespace en_2_TicTacToc
                 //Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("User, Enter the number(0~8)");
                 inputNumber = int.Parse(Console.ReadLine());
-                arrangementOX[inputNumber] = '0';
+                arrangementOX[inputNumber] = 'o';
                 tile.Tile(arrangementOX, inputNumber);
                 //Console.WriteLine("\n\n\n\n\n");
                 //Console.ForegroundColor = ConsoleColor.Blue;
                 Thread.Sleep(1000);
                 Console.Clear();
                 bool isExist = true;
-                int count;
+                //int count;
                 while (isExist)
                 {
-                    count = 0;
+                    //count = 0;
                     inputNumber = random.Next(9);
-                    for(int i = 0; i < 9; i++)
+                    if(arrangementOX[inputNumber] != 'x' && arrangementOX[inputNumber] != 'o')
                     {
-                        if(arrangementOX[i] != ' ')
-                        {
-                            count++;
-                        }
+                        arrangementOX[inputNumber] = 'x';
+                        tile.Tile(arrangementOX, inputNumber);
+                        isExist = false;
                     }
-                    if (count == 9) isExist = false;
                 }
-               
-                arrangementOX[inputNumber] = 'X';
-                tile.Tile(arrangementOX, inputNumber);
-                
-
             }
-            Console.ForegroundColor = ConsoleColor.White;
+            //Console.ForegroundColor = ConsoleColor.White;
+            CheckWin(arrangementOX);
 
+        }
 
+        private char CheckWin(char[] arrangementOX)
+        {
+            // 가로 빙고일 경우
+            for (int i = 0; i < 3; i++)
+            {
+                if (arrangementOX[i * 3] == arrangementOX[i * 3 + 1] && arrangementOX[i * 3 + 1] == arrangementOX[i * 3 + 2])
+                {
+                    return arrangementOX[i * 3];
+                }
+            }
+            // 세로 빙고일 경우
+            for (int i = 0; i < 3; i++)
+            {
+                if (arrangementOX[i] == arrangementOX[i + 3] && arrangementOX[i + 3] == arrangementOX[i + 6])
+                {
+                    return arrangementOX[i];
+                }
+            }
+            // 대각선 빙고일 경우
+            if(arrangementOX[0] == arrangementOX[4] && arrangementOX[4] == arrangementOX[8])
+            {
+                return arrangementOX[0];
+            }
+            if (arrangementOX[2] == arrangementOX[4] && arrangementOX[4] == arrangementOX[6])
+            {
+                return arrangementOX[2];
+            }
+            return 'N';
         }
 
         private void PlayGameWithUser()
@@ -151,14 +173,15 @@ namespace en_2_TicTacToc
         private void ShowMenu()// 메뉴 출력
         {
             //Console.Clear(); 
-            Console.WriteLine("\n\n                                  1. [PLAG GAME] WITH THE COMPUTER                         ");
-            Console.WriteLine("                                  2. [PLAG GAME] WITH THE USER                             ");
-            Console.WriteLine("                                  3. SHOW SCOREBOARD                                       ");
-            Console.WriteLine("                                  4. END THE PROGRAM                                       ");
-            Console.WriteLine("                                                                                           ");
+            Console.WriteLine("\n\n       1. [PLAG GAME] WITH THE COMPUTER\n");
+            Console.WriteLine("       2. [PLAG GAME] WITH THE USER\n");
+            Console.WriteLine("       3. SHOW SCOREBOARD\n");
+            Console.WriteLine("       4. END THE PROGRAM\n");
+           //Console.WriteLine("                                                                                           ");
         }
         private int InputNumber() // menuNumber 입력
         {
+            
             // 변수 선언
             int number = 0;
             //string stringNumber;

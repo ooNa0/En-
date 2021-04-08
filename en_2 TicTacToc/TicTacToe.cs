@@ -7,14 +7,13 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-// 동일 유저 네임?
 namespace en_2_TicTacToc
 {
     class TicTacToe
     {
         // 변수 선언
-        private int _number;
-        private int arrayNumber = 0;
+        private int _menuNumber; // 메뉴 넘버
+        private int arrayNumber = 0; // 컴퓨터와 게임한 사용자 수
         private int _checkException = 1;
         private bool _isFinished = false;
         private bool _isInMenuNumber;
@@ -23,26 +22,26 @@ namespace en_2_TicTacToc
 
         public void StartGame()
         {
-            
             while (!_isFinished)
             {
                 Console.Clear();
-                // Menu 출력
-                ShowMenu();
+                ShowMenu(); // 메뉴 출력
 
                 _isInMenuNumber = true;
-                // menuNumber 입력
+
+                // 메뉴 번호가 1~ 4에서 벗어났는지
                 while (_isInMenuNumber)
                 {
-                    _number = InputNumber();
-                    if (_number < 1)
+                    _menuNumber = InputNumber(); // 메뉴 번호 입력
+
+                    if (_menuNumber < 1)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write("\n[!] Please Input natural number");
                         Console.ForegroundColor = ConsoleColor.White;
                         continue;
                     }
-                    else if (_number > 4)
+                    else if (_menuNumber > 4)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write("\n[!] Please enter only the numbers 1-4 in the menu");
@@ -52,27 +51,26 @@ namespace en_2_TicTacToc
                     _isInMenuNumber = false;
                 }
                 
-
-                switch (_number)
+                switch (_menuNumber)
                 {
-                    case 1:
-                        userScore.Add(WhoAreYou());
-                        userScore.Add(0);
-                        userScore.Add(0);
+                    case 1: // 컴퓨터와 게임
+                        userScore.Add(WhoAreYou()); // 사용자 이름 입력(중복허용)
+                        userScore.Add(0); // win
+                        userScore.Add(0); // lose
                         PlayGameWithComputer();
                         arrayNumber++;
                         break;
-                    case 2:
+                    case 2: // 혼자 게임
                         PlayGameWithUser();
                         Console.WriteLine("Please enter any key . . . ");
                         trushvalue = Console.ReadLine(); // 클릭시 메뉴로 넘어감
                         break;
-                    case 3:
+                    case 3: // 스코어보드 보여줌
                         ShowScoreboard(arrayNumber);
                         Console.WriteLine("\nPlease enter any key . . . ");
                         trushvalue = Console.ReadLine(); // 클릭시 메뉴로 넘어감
                         continue;
-                    case 4:
+                    case 4: // 프로그램 종료
                         Console.WriteLine("\n You want to close the tic-tac-toe?\n");
                         _checkException = EndProgram();
                         if (_checkException == 0) // Y/y를 입력했을 경우
@@ -89,7 +87,7 @@ namespace en_2_TicTacToc
             }
         }
 
-        private void ShowScoreboard(int arrayNumber)
+        private void ShowScoreboard(int arrayNumber) // 스코어보드 출력
         {
             if(arrayNumber == 0)
             {
@@ -107,22 +105,22 @@ namespace en_2_TicTacToc
 
         }
 
-        private void PlayGameWithComputer()
+        private void PlayGameWithComputer() // 컴퓨터와 게임
         {
             Console.Clear();
+
             // 배열 생성 및 초기화
             ShowTile tile = new ShowTile();
             char[] arrangementOX = new char[9];
             for (int i = 0; i < 9; i++) arrangementOX[i] = (char)(i + 48);
             Random random = new Random();
-            
-
-           tile.Tile(arrangementOX, 10);
-
             int inputNumber;
             bool isEnd = false;
-
             int count = 0;
+            char checkWin = '0';
+
+            tile.Tile(arrangementOX, 10);
+           
             while (!isEnd)
             {
                 bool isExist = true;
@@ -131,12 +129,14 @@ namespace en_2_TicTacToc
                 tile.Tile(arrangementOX, inputNumber);
                 Thread.Sleep(1000);
                 Console.Clear();
-                       
+
+                count++;
                 while (isExist)
                 {
-                    if(count == 5)
+                    if(count == 5) // 무승부
                     {
                         Console.WriteLine("tie");
+
                         break;
                     }
                     else
@@ -150,8 +150,13 @@ namespace en_2_TicTacToc
                         }
                     }
                 }
-                count++;
-                char checkWin = CheckWin(arrangementOX);
+                if (count != 5)
+                {
+                    checkWin = CheckWin(arrangementOX);
+                    isEnd = true;
+                    Console.WriteLine("Return to the menu.");
+                }
+                
                 if (checkWin == 'o')
                 {
                     userScore[1 + arrayNumber*3] = (int)userScore[1 + arrayNumber*3] + 1;
@@ -165,15 +170,14 @@ namespace en_2_TicTacToc
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("Computer Win!!!\n");
                     Console.ForegroundColor = ConsoleColor.White;
-                    isEnd = true;
                 }
                 else
                 {
                     continue;
                 }
+
                 Console.WriteLine("Would you like to play the game again?");
                 int anwser = EndProgram();
-
                 if (anwser == 0)
                 {
                     count = 0;
@@ -219,8 +223,9 @@ namespace en_2_TicTacToc
             return 'N';
         }
 
-        private void PlayGameWithUser()
+        private void PlayGameWithUser() // 혼자서 게임
         {
+            Console.Clear();
             ShowTile tile = new ShowTile();
             // 배열 생성 및 초기화
             char[] arrangementOX = new char[9];

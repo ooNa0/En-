@@ -154,7 +154,9 @@ namespace en_2_TicTacToc
                 if (checkWin == 'o')
                 {
                     userScore[1 + arrayNumber*3] = (int)userScore[1 + arrayNumber*3] + 1;
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("User Win!!!!");
+                    Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine("Would you like to play the game again?");
                     int anwser = EndProgram();
                     if(anwser == 0)
@@ -180,7 +182,9 @@ namespace en_2_TicTacToc
                 else if(checkWin == 'x')
                 {
                     userScore[2 + arrayNumber*3] = (int)userScore[2] + 1;
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("Computer Win!!!");
+                    Console.ForegroundColor = ConsoleColor.White;
                     isEnd = true;
                 }   
             }
@@ -258,16 +262,17 @@ namespace en_2_TicTacToc
                 Console.WriteLine(checkWin);
                 if (checkWin == 'o')
                 {
-
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("User1 Win!!!!");
+                    Console.ForegroundColor = ConsoleColor.White;
                     isEnd = true;
-                    Console.WriteLine("Return to the menu.");
                 }
                 else if (checkWin == 'x')
                 {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("User2 Win!!!");
+                    Console.ForegroundColor = ConsoleColor.White;
                     isEnd = true;
-                    Console.WriteLine("Return to the menu.");
                 }
             }
         }

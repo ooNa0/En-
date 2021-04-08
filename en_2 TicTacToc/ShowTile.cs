@@ -16,7 +16,7 @@ namespace en_2_TicTacToc
                 {
                     if (inputNumber == i * 3 + j)
                     {
-                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.Write("    {0}    ", arrangementOX[i * 3 + j]);
                         Console.ForegroundColor = ConsoleColor.White;
                     }

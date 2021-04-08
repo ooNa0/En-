@@ -17,17 +17,20 @@ namespace en_2_TicTacToc
         private int arrayNumber = 0;
         private int _checkException = 1;
         private bool _isFinished = false;
-        private bool _isInMenuNumber = true;
+        private bool _isInMenuNumber;
 
         private ArrayList userScore = new ArrayList();
 
         public void StartGame()
         {
+            
             while (!_isFinished)
             {
+                Console.Clear();
                 // Menu 출력
                 ShowMenu();
 
+                _isInMenuNumber = true;
                 // menuNumber 입력
                 while (_isInMenuNumber)
                 {
@@ -64,7 +67,13 @@ namespace en_2_TicTacToc
                         break;
                     case 3:
                         ShowScoreboard(arrayNumber);
-                        break;
+                        Console.WriteLine("Would you like to go back to the menu?");
+                        _checkException = EndProgram();
+                        if (_checkException == 0) // Y/y를 입력했을 경우
+                        {
+                            continue;
+                        }
+                         break;
                     case 4:
                         _checkException = EndProgram();
                         if (_checkException == 0) // Y/y를 입력했을 경우
@@ -72,11 +81,7 @@ namespace en_2_TicTacToc
                             Console.WriteLine("\n\nOk,, Goodbye!!!!!");
                             return;
                         }
-                        else if (_checkException != 1) // N/n이 아닌 다른 것을 입력했을 경우
-                        {
-                            Console.WriteLine("Please choose from Y/N (T.T) ..............");
-                        }
-                        Console.WriteLine("You return to the menu selection screen.");
+                        Console.WriteLine("You return to the menu.");
                         break;
                     default:
                         break;
@@ -89,6 +94,7 @@ namespace en_2_TicTacToc
             if(arrayNumber == 0)
             {
                 Console.WriteLine("\n[!]No Score record. . . returning Menu");
+                Thread.Sleep(1000);
                 return;
             }
             Console.WriteLine("[index]   username      win   lose");
@@ -97,6 +103,7 @@ namespace en_2_TicTacToc
             {
                 Console.WriteLine("[{0}]       {1}{2}       {3}", i + 1, userScore[i*3], userScore[1 + i*3], userScore[2 + i*3]);
             }
+
         }
 
         private void PlayGameWithComputer()
@@ -133,7 +140,9 @@ namespace en_2_TicTacToc
                     }
                     else
                     {
-                        Console.WriteLine("This is the value that is already filled in. Please re-enter.");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\n[!] Value is already..\n");
+                        Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine("Please enter the number(0~8)");
                         inputNumber = int.Parse(Console.ReadLine());
                     }
@@ -328,22 +337,29 @@ namespace en_2_TicTacToc
         private int EndProgram() // 프로그램 종료 시 한번 더 물어봄
         {
             Console.WriteLine("Please answer Y/N");
+            bool isYN = true;
 
-            string answer = Console.ReadLine();
-
-            switch (answer)
+            while (isYN)
             {
-                case "Y":
-                    return 0;
-                case "y":
-                    return 0;
-                case "N":
-                    return 1;
-                case "n":
-                    return 1;
-                default:
-                    return 2;
+                string answer = Console.ReadLine();
+
+                switch (answer)
+                {
+                    case "Y":
+                        return 0;
+                    case "y":
+                        return 0;
+                    case "N":
+                        return 1;
+                    case "n":
+                        return 1;
+                    default:
+                        Console.WriteLine("Please choose from Y/N (T.T) ..............");
+                        continue;
+                }
             }
+            return 0;
+            
         }
 
         private string WhoAreYou()

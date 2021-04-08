@@ -60,10 +60,11 @@ namespace en_2_TicTacToc
                         userScore.Add(0);
                         userScore.Add(0);
                         PlayGameWithComputer();
-                        arrayNumber++;
                         break;
                     case 2:
                         PlayGameWithUser();
+                        Console.WriteLine("Please enter any key . . . ");
+                        trushvalue = Console.ReadLine(); // 클릭시 메뉴로 넘어감
                         break;
                     case 3:
                         ShowScoreboard(arrayNumber);
@@ -226,6 +227,7 @@ namespace en_2_TicTacToc
 
             int inputNumber;
             bool isEnd = false;
+
             int count = 0;
             while (!isEnd)
             {
@@ -237,13 +239,13 @@ namespace en_2_TicTacToc
                 if(count % 2 == 0)
                 {
                     Console.WriteLine("User1, Enter the number(0~8)");
-                    inputNumber = int.Parse(Console.ReadLine());
+                    inputNumber = IsExist(arrangementOX);
                     arrangementOX[inputNumber] = 'o';
                 }
                 else
                 {
-                    Console.WriteLine("User2, Enter the number");
-                    inputNumber = int.Parse(Console.ReadLine());
+                    Console.WriteLine("User2, Enter the number(0~8)");
+                    inputNumber = IsExist(arrangementOX);
                     arrangementOX[inputNumber] = 'x';
                 }
                 

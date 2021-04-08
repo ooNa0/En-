@@ -8,9 +8,10 @@ namespace en_2_TicTacToc
     {
         public void Tile(char[] arrangementOX, int inputNumber)
         {
-            Console.WriteLine("\nㅁ      ㅁ      ㅁ      ㅁ\n  ");
+            Console.Write("\n            ㅁ      ㅁ      ㅁ      ㅁ\n\n");
             for (int i = 0; i < 3; i++)
             {
+                Console.Write("            ");
                 for (int j = 0; j < 3; j++)
                 {
                     if (inputNumber == i * 3 + j)
@@ -24,7 +25,7 @@ namespace en_2_TicTacToc
                         Console.Write("    {0}    ", arrangementOX[i * 3 + j]);
                     }
                 }
-                Console.WriteLine("\n\nㅁ      ㅁ      ㅁ      ㅁ\n");
+                Console.WriteLine("\n\n            ㅁ      ㅁ      ㅁ      ㅁ\n           ");
             }
         }
     }

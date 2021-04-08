@@ -181,7 +181,9 @@ namespace en_2_TicTacToc
                     else if(anwser == 2)
                     {
                         isEnd = true;
-                        Console.WriteLine("You entered it incorrectly. Return to the menu.");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nYou entered it incorrectly. Return to the menu.\n");
+                        Console.ForegroundColor = ConsoleColor.White;
                     }   
                 }
                 else if(checkWin == 'x')

@@ -60,6 +60,7 @@ namespace en_2_TicTacToc
                         userScore.Add(0);
                         userScore.Add(0);
                         PlayGameWithComputer();
+                        arrayNumber++;
                         break;
                     case 2:
                         PlayGameWithUser();
@@ -155,38 +156,36 @@ namespace en_2_TicTacToc
                 {
                     userScore[1 + arrayNumber*3] = (int)userScore[1 + arrayNumber*3] + 1;
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("User Win!!!!");
+                    Console.WriteLine("User Win!!!!\n");
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine("Would you like to play the game again?");
-                    int anwser = EndProgram();
-                    if(anwser == 0)
-                    {
-                        count = 0;
-                        // 초기화
-                        for (int i = 0; i < 9; i++) arrangementOX[i] = (char)(i + 48);
-                        tile.Tile(arrangementOX, 10);
-                    }
-                    if(anwser == 1)
-                    {
-                        isEnd = true;
-                        Console.WriteLine("Return to the menu.");
-                    }
-                    else if(anwser == 2)
-                    {
-                        isEnd = true;
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("\nYou entered it incorrectly. Return to the menu.\n");
-                        Console.ForegroundColor = ConsoleColor.White;
-                    }   
                 }
                 else if(checkWin == 'x')
                 {
                     userScore[2 + arrayNumber*3] = (int)userScore[2] + 1;
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("Computer Win!!!");
+                    Console.WriteLine("Computer Win!!!\n");
                     Console.ForegroundColor = ConsoleColor.White;
                     isEnd = true;
-                }   
+                }
+                else
+                {
+                    continue;
+                }
+                Console.WriteLine("Would you like to play the game again?");
+                int anwser = EndProgram();
+
+                if (anwser == 0)
+                {
+                    count = 0;
+                    // 초기화
+                    for (int i = 0; i < 9; i++) arrangementOX[i] = (char)(i + 48);
+                    tile.Tile(arrangementOX, 10);
+                }
+                if (anwser == 1)
+                {
+                    isEnd = true;
+                    Console.WriteLine("Return to the menu.");
+                }
             }
         }
 
@@ -259,7 +258,6 @@ namespace en_2_TicTacToc
                
                 count++;
                 char checkWin = CheckWin(arrangementOX);
-                Console.WriteLine(checkWin);
                 if (checkWin == 'o')
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;

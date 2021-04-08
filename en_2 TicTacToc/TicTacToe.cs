@@ -13,7 +13,6 @@ namespace en_2_TicTacToc
     class TicTacToe
     {
         // 변수 선언
-        
         private int _number;
         private int arrayNumber = 0;
         private int _checkException = 1;
@@ -31,14 +30,12 @@ namespace en_2_TicTacToc
                 ShowMenu();
 
                 // menuNumber 입력
-
                 _number = InputNumber();
 
                 switch (_number)
                 {
                     case 1:
-                        //ArrayList userScore = new ArrayList();
-                        userScore.Add(WhoAreYou());//.Add(WhoAreYou());
+                        userScore.Add(WhoAreYou());
                         userScore.Add(0);
                         userScore.Add(0);
                         PlayGameWithComputer();
@@ -71,7 +68,6 @@ namespace en_2_TicTacToc
 
         private void ShowScoreboard(int arrayNumber)
         {
-            //throw new NotImplementedException();
             if(arrayNumber == 0)
             {
                 Console.WriteLine("\n[!]No Score record. . . returning Menu");
@@ -103,17 +99,10 @@ namespace en_2_TicTacToc
             int count = 0;
             while (!isEnd)
             {
-                //Console.ForegroundColor = ConsoleColor.Red;
-                //if(count == 0)
-                //{
-                //    tile.Tile(arrangementOX, 10);
-                //}
                 Console.WriteLine("\n\nUser {0}, Enter the number(0~8)", userScore[0]);
                 inputNumber = int.Parse(Console.ReadLine());
                 arrangementOX[inputNumber] = 'o';
                 tile.Tile(arrangementOX, inputNumber);
-                //Console.WriteLine("\n\n\n\n\n");
-                //Console.ForegroundColor = ConsoleColor.Blue;
                 Thread.Sleep(1000);
                 Console.Clear();
                 bool isExist = true;
@@ -136,9 +125,7 @@ namespace en_2_TicTacToc
                     }
                 }
                 count++;
-                //Console.WriteLine("count = {0}", count);
                 char checkWin = CheckWin(arrangementOX);
-                //Console.WriteLine("CheckWin = {0}", checkWin);
                 if (checkWin == 'o')
                 {
                     userScore[1 + arrayNumber*3] = (int)userScore[1 + arrayNumber*3] + 1;
@@ -168,12 +155,8 @@ namespace en_2_TicTacToc
                     userScore[2 + arrayNumber*3] = (int)userScore[2] + 1;
                     Console.WriteLine("Computer Win!!!");
                     isEnd = true;
-                }
-                
+                }   
             }
-            //Console.ForegroundColor = ConsoleColor.White;
-            
-
         }
 
         private char CheckWin(char[] arrangementOX)
@@ -208,13 +191,11 @@ namespace en_2_TicTacToc
 
         private void PlayGameWithUser()
         {
-            //throw new NotImplementedException();
             ShowTile tile = new ShowTile();
             // 배열 생성 및 초기화
             char[] arrangementOX = new char[9];
             for (int i = 0; i < 9; i++) arrangementOX[i] = (char)(i + 48);
-            //arrangementOX = Enumerable.Repeat('_', 9).ToArray();
-
+            
             tile.Tile(arrangementOX, 10);
 
             int inputNumber;
@@ -227,13 +208,10 @@ namespace en_2_TicTacToc
                     Console.WriteLine("tie");
                     break;
                 }
-                //Console.ForegroundColor = ConsoleColor.Yellow;
-               
                 if(count % 2 == 0)
                 {
                     Console.WriteLine("User1, Enter the number(0~8)");
                     inputNumber = int.Parse(Console.ReadLine());
-                    //Console.ForegroundColor = ConsoleColor.Yellow;
                     arrangementOX[inputNumber] = 'o';
                 }
                 else
@@ -243,17 +221,13 @@ namespace en_2_TicTacToc
                     arrangementOX[inputNumber] = 'x';
                 }
                 
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
                 Console.Clear();
-                //Console.ForegroundColor = ConsoleColor.White;
                 tile.Tile(arrangementOX, inputNumber);
-                //Console.Clear();
-                //Console.ForegroundColor = ConsoleColor.Blue;
                
                 count++;
                 char checkWin = CheckWin(arrangementOX);
                 Console.WriteLine(checkWin);
-                //Console.ForegroundColor = ConsoleColor.White;
                 if (checkWin == 'o')
                 {
 
@@ -268,36 +242,29 @@ namespace en_2_TicTacToc
                     Console.WriteLine("Return to the menu.");
                 }
             }
-            
-            //Console.WriteLine("count = {0}", count);
-            
-
         }
 
 
         private void ShowMenu()// 메뉴 출력
         {
-            //Console.Clear(); 
-            Console.WriteLine("\n\n       1. [PLAG GAME] WITH THE COMPUTER\n");
+            Console.WriteLine("\n\n-----------------------------------------------------------------");
+            Console.WriteLine("\n       1. [PLAG GAME] WITH THE COMPUTER\n");
             Console.WriteLine("       2. [PLAG GAME] WITH THE USER\n");
             Console.WriteLine("       3. SHOW SCOREBOARD(only play with computer)\n");
             Console.WriteLine("       4. END THE PROGRAM\n");
-           //Console.WriteLine("                                                                                           ");
+            Console.WriteLine("-----------------------------------------------------------------");
         }
         private int InputNumber() // menuNumber 입력
         {
             
             // 변수 선언
             int number = 0;
-            //string stringNumber;
             bool isException = true;
 
-            //Console.ForegroundColor = ConsoleColor.Red;
             // menuNumber 예외 처리
             while (isException)
             {
                 Console.Write("\nPlease Input from the menu number :");
-                //stringNumber = Console.ReadLine();
                 number = int.Parse(Console.ReadLine());
 
                 if (number < 0 || number > 5)
@@ -305,15 +272,12 @@ namespace en_2_TicTacToc
                     Console.Write("\n[!]Please Input natural number :");
                     continue;
                 }
-
-
                 isException = false;
             }
             return number;
         }
         private int EndProgram() // 프로그램 종료 시 한번 더 물어봄
         {
-            //Console.WriteLine("Are you sure you want to close the tic-tac-toe program?");
             Console.WriteLine("Please answer Y/N");
 
             string answer = Console.ReadLine();
@@ -338,7 +302,7 @@ namespace en_2_TicTacToc
             string _userName = null;
             bool _isException = false;
 
-            Console.WriteLine("[+] Enter only in English");
+            Console.WriteLine("[+] Please enter only English and numbers");
             Console.WriteLine("[+] Character limit: 1~16");
 
             while (!_isException)
@@ -348,10 +312,10 @@ namespace en_2_TicTacToc
 
                 _userName = Console.ReadLine();
                 
-                if (!(Regex.IsMatch(_userName, "^[a-zA-Z]*$")))//0-9
+                if (!(Regex.IsMatch(_userName, "^[a-zA-Z0-9]*$")))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("[!] Enter only in English");
+                    Console.WriteLine("[!] Please enter only English and numbers");
                     Console.ForegroundColor = ConsoleColor.White;
                     continue;
                 }

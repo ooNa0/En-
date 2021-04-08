@@ -136,9 +136,9 @@ namespace en_2_TicTacToc
                     }
                 }
                 count++;
-                Console.WriteLine("count = {0}", count);
+                //Console.WriteLine("count = {0}", count);
                 char checkWin = CheckWin(arrangementOX);
-                Console.WriteLine("CheckWin = {0}", checkWin);
+                //Console.WriteLine("CheckWin = {0}", checkWin);
                 if (checkWin == 'o')
                 {
                     userScore[1 + arrayNumber*3] = (int)userScore[1 + arrayNumber*3] + 1;
@@ -219,27 +219,58 @@ namespace en_2_TicTacToc
 
             int inputNumber;
             bool isEnd = false;
-            while (isEnd)
+            int count = 0;
+            while (!isEnd)
             {
-
+                if(count == 9)
+                {
+                    Console.WriteLine("tie");
+                    break;
+                }
                 //Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("User1, Enter the number(0~8)");
-                inputNumber = int.Parse(Console.ReadLine());
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                arrangementOX[inputNumber] = '0';
-                Console.ForegroundColor = ConsoleColor.White;
-                tile.Tile(arrangementOX, inputNumber);
+               
+                if(count % 2 == 0)
+                {
+                    Console.WriteLine("User1, Enter the number(0~8)");
+                    inputNumber = int.Parse(Console.ReadLine());
+                    //Console.ForegroundColor = ConsoleColor.Yellow;
+                    arrangementOX[inputNumber] = 'o';
+                }
+                else
+                {
+                    Console.WriteLine("User2, Enter the number");
+                    inputNumber = int.Parse(Console.ReadLine());
+                    arrangementOX[inputNumber] = 'x';
+                }
+                
+                Thread.Sleep(1000);
                 Console.Clear();
+                //Console.ForegroundColor = ConsoleColor.White;
+                tile.Tile(arrangementOX, inputNumber);
+                //Console.Clear();
                 //Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("User2, Enter the number");
-                inputNumber = int.Parse(Console.ReadLine());
-                arrangementOX[inputNumber] = 'X';
-                tile.Tile(arrangementOX, inputNumber);
-                Console.Clear();
+               
+                count++;
+                char checkWin = CheckWin(arrangementOX);
+                Console.WriteLine(checkWin);
+                //Console.ForegroundColor = ConsoleColor.White;
+                if (checkWin == 'o')
+                {
+
+                    Console.WriteLine("User1 Win!!!!");
+                    isEnd = true;
+                    Console.WriteLine("Return to the menu.");
+                }
+                else if (checkWin == 'x')
+                {
+                    Console.WriteLine("User2 Win!!!");
+                    isEnd = true;
+                    Console.WriteLine("Return to the menu.");
+                }
             }
-            Console.ForegroundColor = ConsoleColor.White;
-
-
+            
+            //Console.WriteLine("count = {0}", count);
+            
 
         }
 
@@ -249,7 +280,7 @@ namespace en_2_TicTacToc
             //Console.Clear(); 
             Console.WriteLine("\n\n       1. [PLAG GAME] WITH THE COMPUTER\n");
             Console.WriteLine("       2. [PLAG GAME] WITH THE USER\n");
-            Console.WriteLine("       3. SHOW SCOREBOARD\n");
+            Console.WriteLine("       3. SHOW SCOREBOARD(only play with computer)\n");
             Console.WriteLine("       4. END THE PROGRAM\n");
            //Console.WriteLine("                                                                                           ");
         }

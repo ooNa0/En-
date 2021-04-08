@@ -78,7 +78,6 @@ namespace en_2_TicTacToc
                             Console.WriteLine("\n\nOk,, Goodbye!!!!!");
                             return;
                         }
-                        Console.WriteLine("\nYou return to the menu.");
                         Console.WriteLine("Please enter any key . . . ");
                         trushvalue = Console.ReadLine(); // 클릭시 메뉴로 넘어감
                         break;
@@ -298,7 +297,7 @@ namespace en_2_TicTacToc
                     Console.WriteLine("[!] Problem with the length of the number");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
-                else if((Regex.IsMatch(stringNumber, "^[0-9]*$"))) // 0~9 만 입력
+                else if((Regex.IsMatch(stringNumber, "^[0-8]*$"))) // 0~9 만 입력
                 {
                     number = Convert.ToInt32(stringNumber);
                     isException = false;
@@ -386,7 +385,7 @@ namespace en_2_TicTacToc
             bool isExist = true;
             while (isExist)
             {
-                Console.WriteLine("Please enter the number(0~8)");
+                //Console.WriteLine("Please enter the number(0~8)");
                 inputNumber = InputNumber();
                 if (arrangementOX[inputNumber] != 'x' && arrangementOX[inputNumber] != 'o')
                 {

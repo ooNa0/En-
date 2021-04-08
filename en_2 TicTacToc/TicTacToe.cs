@@ -141,14 +141,14 @@ namespace en_2_TicTacToc
                 Console.WriteLine("CheckWin = {0}", checkWin);
                 if (checkWin == 'o')
                 {
-                    userScore[1 + arrayNumber*3] = (int)userScore[1] + 1;
+                    userScore[1 + arrayNumber*3] = (int)userScore[1 + arrayNumber*3] + 1;
                     Console.WriteLine("User Win!!!!");
                     Console.WriteLine("Would you like to play the game again?");
                     int anwser = EndProgram();
                     if(anwser == 0)
                     {
-                        Console.WriteLine("--------------");
                         count = 0;
+                        // 초기화
                         for (int i = 0; i < 9; i++) arrangementOX[i] = (char)(i + 48);
                         tile.Tile(arrangementOX, 10);
                     }
@@ -307,22 +307,28 @@ namespace en_2_TicTacToc
             string _userName = null;
             bool _isException = false;
 
+            Console.WriteLine("[+] Enter only in English");
+            Console.WriteLine("[+] Character limit: 1~16");
+
             while (!_isException)
             {
-                Console.WriteLine("[+] Enter only in English");
-                Console.WriteLine("[+] Character limit: 1~16");
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("Please tell me your name :");
 
                 _userName = Console.ReadLine();
-                //Console.ForegroundColor = ConsoleColor.Red;
+                
                 if (!(Regex.IsMatch(_userName, "^[a-zA-Z]*$")))//0-9
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("[!] Enter only in English");
+                    Console.ForegroundColor = ConsoleColor.White;
                     continue;
                 }
                 else if (_userName.Length < 0 || 16 < _userName.Length)
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("[!] Character limit: 1~16");
+                    Console.ForegroundColor = ConsoleColor.White;
                     continue;
                 }
                 _isException = true;

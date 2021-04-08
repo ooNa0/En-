@@ -71,7 +71,7 @@ namespace en_2_TicTacToc
                 Console.WriteLine("\n[!]No Score record. . . returning Menu");
                 return;
             }
-            Console.WriteLine("[index]   username           win   lose");
+            Console.WriteLine("[index]   username      win   lose");
 
             for (int i = 0; i < arrayNumber; i++)
             {
@@ -246,32 +246,62 @@ namespace en_2_TicTacToc
 
         private void ShowMenu()// 메뉴 출력
         {
-            Console.WriteLine("\n\n---------------------------------------------------");
-            Console.WriteLine("\n       1. [PLAG GAME] WITH THE COMPUTER\n");
-            Console.WriteLine("       2. [PLAG GAME] WITH THE USER\n");
-            Console.WriteLine("       3. SHOW SCOREBOARD(only play with computer)\n");
-            Console.WriteLine("       4. END THE PROGRAM\n");
-            Console.WriteLine("---------------------------------------------------");
+            Console.WriteLine("\n\n--------------------------------------------------");
+            Console.WriteLine("\n    1. [PLAG GAME] WITH THE COMPUTER\n");
+            Console.WriteLine("    2. [PLAG GAME] WITH THE USER\n");
+            Console.WriteLine("    3. SHOW SCOREBOARD(only play with computer)\n");
+            Console.WriteLine("    4. END THE PROGRAM\n");
+            Console.WriteLine("--------------------------------------------------");
         }
         private int InputNumber() // menuNumber 입력
         {
-            
+
             // 변수 선언
+            string stringNumber;
             int number = 0;
             bool isException = true;
 
-            // menuNumber 예외 처리
+            
+            // menuNumber 예외 처리 - 길이, null 안됨
             while (isException)
             {
                 Console.Write("\nPlease Input from the menu number :");
-                number = int.Parse(Console.ReadLine());
-
-                if (number < 0 || number > 5)
+                //number = int.Parse(Console.ReadLine());
+                stringNumber = Console.ReadLine();
+                if(stringNumber.Length != 1) // 길이 예외처리, 음수, 그냥 enter 도 필터링
                 {
-                    Console.Write("\n[!]Please Input natural number :");
-                    continue;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\n[!]problem with the length of the number");
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
-                isException = false;
+                else if((Regex.IsMatch(stringNumber, "^[0-9]*$"))) // 0~9 만 입력
+                {
+                    number = Convert.ToInt32(stringNumber);
+                    /*if (number < 1)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("\n[!]Please Input natural number");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        continue;
+                    }
+                    else */if (number > 4)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("\nPlease enter only the numbers 0-4 in the menu");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        continue;
+                    }
+                    isException = false;
+                }/*
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("[!]You entered it incorrectly, please enter it again");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }*/
+
+
+
             }
             return number;
         }

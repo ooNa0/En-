@@ -17,6 +17,7 @@ namespace en_2_TicTacToc
         private int arrayNumber = 0;
         private int _checkException = 1;
         private bool _isFinished = false;
+        private bool _isInMenuNumber = true;
 
         private ArrayList userScore = new ArrayList();
 
@@ -28,7 +29,26 @@ namespace en_2_TicTacToc
                 ShowMenu();
 
                 // menuNumber 입력
-                _number = InputNumber();
+                while (_isInMenuNumber)
+                {
+                    _number = InputNumber();
+                    if (_number < 1)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("\n[!]Please Input natural number");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        continue;
+                    }
+                    else if (_number > 4)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("\nPlease enter only the numbers 1-4 in the menu");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        continue;
+                    }
+                    _isInMenuNumber = false;
+                }
+                
 
                 switch (_number)
                 {
@@ -97,14 +117,29 @@ namespace en_2_TicTacToc
             int count = 0;
             while (!isEnd)
             {
+                bool isExist = true;
                 Console.WriteLine("\n\nUser {0}", userScore[0]);
                 Console.WriteLine("Please enter the number(0~8)");
-                inputNumber = int.Parse(Console.ReadLine());
-                arrangementOX[inputNumber] = 'o';
-                tile.Tile(arrangementOX, inputNumber);
-                Thread.Sleep(1000);
-                Console.Clear();
-                bool isExist = true;
+                inputNumber = InputNumber();
+                while (isExist)
+                {
+                    if (arrangementOX[inputNumber] != 'x' && arrangementOX[inputNumber] != 'o')
+                    {
+                        arrangementOX[inputNumber] = 'o';
+                        tile.Tile(arrangementOX, inputNumber);
+                        Thread.Sleep(1000);
+                        Console.Clear();
+                        isExist = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("This is the value that is already filled in. Please re-enter.");
+                        Console.WriteLine("Please enter the number(0~8)");
+                        inputNumber = int.Parse(Console.ReadLine());
+                    }
+                }
+
+                isExist = true;
                 while (isExist)
                 {
                     if(count == 5)
@@ -271,26 +306,12 @@ namespace en_2_TicTacToc
                  if(stringNumber.Length != 1) // 길이 예외처리, 음수, 그냥 enter 도 예외 처리
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\n[!]problem with the length of the number");
+                    Console.WriteLine("[!] Problem with the length of the number");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
                 else if((Regex.IsMatch(stringNumber, "^[0-9]*$"))) // 0~9 만 입력
                 {
                     number = Convert.ToInt32(stringNumber);
-                    if (number < 1)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("\n[!]Please Input natural number");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        continue;
-                    }
-                    else if (number > 4)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("\nPlease enter only the numbers 1-4 in the menu");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        continue;
-                    }
                     isException = false;
                 }
                 else

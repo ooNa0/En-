@@ -262,14 +262,13 @@ namespace en_2_TicTacToc
             bool isException = true;
 
             
-            // menuNumber 예외 처리 - 길이, null 안됨
+            // menuNumber 예외 처리
             while (isException)
             {
                 Console.Write("\nPlease Input from the menu number :");
-                //number = int.Parse(Console.ReadLine());
                 stringNumber = Console.ReadLine();
                 
-                 if(stringNumber.Length != 1) // 길이 예외처리, 음수
+                 if(stringNumber.Length != 1) // 길이 예외처리, 음수, 그냥 enter 도 예외 처리
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("\n[!]problem with the length of the number");
@@ -300,9 +299,6 @@ namespace en_2_TicTacToc
                     Console.WriteLine("[!]You entered it incorrectly, please enter it again");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
-
-
-
             }
             return number;
         }
@@ -341,8 +337,14 @@ namespace en_2_TicTacToc
                 Console.Write("Please tell me your name :");
 
                 _userName = Console.ReadLine();
-                
-                if (!(Regex.IsMatch(_userName, "^[a-zA-Z0-9]*$")))
+                if (_userName.Length == 0) // enter 예외처리
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\n[!]problem with the length of the number");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    continue;
+                }
+                else if (!(Regex.IsMatch(_userName, "^[a-zA-Z0-9]*$")))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("[!] Please enter only English and numbers");

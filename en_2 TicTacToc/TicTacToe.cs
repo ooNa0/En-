@@ -16,11 +16,9 @@ namespace en_2_TicTacToc
         private int _number;
         private int arrayNumber = 0;
         private int _checkException = 1;
-        private string User1;
-        private string User2;
         private bool _isFinished = false;
 
-        public ArrayList userScore = new ArrayList();
+        private ArrayList userScore = new ArrayList();
 
         public void StartGame()
         {
@@ -99,7 +97,8 @@ namespace en_2_TicTacToc
             int count = 0;
             while (!isEnd)
             {
-                Console.WriteLine("\n\nUser {0}, Enter the number(0~8)", userScore[0]);
+                Console.WriteLine("\n\nUser {0}", userScore[0]);
+                Console.WriteLine("Please enter the number(0~8)");
                 inputNumber = int.Parse(Console.ReadLine());
                 arrangementOX[inputNumber] = 'o';
                 tile.Tile(arrangementOX, inputNumber);
@@ -247,12 +246,12 @@ namespace en_2_TicTacToc
 
         private void ShowMenu()// 메뉴 출력
         {
-            Console.WriteLine("\n\n-----------------------------------------------------------------");
+            Console.WriteLine("\n\n------------------------------------------");
             Console.WriteLine("\n       1. [PLAG GAME] WITH THE COMPUTER\n");
             Console.WriteLine("       2. [PLAG GAME] WITH THE USER\n");
             Console.WriteLine("       3. SHOW SCOREBOARD(only play with computer)\n");
             Console.WriteLine("       4. END THE PROGRAM\n");
-            Console.WriteLine("-----------------------------------------------------------------");
+            Console.WriteLine("------------------------------------------");
         }
         private int InputNumber() // menuNumber 입력
         {
@@ -329,7 +328,7 @@ namespace en_2_TicTacToc
                 _isException = true;
                 break;
             }
-            return _userName;
+            return _userName.PadRight(16, ' ');
         }
     }
 }

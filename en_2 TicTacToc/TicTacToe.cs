@@ -71,13 +71,16 @@ namespace en_2_TicTacToc
                         trushvalue = Console.ReadLine(); // 클릭시 메뉴로 넘어감
                         continue;
                     case 4:
+                        Console.WriteLine("\n You want to close the tic-tac-toe?\n");
                         _checkException = EndProgram();
                         if (_checkException == 0) // Y/y를 입력했을 경우
                         {
                             Console.WriteLine("\n\nOk,, Goodbye!!!!!");
                             return;
                         }
-                        Console.WriteLine("You return to the menu.");
+                        Console.WriteLine("\nYou return to the menu.");
+                        Console.WriteLine("Please enter any key . . . ");
+                        trushvalue = Console.ReadLine(); // 클릭시 메뉴로 넘어감
                         break;
                     default:
                         break;
@@ -92,11 +95,11 @@ namespace en_2_TicTacToc
                 Console.WriteLine("\n[!]No Score record. . . returning Menu");
                 return;
             }
-            Console.WriteLine("[index]   username       win   lose");
+            Console.WriteLine("[index]   username        win   lose");
 
             for (int i = 0; i < arrayNumber; i++)
             {
-                Console.WriteLine("[{0}]       {1}{2}      {3}", i + 1, userScore[i*3], userScore[1 + i*3], userScore[2 + i*3]);
+                Console.WriteLine("[{0}]       {1}{2}     {3}", i + 1, userScore[i*3], userScore[1 + i*3], userScore[2 + i*3]);
             }
 
         }
@@ -120,8 +123,8 @@ namespace en_2_TicTacToc
             while (!isEnd)
             {
                 bool isExist = true;
-                Console.WriteLine("\n\nUser {0}", userScore[0]);
                 inputNumber = IsExist(arrangementOX);
+                arrangementOX[inputNumber] = 'o';
                 tile.Tile(arrangementOX, inputNumber);
                 Thread.Sleep(1000);
                 Console.Clear();
@@ -365,7 +368,7 @@ namespace en_2_TicTacToc
                     Console.ForegroundColor = ConsoleColor.White;
                     continue;
                 }
-                else if (_userName.Length < 0 || 16 < _userName.Length)
+                else if (16 < _userName.Length)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("[!] Character limit: 1~16");

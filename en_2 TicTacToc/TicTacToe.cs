@@ -268,7 +268,8 @@ namespace en_2_TicTacToc
                 Console.Write("\nPlease Input from the menu number :");
                 //number = int.Parse(Console.ReadLine());
                 stringNumber = Console.ReadLine();
-                if(stringNumber.Length != 1) // 길이 예외처리, 음수, 그냥 enter 도 필터링
+                
+                 if(stringNumber.Length != 1) // 길이 예외처리, 음수
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("\n[!]problem with the length of the number");
@@ -277,28 +278,28 @@ namespace en_2_TicTacToc
                 else if((Regex.IsMatch(stringNumber, "^[0-9]*$"))) // 0~9 만 입력
                 {
                     number = Convert.ToInt32(stringNumber);
-                    /*if (number < 1)
+                    if (number < 1)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write("\n[!]Please Input natural number");
                         Console.ForegroundColor = ConsoleColor.White;
                         continue;
                     }
-                    else */if (number > 4)
+                    else if (number > 4)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("\nPlease enter only the numbers 0-4 in the menu");
+                        Console.Write("\nPlease enter only the numbers 1-4 in the menu");
                         Console.ForegroundColor = ConsoleColor.White;
                         continue;
                     }
                     isException = false;
-                }/*
+                }
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("[!]You entered it incorrectly, please enter it again");
                     Console.ForegroundColor = ConsoleColor.White;
-                }*/
+                }
 
 
 

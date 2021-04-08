@@ -18,7 +18,7 @@ namespace en_2_TicTacToc
         private int _checkException = 1;
         private bool _isFinished = false;
         private bool _isInMenuNumber;
-
+        private string trushvalue;
         private ArrayList userScore = new ArrayList();
 
         public void StartGame()
@@ -67,13 +67,9 @@ namespace en_2_TicTacToc
                         break;
                     case 3:
                         ShowScoreboard(arrayNumber);
-                        Console.WriteLine("Would you like to go back to the menu?");
-                        _checkException = EndProgram();
-                        if (_checkException == 0) // Y/y를 입력했을 경우
-                        {
-                            continue;
-                        }
-                         break;
+                        Console.WriteLine("\nPlease enter any key . . . ");
+                        trushvalue = Console.ReadLine(); // 클릭시 메뉴로 넘어감
+                        continue;
                     case 4:
                         _checkException = EndProgram();
                         if (_checkException == 0) // Y/y를 입력했을 경우
@@ -94,14 +90,13 @@ namespace en_2_TicTacToc
             if(arrayNumber == 0)
             {
                 Console.WriteLine("\n[!]No Score record. . . returning Menu");
-                Thread.Sleep(1000);
                 return;
             }
-            Console.WriteLine("[index]   username      win   lose");
+            Console.WriteLine("[index]   username       win   lose");
 
             for (int i = 0; i < arrayNumber; i++)
             {
-                Console.WriteLine("[{0}]       {1}{2}       {3}", i + 1, userScore[i*3], userScore[1 + i*3], userScore[2 + i*3]);
+                Console.WriteLine("[{0}]       {1}{2}      {3}", i + 1, userScore[i*3], userScore[1 + i*3], userScore[2 + i*3]);
             }
 
         }
@@ -126,29 +121,11 @@ namespace en_2_TicTacToc
             {
                 bool isExist = true;
                 Console.WriteLine("\n\nUser {0}", userScore[0]);
-                Console.WriteLine("Please enter the number(0~8)");
-                inputNumber = InputNumber();
-                while (isExist)
-                {
-                    if (arrangementOX[inputNumber] != 'x' && arrangementOX[inputNumber] != 'o')
-                    {
-                        arrangementOX[inputNumber] = 'o';
-                        tile.Tile(arrangementOX, inputNumber);
-                        Thread.Sleep(1000);
-                        Console.Clear();
-                        isExist = false;
-                    }
-                    else
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("\n[!] Value is already..\n");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.WriteLine("Please enter the number(0~8)");
-                        inputNumber = int.Parse(Console.ReadLine());
-                    }
-                }
-
-                isExist = true;
+                inputNumber = IsExist(arrangementOX);
+                tile.Tile(arrangementOX, inputNumber);
+                Thread.Sleep(1000);
+                Console.Clear();
+                       
                 while (isExist)
                 {
                     if(count == 5)
@@ -301,12 +278,10 @@ namespace en_2_TicTacToc
         }
         private int InputNumber() // menuNumber 입력
         {
-
             // 변수 선언
             string stringNumber;
             int number = 0;
             bool isException = true;
-
             
             // menuNumber 예외 처리
             while (isException)
@@ -402,5 +377,28 @@ namespace en_2_TicTacToc
             }
             return _userName.PadRight(16, ' ');
         }
+        private int IsExist(char[] arrangementOX)
+        {
+            int inputNumber = 0;
+            bool isExist = true;
+            while (isExist)
+            {
+                Console.WriteLine("Please enter the number(0~8)");
+                inputNumber = InputNumber();
+                if (arrangementOX[inputNumber] != 'x' && arrangementOX[inputNumber] != 'o')
+                {
+                    isExist = false;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\n[!] Value is already..\n");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    
+                }
+            }
+            return inputNumber;
+        }
     }
+    
 }

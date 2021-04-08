@@ -71,11 +71,11 @@ namespace en_2_TicTacToc
                 Console.WriteLine("\n[!]No Score record. . . returning Menu");
                 return;
             }
-            Console.WriteLine("[index]   username   win   lose");
+            Console.WriteLine("[index]   username           win   lose");
 
             for (int i = 0; i < arrayNumber; i++)
             {
-                Console.WriteLine("[{0}]          {1}       {2}       {3}", i + 1, userScore[i*3], userScore[1 + i*3], userScore[2 + i*3]);
+                Console.WriteLine("[{0}]       {1}{2}       {3}", i + 1, userScore[i*3], userScore[1 + i*3], userScore[2 + i*3]);
             }
         }
 
@@ -246,12 +246,12 @@ namespace en_2_TicTacToc
 
         private void ShowMenu()// 메뉴 출력
         {
-            Console.WriteLine("\n\n------------------------------------------");
+            Console.WriteLine("\n\n---------------------------------------------------");
             Console.WriteLine("\n       1. [PLAG GAME] WITH THE COMPUTER\n");
             Console.WriteLine("       2. [PLAG GAME] WITH THE USER\n");
             Console.WriteLine("       3. SHOW SCOREBOARD(only play with computer)\n");
             Console.WriteLine("       4. END THE PROGRAM\n");
-            Console.WriteLine("------------------------------------------");
+            Console.WriteLine("---------------------------------------------------");
         }
         private int InputNumber() // menuNumber 입력
         {
@@ -300,7 +300,7 @@ namespace en_2_TicTacToc
         {
             string _userName = null;
             bool _isException = false;
-
+            Console.WriteLine("\n\nOk,, and who you are??");
             Console.WriteLine("[+] Please enter only English and numbers");
             Console.WriteLine("[+] Character limit: 1~16");
 

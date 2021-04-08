@@ -12,7 +12,7 @@ namespace en_2_TicTacToc
         {
 
             Console.Title = "TicTacToe";
-            Console.SetWindowSize(50, 35);
+            Console.SetWindowSize(50, 37);
 
             TicTacToe ticTacToe = new TicTacToe(); // 틱택토 객체 실행
             ticTacToe.StartGame(); // 틱택토 내 메소드 실행

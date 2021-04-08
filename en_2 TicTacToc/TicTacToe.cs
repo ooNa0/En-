@@ -38,14 +38,14 @@ namespace en_2_TicTacToc
                     if (_number < 1)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("\n[!]Please Input natural number");
+                        Console.Write("\n[!] Please Input natural number");
                         Console.ForegroundColor = ConsoleColor.White;
                         continue;
                     }
                     else if (_number > 4)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("\nPlease enter only the numbers 1-4 in the menu");
+                        Console.Write("\n[!] Please enter only the numbers 1-4 in the menu");
                         Console.ForegroundColor = ConsoleColor.White;
                         continue;
                     }
@@ -91,7 +91,9 @@ namespace en_2_TicTacToc
         {
             if(arrayNumber == 0)
             {
-                Console.WriteLine("\n[!]No Score record. . . returning Menu");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\n[!] No Score record. . . returning Menu");
+                Console.ForegroundColor = ConsoleColor.White;
                 return;
             }
             Console.WriteLine("[index]   username        win   lose");
@@ -297,7 +299,7 @@ namespace en_2_TicTacToc
                     Console.WriteLine("[!] Problem with the length of the number");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
-                else if((Regex.IsMatch(stringNumber, "^[0-8]*$"))) // 0~9 만 입력
+                else if((Regex.IsMatch(stringNumber, "^[0-8]*$"))) // 0~8 만 입력
                 {
                     number = Convert.ToInt32(stringNumber);
                     isException = false;
@@ -305,7 +307,7 @@ namespace en_2_TicTacToc
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("[!]You entered it incorrectly, please enter it again");
+                    Console.WriteLine("[!] You entered it incorrectly,\n please enter it again");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
             }
@@ -331,7 +333,9 @@ namespace en_2_TicTacToc
                     case "n":
                         return 1;
                     default:
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Please choose from Y/N (T.T) ..............");
+                        Console.ForegroundColor = ConsoleColor.White;
                         continue;
                 }
             }

@@ -37,14 +37,14 @@ namespace en_2_TicTacToc
                     if (_menuNumber < 1)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("\n[!] Please Input natural number");
+                        Console.Write("[!] Please Input natural number\n");
                         Console.ForegroundColor = ConsoleColor.White;
                         continue;
                     }
                     else if (_menuNumber > 4)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("\n[!] Please enter only the numbers 1-4 in the menu");
+                        Console.Write("[!] Please enter only the numbers 1-4 in the menu\n");
                         Console.ForegroundColor = ConsoleColor.White;
                         continue;
                     }
@@ -314,12 +314,12 @@ namespace en_2_TicTacToc
                     number = Convert.ToInt32(stringNumber);
                     isException = false;
                 }
-                else
+                /*else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("[!] You entered it incorrectly,\n please enter it again");
+                    Console.WriteLine("[!] You entered it incorrectly,\nplease enter it again . . .");
                     Console.ForegroundColor = ConsoleColor.White;
-                }
+                }*/
             }
             return number;
         }
@@ -370,21 +370,21 @@ namespace en_2_TicTacToc
                 if (_userName.Length == 0) // enter 예외처리
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\n[!]problem with the length of the number");
+                    Console.WriteLine("[!] Problem with the length of the number\n");
                     Console.ForegroundColor = ConsoleColor.White;
                     continue;
                 }
                 else if (!(Regex.IsMatch(_userName, "^[a-zA-Z0-9]*$")))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("[!] Please enter only English and numbers");
+                    Console.WriteLine("[!] Please enter only English and numbers\n");
                     Console.ForegroundColor = ConsoleColor.White;
                     continue;
                 }
                 else if (16 < _userName.Length)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("[!] Character limit: 1~16");
+                    Console.WriteLine("[!] Character limit: 1~16\n");
                     Console.ForegroundColor = ConsoleColor.White;
                     continue;
                 }

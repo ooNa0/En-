@@ -30,15 +30,22 @@ namespace en_3_Libray
 
         }
 
-        public string id
+        // VO get/set method, ToString()
+        public int Id
         {
             get { return id; }
             set { id = value; }
         }
 
-        public string bookName
+        public string BookName
         {
             get { return bookName; }
+            set { bookName = value; }
+        }
+        public string Publisher
+        {
+            get { return publisher; }
+            set { publisher = value; }
         }
     }
 }

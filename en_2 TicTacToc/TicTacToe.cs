@@ -131,10 +131,10 @@ namespace en_2_TicTacToc
  
                 while (isExist)
                 {
-                    if(round >= 5) // 마지막 라운드
+                    if(round >= 5) // 마지막 라운드 일때
                     {
                         checkWin = CheckWin(arrangementOX);
-                        if (checkWin == 'o')
+                        if (checkWin == 'o') // user가 이길 경우
                         {
                             userScore[1 + arrayNumber * 3] = (int)userScore[1 + arrayNumber * 3] + 1;
                             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -161,16 +161,16 @@ namespace en_2_TicTacToc
                         }
                     }
                 }
-                if (round < 5) { 
+                if (round < 5) { // 마지막 라운드가 아닐 경우
                     checkWin = CheckWin(arrangementOX);
-                    if (checkWin == 'o')
+                    if (checkWin == 'o') // user win
                     {
                         userScore[1 + arrayNumber * 3] = (int)userScore[1 + arrayNumber * 3] + 1;
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("User Win!!!!\n");
                         Console.ForegroundColor = ConsoleColor.White;
                     }
-                    else if (checkWin == 'x')
+                    else if (checkWin == 'x') // user lose
                     {
                         userScore[2 + arrayNumber * 3] = (int)userScore[2 + arrayNumber * 3] + 1;
                         Console.ForegroundColor = ConsoleColor.Yellow;
@@ -189,6 +189,7 @@ namespace en_2_TicTacToc
                 if (anwser == 0)
                 {
                     round = 0;
+
                     // 초기화
                     for (int i = 0; i < 9; i++) arrangementOX[i] = (char)(i + 48);
                     tile.Tile(arrangementOX, 10);
@@ -196,12 +197,11 @@ namespace en_2_TicTacToc
                 if (anwser == 1)
                 {
                     isEnd = true;
-                    Console.WriteLine("Return to the menu.");
                 }
             }
         }
 
-        private char CheckWin(char[] arrangementOX)
+        private char CheckWin(char[] arrangementOX) // 게임이 이겼는지 확인, 이기면 이긴 사람의 o, x를 반환
         {
             // 가로 빙고일 경우
             for (int i = 0; i < 3; i++)
@@ -265,7 +265,6 @@ namespace en_2_TicTacToc
                     arrangementOX[inputNumber] = 'x';
                 }
                 
-                //Thread.Sleep(500);
                 Console.Clear();
                 tile.Tile(arrangementOX, inputNumber);
                
@@ -361,7 +360,7 @@ namespace en_2_TicTacToc
             
         }
 
-        private string WhoAreYou()
+        private string WhoAreYou() // username 예외처리
         {
             string _userName = null;
             bool _isException = false;
@@ -382,14 +381,14 @@ namespace en_2_TicTacToc
                     Console.ForegroundColor = ConsoleColor.White;
                     continue;
                 }
-                else if (!(Regex.IsMatch(_userName, "^[a-zA-Z0-9]*$")))
+                else if (!(Regex.IsMatch(_userName, "^[a-zA-Z0-9]*$"))) // 영어와 숫자만 받음
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("[!] Please enter only English and numbers\n");
                     Console.ForegroundColor = ConsoleColor.White;
                     continue;
                 }
-                else if (16 < _userName.Length)
+                else if (16 < _userName.Length) // 길이 예외처리
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("[!] Character limit: 1~16\n");
@@ -401,7 +400,7 @@ namespace en_2_TicTacToc
             }
             return _userName.PadRight(16, ' ');
         }
-        private int IsExist(char[] arrangementOX)
+        private int IsExist(char[] arrangementOX) // 중복되어 선택했는지
         {
             int inputNumber = 0;
             bool isExist = true;

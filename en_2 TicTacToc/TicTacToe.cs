@@ -14,7 +14,6 @@ namespace en_2_TicTacToc
         // 변수 선언
         private int _menuNumber; // 메뉴 넘버
         private int arrayNumber = 0; // 컴퓨터와 게임한 사용자 수
-        private int _checkException = 1;
         private bool _isFinished = false;
         private bool _isInMenuNumber;
         private string trushvalue;
@@ -34,14 +33,14 @@ namespace en_2_TicTacToc
                 {
                     _menuNumber = InputNumber(); // 메뉴 번호 입력
 
-                    if (_menuNumber < 1)
+                    if (_menuNumber < 1) // 자연수가 아닐때
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write("[!] Please Input natural number\n");
                         Console.ForegroundColor = ConsoleColor.White;
                         continue;
                     }
-                    else if (_menuNumber > 4)
+                    else if (_menuNumber > 4) // 메뉴 번호보다 넘어갔을때
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write("[!] Please enter only the numbers 1-4 in the menu\n");
@@ -58,7 +57,7 @@ namespace en_2_TicTacToc
                         userScore.Add(0); // win
                         userScore.Add(0); // lose
                         PlayGameWithComputer();
-                        arrayNumber++;
+                        arrayNumber++; // 사용자 수 증가
                         break;
                     case 2: // 혼자 게임
                         PlayGameWithUser();
@@ -72,8 +71,7 @@ namespace en_2_TicTacToc
                         continue;
                     case 4: // 프로그램 종료
                         Console.WriteLine("\nYou want to close the tic-tac-toe?\n");
-                        _checkException = EndProgram();
-                        if (_checkException == 0) // Y/y를 입력했을 경우
+                        if (EndProgram() == 0) // Y/y를 입력했을 경우
                         {
                             Console.WriteLine("\n\nOk,, Goodbye!!!!!");
                             return;
@@ -259,13 +257,13 @@ namespace en_2_TicTacToc
                 }
                 if(count % 2 == 0)
                 {
-                    Console.WriteLine("User1, Enter the number(0~8)");
+                    Console.WriteLine("User1,");
                     inputNumber = IsExist(arrangementOX);
                     arrangementOX[inputNumber] = 'o';
                 }
                 else
                 {
-                    Console.WriteLine("User2, Enter the number(0~8)");
+                    Console.WriteLine("User2,");
                     inputNumber = IsExist(arrangementOX);
                     arrangementOX[inputNumber] = 'x';
                 }

@@ -206,10 +206,7 @@ namespace en_2_TicTacToc
         {
             if (WinAndBlock(arrangementOX) >= 0) { return WinAndBlock(arrangementOX); }
             else if (Fork(arrangementOX) >= 0) { return Fork(arrangementOX); }
-            else if (BlockingFork(arrangementOX) >= 0) { return BlockingFork(arrangementOX); }
             else if (Center(arrangementOX) >= 0) { return Center(arrangementOX); }
-            else if (OppositeCorner(arrangementOX) >= 0) { return OppositeCorner(arrangementOX); }
-            else if (EmptyCorner(arrangementOX) >= 0) { return EmptyCorner(arrangementOX); }
             else { return EmptySide(arrangementOX); }
         }
 
@@ -292,78 +289,66 @@ namespace en_2_TicTacToc
             return -1;
         }
 
-        private int Fork(char[] arrangementOX) // or 연산 사용
+        private int Fork(char[] arrangementOX) // 2목을 만들 가능성 (or 연산 사용)
         {
-
+            bool True = true;
+            // 가로
             for (int i = 0; i < 3; i++)
             {
                 if (arrangementOX[i * 3] != 'o' && arrangementOX[i * 3 + 1] != 'o' && arrangementOX[i * 3 + 2] != 'o')
                 {
-                    if (arrangementOX[i * 3] != 'x' && arrangementOX[i * 3 + 1] != 'x' && arrangementOX[i * 3 + 2] != 'x') // or 연산
+                    if ((arrangementOX[i * 3] != 'x' || arrangementOX[(i * 3) + 1] != 'x' || arrangementOX[(i * 3) + 2] != 'x') == True) // or 연산
                     {
-
+                        if(arrangementOX[i*3] == 'x')
+                        {
+                            return i * 3 + 1;
+                        }
+                        else
+                        {
+                            return i * 3;
+                        }
                     }
                 }
             }
-            // 세로 빙고일 경우
+            // 세로
             for (int i = 0; i < 3; i++)
             {
-                if (arrangementOX[i] == arrangementOX[i + 3] && arrangementOX[i + 3] == arrangementOX[i + 6])
+                if (arrangementOX[i] != 'o' && arrangementOX[i + 3] != 'o' && arrangementOX[i + 6] != 'o')
                 {
-                    return arrangementOX[i];
-                }
-            }
-            // 대각선 빙고일 경우
-            if (arrangementOX[0] == arrangementOX[4] && arrangementOX[4] == arrangementOX[8])
-            {
-                return arrangementOX[0];
-            }
-            if (arrangementOX[2] == arrangementOX[4] && arrangementOX[4] == arrangementOX[6])
-            {
-                return arrangementOX[2];
-            }
-            for (int i = 0; i < 3; i++)
-            {
-                if(arrangementOX[i*3] != 'o' && )
-                if (arrangementOX[i * 3] == arrangementOX[i * 3 + 1])
-                {
-                    if (arrangementOX[i * 3 + 2] != 'o' && arrangementOX[i * 3 + 2] != 'x')
+                    if ((arrangementOX[i] != 'x' || arrangementOX[i + 3] != 'x' || arrangementOX[i + 6] != 'x') == True) // or 연산
                     {
-                        return i * 3 + 2;
-                    }
-                }
-                if (arrangementOX[i * 3] == arrangementOX[i * 3 + 2])
-                {
-                    if (arrangementOX[i * 3 + 1] != 'o' && arrangementOX[i * 3 + 1] != 'x')
-                    {
-                        return i * 3 + 1;
-                    }
-                }
-                if (arrangementOX[i * 3 + 2] == arrangementOX[i * 3 + 1])
-                {
-                    if (arrangementOX[i * 3] != 'o' && arrangementOX[i * 3] != 'x')
-                    {
-                        return i * 3;
+                        if (arrangementOX[i] == 'x')
+                        {
+                            return i + 3;
+                        }
+                        else
+                        {
+                            return i;
+                        }
                     }
                 }
             }
-        }
-        private int BlockingFork(char[] arrangementOX)
-        {
-
+            // 대각선
+            if (arrangementOX[0] != 'o' && arrangementOX[4] != 'o' && arrangementOX[8] != 'o')
+            {
+                if ((arrangementOX[0] != 'x' || arrangementOX[4] != 'x' || arrangementOX[8] != 'x') == True) // or 연산
+                {
+                    if (arrangementOX[0] == 'x')
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        return 4;
+                    }
+                }
+            }
+            return -1;
         }
         private int Center(char[] arrangementOX)
         {
             if (arrangementOX[4] != 'x' && arrangementOX[4] != 'o') { return 4; }
             return -1;
-        }
-        private int OppositeCorner(char[] arrangementOX)
-        {
-
-        }
-        private int EmptyCorner(char[] arrangementOX)
-        {
-
         }
         private int EmptySide(char[] arrangementOX)
         {

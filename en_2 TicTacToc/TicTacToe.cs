@@ -193,6 +193,7 @@ namespace en_2_TicTacToc
 
                     // 초기화
                     for (int i = 0; i < 9; i++) arrangementOX[i] = (char)(i + 48);
+                    Console.Clear();
                     tile.Tile(arrangementOX, 10);
                 }
                 if (anwser == 1)
@@ -204,32 +205,33 @@ namespace en_2_TicTacToc
 
         private int AIComputer(char[] arrangementOX)
         {
-            if (WinAndBlock(arrangementOX) >= 0) { return WinAndBlock(arrangementOX); }
-            else if (Fork(arrangementOX) >= 0) { return Fork(arrangementOX); }
+            if (Win(arrangementOX) >= 0) { return Win(arrangementOX); }
+            if (Block(arrangementOX) >= 0) { return Block(arrangementOX); }
             else if (Center(arrangementOX) >= 0) { return Center(arrangementOX); }
+            else if (Fork(arrangementOX) >= 0) { return Fork(arrangementOX); }
             else { return EmptySide(arrangementOX); }
         }
 
-        private int WinAndBlock(char[] arrangementOX)
+        private int Win(char[] arrangementOX)
         {
-            // 가로에서 2개 이상있을 경우
+            // 가로에서 2개 이상있을 경우 넣기
             for (int i = 0; i < 3; i++)
             {
-                if (arrangementOX[i * 3] == arrangementOX[i * 3 + 1])
+                if (arrangementOX[i * 3] == 'x' && arrangementOX[i * 3 + 1] == 'x')
                 {
                     if (arrangementOX[i * 3 + 2] != 'o' && arrangementOX[i * 3 + 2] != 'x')
                     {
                         return i * 3 + 2;
                     }
                 }
-                if (arrangementOX[i * 3] == arrangementOX[i * 3 + 2])
+                if (arrangementOX[i * 3] == 'x' && arrangementOX[i * 3 + 2] == 'x')
                 {
                     if (arrangementOX[i * 3 + 1] != 'o' && arrangementOX[i * 3 + 1] != 'x')
                     {
                         return i * 3 + 1;
                     }
                 }
-                if (arrangementOX[i * 3 + 2] == arrangementOX[i * 3 + 1])
+                if (arrangementOX[i * 3 + 2] == 'x' && arrangementOX[i * 3 + 1] == 'x')
                 {
                     if (arrangementOX[i * 3] != 'o' && arrangementOX[i * 3] != 'x')
                     {
@@ -238,24 +240,103 @@ namespace en_2_TicTacToc
                 }
             }
 
-            // 세로에서 두개 이상
+            // 세로에서 두개 이상 넣기
             for (int i = 0; i < 3; i++)
             {
-                if (arrangementOX[i] == arrangementOX[i + 3])
+                if (arrangementOX[i] == 'x' && arrangementOX[i + 3] == 'x')
                 {
                     if (arrangementOX[i + 6] != 'o' && arrangementOX[i + 6] != 'x')
                     {
                         return i + 6;
                     }
                 }
-                if (arrangementOX[i] == arrangementOX[i + 6])
+                if (arrangementOX[i] == 'x' && arrangementOX[i + 6] == 'x')
                 {
                     if (arrangementOX[i + 3] != 'o' && arrangementOX[i + 3] != 'x')
                     {
                         return i + 3;
                     }
                 }
-                if (arrangementOX[i+3] == arrangementOX[i + 6])
+                if (arrangementOX[i+3] == 'x' && arrangementOX[i + 6] == 'x')
+                {
+                    if (arrangementOX[i] != 'o' && arrangementOX[i] != 'x')
+                    {
+                        return i;
+                    }
+                }
+            }
+            
+            // 대각선 두개 이상 넣기
+            if (arrangementOX[0] == 'x' && arrangementOX[4] == 'x')
+            {
+                if(arrangementOX[8] != 'o' && arrangementOX[8] != 'x')
+                {
+                    return 8;
+                }
+            }
+            if(arrangementOX[4] == 'x' && arrangementOX[8] == 'x')
+            {
+                if (arrangementOX[0] != 'o' && arrangementOX[0] != 'x')
+                {
+                    return 0;
+                }
+            }
+            if (arrangementOX[0] == 'x' && arrangementOX[8] =='x')
+            {
+                if (arrangementOX[4] != 'o' && arrangementOX[4] != 'x')
+                {
+                    return 4;
+                }
+            }
+            return -1;
+        }
+
+        private int Block(char[] arrangementOX)
+        {
+            // 가로에서 2개 이상있을 경우 막기
+            for (int i = 0; i < 3; i++)
+            {
+                if (arrangementOX[i * 3] == 'o' && arrangementOX[i * 3 + 1] == 'o')
+                {
+                    if (arrangementOX[i * 3 + 2] != 'o' && arrangementOX[i * 3 + 2] != 'x')
+                    {
+                        return i * 3 + 2;
+                    }
+                }
+                if (arrangementOX[i * 3] == 'o' && arrangementOX[i * 3 + 2] == 'o')
+                {
+                    if (arrangementOX[i * 3 + 1] != 'o' && arrangementOX[i * 3 + 1] != 'x')
+                    {
+                        return i * 3 + 1;
+                    }
+                }
+                if (arrangementOX[i * 3 + 2] == 'o' && arrangementOX[i * 3 + 1] == 'o')
+                {
+                    if (arrangementOX[i * 3] != 'o' && arrangementOX[i * 3] != 'x')
+                    {
+                        return i * 3;
+                    }
+                }
+            }
+
+            // 세로에서 두개 이상일때 막기
+            for (int i = 0; i < 3; i++)
+            {
+                if (arrangementOX[i] == 'o' && arrangementOX[i + 3] == 'o')
+                {
+                    if (arrangementOX[i + 6] != 'o' && arrangementOX[i + 6] != 'x')
+                    {
+                        return i + 6;
+                    }
+                }
+                if (arrangementOX[i] == 'o' && arrangementOX[i + 6] == 'o')
+                {
+                    if (arrangementOX[i + 3] != 'o' && arrangementOX[i + 3] != 'x')
+                    {
+                        return i + 3;
+                    }
+                }
+                if (arrangementOX[i + 3] == 'o' && arrangementOX[i + 6] == 'o')
                 {
                     if (arrangementOX[i] != 'o' && arrangementOX[i] != 'x')
                     {
@@ -264,22 +345,22 @@ namespace en_2_TicTacToc
                 }
             }
 
-            // 대각선 빙고일 경우
-            if (arrangementOX[0] == arrangementOX[4])
+            // 대각선 두개 이상일때 막기
+            if (arrangementOX[0] == 'o' && arrangementOX[4] =='o')
             {
-                if(arrangementOX[8] != 'o' && arrangementOX[8] != 'x')
+                if (arrangementOX[8] != 'o' && arrangementOX[8] != 'x')
                 {
                     return 8;
                 }
             }
-            if(arrangementOX[4] == arrangementOX[8])
+            if (arrangementOX[4] == 'o' && arrangementOX[8] == 'o')
             {
                 if (arrangementOX[0] != 'o' && arrangementOX[0] != 'x')
                 {
                     return 0;
                 }
             }
-            if (arrangementOX[0] == arrangementOX[8])
+            if (arrangementOX[0] == 'o' && arrangementOX[8] == 'o')
             {
                 if (arrangementOX[4] != 'o' && arrangementOX[4] != 'x')
                 {

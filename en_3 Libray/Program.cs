@@ -1,4 +1,5 @@
-﻿using System;
+﻿using en_3_Libray.View;
+using System;
 
 namespace en_3_Libray
 {
@@ -6,7 +7,11 @@ namespace en_3_Libray
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Menu menu = new Menu();
+
+
+            Console.Title = "Library";
+            //Console.SetWindowSize(50, 37);
         }
     }
 }

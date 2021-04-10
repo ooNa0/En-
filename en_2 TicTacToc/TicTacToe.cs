@@ -7,6 +7,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
+// tryParse 금지, 함수는 카멜 표기, 메소드 간격, while문안에 bool 변수
+// 매직넘버, 주석처리, namespace 네이밍, UI쓸데없는거, 종료 유무
 namespace en_2_TicTacToc
 {
     class TicTacToe
@@ -17,7 +19,7 @@ namespace en_2_TicTacToc
         private int arrayNumber = 0; // 컴퓨터와 게임한 사용자 수
         private bool _isFinished = false; // 게임을 끝내는지
         private bool _isInMenuNumber; // 메뉴 번호 예외처리
-        private string trushvalue; // 쓰레기 변수, clear를 위해 선언
+        private string trashvalue; // 쓰레기 변수, clear를 위해 선언
         private ArrayList userScore = new ArrayList(); // 유저 스코어로 0:username 1:win 2:lose 가 저장
 
         public void StartGame()
@@ -63,12 +65,12 @@ namespace en_2_TicTacToc
                     case 2: // 혼자서 게임
                         PlayGameWithUser();
                         Console.WriteLine("Please enter any key . . . ");
-                        trushvalue = Console.ReadLine(); // 클릭시 메뉴로 넘어감
+                        trashvalue = Console.ReadLine(); // 클릭시 메뉴로 넘어감
                         break;
                     case 3: // 스코어보드 보여줌
                         ShowScoreboard(arrayNumber);
                         Console.WriteLine("\nPlease enter any key . . . ");
-                        trushvalue = Console.ReadLine(); // 클릭시 메뉴로 넘어감
+                        trashvalue = Console.ReadLine(); // 클릭시 메뉴로 넘어감
                         continue;
                     case 4: // 프로그램 종료
                         Console.WriteLine("\nYou want to close the tic-tac-toe?\n");
@@ -78,7 +80,7 @@ namespace en_2_TicTacToc
                             return;
                         }
                         Console.WriteLine("Please enter any key . . . ");
-                        trushvalue = Console.ReadLine(); // 클릭시 메뉴로 넘어감
+                        trashvalue = Console.ReadLine(); // 클릭시 메뉴로 넘어감
                         break;
                     default:
                         break;
@@ -153,13 +155,13 @@ namespace en_2_TicTacToc
                     {
                         //inputNumber = random.Next(9); // 컴퓨터는 랜덤으로 값을 입력
                         inputNumber = AIComputer(arrangementOX);
-                        //if (arrangementOX[inputNumber] != 'x' && arrangementOX[inputNumber] != 'o')
-                        //{
+                        if (arrangementOX[inputNumber] != 'x' && arrangementOX[inputNumber] != 'o')
+                        {
                         arrangementOX[inputNumber] = 'x';
                         Console.Clear();
                         tile.Tile(arrangementOX, inputNumber);
                         isExist = false;
-                        //}
+                        }
                     }
                 }
                 if (round < 5) { // 마지막 라운드가 아닐 경우
@@ -288,6 +290,28 @@ namespace en_2_TicTacToc
                     return 4;
                 }
             }
+
+            if (arrangementOX[2] == 'x' && arrangementOX[4] == 'x')
+            {
+                if (arrangementOX[6] != 'o' && arrangementOX[6] != 'x')
+                {
+                    return 6;
+                }
+            }
+            if (arrangementOX[4] == 'x' && arrangementOX[6] == 'x')
+            {
+                if (arrangementOX[2] != 'o' && arrangementOX[2] != 'x')
+                {
+                    return 2;
+                }
+            }
+            if (arrangementOX[2] == 'x' && arrangementOX[6] == 'x')
+            {
+                if (arrangementOX[4] != 'o' && arrangementOX[4] != 'x')
+                {
+                    return 4;
+                }
+            }
             return -1;
         }
 
@@ -367,6 +391,28 @@ namespace en_2_TicTacToc
                     return 4;
                 }
             }
+
+            if (arrangementOX[2] == 'o' && arrangementOX[4] == 'o')
+            {
+                if (arrangementOX[6] != 'o' && arrangementOX[6] != 'x')
+                {
+                    return 6;
+                }
+            }
+            if (arrangementOX[4] == 'o' && arrangementOX[6] == 'o')
+            {
+                if (arrangementOX[2] != 'o' && arrangementOX[2] != 'x')
+                {
+                    return 2;
+                }
+            }
+            if (arrangementOX[2] == 'o' && arrangementOX[6] == 'o')
+            {
+                if (arrangementOX[4] != 'o' && arrangementOX[4] != 'x')
+                {
+                    return 4;
+                }
+            }
             return -1;
         }
 
@@ -426,11 +472,13 @@ namespace en_2_TicTacToc
             }
             return -1;
         }
+
         private int Center(char[] arrangementOX)
         {
             if (arrangementOX[4] != 'x' && arrangementOX[4] != 'o') { return 4; }
             return -1;
         }
+
         private int EmptySide(char[] arrangementOX)
         {
             Random random = new Random();
@@ -525,7 +573,6 @@ namespace en_2_TicTacToc
             }
         }
 
-
         private void ShowMenu()// 메뉴 출력
         {
             Console.WriteLine("\n\n--------------------------------------------------");
@@ -535,6 +582,7 @@ namespace en_2_TicTacToc
             Console.WriteLine("    4. END THE PROGRAM\n");
             Console.WriteLine("--------------------------------------------------");
         }
+
         private int InputNumber() // menuNumber 입력
         {
             // 변수 선언
@@ -567,6 +615,7 @@ namespace en_2_TicTacToc
             }
             return number;
         }
+
         private int EndProgram() // 프로그램 종료 시 한번 더 물어봄
         {
             Console.WriteLine("Please answer Y/N");
@@ -637,6 +686,7 @@ namespace en_2_TicTacToc
             }
             return _userName.PadRight(16, ' ');
         }
+
         private int IsExist(char[] arrangementOX) // 중복되어 선택했는지
         {
             int inputNumber = 0;
@@ -660,5 +710,4 @@ namespace en_2_TicTacToc
             return inputNumber;
         }
     }
-        
 }

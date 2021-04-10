@@ -8,7 +8,7 @@ namespace en_3_Libray
         static void Main(string[] args)
         {
             Menu menu = new Menu();
-
+            menu.MainMenu();
 
             Console.Title = "Library";
             //Console.SetWindowSize(50, 37);

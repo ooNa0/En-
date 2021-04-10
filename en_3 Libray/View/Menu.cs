@@ -9,13 +9,13 @@ namespace en_3_Libray.View
         public void MainMenu()
         {
             ConsoleKeyInfo cki;
-            int x = 40, y = 20;
+            int x = 0, y = 20;
             while (true)
             {
                 Console.Clear();
                 ShowMenu();
                 Console.SetCursorPosition(x, y);
-                Console.Write('@');
+                Console.Write('>');
                 cki = Console.ReadKey(true);
                 switch (cki.Key)
                 {
@@ -33,9 +33,10 @@ namespace en_3_Libray.View
         }
         private void ShowMenu()
         {
-            Console.WriteLine("AAAAAAAAAAAAAAAAAAAAAAA");
-            Console.WriteLine("BBBBBBBBBBBBBBBBBBBBBBB");
-            Console.WriteLine("AAAAAAAAAAAAAAAAAAAAAAA");
+            Console.WriteLine("1. 로그인");
+            Console.WriteLine("2. 회원가입");
+            Console.WriteLine("3. 관리자 모드");
+            Console.WriteLine("4. 종료하기");
         }
     }
 }

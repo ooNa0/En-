@@ -20,7 +20,7 @@ namespace en_3_Libray.Exception
                 _identity = Console.ReadLine();
                 if (_identity.Length < 1 || _identity.Length > 10)
                 {
-                    Console.WriteLine("길이에 문제가 있습니다. 다시 입력해주세요.");
+                    Console.WriteLine("길이에 문제가 있습니다. 다시 입력해주세요.\n다시 입력하기 위해서 아무 키나 눌러주세요.");
                     Console.ReadLine();
                 }
                 else

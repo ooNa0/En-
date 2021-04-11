@@ -3,6 +3,7 @@ using en_3_Libray.User;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace en_3_Libray.View
 {
@@ -75,7 +76,8 @@ namespace en_3_Libray.View
                 }
                 else
                 {
-                    Console.WriteLine("메뉴로 되돌아갑니다.");
+                    Console.WriteLine("메뉴로 되돌아갑니다.\n아무키나 눌러주십시오.");
+                    Console.ReadLine();
                 }
             }
             else

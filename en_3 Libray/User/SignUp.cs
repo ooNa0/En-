@@ -9,7 +9,7 @@ namespace en_3_Libray.User
     class SignUp
     {
         public string _identity;
-        public string _passWord = "";
+        public string _passWord;
         public void StartSignUp()
         {
             bool isSet = true;
@@ -46,13 +46,26 @@ namespace en_3_Libray.User
                     keyInfo = Console.ReadKey(true);
                 }
                 // 비밀번호는 하나의 영문자 이상, 하나의 특수문자 이상, 영어+숫자+특수문자로 이루어져있으며 7~15 크기
-                if(!Regex.IsMatch(_identity, "/^(?=.*[A-Za-z])(?=.*[@.!%*#?&])[A-Za-z0-9@.!%*#?&]{7,15}$"))
+                if(_passWord.Length/2 < 7 || _passWord.Length/2 > 15)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("비밀번호는 최소 하나의 영문자, 하나의 특수문자(@.!%*#?& 중) 가 포함되어야 하고,");
-                    Console.WriteLine("길이는 8보다 크고 15보다 작아야 합니다.");
+                    Console.WriteLine("\n\n길이는 8보다 크고 15보다 작아야 합니다.");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine(_passWord.Length);
+                    Console.ReadLine();
+                    Console.Clear();
+                    Console.WriteLine("아이디 : " + _identity);
+
+                }
+                else if(!(Regex.IsMatch(_passWord, "/^[A-Za-z0-9@.!%*#?&]$")))//(?=.*[@.!%*#?&])
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\n\n잘못 입력하셨습니다.");
+                    //Console.WriteLine(_passWord);
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.ReadLine();
+                    Console.Clear();
+                    Console.WriteLine("아이디 : " + _identity);
                 }
                 else
                 {

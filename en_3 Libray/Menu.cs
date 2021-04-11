@@ -1,4 +1,5 @@
 ﻿using en_3_Libray.Exception;
+using en_3_Libray.User;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,10 +10,11 @@ namespace en_3_Libray.View
     {
         public void MainMenu()
         {
+            bool isOpen = false;
             Printing print = new Printing();
             ConsoleKeyInfo cki;
             int x = 0, y = 0;
-            while (true)
+            while (!isOpen)
             {
                 Console.Clear();
                 print.ShowMenu();
@@ -22,13 +24,13 @@ namespace en_3_Libray.View
                 switch (cki.Key)
                 {
                     case ConsoleKey.UpArrow:
-                        if(y >= 0)
+                        if(y > 0)
                         {
                             y--;
                         }
                         break;
                     case ConsoleKey.DownArrow:
-                        if(y <= 4)
+                        if(y < 4)
                         {
                             y++;
                         }
@@ -45,13 +47,14 @@ namespace en_3_Libray.View
         private void SelectMenu(int y)
         {
             Login login = new Login();
+            SignUp signUp = new SignUp();
             if (y == 0) // 로그인
             {
                 login.StartLogin();
             }
             else if (y == 1) // 회원가입
             {
-
+                signUp.StartSignUp();
             }
             else if (y == 2) // 관리자 모드
             {

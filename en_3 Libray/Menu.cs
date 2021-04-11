@@ -8,9 +8,9 @@ namespace en_3_Libray.View
 {
     class Menu
     {
+        public bool isOpen = false;
         public void MainMenu()
         {
-            bool isOpen = false;
             Printing print = new Printing();
             ConsoleKeyInfo cki;
             int x = 0, y = 0;
@@ -19,7 +19,7 @@ namespace en_3_Libray.View
                 Console.Clear();
                 print.ShowMenu();
                 Console.SetCursorPosition(x, y);
-                Console.Write('>');
+                Console.Write('▶');
                 cki = Console.ReadKey(true);
                 switch (cki.Key)
                 {
@@ -30,7 +30,7 @@ namespace en_3_Libray.View
                         }
                         break;
                     case ConsoleKey.DownArrow:
-                        if(y < 4)
+                        if(y < 3)
                         {
                             y++;
                         }
@@ -48,6 +48,9 @@ namespace en_3_Libray.View
         {
             Login login = new Login();
             SignUp signUp = new SignUp();
+            Ask ask = new Ask();
+            int yesOrNo;
+
             if (y == 0) // 로그인
             {
                 login.StartLogin();
@@ -62,7 +65,18 @@ namespace en_3_Libray.View
             }
             else if(y == 3) // 종료
             {
-
+                Console.Clear();
+                Console.WriteLine("정말로 프로그램을 종료하시겠어요?");
+                yesOrNo = ask.AskYesOrNo();
+                if(yesOrNo == 0)
+                {
+                    Console.WriteLine("프로그램을 이용해주셔서 감사합니다.");
+                    isOpen = true;
+                }
+                else
+                {
+                    Console.WriteLine("메뉴로 되돌아갑니다.");
+                }
             }
             else
             {

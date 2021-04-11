@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-
+// 없는 아이디이다. 비밀번호가 일치하지 않는다. 
 namespace en_3_Libray.Exception
 {
     class Login
@@ -39,11 +39,12 @@ namespace en_3_Libray.Exception
                     Console.Write("*");
                     keyInfo = Console.ReadKey(true);
                 }
-                if(_passWord.Length < 1 || _passWord.Length > 15)
+                if(_passWord.Length < 4 || _passWord.Length > 15)
                 {
-                    Console.WriteLine("길이에 문제가 있습니다. 다시 입력해주세요.");
+                    Console.WriteLine("\n길이에 문제가 있습니다. 다시 입력해주세요.");
                     Console.ReadLine();
                     Console.Clear();
+                    Console.Write("아이디 : " + _identity + "\n");
                 }
                 else
                 {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using en_3_Libray.Exception;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,12 +9,13 @@ namespace en_3_Libray.View
     {
         public void MainMenu()
         {
+            Printing print = new Printing();
             ConsoleKeyInfo cki;
             int x = 0, y = 0;
             while (true)
             {
                 Console.Clear();
-                ShowMenu();
+                print.ShowMenu();
                 Console.SetCursorPosition(x, y);
                 Console.Write('>');
                 cki = Console.ReadKey(true);
@@ -40,28 +42,22 @@ namespace en_3_Libray.View
                 }
             }
         }
-        private void ShowMenu()
+        private void SelectMenu(int y)
         {
-            Console.WriteLine("1. 로그인");
-            Console.WriteLine("2. 회원가입");
-            Console.WriteLine("3. 관리자 모드");
-            Console.WriteLine("4. 종료하기");
-        }
-        private void SelectMeun(int y)
-        {
-            if (y == 0)
+            Login login = new Login();
+            if (y == 0) // 로그인
+            {
+                login.StartLogin();
+            }
+            else if (y == 1) // 회원가입
             {
 
             }
-            else if (y == 1)
+            else if (y == 2) // 관리자 모드
             {
 
             }
-            else if (y == 2)
-            {
-
-            }
-            else if(y == 3)
+            else if(y == 3) // 종료
             {
 
             }

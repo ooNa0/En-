@@ -20,10 +20,16 @@ namespace en_3_Libray.View
                 switch (cki.Key)
                 {
                     case ConsoleKey.UpArrow:
-                        y--;
+                        if(y >= 0)
+                        {
+                            y--;
+                        }
                         break;
                     case ConsoleKey.DownArrow:
-                        y++;
+                        if(y <= 4)
+                        {
+                            y++;
+                        }
                         break;
                     case ConsoleKey.Enter:
                         SelectMenu(y);

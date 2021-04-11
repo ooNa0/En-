@@ -12,51 +12,49 @@ namespace en_3_Libray.Exception
 
         public void StartLogin()
         {
-            while (true)
+            bool isSet = true;
+            while (isSet)
             {
-                Console.Write("아이디를 입력해주십시오. :");
+                Console.Clear();
+                Console.Write("아이디 : ");
                 _identity = Console.ReadLine();
                 if (_identity.Length < 1 || _identity.Length > 10)
                 {
                     Console.WriteLine("길이에 문제가 있습니다. 다시 입력해주세요.");
-                    Console.Clear();
+                    Console.ReadLine();
                 }
                 else
                 {
                     break;
                 }
             }
-            while (true)
+            while (isSet)
             {
-                Console.Write("Enter password: ");
+                Console.Write("비밀번호 : ");
                 ConsoleKeyInfo keyInfo;
-
-                do
-                {
+                keyInfo = Console.ReadKey(true);
+                //keyInfo.Key != ConsoleKey.Backspace && 
+                while (keyInfo.Key != ConsoleKey.Enter) {
+                    _passWord += keyInfo.KeyChar;
+                    Console.Write("*");
                     keyInfo = Console.ReadKey(true);
-                    // Skip if Backspace or Enter is Pressed
-                    if (keyInfo.Key != ConsoleKey.Backspace && keyInfo.Key != ConsoleKey.Enter)
-                    {
-                        _passWord += keyInfo.KeyChar;
-                        Console.Write("*");
-                    }
-                    else
-                    {
-                        if (keyInfo.Key == ConsoleKey.Backspace && _passWord.Length > 0)
-                        {
-                            // Remove last charcter if Backspace is Pressed
-                            _passWord = _passWord.Substring(0, (_passWord.Length - 1));
-                            Console.Write("b b");
-                        }
-                    }
                 }
-                // Stops Getting Password Once Enter is Pressed
-                while (keyInfo.Key != ConsoleKey.Enter);
-                Console.WriteLine();
-                Console.WriteLine("---------------------------");
-                Console.WriteLine("Your Password is : " + _passWord);
+                if(_passWord.Length < 1 || _passWord.Length > 15)
+                {
+                    Console.WriteLine("길이에 문제가 있습니다. 다시 입력해주세요.");
+                    Console.ReadLine();
+                    Console.Clear();
+                }
+                else
+                {
+                    isSet = false;
+                }
             }
-            /*
+            
+        }
+    }
+}
+        /*
             while (true)
             {
                 Console.Write("비밀번호를 입력해주십시오. :");
@@ -71,6 +69,3 @@ namespace en_3_Libray.Exception
                     break;
                 }
             }*/
-        }
-    }
-}

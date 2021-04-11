@@ -9,7 +9,7 @@ namespace en_3_Libray.View
         public void MainMenu()
         {
             ConsoleKeyInfo cki;
-            int x = 0, y = 20;
+            int x = 0, y = 0;
             while (true)
             {
                 Console.Clear();
@@ -25,6 +25,9 @@ namespace en_3_Libray.View
                     case ConsoleKey.DownArrow:
                         y++;
                         break;
+                    case ConsoleKey.Enter:
+                        SelectMenu(y);
+                        break;
                     case ConsoleKey.Escape:
                         Console.WriteLine("메뉴로 돌아갑니다.");
                         break;
@@ -37,6 +40,29 @@ namespace en_3_Libray.View
             Console.WriteLine("2. 회원가입");
             Console.WriteLine("3. 관리자 모드");
             Console.WriteLine("4. 종료하기");
+        }
+        private void SelectMeun(int y)
+        {
+            if (y == 0)
+            {
+
+            }
+            else if (y == 1)
+            {
+
+            }
+            else if (y == 2)
+            {
+
+            }
+            else if(y == 3)
+            {
+
+            }
+            else
+            {
+
+            }
         }
     }
 }

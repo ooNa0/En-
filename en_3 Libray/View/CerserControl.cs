@@ -8,35 +8,36 @@ namespace en_3_Libray
 {
     class CerserControl
     {
-        public bool cerserControl(int Y, int min, int max)
+        public int cerserControl(int min, int max)
         {
+            int y = 0;
             Printing print = new Printing();
             bool isOpen = false;
             ConsoleKeyInfo cki;
-            int x = 0, y = 0;
+            //int x = 0, y = 0;
             while (!isOpen)
             {
                 Console.Clear();
                 print.ShowMenu();
-                Console.SetCursorPosition(x, y);
+                Console.SetCursorPosition(0, 0);
                 Console.Write('▶');
                 cki = Console.ReadKey(true);
                 switch (cki.Key)
                 {
                     case ConsoleKey.UpArrow:
-                        if (y > 0) { y--; }
+                        if (y > min) { y--; }
                         break;
                     case ConsoleKey.DownArrow:
-                        if (y < 3) { y++; }
+                        if (y < max) { y++; }
                         break;
                     case ConsoleKey.Enter:
-                        SelectMenu(y);
-                        break;
+                        return y;
                     case ConsoleKey.Escape:
                         Console.WriteLine("메뉴로 돌아갑니다.");
                         break;
                 }
             }
+            return y;
         }
 
     }

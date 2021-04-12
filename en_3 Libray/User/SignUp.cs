@@ -11,20 +11,19 @@ namespace en_3_Libray.User
     class SignUp
     {
 
-        public static List<UserVO> user = new List<UserVO>();
+        public List<UserVO> user = new List<UserVO>();
         private string _identity;
         private string _passWord;
         private string _name;
         private string _age;
         private string _phoneNumber;
-
+        private string recode = "아이디 :";
         public void StartSignUp()
         {
-            string recode = "아이디 :";
             ConsoleKeyInfo keyInfo;
 
             //List<UserVO> user = new List<UserVO>();
-            UserVO userVO = new UserVO();
+            //UserVO userVO = new UserVO();
             bool isSet = true;
             Menu menu = new Menu();
 
@@ -46,7 +45,7 @@ namespace en_3_Libray.User
                 {
                     recode += _identity + "\n";
                     isSet = false;
-                    userVO.Id = _identity;
+                    //userVO.Id = _identity;
                 }
             }
             while (!isSet) // 비밀번호
@@ -54,6 +53,7 @@ namespace en_3_Libray.User
                 Console.Clear();
                 _passWord = "";
                 string star = "";
+                Console.Write(recode);
                 //recode += "비밀번호 : ";
                 Console.Write("비밀번호: ");//길이 8이상, 영어 + 숫자 + 특수문자)
                 keyInfo = Console.ReadKey(true);
@@ -90,35 +90,43 @@ namespace en_3_Libray.User
                     recode += "비밀번호 : ";
                     recode += star + "\n";
                     isSet = true;
-                    userVO.PassWord = _passWord;
+                    //userVO.PassWord = _passWord;
                 }
             }
 
             while (isSet) // 이름
             {
-                Console.Write("(4글자 이내 한글)이름 : ");
+                Console.Clear();
+                Console.Write(recode);
+                Console.Write("이름 : ");//\n(4글자 이내 한글)
                 _name = Console.ReadLine();
+
+                recode += "이름 : " + _name + "\n";
+                isSet = false;
+                /*
                 if (!(Regex.IsMatch(_name, "^[가-힣]{1,4}$")))
                 {
                     Console.WriteLine("4글자 이내 한글만 입력이가능합니다.");
                     Console.ReadLine();
-                    Console.Clear();
-                    Console.WriteLine(recode);
                 }
                 else
                 {
                     recode += "이름 : " + _name + "\n";
                     isSet = false;
-                    userVO.Name = _name;
-                }
+                }*/
             }
 
             while (!isSet) // 나이
             {
                 Console.Clear();
-                Console.WriteLine(recode);
-                Console.Write("(숫자만 입력)나이 : ");
+                Console.Write(recode);
+                Console.Write("나이 : ");//(숫자만 입력)
                 _age = Console.ReadLine();
+
+
+                recode += "나이 : " + _age + "\n";
+                isSet = true;
+                /*
                 if (!(Regex.IsMatch(_age, "^[0-9]+$")))
                 {
                     Console.WriteLine("\n숫자만 입력이 가능합니다.");
@@ -128,16 +136,21 @@ namespace en_3_Libray.User
                 {
                     recode += "나이 : " + _age + "\n";
                     isSet = true;
-                    userVO.Age = _age;
-                }
+                    //userVO.Age = _age;
+                }*/
             }
 
             while (isSet) // 전화번호
             {
                 Console.Clear();
-                Console.WriteLine(recode);
-                Console.Write("(010-0000-0000 형식)\n전화번호: ");
+                Console.Write(recode);
+                Console.Write("(010-0000-0000 형식)전화번호: ");
                 _phoneNumber = Console.ReadLine();
+
+
+                recode += "전화번호 : " + _phoneNumber + "\n";
+                isSet = false;
+                /*
                 if (!Regex.IsMatch(_phoneNumber, "^010-?([0-9]{4})-?([0-9]{4})$"))
                 {
                     Console.WriteLine("010-0000-0000 형식으로 입력해주세요.");
@@ -147,11 +160,13 @@ namespace en_3_Libray.User
                 {
                     recode += "전화번호 : " + _phoneNumber + "\n";
                     isSet = false;
-                    userVO.PhoneNumber = _phoneNumber;
-                }
+                    //userVO.PhoneNumber = _phoneNumber;
+                }*/
             }
-            user.Add(userVO);
-            Console.WriteLine("회원가입이 완료되었습니다. 반가워요 " + _name + "님");
+            //List<UserVO> user = new List<UserVO>(userVO);
+            user.Add(new UserVO() { Id=_identity, PassWord=_passWord, Name=_name, Age=_age, PhoneNumber=_phoneNumber });
+            Console.WriteLine(user.Count);
+            Console.WriteLine("\n회원가입이 완료되었습니다. 반가워요 " + user[user.Count-1].Name + "님");
             Console.WriteLine("아무키나 눌러주세요.");
             Console.ReadLine();
         }

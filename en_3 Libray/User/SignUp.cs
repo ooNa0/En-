@@ -10,6 +10,9 @@ namespace en_3_Libray.User
     {
         public string _identity;
         public string _passWord;
+        public string _name;
+        public string _Age;
+        public string _PhoneNumber;
         public void StartSignUp()
         {
             bool isSet = true;
@@ -18,7 +21,7 @@ namespace en_3_Libray.User
             {
                 Console.Clear();
 
-                Console.Write("생성하실 아이디를 입력해주세요. 영어와 숫자만으로 10자리 이내로 입력해주세요.\n아이디 : ");
+                Console.Write("생성할 아이디를 입력해주세요. (영어숫자 10자리 이내)\n아이디 : ");
                 _identity = Console.ReadLine();
                 if (!(Regex.IsMatch(_identity, "^[a-zA-Z0-9]{1,10}$"))) // 영어와 숫자만 받음
                 {
@@ -47,7 +50,7 @@ namespace en_3_Libray.User
                     keyInfo = Console.ReadKey(true);
                 }
                 // 비밀번호는 하나의 영문자 이상, 하나의 특수문자 이상, 영어+숫자+특수문자로 이루어져있으며 7~15 크기
-                if(_passWord.Length < 7 || _passWord.Length > 15)
+                if(_passWord.Length < 8 || _passWord.Length > 15)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("\n\n길이는 8보다 크고 15보다 작아야 합니다.");
@@ -58,11 +61,11 @@ namespace en_3_Libray.User
                     Console.WriteLine("아이디 : " + _identity);
 
                 }
-                else if(!(Regex.IsMatch(_passWord, "/^[A-Za-z0-9@.!%*#?&]$")))//(?=.*[@.!%*#?&])
+                else if(!(Regex.IsMatch(_passWord, "^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[@.!%*#?&]).{8,}$")))//(?=.*[@.!%*#?&])  [A-Za-z0-9@.!%*#?&]
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("\n\n잘못 입력하셨습니다.");
-                    //Console.WriteLine(_passWord);
+                    Console.WriteLine(_passWord);
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.ReadLine();
                     Console.Clear();
@@ -76,11 +79,11 @@ namespace en_3_Libray.User
 
             while (isSet) // 이름
             {
-                Console.Clear();
+                //Console.Clear();
 
                 Console.Write("4글자 이내로 한글로 성함을 입력해주세요.(띄어쓰기 불가능)\n 성함 : ");
-                _identity = Console.ReadLine();
-                if (!(Regex.IsMatch(_identity, "^[가-힣]{1,4}$")))
+                _name = Console.ReadLine();
+                if (!(Regex.IsMatch(_name, "^[가-힣]{1,4}$")))
                 {
                     Console.WriteLine("4글자 이내 한글만 입력이가능합니다.");
                     Console.ReadLine();
@@ -92,34 +95,34 @@ namespace en_3_Libray.User
                 }
             } 
             
-            while (!isSet) // 생년월일
+            while (!isSet) // 나이
             {
-                Console.Write("(yyyy/mm/dd 형식) 생년월일 : ");
-                
-                if (!(Regex.IsMatch(_identity, "^/{4}/{1,2}/{1,2}$")))
+                Console.Write("나이 : ");
+                _Age = Console.ReadLine();
+                if (!(Regex.IsMatch(_Age, "^[0-9]+$")))
                 {
-                    Console.WriteLine("숫자만 입력이 가능합니다.");
+                    Console.WriteLine("\n숫자만 입력이 가능합니다.");
                     Console.ReadLine();
                 }
                 else
                 {
-                    isSet = false;
+                    isSet = true;
                     // 리스트에 넣기
                 }
             }
 
             while (isSet) // 전화번호
             {
-                Console.Write("(000-0000-0000 형식으로 입력해주세요.)\n전화번호: ");
-
-                if (!Regex.IsMatch(_identity, "^{3}-{4}-{4}$"))
+                Console.Write("(010-0000-0000 형식으로 입력해주세요.)\n전화번호: ");
+                _PhoneNumber = Console.ReadLine();
+                if (!Regex.IsMatch(_PhoneNumber, "^010-?([0-9]{4})-?([0-9]{4})$"))
                 {
-                    Console.WriteLine("000-0000-0000 형식으로 입력해주세요.");
+                    Console.WriteLine("010-0000-0000 형식으로 입력해주세요.");
                     Console.ReadLine();
                 }
                 else
                 {
-                    isSet = true;
+                    isSet = false;
                     // 리스트에 넣기
                 }
             }

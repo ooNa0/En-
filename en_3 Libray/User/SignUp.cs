@@ -1,4 +1,6 @@
-﻿using en_3_Libray.Exception;
+﻿using en_3_Libray.Data;
+using en_3_Libray.Exception;
+using en_3_Libray.View;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,21 +10,31 @@ namespace en_3_Libray.User
 {
     class SignUp
     {
-        public string _identity;
-        public string _passWord;
-        public string _name;
-        public string _Age;
-        public string _PhoneNumber;
+
+        //public static List<User> Users = new List<User>();
+        private string _identity;
+        private string _passWord;
+        private string _name;
+        private string _age;
+        private string _phoneNumber;
+
         public void StartSignUp()
         {
+            string recode = "";
+            ConsoleKeyInfo keyInfo;
+
+            List<UserVO> user = new List<UserVO>();
             bool isSet = true;
+            int userNumber = 0;
+            Menu menu = new Menu();
 
             while (isSet) // 아이디
             {
                 Console.Clear();
 
-                Console.Write("생성할 아이디를 입력해주세요. (영어숫자 10자리 이내)\n아이디 : ");
+                Console.Write("\n아이디 : ");
                 _identity = Console.ReadLine();
+
                 if (!(Regex.IsMatch(_identity, "^[a-zA-Z0-9]{1,10}$"))) // 영어와 숫자만 받음
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -33,120 +45,167 @@ namespace en_3_Libray.User
                 else
                 {
                     isSet = false;
+                    //user.Id = _identity;
                 }
-            }
-
-            while (!isSet) // 비밀번호
-            {
-                _passWord = "";
-                Console.Write("비밀번호 : ");
-                ConsoleKeyInfo keyInfo;
-                keyInfo = Console.ReadKey(true);
-                //keyInfo.Key != ConsoleKey.Backspace && 
-                while (keyInfo.Key != ConsoleKey.Enter)
+               
+                while (!isSet) // 비밀번호
                 {
-                    _passWord += keyInfo.KeyChar;
-                    Console.Write("*");
+                    //Console.Clear();
+                    _passWord = "";
+                    //recode += "비밀번호 : ";
+                    //Console.Write(recode);
+                    Console.Write("(8보다 크면서 영어+숫자+특수문자)비밀번호 : ");
                     keyInfo = Console.ReadKey(true);
+                    while (keyInfo.Key != ConsoleKey.Backspace && keyInfo.Key != ConsoleKey.Enter)
+                    {
+                        _passWord += keyInfo.KeyChar;
+                        Console.Write("*");
+                        keyInfo = Console.ReadKey(true);
+                    }
+                    // 비밀번호는 하나의 영문자 이상, 하나의 특수문자 이상, 영어+숫자+특수문자로 이루어져있으며 7~15 크기
+                    if (_passWord.Length < 8 || _passWord.Length > 15)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\n\n길이는 8보다 크고 15보다 작아야 합니다.");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(_passWord.Length);
+                        Console.ReadLine();
+                        Console.Clear();
+                        Console.WriteLine(recode);
+
+                    }
+                    else if (!(Regex.IsMatch(_passWord, "^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[@.!%*#?&]).{8,}$")))//(?=.*[@.!%*#?&])  [A-Za-z0-9@.!%*#?&]
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\n\n잘못 입력하셨습니다.");
+                        Console.WriteLine(_passWord);
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.ReadLine();
+                        Console.Clear();
+                        Console.WriteLine(recode);
+                    }
+                    else
+                    {
+                        recode += "비밀번호 : " + _passWord + "\n";
+                        isSet = true;
+                        //user[userNumber].PassWord = _passWord;
+                    }
                 }
-                // 비밀번호는 하나의 영문자 이상, 하나의 특수문자 이상, 영어+숫자+특수문자로 이루어져있으며 7~15 크기
-                if(_passWord.Length < 8 || _passWord.Length > 15)
+
+                while (isSet) // 이름
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\n\n길이는 8보다 크고 15보다 작아야 합니다.");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine(_passWord.Length);
-                    Console.ReadLine();
                     Console.Clear();
-                    Console.WriteLine("아이디 : " + _identity);
-
+                    Console.WriteLine(recode);
+                    Console.Write("\n(4글자 이내 한글)이름 : ");
+                    _name = Console.ReadLine();
+                    if (!(Regex.IsMatch(_name, "^[가-힣]{1,4}$")))
+                    {
+                        Console.WriteLine("4글자 이내 한글만 입력이가능합니다.");
+                        Console.ReadLine();
+                    }
+                    else
+                    {
+                        recode += "이름 : " + _name + "\n";
+                        isSet = false;
+                        //user[userNumber].Name = _name;
+                    }
                 }
-                else if(!(Regex.IsMatch(_passWord, "^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[@.!%*#?&]).{8,}$")))//(?=.*[@.!%*#?&])  [A-Za-z0-9@.!%*#?&]
+
+                while (!isSet) // 나이
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\n\n잘못 입력하셨습니다.");
-                    Console.WriteLine(_passWord);
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.ReadLine();
                     Console.Clear();
-                    Console.WriteLine("아이디 : " + _identity);
+                    Console.WriteLine(recode);
+                    Console.Write("(숫자만 입력)나이 : ");
+                    _age = Console.ReadLine();
+                    if (!(Regex.IsMatch(_age, "^[0-9]+$")))
+                    {
+                        Console.WriteLine("\n숫자만 입력이 가능합니다.");
+                        Console.ReadLine();
+                    }
+                    else
+                    {
+                        recode += "나이 : " + _age + "\n";
+                        isSet = true;
+                        //user[userNumber].Age = _age;
+                    }
                 }
-                else
-                {
-                    isSet = true;
-                }
-            }
 
-            while (isSet) // 이름
-            {
-                //Console.Clear();
-
-                Console.Write("4글자 이내로 한글로 성함을 입력해주세요.(띄어쓰기 불가능)\n 성함 : ");
-                _name = Console.ReadLine();
-                if (!(Regex.IsMatch(_name, "^[가-힣]{1,4}$")))
+                while (isSet) // 전화번호
                 {
-                    Console.WriteLine("4글자 이내 한글만 입력이가능합니다.");
-                    Console.ReadLine();
+                    Console.Clear();
+                    Console.WriteLine(recode);
+                    Console.Write("(010-0000-0000 형식)\n전화번호: ");
+                    _phoneNumber = Console.ReadLine();
+                    if (!Regex.IsMatch(_phoneNumber, "^010-?([0-9]{4})-?([0-9]{4})$"))
+                    {
+                        Console.WriteLine("010-0000-0000 형식으로 입력해주세요.");
+                        Console.ReadLine();
+                    }
+                    else
+                    {
+                        recode += "전화번호 : " + _phoneNumber + "\n";
+                        isSet = false;
+                        //user[userNumber].PhoneNumber = _phoneNumber;
+                    }
                 }
-                else
-                {
-                    isSet = false;
-                    // 리스트에 넣기
-                }
-            } 
-            
-            while (!isSet) // 나이
-            {
-                Console.Write("나이 : ");
-                _Age = Console.ReadLine();
-                if (!(Regex.IsMatch(_Age, "^[0-9]+$")))
-                {
-                    Console.WriteLine("\n숫자만 입력이 가능합니다.");
-                    Console.ReadLine();
-                }
-                else
-                {
-                    isSet = true;
-                    // 리스트에 넣기
-                }
-            }
-
-            while (isSet) // 전화번호
-            {
-                Console.Write("(010-0000-0000 형식으로 입력해주세요.)\n전화번호: ");
-                _PhoneNumber = Console.ReadLine();
-                if (!Regex.IsMatch(_PhoneNumber, "^010-?([0-9]{4})-?([0-9]{4})$"))
-                {
-                    Console.WriteLine("010-0000-0000 형식으로 입력해주세요.");
-                    Console.ReadLine();
-                }
-                else
-                {
-                    isSet = false;
-                    // 리스트에 넣기
-                }
+                Console.WriteLine("회원가입이 완료되었습니다. 반가워요 " + _name + "님");
+                Console.WriteLine("아무키나 눌러주세요.");
+                Console.ReadLine();
             }
         }
     }
 }
-
 /*
-                if (_passWord.Length < 4 || _passWord.Length > 15)
-                {
-                    Console.WriteLine("\n길이에 문제가 있습니다. 다시 입력해주세요.");
-                    Console.ReadLine();
-                    Console.Clear();
-                    Console.Write("아이디 : " + _identity + "\n");
-                }
-                else if (!(Regex.IsMatch(_identity, "^[a-zA-Z0-9]*$"))) // 영어와 숫자만 받음
+ while (isSet) // 아이디
+            {
+                Console.Clear();
+
+                Console.Write("생성할 아이디를 입력해주세요. (영어숫자 10자리 이내)\n아이디 : ");
+                _identity = Console.ReadLine();
+
+                if (!(Regex.IsMatch(_identity, "^[a-zA-Z0-9]{1,10}$"))) // 영어와 숫자만 받음
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("영어(대소문자 상관 없음)와 숫자만 입력해주세요.");
+                    Console.WriteLine("영어(대소문자 상관 없음)와 숫자만 10자리 이내로 입력해주세요.");
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.ReadLine();
                 }
                 else
                 {
                     isSet = false;
+                    user[userNumber].Id = _identity;
                 }
-    */
+*/
+/*
+             while (isSet) // 아이디
+             {
+                 Console.Clear();
+                 _identity = "";
+                 Console.Write("생성할 아이디를 입력해주세요. (영어숫자 10자리 이내)\n");
+
+                 keyInfo = Console.ReadKey(false);
+                 while (keyInfo.Key != ConsoleKey.Enter)//keyInfo.Key != ConsoleKey.Backspace || 
+                 {
+                     if(keyInfo.Key == ConsoleKey.Escape)
+                     {
+                         menu.MainMenu();
+                     }
+                     _identity += keyInfo.KeyChar;
+                     keyInfo = Console.ReadKey(false);
+                 }
+
+                 if (!(Regex.IsMatch(_identity, "^[a-zA-Z0-9]{1,10}$"))) // 영어와 숫자만 받음
+                 {
+                     Console.ForegroundColor = ConsoleColor.Red;
+                     Console.WriteLine("영어(대소문자 상관 없음)와 숫자만 10자리 이내로 입력해주세요.");
+                     Console.ForegroundColor = ConsoleColor.White;
+                     Console.ReadLine();
+                 }
+                 else
+                 {
+                     recode += _identity;
+                     recode += "\n";
+                     isSet = false;
+                     //user[userNumber].Id = _identity;
+                 }
+             }*/

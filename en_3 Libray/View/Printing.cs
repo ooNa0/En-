@@ -16,19 +16,17 @@ namespace en_3_Libray.View
 
         public void UserMenu()
         {
-            Console.WriteLine("▷ 도서 검색");
             Console.WriteLine("▷ 도서 대출");
             Console.WriteLine("▷ 도서 반납");
             Console.WriteLine("▷ 전체 도서 출력");
+            Console.WriteLine("▷ 도서 검색");
             Console.WriteLine("▷ 나의 정보");
-            Console.WriteLine("▷ 종료");
             Console.WriteLine("▷ 로그아웃");
         }
 
         public void AdministratorMode()
         {
             Console.WriteLine("▷ 도서 등록");
-            Console.WriteLine("▷ 도서 정보 수정");
             Console.WriteLine("▷ 도서 삭제");
             Console.WriteLine("▷ 도서 검색");
             Console.WriteLine("▷ 전체 도서 출력");
@@ -36,6 +34,30 @@ namespace en_3_Libray.View
             Console.WriteLine("▷ 회원 검색");
             Console.WriteLine("▷ 회원 삭제");
             Console.WriteLine("▷ 돌아가기");
+        }
+
+        public void HowToSearchBook()
+        {
+            Console.WriteLine("▷ 도서명");
+            Console.WriteLine("▷ 출판사");
+            Console.WriteLine("▷ 저자");
+            Console.WriteLine("▷ 돌아가기");
+        }
+        public void BookList(List<BookVO> bookVO)
+        {
+            string wantSearch = Console.ReadLine();
+            int count = bookVO.Count - 1;
+            while (count >= 0)
+            {
+                if (wantSearch == bookVO[count].Id)
+                {
+                    foreach (BookVO book in bookVO)
+                    {
+                        Console.WriteLine("{0}", book.ToString());
+                    }
+                    break;
+                }
+            }
         }
     }
 }

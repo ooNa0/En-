@@ -49,14 +49,11 @@ namespace en_3_Libray.View
             int count = bookVO.Count - 1;
             while (count >= 0)
             {
-                if (wantSearch == bookVO[count].Id)
+                foreach (BookVO book in bookVO)
                 {
-                    foreach (BookVO book in bookVO)
-                    {
-                        Console.WriteLine("{0}", book.ToString());
-                    }
-                    break;
+                    Console.WriteLine("{0}", book.ToString());
                 }
+                break;
             }
         }
     }

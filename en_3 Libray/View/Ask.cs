@@ -24,7 +24,8 @@ namespace en_3_Libray.View
                     {
                         menu.MainMenu();
                     }
-                    answer += keyInput;
+                    answer += keyInput.KeyChar;
+                    //Console.WriteLine(answer);
                     keyInput = Console.ReadKey(false);
                 }
                 
@@ -36,9 +37,9 @@ namespace en_3_Libray.View
                         return 1;
                     default:
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("\"Yes\" 아니면 \"No\"만 입력이 가능합니다..!");
+                        Console.WriteLine("\"Yes\" 아니면 \"No\"만 입력이 가능합니다..!\n아무키나 입력해주세요.");
+                        Console.ReadLine();
                         Console.ForegroundColor = ConsoleColor.White;
-                        Thread.Sleep(1000);
                         Console.Clear();
                         Console.WriteLine("정말로 프로그램을 종료하시겠어요?");
                         Console.WriteLine("\"Yes\"나 \"No\"를 입력해주세요.");

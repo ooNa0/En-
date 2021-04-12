@@ -9,6 +9,8 @@ namespace en_3_Libray.View
 {
     class Menu
     {
+        public static List<BookVO> Books = new List<BookVO>();
+        //public static List<User> Users = new List<User>();
         public bool isOpen = false;
         public void MainMenu()
         {
@@ -17,6 +19,7 @@ namespace en_3_Libray.View
             int x = 0, y = 0;
             while (!isOpen)
             {
+                
                 Console.Clear();
                 print.ShowMenu();
                 Console.SetCursorPosition(x, y);
@@ -71,7 +74,7 @@ namespace en_3_Libray.View
                 yesOrNo = ask.AskYesOrNo();
                 if(yesOrNo == 0)
                 {
-                    Console.WriteLine("프로그램을 이용해주셔서 감사합니다.");
+                    Console.WriteLine("\n\n프로그램을 이용해주셔서 감사합니다.");
                     isOpen = true;
                 }
                 else

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
 // 없는 아이디이다. 비밀번호가 일치하지 않는다. 
 namespace en_3_Libray.Exception
 {
@@ -12,16 +14,25 @@ namespace en_3_Libray.Exception
 
         public void StartLogin()
         {
+            int failCount = 0;
             bool isSet = true;
             while (isSet)
             {
                 Console.Clear();
-                Console.Write("아이디 : ");
+                Console.Write("(영어와 숫자로 이루어진 10자리 이하)\n아이디 : ");
                 _identity = Console.ReadLine();
-                if (_identity.Length < 1 || _identity.Length > 10)
+                if (!Regex.IsMatch(_identity, "^[a-zA-Z0-9]{1,10}$"))
                 {
-                    Console.WriteLine("길이에 문제가 있습니다. 다시 입력해주세요.\n다시 입력하기 위해서 아무 키나 눌러주세요.");
+                    if (failCount > 5) { Console.WriteLine("아이디는 영어와 숫자로 이루어진 10자리 이하 문자열입니다."); }
+                    else if(failCount > 10)
+                    {
+                        Console.WriteLine(" 초기 화면으로 돌아갑니다.");
+                        Thread.Sleep(500);
+                        Console.ReadLine();
+                        return;
+                    }
                     Console.ReadLine();
+                    failCount++;
                 }
                 else
                 {
@@ -39,9 +50,9 @@ namespace en_3_Libray.Exception
                     Console.Write("*");
                     keyInfo = Console.ReadKey(true);
                 }
-                if(_passWord.Length < 4 || _passWord.Length > 15)
+                if(_passWord.Length < 4 || _passWord.Length > 15)//// 해당 아이디에 비밀번호가 맞는지
                 {
-                    Console.WriteLine("\n길이에 문제가 있습니다. 다시 입력해주세요.");
+                    Console.WriteLine("\n틀렸습니다. 다시 입력해주세요.");
                     Console.ReadLine();
                     Console.Clear();
                     Console.Write("아이디 : " + _identity + "\n");

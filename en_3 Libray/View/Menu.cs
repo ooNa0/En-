@@ -69,7 +69,6 @@ namespace en_3_Libray.View
             {
                 Console.Clear();
                 administratorMenu.UserSelectMenu(user);
-                Thread.Sleep(1000);
             }
             else if (y == 3) // 종료
             {

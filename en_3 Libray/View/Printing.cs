@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace en_3_Libray.View
 {
@@ -45,7 +46,9 @@ namespace en_3_Libray.View
         }
         public void BookList(List<BookVO> bookVO)
         {
-            string wantSearch = Console.ReadLine();
+            //string wantSearch = Console.ReadLine();
+            Console.Clear();
+            //Console.WriteLine(bookVO.Count);
             int count = bookVO.Count - 1;
             while (count >= 0)
             {
@@ -55,6 +58,7 @@ namespace en_3_Libray.View
                 }
                 break;
             }
+            Console.ReadLine();
         }
     }
 }

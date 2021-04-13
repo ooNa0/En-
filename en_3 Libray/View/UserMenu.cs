@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace en_3_Libray.View
 {
-    class UserMenu
+    class UserMenu : AdministratorMenu
     {
-        public void UserSelectMenu(List<UserVO> userVO, List<BookVO> bookVO)
+        public void UserSelectMenu(List<UserVO> userVO, int index)
         {
             CerserControl cerserControl = new CerserControl();
             AdministratorMenu administrator = new AdministratorMenu();
@@ -20,20 +21,27 @@ namespace en_3_Libray.View
             {
                 print.UserMenu();
                 Console.WriteLine();
-                switch (cerserControl.cerserControl(0, 6))
+                switch (cerserControl.cerserControl(0, 5))
                 {
                     case 0: // 도서 대출
 
                         break;
                     case 1: // 도서 반납
-                        if()
+                        if(userVO[index].BorrowBookNumber == 0)
+                        {
+                            Console.WriteLine("반납할 도서가 없습니다.");
+                        }
+                        else
+                        {
+
+                        }
                         break;
                     case 2: // 전체 도서 출력
-                        print.BookList(bookVO);
+                        print.BookList(book);
                         break;
                     case 3: // 도서 검색
                         print.HowToSearchBook();
-                        administrator.SearchBook(cerserControl.cerserControl(0, 3), bookVO);
+                        administrator.SearchBook(cerserControl.cerserControl(0, 3), book);
                         break;
                     case 4: // 사용자 정보
                         Console.Clear();

@@ -64,7 +64,7 @@ namespace en_4_Library
             if (!(Regex.IsMatch(input, "^[0-9]{2,3}-?([0-9]{4})-?([0-9]{4})$"))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("000-0000-0000 형식으로 입력해주세요.");
+                Console.WriteLine("000-0000-0000형식으로 입력해주세요.");
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.ReadLine();
                 return false;

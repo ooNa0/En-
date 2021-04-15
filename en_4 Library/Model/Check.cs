@@ -13,7 +13,7 @@ namespace en_4_Library
             if (!(Regex.Match(input, "^[a-zA-Z0-9]*$").Success))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("영어와 숫자 둘 다 입력해주세요.");
+                Console.WriteLine("영어와 숫자만 입력해주세요.");
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.ReadLine();
                 return false;
@@ -21,12 +21,27 @@ namespace en_4_Library
             return true;
         }
 
-        
+        public bool English(string input)
+        {
+            Console.Clear();
+            if (!(Regex.Match(input, "^[a-zA-Z]*$").Success))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("영어를 입력해주세요.");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.ReadLine();
+                return false;
+            }
+            return true;
+        }
+
+        // 이거 안됨
         public bool Number(string input)
         {
             Console.Clear();
-            if (!(Regex.Match(input, "^[0-9]*$").Success))
+            if (!(Regex.Match(input, "^[0-9]+$").Success))
             {
+                Console.WriteLine(Regex.IsMatch(input, "^[0-9]+$"));
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("숫자가 입력이 되지 않았습니다.");
                 Console.ForegroundColor = ConsoleColor.White;
@@ -63,7 +78,7 @@ namespace en_4_Library
             }
             return true;
         }
-
+        /*
         public bool PhoneNumber(string input)
         {
             Console.Clear();
@@ -74,8 +89,8 @@ namespace en_4_Library
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.ReadLine();
                 return false;
-            }
+            }//https://docs.microsoft.com/ko-kr/dotnet/csharp/how-to/search-strings
             return true;
-        }
+        }*/
     }
 }

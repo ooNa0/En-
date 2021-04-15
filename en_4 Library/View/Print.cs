@@ -43,6 +43,35 @@ namespace en_4_Library.View
             Console.WriteLine("▷ 저자");
             Console.WriteLine("▷ 돌아가기");
         }
+
+        public void IsNotExistIdentity()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("이미 존재하는 아이디가 아닙니다.");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("아무키나 입력해주세요..");
+            Console.ReadLine();
+        }
+
+        public void IsExistIdentity()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("이미 존재하는 아이디입니다.");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("아무키나 입력해주세요..");
+            Console.ReadLine();
+        }
+
+        public void SignUpFirst()
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("회원가입을 먼저해주세요.");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("아무키나 입력해주세요..");
+            Console.ReadLine();
+        }
+
         public void ShowBookList(List<BookVO> bookVO)
         {
             Console.Clear();

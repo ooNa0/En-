@@ -11,13 +11,28 @@ namespace en_4_Library
         Constant constant = new Constant(); // 매개변수로 빼기
 
         ConsoleKeyInfo keyInfo;
-        public int controlCursor(int min, int max)//Print print, Constant constant, 
+        public int controlCursor(int min, int max, int mode)//Print print, Constant constant,
         {
             int y = 0;
             while (Constant.USING_CURSOR)
             {
                 Console.Clear();
-                print.ShowMenu();
+                if(mode == Constant.MAIN_MENU)
+                {
+                    print.ShowMenu();
+                }
+                else if(mode == Constant.USER_MENU)
+                {
+                    print.ShowUserMenu();
+                }
+                else if(mode == Constant.ADMINISTRATOR_MODE)
+                {
+                    print.ShowAdministratorMode();
+                }
+                else if(mode == Constant.SEARCH_BOOK)
+                {
+                    print.ShowHowToSearchBook();
+                }
                 Console.SetCursorPosition(Constant.X_POSITION, y);
                 Console.Write('▶');
                 keyInfo = Console.ReadKey(true);
@@ -47,7 +62,7 @@ namespace en_4_Library
                         return y;
                     case ConsoleKey.Escape:
                         Console.WriteLine("메뉴로 돌아갑니다.");
-                        break;
+                        return -1;
                 }
             }
         }

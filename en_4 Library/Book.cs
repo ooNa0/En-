@@ -17,6 +17,8 @@ namespace en_4_Library
 
             switch (cursor.controlCursor(0, 3, Constant.HOW_TO_SEARCH_BOOK))
             {
+                case Constant.ESC:
+                    return;
                 case Constant.SEARCH_BOOK_NAME:
                     Console.Clear();
                     Console.WriteLine("찾으실 도서의 제목을 입력해주세요.");

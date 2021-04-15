@@ -9,12 +9,13 @@ namespace en_4_Library
 
     class User
     {
-        Input input = new Input(); // 이거도 인자로?
+        Input input = new Input(); // 이거도 인자로? 
+        List<char> convertString = new List<char>();
         public bool SignIn(Print print, List<UserVO> userList)
         {
             string identity = "";
             string password = "";
-
+           
             bool isIdentityExist = false;
             bool isPasswordExist = false;
             int count = userList.Count - 1;
@@ -27,8 +28,8 @@ namespace en_4_Library
             {
                 Console.Clear();
                 Console.Write("아이디 :");
-
-                identity = input.KeyChar(Constant.IS_NOT_PASSWORD);
+                convertString = input.KeyChar(Constant.IS_NOT_PASSWORD);
+                identity = new string(convertString.ToArray());
                 if (identity == "ESC")
                 {
                     return false;
@@ -54,7 +55,9 @@ namespace en_4_Library
                 Console.Clear();
                 Console.WriteLine("아이디 :" + identity);
                 Console.Write("비밀번호 : ");
-                password = input.KeyChar(Constant.IS_PASSWORD);
+                //password = input.KeyChar(Constant.IS_PASSWORD);
+                convertString = input.KeyChar(Constant.IS_NOT_PASSWORD);
+                password = new string(convertString.ToArray());
                 if (password == "ESC")
                 {
                     return false;
@@ -105,8 +108,10 @@ namespace en_4_Library
             {
                 Console.Clear();
                 Console.Write(record);
-
-                identity = input.KeyChar(Constant.IS_NOT_PASSWORD);
+                Console.WriteLine("-------------------------");
+                //identity = input.KeyChar(Constant.IS_NOT_PASSWORD);
+                convertString = input.KeyChar(Constant.IS_NOT_PASSWORD);
+                identity = new string(convertString.ToArray());
                 if (identity == "ESC")
                 {
                     return;
@@ -115,7 +120,7 @@ namespace en_4_Library
                 {
                     continue;
                 }
-                if (!(check.English(identity) && check.Number(identity)))
+                if (!check.EnglishAndNumber(identity))// && check.Number(identity)))
                 {
                     continue;
                 }
@@ -125,15 +130,15 @@ namespace en_4_Library
                     {
                         isIdentityExist = true;
                         print.IsExistIdentity();
-                        break;
+                        continue;
                     }
+                    count--;
                 }
                 if (isIdentityExist == false)
                 {
-                    isSet = true;
+                    isSet = false;
                     record += identity + "\n";
                 }
-                count--;
             }
             while (!isSet) // 비밀번호
             {
@@ -141,13 +146,18 @@ namespace en_4_Library
                 password = "";
                 Console.Write(record);
                 Console.Write("(길이 8이상 15이하 영어+숫자 혼합)비밀번호 : ");//길이 8이상, 영어 + 숫자 + 특수문자)
-                password = input.KeyChar(Constant.IS_PASSWORD);
-
+                //password = input.KeyChar(Constant.IS_PASSWORD);
+                convertString = input.KeyChar(Constant.IS_PASSWORD);
+                password = new string(convertString.ToArray());
                 if (password == "ESC")
                 {
                     return;
                 }
                 if (!check.Length(password, Constant.PASSWORD_MIN_LENGTH, Constant.PASSWORD_MAX_LENGTH))
+                {
+                    continue;
+                }
+                if (!check.EnglishAndNumber(identity))// && check.Number(identity)))
                 {
                     continue;
                 }
@@ -167,8 +177,9 @@ namespace en_4_Library
                 Console.Clear();
                 Console.Write(record);
                 Console.Write("(4글자 내 한글)이름 : ");
-                name = input.KeyChar(Constant.IS_NOT_PASSWORD);
-
+                //name = input.KeyChar(Constant.IS_NOT_PASSWORD);
+                convertString = input.KeyChar(Constant.IS_NOT_PASSWORD);
+                name = new string(convertString.ToArray());
                 if (password == "ESC")
                 {
                     return;
@@ -190,8 +201,9 @@ namespace en_4_Library
                 Console.Clear();
                 Console.Write(record);
                 Console.Write("(숫자만 입력나이 : ");//(숫자만 입력)
-                age = input.KeyChar(Constant.IS_NOT_PASSWORD);
-
+                //age = input.KeyChar(Constant.IS_NOT_PASSWORD);
+                convertString = input.KeyChar(Constant.IS_NOT_PASSWORD);
+                age = new string(convertString.ToArray());
                 if (password == "ESC")
                 {
                     return;
@@ -213,8 +225,9 @@ namespace en_4_Library
                 Console.Clear();
                 Console.Write(record);
                 Console.Write("(010-0000-0000 형식)전화번호: ");
-                phoneNumber = input.KeyChar(Constant.IS_NOT_PASSWORD);
-
+                //phoneNumber = input.KeyChar(Constant.IS_NOT_PASSWORD);
+                convertString = input.KeyChar(Constant.IS_NOT_PASSWORD);
+                phoneNumber = new string(convertString.ToArray());
                 if (phoneNumber == "ESC")
                 {
                     return;

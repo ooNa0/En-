@@ -55,7 +55,7 @@ namespace en_4_Library
         }
         public override string ToString()
         {
-            return BookName.PadRight(23, ' ') + Author.PadRight(20, ' ') + Publisher.PadRight(20, ' ') + Quantity;//base.ToString();
+            return BookName.PadRight(16, '-') + Author.PadRight(10, ' ') + Publisher.PadRight(10, ' ') + Quantity;//base.ToString();
         }
 
         // 생성자 - 부모 클래스가 자식 클래스의 기반, 코드의 재활용

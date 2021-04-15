@@ -62,16 +62,34 @@ namespace en_4_Library.View
             Console.ReadLine();
         }
 
-        public void ShowBookList(List<BookVO> bookVO)
+        public void ShowBookList(List<BookVO> bookList)
         {
             Console.Clear();
-            int count = bookVO.Count - 1;
+            int count = bookList.Count - 1;
             Console.WriteLine("도서명               저자                 출판사명          수량 ");
             while (count >= 0)
             {
-                foreach (BookVO book in bookVO)
+                Console.WriteLine("-------------------------------------------------------------------");
+                foreach (BookVO book in bookList)
                 {
                     Console.WriteLine("{0}", book.ToString());
+                }
+                break;
+            }
+            Console.ReadLine();
+            Console.Clear();
+        }
+        public void ShowUserList(List<UserVO> userList)
+        {
+            Console.Clear();
+            int count = userList.Count - 1;
+            Console.WriteLine("이름               아이디                 나이 ");
+            while (count >= 0)
+            {
+                Console.WriteLine("-------------------------------------------------------------------");
+                foreach (UserVO user in userList)
+                {
+                    Console.WriteLine("{0}", user.ToString());
                 }
                 break;
             }

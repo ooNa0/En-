@@ -62,16 +62,6 @@ namespace en_4_Library.View
             Console.ReadLine();
         }
 
-        public void SignUpFirst()
-        {
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("회원가입을 먼저해주세요.");
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("아무키나 입력해주세요..");
-            Console.ReadLine();
-        }
-
         public void ShowBookList(List<BookVO> bookVO)
         {
             Console.Clear();

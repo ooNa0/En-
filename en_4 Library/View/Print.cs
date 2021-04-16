@@ -6,12 +6,26 @@ namespace en_4_Library.View
 {
     class Print
     {
+        public void Library()
+        {
+            Console.WriteLine("┌──────────────────────────────────────────────────────────────────────┐");
+            Console.WriteLine("│                                                                      │");
+            Console.WriteLine("│   ■       ■  ■■■■   ■■■■     ■■   ■■■■   ■    ■    │");
+            Console.WriteLine("│   ■       ■  ■     ■  ■     ■  ■    ■ ■     ■  ■    ■    │");
+            Console.WriteLine("│   ■       ■  ■■■■   ■■■■   ■■■■ ■■■■    ■  ■     │"); 
+            Console.WriteLine("│   ■       ■  ■     ■  ■■■     ■    ■ ■■■        ■       │");
+            Console.WriteLine("│   ■       ■  ■     ■  ■   ■■  ■    ■ ■   ■■     ■       │");
+            Console.WriteLine("│   ■■■■ ■  ■■■■   ■     ■  ■    ■ ■     ■     ■       │");
+            Console.WriteLine("│                                                                      │");
+            Console.WriteLine("└─────────────────────────────[뒤로가기 :: ESC]────────────────────────┘");
+            Console.WriteLine(); Console.WriteLine();
+        }
         public void ShowMenu()
         {
-            Console.WriteLine("▷ 로그인");
-            Console.WriteLine("▷ 회원가입");
-            Console.WriteLine("▷ 관리자 모드");
-            Console.WriteLine("▷ 종료");
+            Console.WriteLine("                              ▷ 로그인"); Console.WriteLine();
+            Console.WriteLine("                              ▷ 회원가입"); Console.WriteLine();
+            Console.WriteLine("                              ▷ 관리자 모드"); Console.WriteLine();
+            Console.WriteLine("                              ▷ 종료");
         }
 
         public void ShowUserMenu()

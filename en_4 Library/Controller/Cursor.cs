@@ -13,24 +13,30 @@ namespace en_4_Library
         ConsoleKeyInfo keyInfo;
         public int controlCursor(int min, int max, int mode)//Print print, Constant constant,
         {
-            int y = 0;
+            int y = Constant.Y_POSITION;
+            max += Constant.Y_POSITION + max;
+            min += Constant.Y_POSITION + min;
             while (Constant.USING_CURSOR)
             {
                 Console.Clear();
                 if(mode == Constant.MAIN_MENU)
                 {
+                    print.Library();
                     print.ShowMenu();
                 }
                 else if(mode == Constant.USER_MENU)
                 {
+                    print.Library();
                     print.ShowUserMenu();
                 }
                 else if(mode == Constant.ADMINISTRATOR_MODE)
                 {
+                    print.Library();
                     print.ShowAdministratorMode();
                 }
                 else if(mode == Constant.SEARCH_BOOK)
                 {
+                    print.Library();
                     print.ShowHowToSearchBook();
                 }
                 Console.SetCursorPosition(Constant.X_POSITION, y);
@@ -41,7 +47,7 @@ namespace en_4_Library
                     case ConsoleKey.UpArrow:
                         if(y > min) 
                         { 
-                            y--; 
+                            y -= 2; 
                         }
                         else if(y == min)
                         {
@@ -51,7 +57,7 @@ namespace en_4_Library
                     case ConsoleKey.DownArrow:
                         if (y < max) 
                         { 
-                            y++; 
+                            y += 2; 
                         }
                         else if(y == max)
                         {
@@ -61,7 +67,7 @@ namespace en_4_Library
                     case ConsoleKey.Enter:
                         return y;
                     case ConsoleKey.Escape:
-                        Console.WriteLine("메뉴로 돌아갑니다.");
+                        //Console.WriteLine("메뉴로 돌아갑니다.");
                         return -1;
                 }
             }

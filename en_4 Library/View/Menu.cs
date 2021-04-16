@@ -30,24 +30,25 @@ namespace en_4_Library
         int userNumber;
         public void StartMenu()
         {
-            userList.Add(new UserVO("a", "a", "테스트쉽다~!", "66", 0));
-            userList.Add(new UserVO("AAA123", "AAAAA12345", "구나영", "32", 0));
-            userList.Add(new UserVO("BBB123", "BBBBB12345", "구나영", "22", 0));
-            userList.Add(new UserVO("ABC123", "CCABS12345", "곽현숙", "45", 0));
+            userList.Add(new UserVO("a", "a", "테스트쉽다~!", "66"));
+            userList.Add(new UserVO("AAA123", "AAAAA12345", "구나영", "32"));
+            userList.Add(new UserVO("BBB123", "BBBBB12345", "구나영", "22"));
+            userList.Add(new UserVO("ABC123", "CCABS12345", "곽현숙", "45"));
             bookList.Add(new BookVO("엔샵의 발견", "엔지니어스", "EN#", 2));
             bookList.Add(new BookVO("당신은 엔-샵인가", "엔지니어스", "EN#", 1));
-            bookList.Add(new BookVO("안녕 나의 청춘 엔샵", "엔지니어스", "EN#", 5));
+            bookList.Add(new BookVO("안녕 나의 청춘, 엔샵", "엔지니어스", "EN#", 5));
+            bookList.Add(new BookVO("a", "테스터편하게", "구나영코딩머신", 1));
 
-            //Console.SetWindowSize(1, 1);
+            //Console.SetWindowSize(30,300);
             //Console.SetBufferSize(80, 80);
-            //Console.SetWindowSize(40, 20);
-            Console.Title = "Library - Menu";
-
+            Console.SetWindowSize(73, 37);
+            Console.Title = "Library";
+            
             bool isEnd = false;
 
             while (!isEnd)
             {
-                switch (cursor.controlCursor(0, 3, Constant.MAIN_MENU))
+                switch ((cursor.controlCursor(0, 3, Constant.MAIN_MENU)-Constant.Y_POSITION)/2)
                 {
                     case Constant.SIGN_IN:
                         userNumber = user.SignIn(print, userList);
@@ -68,18 +69,19 @@ namespace en_4_Library
                         if (adminPassWord == Constant.ADMIN_PASSWORD)
                         {
                             StartAdministratorMenu();
-                            return;
                         }
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("관리자 비밀번호가 올바르지 않습니다.");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.ReadLine();
-                        Console.Clear();
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write("관리자 비밀번호가 올바르지 않습니다.");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.ReadLine();
+                            Console.Clear();
+                        }
                         break;
                     case Constant.EXIT:
                         Console.Clear();
                         Console.WriteLine("\n\n프로그램을 이용해주셔서 감사합니다.");
-                        Console.ReadLine();
                         isEnd = true;
                         break;
                 }
@@ -93,11 +95,15 @@ namespace en_4_Library
             while (!isFinished)
             {
                 print.ShowUserMenu();
-                switch (cursor.controlCursor(0, 5, Constant.USER_MENU))
+                switch ((cursor.controlCursor(0, 5, Constant.USER_MENU) - Constant.Y_POSITION)/2)
                 {
+                    case Constant.ESC:
+                        return;
                     case Constant.BORROW_BOOK:
+                        user.BorrowBook(userList, bookList, userNumber);
                         break;
                     case Constant.RETURN_BOOK:
+                        user.ReturnBook(userList, bookList, userNumber);
                         break;
                     case Constant.PRINT_BOOKS:
                         print.ShowBookList(bookList);
@@ -135,8 +141,10 @@ namespace en_4_Library
                 Console.Clear();
                 print.ShowAdministratorMode();
 
-                switch (cursor.controlCursor(0, 7, Constant.ADMINISTRATOR_MODE))
+                switch ((cursor.controlCursor(0, 7, Constant.ADMINISTRATOR_MENU) - Constant.Y_POSITION)/2)
                 {
+                    case Constant.ESC:
+                        return;
                     case Constant.ADD_BOOK: // 도서 등록
                         book.Add(bookList);
                         break;
@@ -155,16 +163,13 @@ namespace en_4_Library
                         break;
                     case Constant.SEARCH_USER: // 회원 검색
                         Console.Clear();
-                        administrator.Search(cursor, userList);
+                        administrator.Search(userList);
                         break;
                     case Constant.REMOVE_USER: // 회원 삭제
                         administrator.Remove(userList);
                         break;
                     case Constant.GO_BACK: // 돌아가기
-                        Console.Clear();
-                        isSet = false;
-                        Console.ReadLine();
-                        break;
+                        return;
                 }
             }
         }

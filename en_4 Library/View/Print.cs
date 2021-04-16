@@ -17,9 +17,11 @@ namespace en_4_Library.View
             Console.WriteLine("│   ■       ■  ■     ■  ■   ■■  ■    ■ ■   ■■     ■       │");
             Console.WriteLine("│   ■■■■ ■  ■■■■   ■     ■  ■    ■ ■     ■     ■       │");
             Console.WriteLine("│                                                                      │");
-            Console.WriteLine("└─────────────────────────────[뒤로가기 :: ESC]────────────────────────┘");
+            Console.WriteLine("└──────────────────────────────────────────────────────────────────────┘");
+            //Console.WriteLine("└─────────────────────────────[뒤로가기 :: ESC]────────────────────────┘");
             Console.WriteLine(); Console.WriteLine();
         }
+        
         public void ShowMenu()
         {
             Console.WriteLine("                              ▷ 로그인"); Console.WriteLine();
@@ -30,49 +32,49 @@ namespace en_4_Library.View
 
         public void ShowUserMenu()
         {
-            Console.WriteLine("▷ 도서 대출");
-            Console.WriteLine("▷ 도서 반납");
-            Console.WriteLine("▷ 전체 도서 출력");
-            Console.WriteLine("▷ 도서 검색");
-            Console.WriteLine("▷ 나의 정보");
-            Console.WriteLine("▷ 로그아웃");
+            Console.WriteLine("                              ▷ 도서 대출"); Console.WriteLine();
+            Console.WriteLine("                              ▷ 도서 반납"); Console.WriteLine();
+            Console.WriteLine("                              ▷ 전체 도서 출력"); Console.WriteLine();
+            Console.WriteLine("                              ▷ 도서 검색"); Console.WriteLine();
+            Console.WriteLine("                              ▷ 나의 정보"); Console.WriteLine();
+            Console.WriteLine("                              ▷ 로그아웃");
         }
 
         public void ShowAdministratorMode()
         {
-            Console.WriteLine("▷ 도서 등록");
-            Console.WriteLine("▷ 도서 삭제");
-            Console.WriteLine("▷ 도서 검색");
-            Console.WriteLine("▷ 전체 도서 출력");
-            Console.WriteLine("▷ 회원 리스트");
-            Console.WriteLine("▷ 회원 검색");
-            Console.WriteLine("▷ 회원 삭제");
-            Console.WriteLine("▷ 돌아가기");
+            Console.WriteLine("                              ▷ 도서 등록"); Console.WriteLine();
+            Console.WriteLine("                              ▷ 도서 삭제"); Console.WriteLine();
+            Console.WriteLine("                              ▷ 도서 검색"); Console.WriteLine();
+            Console.WriteLine("                              ▷ 전체 도서 출력"); Console.WriteLine();
+            Console.WriteLine("                              ▷ 회원 리스트"); Console.WriteLine();
+            Console.WriteLine("                              ▷ 회원 검색"); Console.WriteLine();
+            Console.WriteLine("                              ▷ 회원 삭제"); Console.WriteLine();
+            Console.WriteLine("                              ▷ 돌아가기");
         }
 
         public void ShowHowToSearchBook()
         {
-            Console.WriteLine("▷ 도서명");
-            Console.WriteLine("▷ 출판사");
-            Console.WriteLine("▷ 저자");
-            Console.WriteLine("▷ 돌아가기");
+            Console.WriteLine("                              ▷ 도서명"); Console.WriteLine();
+            Console.WriteLine("                              ▷ 출판사"); Console.WriteLine();
+            Console.WriteLine("                              ▷ 저자"); Console.WriteLine();
+            Console.WriteLine("                              ▷ 돌아가기");
         }
 
         public void IsNotExistIdentity()
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("이미 존재하는 아이디가 아닙니다.");
+            Console.WriteLine("                              이미 존재하는 아이디가 아닙니다.");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("아무키나 입력해주세요..");
+            Console.WriteLine("                              아무키나 입력해주세요..");
             Console.ReadLine();
         }
 
         public void IsExistIdentity()
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("이미 존재하는 아이디입니다.");
+            Console.WriteLine("                              이미 존재하는 아이디입니다.");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("아무키나 입력해주세요..");
+            Console.WriteLine("                              아무키나 입력해주세요..");
             Console.ReadLine();
         }
 

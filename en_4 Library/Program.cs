@@ -7,7 +7,7 @@ namespace en_4_Library
         static void Main(string[] args)
         {
             Menu menu = new Menu();
-            menu.ShowMenu();
+            menu.StartMenu();
         }
     }
 }

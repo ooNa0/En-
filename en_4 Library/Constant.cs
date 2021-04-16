@@ -88,7 +88,8 @@ namespace en_4_Library
 
         public const bool USING_CURSOR = true;
         
-        public const int X_POSITION = 0;
+        public const int X_POSITION = 30;
+        public const int Y_POSITION = 12;
     }
 }
 

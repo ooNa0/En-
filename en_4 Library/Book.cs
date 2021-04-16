@@ -15,7 +15,7 @@ namespace en_4_Library
             int count = bookList.Count - 1;
             int search = 0;
 
-            switch (cursor.controlCursor(0, 3, Constant.HOW_TO_SEARCH_BOOK))
+            switch ((cursor.controlCursor(0, 3, Constant.HOW_TO_SEARCH_BOOK)-Constant.Y_POSITION)/2)
             {
                 case Constant.ESC:
                     return;

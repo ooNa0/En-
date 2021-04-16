@@ -250,9 +250,12 @@ namespace en_4_Library
         public void Remove(List<BookVO> book, Print print)
         {
             Console.Clear(); print.Library();
-            Console.WriteLine("지울 도서의 제목을 입력해주세요.");
+            print.ShowBookList(book, print);
+
+            Console.WriteLine("\n\n지울 도서의 제목을 입력해주세요.");
 
             string wantRemove = Console.ReadLine();
+            
             int count = book.Count - 1;
             int remove = 0;
             while (count >= 0)
@@ -260,9 +263,6 @@ namespace en_4_Library
                 if (wantRemove == book[count].BookName)
                 {
                     remove++;
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    //Console.WriteLine("존재하는 아이디가 아닙니다.");
-                    Console.ForegroundColor = ConsoleColor.White;
                     book.RemoveAt(count);
                     Console.WriteLine("도서 삭제 완료!\n아무 키나 입력해주세요..");
                     Console.ReadLine();

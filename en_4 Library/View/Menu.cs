@@ -30,10 +30,10 @@ namespace en_4_Library
         int userNumber;
         public void StartMenu()
         {
-            userList.Add(new UserVO("a", "a", "테스트쉽다~!", "66"));
-            userList.Add(new UserVO("AAA123", "AAAAA12345", "구나영", "32"));
-            userList.Add(new UserVO("BBB123", "BBBBB12345", "구나영", "22"));
-            userList.Add(new UserVO("ABC123", "CCABS12345", "곽현숙", "45"));
+            userList.Add(new UserVO("a", "a", "테스트쉽다~!", "66", "010-1111-1111"));
+            userList.Add(new UserVO("AAA123", "AAAAA12345", "구나영", "32", "010-1234-1234"));
+            userList.Add(new UserVO("BBB123", "BBBBB12345", "구나영", "22", "070-1114-3283"));
+            userList.Add(new UserVO("ABC123", "CCABS12345", "곽현숙", "45", "010-2383-2184"));
             bookList.Add(new BookVO("엔샵의 발견", "엔지니어스", "EN#", 2));
             bookList.Add(new BookVO("당신은 엔-샵인가", "엔지니어스", "EN#", 1));
             bookList.Add(new BookVO("안녕 나의 청춘, 엔샵", "엔지니어스", "EN#", 5));
@@ -107,9 +107,9 @@ namespace en_4_Library
                         break;
                     case Constant.PRINT_BOOKS:
                         print.ShowBookList(bookList, print);
+                        Console.ReadLine();
                         break;
                     case Constant.SEARCH_BOOK:
-                        Console.Clear();
                         book.Search(cursor, bookList, print);
                         break;
                     case Constant.PRINT_USER_INFOMATION:
@@ -117,7 +117,7 @@ namespace en_4_Library
                         Console.WriteLine("\n      {0}님의 정보입니다.\n", userList[userNumber].Name);
                         //foreach (string user in userList[userNumber])
                         //{
-                            Console.WriteLine("\n{0}\n", userList[userNumber].ToString());
+                        print.ShowUserInformation(userList, userNumber);
                         //}
                         Console.ReadLine();
                         Console.Clear();
@@ -156,6 +156,8 @@ namespace en_4_Library
                         break;
                     case Constant.PRINT_BOOKLIST: // 전체 도서 출력
                         print.ShowBookList(bookList, print);
+                        Console.ReadLine();
+                        //Console.Clear();
                         break;
                     case Constant.PRINT_USERS: // 회원 리스트
                         print.ShowUserList(userList, print);

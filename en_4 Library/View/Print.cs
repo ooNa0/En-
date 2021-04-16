@@ -119,8 +119,6 @@ namespace en_4_Library.View
                 }
                 break;
             }
-            Console.ReadLine();
-            Console.Clear();
         }
         public void ShowUserList(List<UserVO> userList, Print print)
         {
@@ -136,8 +134,19 @@ namespace en_4_Library.View
                 }
                 break;
             }
-            Console.ReadLine();
-            Console.Clear();
+        }
+        public void ShowUserInformation(List<UserVO> userList, int userNumber)
+        {
+            Console.WriteLine("\n이름 : {0}\n", userList[userNumber].Name);
+            Console.WriteLine("\n나이 : {0}\n", userList[userNumber].Age);
+            Console.WriteLine("\n아이디 : {0}\n", userList[userNumber].Id);
+            Console.WriteLine("\n비밀번호 : {0}\n", userList[userNumber].PhoneNumber);
+            if (userList[userNumber].BorrowBook != "")
+            {
+                Console.WriteLine("\n빌린 책 제목 : {0}\n", userList[userNumber].BorrowBook);
+                Console.WriteLine("\n대출일 : {0}\n", userList[userNumber].BorrowDate);
+                Console.WriteLine("\n반납일 : {0}\n", userList[userNumber].RorrowDate);
+            }
         }
     }
 }

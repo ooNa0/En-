@@ -11,6 +11,7 @@ namespace en_4_Library
         {
             Console.Clear();
             print.Library();
+            print.ShowUserList(userList, print);
             Console.WriteLine("지울 회원의 이름을 입력해주세요.");
 
             string wantRemoveName = Console.ReadLine();
@@ -22,9 +23,6 @@ namespace en_4_Library
                 if (wantRemoveName == userList[count].Name)
                 {
                     remove++;
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    //Console.WriteLine("존재하는 회원이 아닙니다.");
-                    Console.ForegroundColor = ConsoleColor.White;
                 }
                 count--;
             }
@@ -33,7 +31,7 @@ namespace en_4_Library
                 userList.RemoveAt(count + 1);
                 Console.WriteLine("회원 삭제 완료!");
             }
-            else if (remove == 0)//userList.Count == remove)
+            else if (remove == 0)
             {
                 Console.WriteLine("지울 회원이 존재하지 않거나, 잘못입력하셨습니다.");
                 Console.WriteLine("아무 키나 입력해주세요..");

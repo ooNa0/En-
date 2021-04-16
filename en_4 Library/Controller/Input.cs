@@ -10,50 +10,41 @@ namespace en_4_Library
         
         public string KeyChar(bool isPassword)
         {
-            keyInput = Console.ReadKey(isPassword);
             string input = "";
-            //List<char> input = new List<char>();
-            //List<char> esc = new List<char>("ESC");
             while (Constant.RECEIVE_KEY_INPUT)
             {
-                // switch로 수정하기
-                if(keyInput.Key != ConsoleKey.Enter && keyInput.Key != ConsoleKey.Backspace && keyInput.Key != ConsoleKey.Escape)
+                keyInput = Console.ReadKey(isPassword);
+                switch (keyInput.Key)
                 {
-                    input += keyInput.KeyChar;
-                    //input.Add(keyInput.KeyChar);
-                    if (isPassword)
-                    {
-                        Console.Write("*");
-                    }
-                }
-                else
-                {
-                    if (keyInput.Key == ConsoleKey.Backspace && input.Length > 0)
-                    {
+                    case ConsoleKey.Enter:
+                        return input;
+                    case ConsoleKey.Backspace:
+                        if(input.Length > 0)
+                        {
+                            if (isPassword)
+                            {
+                                input = input.Substring(0, (input.Length - 1));
+                                Console.Write("\b \b");
+                            }
+                            else
+                            {
+                                Console.SetCursorPosition(Console.CursorLeft, Console.CursorTop);
+                                Console.Write(" ");
+                                Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+                                input = input.Substring(0, (input.Length - 1));
+                            }
+                        }
+                        break;
+                    case ConsoleKey.Escape:
+                        return "ESC";
+                    default:
+                        input += keyInput.KeyChar;
                         if (isPassword)
                         {
-                            input = input.Substring(0, (input.Length - 1));
-                            //input.RemoveAt(input.Count - 1);
-                            Console.Write("\b \b");//keyInput.KeyChar);
+                            Console.Write("*");
                         }
-                        else
-                        {
-                            input = input.Substring(0, (input.Length - 1));
-                            //input.Remove(1);
-                            //Console.Write("\b");
-                        }
-                    }
-                    if (keyInput.Key == ConsoleKey.Escape)
-                    {
-                        //esc.Add("E");
-                        return "ESC";
-                    }
-                    if (keyInput.Key == ConsoleKey.Enter)
-                    {
-                        return input;
-                    }
+                        break;
                 }
-                keyInput = Console.ReadKey(isPassword);
             }
         }
     }

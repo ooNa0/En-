@@ -7,37 +7,31 @@ namespace en_4_Library
 {
     class Cursor
     {
-        Print print = new Print(); // 매개 변수로
-        Constant constant = new Constant(); // 매개변수로 빼기
-
+        Print print = new Print();
         ConsoleKeyInfo keyInfo;
-        public int controlCursor(int min, int max, int mode)//Print print, Constant constant,
+        public int controlCursor(int minimum, int max, int mode)
         {
             int y = Constant.Y_POSITION;
             max += Constant.Y_POSITION + max;
-            min += Constant.Y_POSITION + min;
+            minimum += Constant.Y_POSITION + minimum;
             while (Constant.USING_CURSOR)
             {
                 Console.Clear();
-                if(mode == Constant.MAIN_MENU)
+                print.Library();
+                switch (mode)
                 {
-                    print.Library();
-                    print.ShowMenu();
-                }
-                else if(mode == Constant.USER_MENU)
-                {
-                    print.Library();
-                    print.ShowUserMenu();
-                }
-                else if(mode == Constant.ADMINISTRATOR_MODE)
-                {
-                    print.Library();
-                    print.ShowAdministratorMode();
-                }
-                else if(mode == Constant.SEARCH_BOOK)
-                {
-                    print.Library();
-                    print.ShowHowToSearchBook();
+                    case Constant.MAIN_MENU:
+                        print.ShowMenu();
+                        break;
+                    case Constant.USER_MENU:
+                        print.ShowUserMenu();
+                        break;
+                    case Constant.ADMINISTRATOR_MODE:
+                        print.ShowAdministratorMenu();
+                        break;
+                    case Constant.SEARCH_BOOK:
+                        print.ShowHowToSearchBook();
+                        break;
                 }
                 Console.SetCursorPosition(Constant.X_POSITION, y);
                 Console.Write('▶');
@@ -45,11 +39,11 @@ namespace en_4_Library
                 switch (keyInfo.Key)
                 {
                     case ConsoleKey.UpArrow:
-                        if(y > min) 
+                        if(y > minimum) 
                         { 
                             y -= 2; 
                         }
-                        else if(y == min)
+                        else if(y == minimum)
                         {
                             y = max;
                         }
@@ -61,13 +55,12 @@ namespace en_4_Library
                         }
                         else if(y == max)
                         {
-                            y = min;
+                            y = minimum;
                         }
                         break;
                     case ConsoleKey.Enter:
                         return y;
                     case ConsoleKey.Escape:
-                        //Console.WriteLine("메뉴로 돌아갑니다.");
                         return -1;
                 }
             }

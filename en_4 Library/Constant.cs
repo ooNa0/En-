@@ -8,6 +8,12 @@ namespace en_4_Library
     {
         public const int ESC = -1;
 
+        public const int CONSOLE_SIZE_X = 73;
+
+        public const int CONSOLE_SIZE_Y = 37;
+
+        public const bool SAME_BOOK_EXIST = true;
+
         // 비밀 번호 유무, 별모양
         public const bool IS_PASSWORD = true;
 
@@ -75,7 +81,10 @@ namespace en_4_Library
         public const int PASSWORD_MAX_LENGTH = 15;
 
         public const int BOOKNAME_MIN_LENGTH = 1;
-        public const int BOOKNAME_MAX_LENGTH = 16;
+        public const int BOOKNAME_MAX_LENGTH = 10;
+
+        public const int X_POSITION = 30;
+        public const int Y_POSITION = 12;
 
         // 메뉴
         public const int MAIN_MENU = 0;
@@ -87,11 +96,5 @@ namespace en_4_Library
         public const int SEARCH_BOOK_MENU = 3;
 
         public const bool USING_CURSOR = true;
-        
-        public const int X_POSITION = 30;
-        public const int Y_POSITION = 12;
     }
 }
-
-// 입력 함수
-// 비밀번호 -> 별 입력함수 플래그 ispassword

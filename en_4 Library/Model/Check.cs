@@ -22,6 +22,20 @@ namespace en_4_Library
             return true;
         }
 
+        public bool EnglishAndNumberAndKorean(string input, Print print)
+        {
+            Console.Clear(); print.Library();
+            if (!(Regex.Match(input, "^[a-zA-Z0-9가-힣]*$").Success))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("10글자 이내 한글, 영어, 숫자만 입력이 가능합니다.");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.ReadLine();
+                return false;
+            }
+            return true;
+        }
+
         public bool English(string input, Print print)
         {
             Console.Clear(); print.Library();
@@ -36,13 +50,11 @@ namespace en_4_Library
             return true;
         }
 
-        // 이거 안됨
         public bool Number(string input, Print print)
         {
             Console.Clear(); print.Library();
-            if (!(Regex.Match(input, "^[0-9]+$").Success))
+            if (!(Regex.Match(input, "^[0-9]*$").Success))
             {
-                Console.WriteLine(Regex.IsMatch(input, "^[0-9]+$"));
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("숫자가 입력이 되지 않았습니다.");
                 Console.ForegroundColor = ConsoleColor.White;
@@ -79,11 +91,11 @@ namespace en_4_Library
             }
             return true;
         }
-        /*
-        public bool PhoneNumber(string input)
+        
+        public bool PhoneNumber(string input, Print print)
         {
-            Console.Clear();
-            if (!(Regex.IsMatch(input, "^[0-9]{2,3}-?([0-9]{4})-?([0-9]{4})$")))
+            Console.Clear(); print.Library();
+            if (!(Regex.IsMatch(input, "^[0-9]{2,3}-([0-9]{4})-([0-9]{4})$")))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("000-0000-0000형식으로 입력해주세요.");
@@ -92,6 +104,6 @@ namespace en_4_Library
                 return false;
             }//https://docs.microsoft.com/ko-kr/dotnet/csharp/how-to/search-strings
             return true;
-        }*/
+        }
     }
 }

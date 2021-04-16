@@ -14,6 +14,7 @@ namespace en_4_Library
         private Print print;
         private User user;
         private Administrator administrator;
+        private Input input;
 
         public Menu()
         {
@@ -22,38 +23,36 @@ namespace en_4_Library
             cursor = new Cursor();
             print = new Print();
             user = new User();
+            input = new Input();
             administrator = new Administrator();
         }
-        
-
         string adminPassWord;
         int userNumber;
         public void StartMenu()
         {
-            userList.Add(new UserVO("a", "a", "테스트쉽다~!", "66", "010-1111-1111"));
+            userList.Add(new UserVO("a", "a", "괃팔혁", "66", "010-1111-1111"));
             userList.Add(new UserVO("AAA123", "AAAAA12345", "구나영", "32", "010-1234-1234"));
             userList.Add(new UserVO("BBB123", "BBBBB12345", "구나영", "22", "070-1114-3283"));
-            userList.Add(new UserVO("ABC123", "CCABS12345", "곽현숙", "45", "010-2383-2184"));
+            userList.Add(new UserVO("ABC123", "CCABS12345", "박현숙", "45", "010-2383-2184"));
             bookList.Add(new BookVO("엔샵의 발견", "엔지니어스", "EN#", 2));
-            bookList.Add(new BookVO("당신은 엔-샵인가", "엔지니어스", "EN#", 1));
+            bookList.Add(new BookVO("반각문자란", "문자탐구", "김만숙", 2));
+            bookList.Add(new BookVO("당신은 엔-샵인가?", "엔지니어스", "EN#", 1));
             bookList.Add(new BookVO("안녕 나의 청춘, 엔샵", "엔지니어스", "EN#", 5));
-            bookList.Add(new BookVO("a", "테스터편하게", "구나영코딩머신", 1));
+            bookList.Add(new BookVO("a", "테스트는 편하게", "구나영코딩머신", 1));
 
-            //Console.SetWindowSize(30,300);
-            //Console.SetBufferSize(80, 80);
-            Console.SetWindowSize(73, 37);
+            Console.SetWindowSize(Constant.CONSOLE_SIZE_X, Constant.CONSOLE_SIZE_Y);
             Console.Title = "Library";
             
             bool isEnd = false;
 
             while (!isEnd)
             {
-                switch ((cursor.controlCursor(0, 3, Constant.MAIN_MENU)-Constant.Y_POSITION)/2)
+                switch ((cursor.controlCursor(0, 3, Constant.MAIN_MENU) - Constant.Y_POSITION) / 2)
                 {
                     case Constant.SIGN_IN:
                         userNumber = user.SignIn(print, userList);
                         Console.WriteLine(userNumber);
-                        
+
                         if (userNumber > -1) // 로그인이 되면
                         {
                             StartUserMenu(userNumber);
@@ -69,15 +68,13 @@ namespace en_4_Library
                         if (adminPassWord == Constant.ADMIN_PASSWORD)
                         {
                             StartAdministratorMenu();
+                            continue;
                         }
-                        else
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write("관리자 비밀번호가 올바르지 않습니다.");
-                            Console.ForegroundColor = ConsoleColor.White;
-                            Console.ReadLine();
-                            Console.Clear();
-                        }
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("관리자 비밀번호가 올바르지 않습니다.");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.ReadLine();
+                        Console.Clear();
                         break;
                     case Constant.EXIT:
                         Console.Clear();
@@ -114,11 +111,8 @@ namespace en_4_Library
                         break;
                     case Constant.PRINT_USER_INFOMATION:
                         Console.Clear(); print.Library();
-                        Console.WriteLine("\n      {0}님의 정보입니다.\n", userList[userNumber].Name);
-                        //foreach (string user in userList[userNumber])
-                        //{
+                        Console.WriteLine("[{0}님의 정보]\n", userList[userNumber].Name);
                         print.ShowUserInformation(userList, userNumber);
-                        //}
                         Console.ReadLine();
                         Console.Clear();
                         break;
@@ -145,7 +139,7 @@ namespace en_4_Library
                 {
                    
                     case Constant.ADD_BOOK: // 도서 등록
-                        book.Add(bookList, print);
+                        book.Add(bookList, print, input);
                         break;
                     case Constant.REMOVE_BOOK: // 도서 삭제
                         book.Remove(bookList, print);
@@ -157,10 +151,10 @@ namespace en_4_Library
                     case Constant.PRINT_BOOKLIST: // 전체 도서 출력
                         print.ShowBookList(bookList, print);
                         Console.ReadLine();
-                        //Console.Clear();
                         break;
                     case Constant.PRINT_USERS: // 회원 리스트
                         print.ShowUserList(userList, print);
+                        Console.ReadLine();
                         break;
                     case Constant.SEARCH_USER: // 회원 검색
                         Console.Clear();

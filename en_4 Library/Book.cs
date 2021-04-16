@@ -26,7 +26,7 @@ namespace en_4_Library
                     howToSearch = Console.ReadLine();
                     while (count >= 0)
                     {
-                        if (bookList[count].BookName.Contains(howToSearch))// == bookList[count].BookName)
+                        if (bookList[count].BookName.Contains(howToSearch))
                         {
                             Console.WriteLine("{0}\n", bookList[count].ToString());
                             search++;
@@ -83,7 +83,7 @@ namespace en_4_Library
             }
         }
         
-        public void Add(List<BookVO> book, Print print)
+        public void Add(List<BookVO> book, Print print, Input input)
         {
             string bookName = "";
             string publisher = "";
@@ -93,6 +93,7 @@ namespace en_4_Library
             string mass = "";
             bool isSet = false;
             Menu menu = new Menu();
+            Check check = new Check();
 
             int count = book.Count - 1;
 
@@ -100,12 +101,13 @@ namespace en_4_Library
             {
                 Console.Clear();
                 print.Library();
-                //string star = "";
-                //Console.Write(recode);
-                Console.Write("(1~16)도서 제목 : ");//길이 8이상, 영어 + 숫자 + 특수문자)
-                bookName = Console.ReadLine();
-                //if (check.Length(bookName, Constant.BOOKNAME_MIN_LENGTH, Constant.BOOKNAME_MAX_LENGTH))
-                if (bookName.Length < 1 || bookName.Length > 10)
+                Console.Write("도서 제목 : ");
+                bookName = input.KeyChar(Constant.IS_NOT_PASSWORD);
+                if(bookName == "ESC")
+                {
+                    return;
+                }
+                if (!check.Length(bookName, Constant.BOOKNAME_MIN_LENGTH, Constant.BOOKNAME_MAX_LENGTH, print))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("입력하신 길이에 문제가 있습니다.");
@@ -113,82 +115,65 @@ namespace en_4_Library
                     Console.ReadLine();
                     continue;
                 }
-                if (!(Regex.IsMatch(bookName, "^[a-zA-Z0-9가-힣]*$")))
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("10글자 이내 한글, 영어, 숫자만 입력이 가능합니다.");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.ReadLine();
-                }
-                else
+                if ((Regex.IsMatch(bookName, "^[a-zA-Z0-9가-힣]*$")))
                 {
                     isSet = true;
                 }
             }
             while (count >= 0)
             {
-                //Console.WriteLine(count);
                 if (bookName == book[count].BookName)
                 {
-                    Console.WriteLine("등록된 동일한 책제목이 존재합니다. 몇개를 추가하시겠습니까?");
-
-                    while (true)
+                    Console.WriteLine("등록된 동일한 책제목이 존재합니다.");
+                    while (Constant.SAME_BOOK_EXIST)
                     {
+                        Console.WriteLine("몇개를 추가하시겠습니까?");
+
                         mass = Console.ReadLine();
-                        if (mass.Length < 1 || mass.Length > 10)
+                        if (!check.Length(mass, Constant.BOOKNAME_MIN_LENGTH, Constant.BOOKNAME_MAX_LENGTH, print))
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("입력하신 길이에 문제가 있습니다.");
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.ReadLine();
-                            Console.Write("도서 제목 : " + bookName);
-
                             continue;
                         }
-                        if (!(Regex.IsMatch(mass, "^[0-9]*$")))
+                        if (!check.Number(mass, print))
                         {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("숫자만 입력해주세요.");
-                            Console.ForegroundColor = ConsoleColor.White;
-                            Console.ReadLine();
                             Console.Clear(); print.Library();
                             Console.Write("도서 제목 : " + bookName);
+                            continue;
                         }
-                        else
-                        {
-                            break;
-                        }
+                        break;
                     }
                     Console.WriteLine("수량 추가가 완료되었습니다.");
                     book[count].Quantity += int.Parse(mass);
                     Console.WriteLine("아무키나 입력해주세요..");
                     Console.ReadLine();
                     return;
-                    //isSet = true;
                 }
                 count--;
             }
-
             recode += bookName + "\n" + "출판사 : ";
 
             while (isSet) // 출판사
             {
                 Console.Clear(); print.Library();
                 Console.Write(recode);
-                publisher = Console.ReadLine();
-
-                if (publisher.Length < 1 || publisher.Length > 10)
+                publisher = input.KeyChar(Constant.IS_NOT_PASSWORD);
+                if (publisher == "ESC")
+                {
+                    return;
+                }
+                if (!check.Length(publisher, Constant.BOOKNAME_MIN_LENGTH, Constant.BOOKNAME_MAX_LENGTH, print))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("글자 길이에 문제가 있습니다.");
+                    Console.WriteLine("입력하신 길이에 문제가 있습니다.");
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine("아무 키나 입력해주세요. . .");
                     Console.ReadLine();
+                    continue;
                 }
-                else
-                {
-                    isSet = false;
-                }
+                isSet = false;
             }
             recode += publisher + "\n" + "저자 : ";
 
@@ -196,20 +181,20 @@ namespace en_4_Library
             {
                 Console.Clear(); print.Library();
                 Console.Write(recode);
-                author = Console.ReadLine();
-
-                if (author.Length < 1 || author.Length > 10)
+                author = input.KeyChar(Constant.IS_NOT_PASSWORD);
+                if (author == "ESC")
+                {
+                    return;
+                }
+                if (!check.Length(author, Constant.BOOKNAME_MIN_LENGTH, Constant.BOOKNAME_MAX_LENGTH, print))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("글자 길이에 문제가 있습니다.");
+                    Console.WriteLine("입력하신 길이에 문제가 있습니다.");
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine("아무 키나 입력해주세요. . .");
                     Console.ReadLine();
+                    continue;
                 }
-                else
-                {
-                    isSet = true;
-                }
+                isSet = true;
             }
             recode += author + "\n" + "수량 : ";
 
@@ -225,26 +210,14 @@ namespace en_4_Library
                     Console.WriteLine("숫자만 입력해주세요.");
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.ReadLine();
+                    continue;
                 }
-                else
-                {
-                    isSet = false;
-                    break;
-                }
+                isSet = false;
             }
             quantity = int.Parse(mass);
             recode += quantity + "\n";
 
-
-            book.Add(new BookVO(bookName, publisher, author, quantity));// { Id = identity, BookName = bookName, Publisher = publisher, Author = author, Quantity = quantity});
-
-            /*foreach (List<> userVOs in user)
-            {
-                Console.WriteLine("{0}", userVOs.ToString);
-            }*/
-
-            //Console.WriteLine("아무키나 눌러주세요.");
-            //Console.ReadLine();
+            book.Add(new BookVO(bookName, publisher, author, quantity));
         }
 
         public void Remove(List<BookVO> book, Print print)
@@ -276,7 +249,5 @@ namespace en_4_Library
                 Console.ReadLine();
             }
         }
-    
-       
     }
 }

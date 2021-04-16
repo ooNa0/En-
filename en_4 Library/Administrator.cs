@@ -1,4 +1,5 @@
-﻿using System;
+﻿using en_4_Library.View;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,9 +7,10 @@ namespace en_4_Library
 {
     class Administrator
     {
-        public void Remove(List<UserVO> userList)
+        public void Remove(List<UserVO> userList, Print print)
         {
             Console.Clear();
+            print.Library();
             Console.WriteLine("지울 회원의 이름을 입력해주세요.");
 
             string wantRemoveName = Console.ReadLine();
@@ -47,7 +49,7 @@ namespace en_4_Library
                 remove = 0;
                 while (count >= 0)
                 {
-                    if (wantRemoveIdentity == userList[count].Id)
+                    if (wantRemoveIdentity == userList[count].Id && wantRemoveName == userList[count].Name)
                     {
                         remove++;
                         userList.RemoveAt(count);
@@ -64,14 +66,13 @@ namespace en_4_Library
             Console.ReadLine();
         }
 
-        public void Search(List<UserVO> userList)
+        public void Search(List<UserVO> userList, Print print)
         {
-            Console.Clear();
             string howToSearch;
             int count = userList.Count - 1;
             int search = 0;
 
-            Console.Clear();
+            Console.Clear(); print.Library();
             Console.WriteLine("찾으실 유저의 이름을 입력해주세요.");
             howToSearch = Console.ReadLine();
             while (count >= 0)

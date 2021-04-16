@@ -1,4 +1,5 @@
-﻿using System;
+﻿using en_4_Library.View;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -7,9 +8,9 @@ namespace en_4_Library
 {
     class Check
     {
-        public bool EnglishAndNumber(string input)
+        public bool EnglishAndNumber(string input, Print print)
         {
-            Console.Clear();
+            Console.Clear(); print.Library();
             if (!(Regex.Match(input, "^[a-zA-Z0-9]*$").Success))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -21,9 +22,9 @@ namespace en_4_Library
             return true;
         }
 
-        public bool English(string input)
+        public bool English(string input, Print print)
         {
-            Console.Clear();
+            Console.Clear(); print.Library();
             if (!(Regex.Match(input, "^[a-zA-Z]*$").Success))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -36,9 +37,9 @@ namespace en_4_Library
         }
 
         // 이거 안됨
-        public bool Number(string input)
+        public bool Number(string input, Print print)
         {
-            Console.Clear();
+            Console.Clear(); print.Library();
             if (!(Regex.Match(input, "^[0-9]+$").Success))
             {
                 Console.WriteLine(Regex.IsMatch(input, "^[0-9]+$"));
@@ -51,9 +52,9 @@ namespace en_4_Library
             return true;
         }
         
-        public bool Length(string input, int minLength, int maxLength)
+        public bool Length(string input, int minLength, int maxLength, Print print)
         {
-            Console.Clear();
+            Console.Clear(); print.Library();
             if (minLength > input.Length || input.Length > maxLength)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -65,9 +66,9 @@ namespace en_4_Library
             return true;
         }
 
-        public bool Korean(string input)
+        public bool Korean(string input, Print print)
         {
-            Console.Clear();
+            Console.Clear(); print.Library();
             if (!(Regex.IsMatch(input, "^[가-힣]{1,4}$")))
             {
                 Console.ForegroundColor = ConsoleColor.Red;

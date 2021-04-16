@@ -1,4 +1,5 @@
-﻿using System;
+﻿using en_4_Library.View;
+using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
@@ -8,9 +9,9 @@ namespace en_4_Library
 {
     class Book
     {
-        public void Search(Cursor cursor, List<BookVO> bookList)
+        public void Search(Cursor cursor, List<BookVO> bookList, Print print)
         {
-            Console.Clear();
+            Console.Clear(); print.Library();
             string howToSearch;
             int count = bookList.Count - 1;
             int search = 0;
@@ -20,7 +21,7 @@ namespace en_4_Library
                 case Constant.ESC:
                     return;
                 case Constant.SEARCH_BOOK_NAME:
-                    Console.Clear();
+                    Console.Clear(); print.Library();
                     Console.WriteLine("찾으실 도서의 제목을 입력해주세요.");
                     howToSearch = Console.ReadLine();
                     while (count >= 0)
@@ -39,7 +40,7 @@ namespace en_4_Library
                     Console.ReadLine();
                     break;
                 case Constant.SEARCH_BOOK_PUBLISHER:
-                    Console.Clear();
+                    Console.Clear(); print.Library();
                     Console.WriteLine("찾으실 도서의 출판사를 입력해주세요.");
                     howToSearch = Console.ReadLine();
                     while (count >= 0)
@@ -59,7 +60,7 @@ namespace en_4_Library
                     Console.ReadLine();
                     break;
                 case Constant.SEARCH_BOOK_AUTHOR:
-                    Console.Clear();
+                    Console.Clear(); print.Library();
                     Console.WriteLine("찾으실 도서의 저자를 입력해주세요.");
                     howToSearch = Console.ReadLine();
                     while (count >= 0)
@@ -82,7 +83,7 @@ namespace en_4_Library
             }
         }
         
-        public void Add(List<BookVO> book)
+        public void Add(List<BookVO> book, Print print)
         {
             string bookName = "";
             string publisher = "";
@@ -98,6 +99,7 @@ namespace en_4_Library
             while (!isSet) // 도서 이름
             {
                 Console.Clear();
+                print.Library();
                 //string star = "";
                 //Console.Write(recode);
                 Console.Write("(1~16)도서 제목 : ");//길이 8이상, 영어 + 숫자 + 특수문자)
@@ -149,7 +151,7 @@ namespace en_4_Library
                             Console.WriteLine("숫자만 입력해주세요.");
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.ReadLine();
-                            Console.Clear();
+                            Console.Clear(); print.Library();
                             Console.Write("도서 제목 : " + bookName);
                         }
                         else
@@ -171,7 +173,7 @@ namespace en_4_Library
 
             while (isSet) // 출판사
             {
-                Console.Clear();
+                Console.Clear(); print.Library();
                 Console.Write(recode);
                 publisher = Console.ReadLine();
 
@@ -192,7 +194,7 @@ namespace en_4_Library
 
             while (!isSet) // 저자
             {
-                Console.Clear();
+                Console.Clear(); print.Library();
                 Console.Write(recode);
                 author = Console.ReadLine();
 
@@ -213,7 +215,7 @@ namespace en_4_Library
 
             while (isSet) // 수량
             {
-                Console.Clear();
+                Console.Clear(); print.Library();
                 Console.Write(recode);
 
                 mass = Console.ReadLine();
@@ -245,9 +247,9 @@ namespace en_4_Library
             //Console.ReadLine();
         }
 
-        public void Remove(List<BookVO> book)
+        public void Remove(List<BookVO> book, Print print)
         {
-            Console.Clear();
+            Console.Clear(); print.Library();
             Console.WriteLine("지울 도서의 제목을 입력해주세요.");
 
             string wantRemove = Console.ReadLine();

@@ -55,7 +55,7 @@ namespace en_4_Library.View
             Console.WriteLine("                              ▷ 로그아웃");
         }
 
-        public void ShowAdministratorMode()
+        public void ShowAdministratorMenu()
         {
             Console.WriteLine("                              ▷ 도서 등록"); Console.WriteLine();
             Console.WriteLine("                              ▷ 도서 삭제"); Console.WriteLine();
@@ -105,9 +105,9 @@ namespace en_4_Library.View
             Console.WriteLine("\n(5번 이상 틀릴 경우 초기화면으로 돌아갑니다.)");
             Console.ReadLine();
         }
-        public void ShowBookList(List<BookVO> bookList)
+        public void ShowBookList(List<BookVO> bookList, Print print)
         {
-            Console.Clear();
+            Console.Clear(); print.Library();
             int count = bookList.Count - 1;
             Console.WriteLine("도서명               저자                 출판사명          수량 ");
             while (count >= 0)
@@ -122,9 +122,9 @@ namespace en_4_Library.View
             Console.ReadLine();
             Console.Clear();
         }
-        public void ShowUserList(List<UserVO> userList)
+        public void ShowUserList(List<UserVO> userList, Print print)
         {
-            Console.Clear();
+            Console.Clear(); print.Library();
             int count = userList.Count - 1;
             Console.WriteLine("이름               아이디                 나이 ");
             while (count >= 0)

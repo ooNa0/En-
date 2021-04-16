@@ -46,10 +46,9 @@ namespace en_3_Libray.View
         }
         public void BookList(List<BookVO> bookVO)
         {
-            //string wantSearch = Console.ReadLine();
             Console.Clear();
-            //Console.WriteLine(bookVO.Count);
             int count = bookVO.Count - 1;
+            Console.WriteLine("도서명               저자                 출판사명          수량 ");
             while (count >= 0)
             {
                 foreach (BookVO book in bookVO)
@@ -59,6 +58,7 @@ namespace en_3_Libray.View
                 break;
             }
             Console.ReadLine();
+            Console.Clear();
         }
     }
 }

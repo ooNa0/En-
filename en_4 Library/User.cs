@@ -25,6 +25,7 @@ namespace en_4_Library
             while (isSet) // 아이디
             {
                 Console.Clear();
+                print.LibraryEscapeKey();
                 Console.Write("                              아이디 :");
                 //convertString = input.KeyChar(Constant.IS_NOT_PASSWORD);
                 //identity = new string(convertString.ToArray());
@@ -56,7 +57,8 @@ namespace en_4_Library
             while (!isPasswordExist)
             {
                 Console.Clear();
-                Console.WriteLine("                              아이디 :" + identity);
+                print.LibraryEscapeKey();
+                Console.WriteLine("                              아이디 :" + identity + "\n");
                 Console.Write("                              비밀번호 : ");
                 password = input.KeyChar(Constant.IS_PASSWORD);
                 //convertString = input.KeyChar(Constant.IS_NOT_PASSWORD);
@@ -67,15 +69,14 @@ namespace en_4_Library
                 }
                 if (password != userList[count].Password) // 해당 아이디에 비밀번호가 맞는지
                 {
-                    Console.WriteLine("\n틀렸습니다. 다시 입력해주세요. (5번 이상 틀릴 경우 초기화면으로 돌아갑니다.");
+                    print.IncorrectPassword();
                     if (failCount > 5)
                     {
-                        Console.WriteLine("초기 화면으로 돌아갑니다.");
-                        //Thread.Sleep(500);
+                        Console.WriteLine("            초기 화면으로 돌아갑니다.");
+                        Thread.Sleep(500);
                         Console.ReadLine();
                         return -1;
                     }
-                    Console.ReadLine();
                     failCount++;
                     Console.Clear();
                     Console.Write("아이디 : " + identity + "\n");
@@ -110,6 +111,7 @@ namespace en_4_Library
             while (isSet) // 아이디
             {
                 Console.Clear();
+                print.LibraryEscapeKey();
                 Console.Write(record);
                 identity = input.KeyChar(Constant.IS_NOT_PASSWORD);
                 //convertString = input.KeyChar(Constant.IS_NOT_PASSWORD);
@@ -145,6 +147,7 @@ namespace en_4_Library
             while (!isSet) // 비밀번호
             {
                 Console.Clear();
+                print.LibraryEscapeKey();
                 password = "";
                 Console.Write(record);
                 Console.Write("(길이 8이상 15이하 영어나 숫자)비밀번호 : ");//길이 8이상, 영어 + 숫자 + 특수문자)
@@ -176,7 +179,7 @@ namespace en_4_Library
 
             while (isSet) // 이름
             {
-                Console.Clear();
+                Console.Clear(); print.LibraryEscapeKey();
                 Console.Write(record);
                 Console.Write("(4글자 내 한글)이름 : ");
                 name = input.KeyChar(Constant.IS_NOT_PASSWORD);
@@ -200,7 +203,7 @@ namespace en_4_Library
 
             while (!isSet) // 나이
             {
-                Console.Clear();
+                Console.Clear(); print.LibraryEscapeKey();
                 Console.Write(record);
                 Console.Write("(숫자만 입력)나이 : ");//(숫자만 입력)
                 age = input.KeyChar(Constant.IS_NOT_PASSWORD);
@@ -221,11 +224,12 @@ namespace en_4_Library
                     isSet = true;
                 }
             }
+            print.LibraryEscapeKey();
             Console.WriteLine(record);
             /*
             while (isSet) // 전화번호
             {
-                Console.Clear();
+                Console.Clear();print.LibraryEscapeKey();
                 Console.Write(record);
                 Console.Write("(000-0000-0000 형식)전화번호: ");
                 //phoneNumber = input.KeyChar(Constant.IS_NOT_PASSWORD);
@@ -247,6 +251,7 @@ namespace en_4_Library
                 }
             }*/
             userList.Add(new UserVO(identity, password, name, age));// phoneNumber, 0));
+            
             Console.WriteLine("\n회원가입이 완료되었습니다. 반가워요 " + userList[userList.Count - 1].Name + "님");
             Console.WriteLine("아무키나 눌러주세요.");
             Console.ReadLine();
@@ -261,11 +266,11 @@ namespace en_4_Library
             string borrowBook = Console.ReadLine();
             int count = bookList.Count - 1;
             
-            while (count >= 0 && userList[userNumber].BorrowBookNumber > 0)
+            while (count >= 0 && userList[userNumber].BorrowBookNumber == 0)
             {
                 if (borrowBook == bookList[count].BookName)
                 {
-                    if(bookList[count].Quantity > 0 && userList[userNumber].BorrowBookNumber > 0)
+                    if(bookList[count].Quantity > 0 && userList[userNumber].BorrowBookNumber == 0)
                     {
                         bookList[count].Quantity -= 1;
                         userList[userNumber].BorrowBook = borrowBook;
@@ -305,20 +310,26 @@ namespace en_4_Library
         public void ReturnBook(List<UserVO> userList, List<BookVO> bookList, int userNumber)
         {
             Console.Clear();
-            if(userList[userNumber].BorrowBookNumber > 0)
+            if(userList[userNumber].BorrowBookNumber == 0)
             {
                 Console.WriteLine("반납할 수 있는 책이 없습니다!");
-
             }
             else
             {
-                Console.WriteLine("빌린 책 한권을 반납을 완료하였습니다.");
-                userList[userNumber].BorrowBookNumber = 1;
+                Console.WriteLine("빌린 책 반납을 완료하였습니다.");
+                int count = bookList.Count - 1;
+                while (count >= 0)
+                {
+                    if (userList[userNumber].BorrowBook == bookList[count].BookName)
+                    {
+                        bookList[userNumber].Quantity += 1;
+                    }
+                    count--;
+                }
+                userList[userNumber].BorrowBookNumber = 0;
                 userList[userNumber].BorrowBook = "";
                 userList[userNumber].BorrowDate = "";
                 userList[userNumber].RorrowDate = "";
-                bookList[userNumber].Quantity += 1;
-                // 반납한 책 대출 가능여부 수정
             }
             Console.WriteLine("아무 키나 눌러주세요. . .");
             Console.ReadLine();

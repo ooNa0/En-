@@ -10,10 +10,8 @@ namespace en_4_Library
         private string bookName;      // 도서명
         private string publisher; // 출판사명
         private string author;    // 저자명
+        //private int quantityAvailableBorrow; // 대출 가능 수량
         private int quantity;  // 수량
-        private bool isBorrowed; // 대출중
-        private string borrowDate; // 대출일
-        private DateTime returnDate; // 반납일
 
         public BookVO(string bookName, string publisher, string author, int quantity)
         {
@@ -43,16 +41,12 @@ namespace en_4_Library
             get { return quantity; }
             set { quantity = value; }
         }
-        public string BorrowDate
+        /*
+        public int QuantityAvailableBorrow // 수량
         {
-            get { return borrowDate; }
-            set { borrowDate = value; }
-        }
-        public DateTime RorrowDate
-        {
-            get { return returnDate; }
-            set { returnDate = value; }
-        }
+            get { return quantityAvailableBorrow; }
+            set { quantityAvailableBorrow = value; }
+        }*/
         public override string ToString()
         {
             return BookName.PadRight(16, '-') + Author.PadRight(10, ' ') + Publisher.PadRight(10, ' ') + Quantity;//base.ToString();

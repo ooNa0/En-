@@ -33,7 +33,15 @@ namespace en_3_Libray.View
                 {
                     case "Yes":
                         return 0;
+                    case "YES":
+                        return 0;
+                    case "yes":
+                        return 0;
                     case "No":
+                        return 1;
+                    case "NO":
+                        return 1;
+                    case "no":
                         return 1;
                     default:
                         Console.ForegroundColor = ConsoleColor.Red;

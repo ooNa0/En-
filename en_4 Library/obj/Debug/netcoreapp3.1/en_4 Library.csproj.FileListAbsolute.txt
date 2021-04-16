@@ -1,0 +1,13 @@
+C:\Users\구나영\Desktop\en#\en_4 Library\obj\Debug\netcoreapp3.1\en_4 Library.csprojAssemblyReference.cache
+C:\Users\구나영\Desktop\en#\en_4 Library\obj\Debug\netcoreapp3.1\en_4 Library.csproj.CoreCompileInputs.cache
+C:\Users\구나영\Desktop\en#\en_4 Library\obj\Debug\netcoreapp3.1\en_4 Library.AssemblyInfoInputs.cache
+C:\Users\구나영\Desktop\en#\en_4 Library\obj\Debug\netcoreapp3.1\en_4 Library.AssemblyInfo.cs
+C:\Users\구나영\Desktop\en#\en_4 Library\bin\Debug\netcoreapp3.1\en_4 Library.exe
+C:\Users\구나영\Desktop\en#\en_4 Library\bin\Debug\netcoreapp3.1\en_4 Library.deps.json
+C:\Users\구나영\Desktop\en#\en_4 Library\bin\Debug\netcoreapp3.1\en_4 Library.runtimeconfig.json
+C:\Users\구나영\Desktop\en#\en_4 Library\bin\Debug\netcoreapp3.1\en_4 Library.runtimeconfig.dev.json
+C:\Users\구나영\Desktop\en#\en_4 Library\bin\Debug\netcoreapp3.1\en_4 Library.dll
+C:\Users\구나영\Desktop\en#\en_4 Library\bin\Debug\netcoreapp3.1\en_4 Library.pdb
+C:\Users\구나영\Desktop\en#\en_4 Library\obj\Debug\netcoreapp3.1\en_4 Library.dll
+C:\Users\구나영\Desktop\en#\en_4 Library\obj\Debug\netcoreapp3.1\en_4 Library.pdb
+C:\Users\구나영\Desktop\en#\en_4 Library\obj\Debug\netcoreapp3.1\en_4 Library.genruntimeconfig.cache

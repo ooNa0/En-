@@ -21,7 +21,22 @@ namespace en_4_Library.View
             //Console.WriteLine("└─────────────────────────────[뒤로가기 :: ESC]────────────────────────┘");
             Console.WriteLine(); Console.WriteLine();
         }
-        
+        public void LibraryEscapeKey()
+        {
+            Console.WriteLine("┌──────────────────────────────────────────────────────────────────────┐");
+            Console.WriteLine("│                                                                      │");
+            Console.WriteLine("│   ■       ■  ■■■■   ■■■■     ■■   ■■■■   ■    ■    │");
+            Console.WriteLine("│   ■       ■  ■     ■  ■     ■  ■    ■ ■     ■  ■    ■    │");
+            Console.WriteLine("│   ■       ■  ■■■■   ■■■■   ■■■■ ■■■■    ■  ■     │");
+            Console.WriteLine("│   ■       ■  ■     ■  ■■■     ■    ■ ■■■        ■       │");
+            Console.WriteLine("│   ■       ■  ■     ■  ■   ■■  ■    ■ ■   ■■     ■       │");
+            Console.WriteLine("│   ■■■■ ■  ■■■■   ■     ■  ■    ■ ■     ■     ■       │");
+            Console.WriteLine("│                                                                      │");
+            //Console.WriteLine("└──────────────────────────────────────────────────────────────────────┘");
+            Console.WriteLine("└────────────────────────────[뒤로가기 :: ESC]─────────────────────────┘");
+            Console.WriteLine(); Console.WriteLine();
+        }
+
         public void ShowMenu()
         {
             Console.WriteLine("                              ▷ 로그인"); Console.WriteLine();
@@ -63,21 +78,33 @@ namespace en_4_Library.View
         public void IsNotExistIdentity()
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("                              이미 존재하는 아이디가 아닙니다.");
+            Console.WriteLine("\n\n이미 존재하는 아이디가 아닙니다.");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("                              아무키나 입력해주세요..");
+            Console.WriteLine("\n아무키나 입력해주세요..");
             Console.ReadLine();
         }
 
         public void IsExistIdentity()
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("                              이미 존재하는 아이디입니다.");
+            //Console.WriteLine("                              이미 존재하는 아이디입니다.");
+            Console.WriteLine("\n\n이미 존재하는 아이디입니다.");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("                              아무키나 입력해주세요..");
+            //Console.WriteLine("                              아무키나 입력해주세요..");
+            Console.WriteLine("\n아무키나 입력해주세요..");
             Console.ReadLine();
         }
 
+        public void IncorrectPassword()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            //Console.WriteLine("\n\n                       틀렸습니다. 다시 입력해주세요.");
+            Console.WriteLine("\n\n틀렸습니다. 다시 입력해주세요.");
+            Console.ForegroundColor = ConsoleColor.White;
+            //Console.WriteLine("\n\n                (5번 이상 틀릴 경우 초기화면으로 돌아갑니다.)");
+            Console.WriteLine("\n(5번 이상 틀릴 경우 초기화면으로 돌아갑니다.)");
+            Console.ReadLine();
+        }
         public void ShowBookList(List<BookVO> bookList)
         {
             Console.Clear();

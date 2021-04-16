@@ -21,7 +21,7 @@ namespace en_4_Library
         }*/
         private string borrowBook;
         private string borrowDate; // 대출일
-        private DateTime returnDate; // 반납일
+        private string returnDate; // 반납일
 
         public UserVO(string id, string password, string name, string age)//, int borrowBookNumber)//string phoneNumber, 
         {
@@ -64,7 +64,7 @@ namespace en_4_Library
             get { return borrowDate; }
             set { borrowDate = value; }
         }
-        public DateTime RorrowDate
+        public string RorrowDate
         {
             get { return returnDate; }
             set { returnDate = value; }

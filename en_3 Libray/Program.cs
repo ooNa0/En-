@@ -1,6 +1,8 @@
 ﻿using en_3_Libray.View;
 using System;
-
+// 관리자 모드로 접속하는 방법, 비밀번호 **** 입니다. (별 네개)
+// 기본 회원, 기본 책을 저장하였습니다!
+// 테스트 편함을 위해 어떤 회원은 아이디가 a, 비밀번호가 a이며, 어떤 도서 제목은 a입니다! 테스트할때 참고해주시면 감사하겠습니다!
 namespace en_3_Libray
 {
     class Program
@@ -9,9 +11,6 @@ namespace en_3_Libray
         {
             Menu menu = new Menu();
             menu.MainMenu();
-
-            Console.Title = "Library";
-            //Console.SetWindowSize(50, 37);
         }
     }
 }

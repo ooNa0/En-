@@ -29,6 +29,7 @@ namespace en_4_Library
                 //convertString = input.KeyChar(Constant.IS_NOT_PASSWORD);
                 //identity = new string(convertString.ToArray());
                 identity = input.KeyChar(Constant.IS_NOT_PASSWORD);
+                count = userList.Count - 1;
                 if (identity == "ESC")
                 {
                     return -1;
@@ -259,15 +260,14 @@ namespace en_4_Library
             Console.WriteLine("무슨 책을 대출하시겠습니까?");
             string borrowBook = Console.ReadLine();
             int count = bookList.Count - 1;
+            
             while (count >= 0 && userList[userNumber].BorrowBookNumber > 0)
             {
                 if (borrowBook == bookList[count].BookName)
                 {
-                    //bookList[count].BorrowDate = DateTime.Now.ToString("yyyyMMdd");
-                    //bookList[count].RorrowDate = DateTime.Now.AddDays(7);
-                    if(bookList[count].QuantityAvailableBorrow > 0)
+                    if(bookList[count].Quantity > 0 && userList[userNumber].BorrowBookNumber > 0)
                     {
-                        bookList[count].QuantityAvailableBorrow -= 1;
+                        bookList[count].Quantity -= 1;
                         userList[userNumber].BorrowBook = borrowBook;
                         userList[userNumber].BorrowDate = DateTime.Now.ToString("yyyy-MM-dd");
                         userList[userNumber].RorrowDate = DateTime.Now.AddDays(7).ToString("yyyy-MM-dd");
@@ -279,9 +279,19 @@ namespace en_4_Library
             }
             if (search == 0)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("찾는 책이 없거나 재고가 남아있지 않습니다.");
-                Console.ForegroundColor = ConsoleColor.White;
+                if(userList[userNumber].BorrowBookNumber == 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("찾는 책이 없거나 재고가 남아있지 않습니다.");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else
+                {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("책 한권만 빌릴 수 있습니다.");
+                        Console.ForegroundColor = ConsoleColor.White;
+                
+                }
             }
             else
             {
@@ -295,7 +305,7 @@ namespace en_4_Library
         public void ReturnBook(List<UserVO> userList, List<BookVO> bookList, int userNumber)
         {
             Console.Clear();
-            if(userList[userNumber].BorrowBookNumber == 0)
+            if(userList[userNumber].BorrowBookNumber > 0)
             {
                 Console.WriteLine("반납할 수 있는 책이 없습니다!");
 
@@ -303,14 +313,16 @@ namespace en_4_Library
             else
             {
                 Console.WriteLine("빌린 책 한권을 반납을 완료하였습니다.");
-                userList[userNumber].BorrowBookNumber = 0;
+                userList[userNumber].BorrowBookNumber = 1;
                 userList[userNumber].BorrowBook = "";
                 userList[userNumber].BorrowDate = "";
                 userList[userNumber].RorrowDate = "";
-                bookList[userNumber].QuantityAvailableBorrow += 1;
-                userList[userNumber].BorrowBookNumber--;
+                bookList[userNumber].Quantity += 1;
                 // 반납한 책 대출 가능여부 수정
             }
+            Console.WriteLine("아무 키나 눌러주세요. . .");
+            Console.ReadLine();
+            Console.Clear();
         }
     }
 }

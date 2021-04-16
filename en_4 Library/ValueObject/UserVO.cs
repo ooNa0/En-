@@ -10,16 +10,27 @@ namespace en_4_Library
         private string password;
         private string name;
         private string age;
-        private string phoneNumber;
+        //private string phoneNumber;
         private int borrowBookNumber = 0;
+        /*
+        private struct borrowBook
+        {
+            private string book;
+            private DateTime borrowDate;
+            private DateTime returnDate;
+        }*/
+        private string borrowBook;
+        private string borrowDate; // 대출일
+        private DateTime returnDate; // 반납일
 
-        public UserVO()
+        public UserVO(string id, string password, string name, string age)//, int borrowBookNumber)//string phoneNumber, 
         {
             this.Id = id;
-            this.PassWord = password;
+            this.Password = password;
             this.Name = name;
             this.Age = age;
-            this.PhoneNumber = phoneNumber;
+            //this.PhoneNumber = phoneNumber;
+            //this.borrowBookNumber = borrowBookNumber;
         }
 
         public string Id // 아이디
@@ -27,40 +38,51 @@ namespace en_4_Library
             get { return id; }
             set { id = value; }
         }
-
-        public string PassWord // 비밀번호
+        public string Password // 비밀번호
         {
             get { return password; }
             set { password = value; }
         }
-
         public string Name // 이름
         {
             get { return name; }
             set { name = value; }
         }
-
         public string Age // 나이
         {
             get { return age; }
             set { age = value; }
         }
-
+        /*
         public string PhoneNumber // 전화번호
         {
             get { return phoneNumber; }
             set { phoneNumber = value; }
+        }*/
+        public string BorrowDate
+        {
+            get { return borrowDate; }
+            set { borrowDate = value; }
         }
+        public DateTime RorrowDate
+        {
+            get { return returnDate; }
+            set { returnDate = value; }
+        }
+        public string BorrowBook
+        {
+            get { return borrowBook; }
+            set { borrowBook = value; }
 
+        }
         public int BorrowBookNumber
         {
             get { return borrowBookNumber; }
             set { borrowBookNumber = value; }
         }
-
         public override string ToString()
         {
-            return "이름: " + Name.PadRight(4, ' ') + "아이디: " + Id.PadRight(10, ' ') + "나이: " + Age.PadRight(3, ' ') + "전화번호: " + PhoneNumber;
+            return "이름: " + Name.PadRight(4, ' ') + "아이디: " + Id.PadRight(10, ' ') + "나이: " + Age.PadRight(3, ' ');// + "전화번호: " + PhoneNumber;
         }
     }
 }

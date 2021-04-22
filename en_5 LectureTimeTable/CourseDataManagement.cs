@@ -51,7 +51,7 @@ namespace en_5_LectureTimeTable
                     case Constant.BY_COURSE_TITLE: // 교과목 명으로
 
                         break;
-                    case Constant.BY_TARGETSTUDENT: // 강의 대상 학년으로
+                    case Constant.BY_TARGET_STUDENT: // 강의 대상 학년으로
 
                         break;
                     case Constant.BY_LECTURER: // 교수명으로

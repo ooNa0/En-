@@ -75,5 +75,7 @@ namespace en_5_LectureTimeTable
 
         public const string SAVE_TIMETABLE = "2";
 
+        //숫자 하나만
+        public const int NUMBER_LENGTH = 1;
     }
 }

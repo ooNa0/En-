@@ -6,7 +6,7 @@ namespace en_4_Library
 {
     class BookVO
     {
-        private string id; // 도서 번호
+        //private string id; // 도서 번호
         private string bookName;      // 도서명
         private string publisher; // 출판사명
         private string author;    // 저자명

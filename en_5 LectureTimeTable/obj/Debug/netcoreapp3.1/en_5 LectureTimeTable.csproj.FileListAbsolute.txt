@@ -1,0 +1,32 @@
+C:\Users\구나영\Desktop\en\구나영_LectureTimeTable\en_5 LectureTimeTable\obj\Debug\netcoreapp3.1\en_5 LectureTimeTable.csprojAssemblyReference.cache
+C:\Users\구나영\Desktop\en\구나영_LectureTimeTable\en_5 LectureTimeTable\obj\Debug\netcoreapp3.1\Interop.Microsoft.Office.Interop.Excel.dll
+C:\Users\구나영\Desktop\en\구나영_LectureTimeTable\en_5 LectureTimeTable\obj\Debug\netcoreapp3.1\en_5 LectureTimeTable.csproj.ResolveComReference.cache
+C:\Users\구나영\Desktop\en\구나영_LectureTimeTable\en_5 LectureTimeTable\obj\Debug\netcoreapp3.1\en_5 LectureTimeTable.csproj.CoreCompileInputs.cache
+C:\Users\구나영\Desktop\en\구나영_LectureTimeTable\en_5 LectureTimeTable\obj\Debug\netcoreapp3.1\en_5 LectureTimeTable.AssemblyInfoInputs.cache
+C:\Users\구나영\Desktop\en\구나영_LectureTimeTable\en_5 LectureTimeTable\obj\Debug\netcoreapp3.1\en_5 LectureTimeTable.AssemblyInfo.cs
+C:\Users\구나영\Desktop\en\구나영_LectureTimeTable\en_5 LectureTimeTable\bin\Debug\netcoreapp3.1\en_5 LectureTimeTable.exe
+C:\Users\구나영\Desktop\en\구나영_LectureTimeTable\en_5 LectureTimeTable\bin\Debug\netcoreapp3.1\en_5 LectureTimeTable.deps.json
+C:\Users\구나영\Desktop\en\구나영_LectureTimeTable\en_5 LectureTimeTable\bin\Debug\netcoreapp3.1\en_5 LectureTimeTable.runtimeconfig.json
+C:\Users\구나영\Desktop\en\구나영_LectureTimeTable\en_5 LectureTimeTable\bin\Debug\netcoreapp3.1\en_5 LectureTimeTable.runtimeconfig.dev.json
+C:\Users\구나영\Desktop\en\구나영_LectureTimeTable\en_5 LectureTimeTable\bin\Debug\netcoreapp3.1\en_5 LectureTimeTable.dll
+C:\Users\구나영\Desktop\en\구나영_LectureTimeTable\en_5 LectureTimeTable\bin\Debug\netcoreapp3.1\en_5 LectureTimeTable.pdb
+C:\Users\구나영\Desktop\en\구나영_LectureTimeTable\en_5 LectureTimeTable\obj\Debug\netcoreapp3.1\en_5 LectureTimeTable.dll
+C:\Users\구나영\Desktop\en\구나영_LectureTimeTable\en_5 LectureTimeTable\obj\Debug\netcoreapp3.1\en_5 LectureTimeTable.pdb
+C:\Users\구나영\Desktop\en\구나영_LectureTimeTable\en_5 LectureTimeTable\obj\Debug\netcoreapp3.1\en_5 LectureTimeTable.genruntimeconfig.cache
+C:\Users\구나영\Desktop\en\구나영_LectureTimeTable\en_5 LectureTimeTable\bin\Debug\netcoreapp3.1\Interop.Microsoft.Office.Interop.Excel.dll
+C:\Users\구나영\Desktop\en#\en_5 LectureTimeTable\bin\Debug\netcoreapp3.1\en_5 LectureTimeTable.exe
+C:\Users\구나영\Desktop\en#\en_5 LectureTimeTable\bin\Debug\netcoreapp3.1\en_5 LectureTimeTable.deps.json
+C:\Users\구나영\Desktop\en#\en_5 LectureTimeTable\bin\Debug\netcoreapp3.1\en_5 LectureTimeTable.runtimeconfig.json
+C:\Users\구나영\Desktop\en#\en_5 LectureTimeTable\bin\Debug\netcoreapp3.1\en_5 LectureTimeTable.runtimeconfig.dev.json
+C:\Users\구나영\Desktop\en#\en_5 LectureTimeTable\bin\Debug\netcoreapp3.1\en_5 LectureTimeTable.dll
+C:\Users\구나영\Desktop\en#\en_5 LectureTimeTable\bin\Debug\netcoreapp3.1\en_5 LectureTimeTable.pdb
+C:\Users\구나영\Desktop\en#\en_5 LectureTimeTable\bin\Debug\netcoreapp3.1\Interop.Microsoft.Office.Interop.Excel.dll
+C:\Users\구나영\Desktop\en#\en_5 LectureTimeTable\obj\Debug\netcoreapp3.1\en_5 LectureTimeTable.csprojAssemblyReference.cache
+C:\Users\구나영\Desktop\en#\en_5 LectureTimeTable\obj\Debug\netcoreapp3.1\Interop.Microsoft.Office.Interop.Excel.dll
+C:\Users\구나영\Desktop\en#\en_5 LectureTimeTable\obj\Debug\netcoreapp3.1\en_5 LectureTimeTable.csproj.ResolveComReference.cache
+C:\Users\구나영\Desktop\en#\en_5 LectureTimeTable\obj\Debug\netcoreapp3.1\en_5 LectureTimeTable.csproj.CoreCompileInputs.cache
+C:\Users\구나영\Desktop\en#\en_5 LectureTimeTable\obj\Debug\netcoreapp3.1\en_5 LectureTimeTable.AssemblyInfoInputs.cache
+C:\Users\구나영\Desktop\en#\en_5 LectureTimeTable\obj\Debug\netcoreapp3.1\en_5 LectureTimeTable.AssemblyInfo.cs
+C:\Users\구나영\Desktop\en#\en_5 LectureTimeTable\obj\Debug\netcoreapp3.1\en_5 LectureTimeTable.dll
+C:\Users\구나영\Desktop\en#\en_5 LectureTimeTable\obj\Debug\netcoreapp3.1\en_5 LectureTimeTable.pdb
+C:\Users\구나영\Desktop\en#\en_5 LectureTimeTable\obj\Debug\netcoreapp3.1\en_5 LectureTimeTable.genruntimeconfig.cache

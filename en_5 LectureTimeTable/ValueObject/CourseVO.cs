@@ -4,7 +4,7 @@ using System.Text;
 
 namespace en_5_LectureTimeTable
 {
-    class LectureVO
+    class CourseVO
     {
     }
 }

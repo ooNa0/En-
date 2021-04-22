@@ -10,7 +10,7 @@ namespace en_5_LectureTimeTable
 
         public const int CONSOLE_SIZE_Y = 45;
 
-        public const int CONSOLE_SHOW_ALL_COURSE_SIZE_X = 140;
+        public const int CONSOLE_SHOW_ALL_COURSE_SIZE_X = 170;
 
         public const int CONSOLE_SHOW_ALL_COURSE_SIZE_Y = 50;
 

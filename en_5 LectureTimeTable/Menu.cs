@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Reflection.Metadata;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -12,18 +13,20 @@ namespace en_5_LectureTimeTable
         private Print print;
         private InputCheck inputCheck;
         private CourseDataManagement management;
+        private List<CourseVO> courseList;
         public Menu()
         {
             print = new Print();
             inputCheck = new InputCheck();
             management = new CourseDataManagement();
+            courseList = new List<CourseVO>();
         }
         public void Setting()
         {
-            StartMenu(); // 메뉴 시작
+            //StartMenu(); // 메뉴 시작
 
-            Console.WriteLine("\n프로그램을 이용해주셔서 감사합니다.\n");
-            /*
+            Console.WriteLine("\n로딩중. .. .\n");
+            
             try
             {
                 // Excel Application 객체 생성
@@ -37,25 +40,38 @@ namespace en_5_LectureTimeTable
 
                 // 특정 sheet의 값 가져오기
                 Excel.Worksheet worksheet = sheets["Sheet1"] as Excel.Worksheet;
+                // 첫번째 워크 시트 가져오기
+                //Excel.Worksheet worksheet = workbook.Worksheets.get_Item(1) as Excel.Worksheet;
 
                 // 범위 설정 (좌측 상단, 우측 하단)
-                Excel.Range cellRange = worksheet.get_Range("A1", "C3") as Excel.Range;
+                //Excel.Range cellRange = worksheet.get_Range(Constant.EXCEL_LOCATION_TOP_LEFT, Constant.EXCEL_LOCATION_BOTTOM_RIGHT) as Excel.Range;
+                Excel.Range cellRange = worksheet.get_Range("A2", "L170") as Excel.Range;
 
                 // 설정한 범위만큼 데이터 담기 (Value2 -셀의 기본 값 제공)
                 Array data = cellRange.Cells.Value2;
 
+                // 사용중인 범위 가져오기
+                //Excel.Range range = worksheet.UsedRange;
+
                 // 데이터 출력
 
-                Console.WriteLine(data.GetValue(1, 1));
-                Console.WriteLine(data.GetValue(1, 2));
-                Console.WriteLine(data.GetValue(1, 3));
-                Console.WriteLine(data.GetValue(2, 1));
-                Console.WriteLine(data.GetValue(2, 2));
-                Console.WriteLine(data.GetValue(2, 3));
-                Console.WriteLine(data.GetValue(3, 1));
-                Console.WriteLine(data.GetValue(3, 2));
-                Console.WriteLine(data.GetValue(3, 3));
-                
+                for (int row = 2; row < Constant.EXCEL_ROW_RANGE; row++)
+                {
+                    courseList.Add(new CourseVO((double)data.GetValue(row, Constant.COLUMN_NO), (string)data.GetValue(row, Constant.COLUMN_MAJOR), (string)data.GetValue(row, Constant.COLUMN_COURSE_NUMBER),
+                        (string)data.GetValue(row, Constant.COLUMN_DIVISION_NUMBER), (string)data.GetValue(row, Constant.COLUMN_COURSE_TITLE), (string)data.GetValue(row, Constant.COLUMN_CATEGORIZATION),
+                        (double)data.GetValue(row, Constant.COLUMN_TARGET_STUDENT), (double)data.GetValue(row, Constant.COLUMN_CREDIT), (string)data.GetValue(row, Constant.COLUMN_DATETIME),
+                        (string)data.GetValue(row, Constant.COLUMN_COURSEROOM), (string)data.GetValue(row, Constant.COLUMN_LECTURER), (string)data.GetValue(row, Constant.COLUMN_LANGUAGE))); // ~12
+                }
+                //Console.WriteLine(data.GetValue(1, 1).GetType());
+                //Console.WriteLine(data.GetValue(1, 2).GetType());
+                //Console.WriteLine(data.GetValue(1, 3).GetType());
+                //Console.WriteLine(data.GetValue(2, 1));
+                //Console.WriteLine(data.GetValue(2, 2));
+                //Console.WriteLine(data.GetValue(2, 3));
+                //Console.WriteLine(data.GetValue(3, 1));
+                //Console.WriteLine(data.GetValue(3, 2));
+                //Console.WriteLine(data.GetValue(3, 3));
+
 
                 StartMenu(); // 메뉴 시작
 
@@ -70,7 +86,7 @@ namespace en_5_LectureTimeTable
             catch (SystemException e)
             {
                 Console.WriteLine(e.Message);
-            }*/
+            }
         }
         public void StartMenu()
         {
@@ -118,10 +134,17 @@ namespace en_5_LectureTimeTable
                         print.NoticeBack();
                         return;
                     case Constant.SHOW_ALL_COURSE: // 전체 강의 보기
-
+                        print.ShowAllCourse(courseList);
                         break;
                     case Constant.ADD_COURSE: // 강의 추가
-
+                        if (isInterestedCourse) // 관심과목일 경우
+                        {
+                            print.ShowInterestedCourseMenu();
+                        }
+                        else // 수강신청일 경우
+                        {
+                            print.ShowCourseRegistrationMenu();
+                        }
                         break;
                     case Constant.REMOVE_COURSE: // 강의 삭제
 

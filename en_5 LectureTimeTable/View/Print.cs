@@ -50,5 +50,12 @@ namespace en_5_LectureTimeTable
             Console.WriteLine("5. 교수명으로");
             //Console.WriteLine("6. 관심과목 검색");
         }
+
+        public void NoticeBack()
+        {
+            Console.WriteLine("아무키나 누루면 뒤로갑니다.");
+            Console.ReadLine();
+            Console.Clear();
+        }
     }
 }

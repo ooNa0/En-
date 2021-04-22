@@ -10,11 +10,29 @@ namespace en_5_LectureTimeTable
 
         public const int CONSOLE_SIZE_Y = 45;
 
+        public const int CONSOLE_SHOW_ALL_COURSE_SIZE_X = 140;
+
+        public const int CONSOLE_SHOW_ALL_COURSE_SIZE_Y = 50;
+
         // 엑셀 범위
         public const string EXCEL_LOCATION_TOP_LEFT= "A2";
 
         public const string EXCEL_LOCATION_BOTTOM_RIGHT = "L170";
 
+        public const int EXCEL_ROW_RANGE = 170;
+
+        public const int COLUMN_NO = 1;
+        public const int COLUMN_MAJOR = 2;
+        public const int COLUMN_COURSE_NUMBER = 3;
+        public const int COLUMN_DIVISION_NUMBER = 4;
+        public const int COLUMN_COURSE_TITLE = 5;
+        public const int COLUMN_CATEGORIZATION = 6;
+        public const int COLUMN_TARGET_STUDENT = 7;
+        public const int COLUMN_CREDIT = 8;
+        public const int COLUMN_DATETIME = 9;
+        public const int COLUMN_COURSEROOM = 10;
+        public const int COLUMN_LECTURER = 11;
+        public const int COLUMN_LANGUAGE = 12;
 
         // 수강신청인지, 관심과목인지!
         public const bool IS_INTERESTED_COURSE = true;
@@ -60,7 +78,7 @@ namespace en_5_LectureTimeTable
 
         public const string BY_COURSE_TITLE = "3";
 
-        public const string BY_TARGETSTUDENT = "4";
+        public const string BY_TARGET_STUDENT = "4";
 
         public const string BY_LECTURER = "5";
 
@@ -77,5 +95,20 @@ namespace en_5_LectureTimeTable
 
         //숫자 하나만
         public const int NUMBER_LENGTH = 1;
+
+        // LectureVO 패딩
+        public const int PADING_NO = 4;
+
+        public const int PADING_MAJOR = 16;
+
+        public const int PADING_COURSE_TITLE = 36;
+
+        public const int PADING_DATE_TIME = 36;
+
+        public const int PADING_COURSE_ROOM = 15;
+
+        public const int PADING_LECTURER = 30;
+
+        public const int PADING_LANGUAGE = 14;
     }
 }

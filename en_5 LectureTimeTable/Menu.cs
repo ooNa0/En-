@@ -55,23 +55,32 @@ namespace en_5_LectureTimeTable
 
                 // 데이터 출력
 
-                for (int row = 2; row < Constant.EXCEL_ROW_RANGE; row++)
+                for (int row = 1; row < Constant.EXCEL_ROW_RANGE; row++)
                 {
-                    courseList.Add(new CourseVO((double)data.GetValue(row, Constant.COLUMN_NO), (string)data.GetValue(row, Constant.COLUMN_MAJOR), (string)data.GetValue(row, Constant.COLUMN_COURSE_NUMBER),
+                    if(data.GetValue(row, Constant.COLUMN_COURSEROOM) == null)
+                    {
+                        courseList.Add(new CourseVO((double)data.GetValue(row, Constant.COLUMN_NO), (string)data.GetValue(row, Constant.COLUMN_MAJOR), (string)data.GetValue(row, Constant.COLUMN_COURSE_NUMBER),
+                         (string)data.GetValue(row, Constant.COLUMN_DIVISION_NUMBER), (string)data.GetValue(row, Constant.COLUMN_COURSE_TITLE), (string)data.GetValue(row, Constant.COLUMN_CATEGORIZATION),
+                         (double)data.GetValue(row, Constant.COLUMN_TARGET_STUDENT), (double)data.GetValue(row, Constant.COLUMN_CREDIT), (string)data.GetValue(row, Constant.COLUMN_DATETIME),
+                         " ", (string)data.GetValue(row, Constant.COLUMN_LECTURER), (string)data.GetValue(row, Constant.COLUMN_LANGUAGE))); // ~12
+
+                    }
+                    else if(data.GetValue(row, Constant.COLUMN_LECTURER) == null)
+                    {
+                        courseList.Add(new CourseVO((double)data.GetValue(row, Constant.COLUMN_NO), (string)data.GetValue(row, Constant.COLUMN_MAJOR), (string)data.GetValue(row, Constant.COLUMN_COURSE_NUMBER),
+                        (string)data.GetValue(row, Constant.COLUMN_DIVISION_NUMBER), (string)data.GetValue(row, Constant.COLUMN_COURSE_TITLE), (string)data.GetValue(row, Constant.COLUMN_CATEGORIZATION),
+                        (double)data.GetValue(row, Constant.COLUMN_TARGET_STUDENT), (double)data.GetValue(row, Constant.COLUMN_CREDIT), (string)data.GetValue(row, Constant.COLUMN_DATETIME),
+                        (string)data.GetValue(row, Constant.COLUMN_COURSEROOM), " ", (string)data.GetValue(row, Constant.COLUMN_LANGUAGE))); // ~12
+
+                    }
+                    else
+                    {
+                        courseList.Add(new CourseVO((double)data.GetValue(row, Constant.COLUMN_NO), (string)data.GetValue(row, Constant.COLUMN_MAJOR), (string)data.GetValue(row, Constant.COLUMN_COURSE_NUMBER),
                         (string)data.GetValue(row, Constant.COLUMN_DIVISION_NUMBER), (string)data.GetValue(row, Constant.COLUMN_COURSE_TITLE), (string)data.GetValue(row, Constant.COLUMN_CATEGORIZATION),
                         (double)data.GetValue(row, Constant.COLUMN_TARGET_STUDENT), (double)data.GetValue(row, Constant.COLUMN_CREDIT), (string)data.GetValue(row, Constant.COLUMN_DATETIME),
                         (string)data.GetValue(row, Constant.COLUMN_COURSEROOM), (string)data.GetValue(row, Constant.COLUMN_LECTURER), (string)data.GetValue(row, Constant.COLUMN_LANGUAGE))); // ~12
+                    }
                 }
-                //Console.WriteLine(data.GetValue(1, 1).GetType());
-                //Console.WriteLine(data.GetValue(1, 2).GetType());
-                //Console.WriteLine(data.GetValue(1, 3).GetType());
-                //Console.WriteLine(data.GetValue(2, 1));
-                //Console.WriteLine(data.GetValue(2, 2));
-                //Console.WriteLine(data.GetValue(2, 3));
-                //Console.WriteLine(data.GetValue(3, 1));
-                //Console.WriteLine(data.GetValue(3, 2));
-                //Console.WriteLine(data.GetValue(3, 3));
-
 
                 StartMenu(); // 메뉴 시작
 

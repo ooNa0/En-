@@ -10,7 +10,7 @@ namespace en_5_LectureTimeTable
 
         public const int CONSOLE_SIZE_Y = 45;
 
-        public const int CONSOLE_SHOW_ALL_COURSE_SIZE_X = 170;
+        public const int CONSOLE_SHOW_ALL_COURSE_SIZE_X = 180;
 
         public const int CONSOLE_SHOW_ALL_COURSE_SIZE_Y = 50;
 
@@ -99,16 +99,18 @@ namespace en_5_LectureTimeTable
         // LectureVO 패딩
         public const int PADING_NO = 4;
 
-        public const int PADING_MAJOR = 16;
+        public const int PADING_MAJOR = 25;
 
-        public const int PADING_COURSE_TITLE = 36;
+        public const int PADING_COURSE_TITLE = 33;
 
-        public const int PADING_DATE_TIME = 36;
+        public const int PADING_DATE_TIME = 35;
 
-        public const int PADING_COURSE_ROOM = 15;
+        public const int PADING_COURSE_ROOM = 14;
 
-        public const int PADING_LECTURER = 30;
+        public const int PADING_LECTURER = 28;
 
-        public const int PADING_LANGUAGE = 14;
+        public const int PADING_LANGUAGE = 12;
+
+        public const int KOREAN_BYTES= 2;
     }
 }

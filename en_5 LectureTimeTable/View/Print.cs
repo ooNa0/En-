@@ -57,5 +57,26 @@ namespace en_5_LectureTimeTable
             Console.ReadLine();
             Console.Clear();
         }
+
+        public void ShowAllCourse(List<CourseVO> courseList)
+        {
+            Console.Clear();// print.Library();
+            Console.SetWindowSize(Constant.CONSOLE_SHOW_ALL_COURSE_SIZE_X, Constant.CONSOLE_SHOW_ALL_COURSE_SIZE_Y);
+            Console.Title = "모든 수업 보기";
+            Console.WriteLine("  [모든 수업 보기]");
+            int count = courseList.Count - 1;
+            Console.WriteLine(" NO  개설학과전공          학수번호  분반  교과목명                이수구분 학년 학점 요일 및 강의시간              강의실  메인교수명           강의언어");
+            while (count >= 0)
+            {
+                Console.WriteLine("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
+                foreach (CourseVO course in courseList)
+                {
+                    Console.WriteLine("{0}\n", course.ToString());
+                }
+                //Console.WriteLine("───────────────────────────────────────────────────────────────────────");
+
+                break;
+            }
+        }
     }
 }

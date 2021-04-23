@@ -13,13 +13,17 @@ namespace en_5_LectureTimeTable
         private Print print;
         private InputCheck inputCheck;
         private CourseDataManagement management;
-        private List<CourseVO> courseList;
+        private List<CourseVO> courseList; // 엑셀 과목 데이터
+        private List<CourseVO> interestedCourseList; // 관심과목
+        private List<CourseVO> timeTableList; // 수강 과목
         public Menu()
         {
             print = new Print();
             inputCheck = new InputCheck();
             management = new CourseDataManagement();
             courseList = new List<CourseVO>();
+            interestedCourseList = new List<CourseVO>();
+            timeTableList = new List<CourseVO>();
         }
         public void Setting()
         {

@@ -39,7 +39,7 @@ namespace en_5_LectureTimeTable
             Console.WriteLine("2. 시간표 저장(엑셀)");
         }
 
-        public void ShowSearchCourseMenu() // 과목찾기 메뉴(+수강신청시 관심과목으로 조회 추가)
+        public void ShowSearchCourseMenu(int addInterestedCourse) // 과목찾기 메뉴(+수강신청시 관심과목으로 조회 추가)
         {
             Console.WriteLine("[강의 검색]\n");
             Console.WriteLine("0. 뒤로가기");
@@ -48,27 +48,31 @@ namespace en_5_LectureTimeTable
             Console.WriteLine("3. 교과목명으로");
             Console.WriteLine("4. 강의 대상 학년으로");
             Console.WriteLine("5. 교수명으로");
-            //Console.WriteLine("6. 관심과목 검색");
+            if(addInterestedCourse == 1) Console.WriteLine("6. 관심과목 검색");
         }
 
         public void NoticeBack()
         {
             Console.WriteLine("아무키나 누루면 뒤로갑니다.");
             Console.ReadLine();
-            Console.Clear();
+            //Console.Clear();
         }
 
         public void ShowAllCourse(List<CourseVO> courseList)
         {
-            Console.Clear();// print.Library();
+            //Console.Clear();
             Console.SetWindowSize(Constant.CONSOLE_SHOW_ALL_COURSE_SIZE_X, Constant.CONSOLE_SHOW_ALL_COURSE_SIZE_Y);
             Console.Title = "모든 수업 보기";
-            Console.WriteLine("  [모든 수업 보기]");
+            //Console.WriteLine("  [모든 수업 보기]");
             int count = courseList.Count - 1;
             Console.WriteLine(" NO  개설학과전공          학수번호  분반  교과목명                이수구분 학년 학점 요일 및 강의시간              강의실  메인교수명           강의언어");
+            Console.WriteLine("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
+            if(count < 0)
+            {
+                Console.WriteLine("\n등록된 시간표가 없습니다!\n");
+            }
             while (count >= 0)
             {
-                Console.WriteLine("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
                 foreach (CourseVO course in courseList)
                 {
                     Console.WriteLine("{0}\n", course.ToString());

@@ -28,7 +28,7 @@ namespace en_5_LectureTimeTable
         public void Setting()
         {
             //StartMenu(); // 메뉴 시작
-
+            
             Console.WriteLine("\n로딩중. .. .\n");
             
             try
@@ -116,8 +116,7 @@ namespace en_5_LectureTimeTable
                         CourseMenu(!Constant.IS_INTERESTED_COURSE);
                         break;
                     case Constant.MY_TIMETABLE: // 나의 시간표
-                        management.TimeTable();
-                        print.NoticeBack();
+                        TimeTable();
                         break;
                     case Constant.EXIT: // 프로그램 종료
                         hasEnded = true;
@@ -139,12 +138,12 @@ namespace en_5_LectureTimeTable
                 else // 수강신청일 경우
                 {
                     print.ShowCourseRegistrationMenu();
-                    addInterestedCourse = 1; // 수강신청시, 관심과목 검색도 추가
+                    addInterestedCourse = 1; // 수강신청시, 관심과목 검색 추가
                 }
                 switch (inputCheck.EnterMenuNumber(Constant.MINIMUN_INTERESTEDCOURSE_NUMBER, Constant.MAXIMUN_INTERESTEDCOURSE_NUMBER + addInterestedCourse))
                 {
                     case Constant.BACK: // 뒤로가기
-                        print.NoticeBack();
+                        //print.NoticeBack();
                         return;
                     case Constant.SHOW_ALL_COURSE: // 전체 강의 보기
                         print.ShowAllCourse(courseList);
@@ -152,19 +151,58 @@ namespace en_5_LectureTimeTable
                     case Constant.ADD_COURSE: // 강의 추가
                         if (isInterestedCourse) // 관심과목일 경우
                         {
-                            print.ShowInterestedCourseMenu();
+                            //print.ShowInterestedCourseMenu();
+                            management.Add(courseList, interestedCourseList, addInterestedCourse);
                         }
                         else // 수강신청일 경우
                         {
-                            print.ShowCourseRegistrationMenu();
+                            //print.ShowCourseRegistrationMenu();
+                            management.Add(courseList, timeTableList, addInterestedCourse);
                         }
                         break;
                     case Constant.REMOVE_COURSE: // 강의 삭제
-
+                        if (isInterestedCourse) // 관심과목일 경우
+                        {
+                            management.Remove(courseList, interestedCourseList);
+                        }
+                        else // 수강신청일 경우
+                        {
+                            management.Remove(courseList, timeTableList);
+                        }
                         break;
                     case Constant.PRINT_COURSE: // 나의 시간표 출력
-                        management.ShowMyCourseList(isInterestedCourse);
+                        if (isInterestedCourse) // 관심과목일 경우
+                        {
+                            print.ShowAllCourse(interestedCourseList);
+                            print.NoticeBack();
+                        }
+                        else // 수강신청일 경우
+                        {
+                            print.ShowAllCourse(timeTableList);
+                            print.NoticeBack();
+                        }
+                        break;
+                }
+            }
+        }
+
+        public void TimeTable() // 나의 강의 보기
+        {
+            bool hasEnded = false;
+
+            while (!hasEnded)
+            {
+                print.ShowMyTimeTableMenu();
+                switch (inputCheck.EnterMenuNumber(Constant.MINIMUN_SHOWMYTIMETABLE_MENU_NUMBER, Constant.MAXIMUN_SHOWMYTIMETABLE_MENU_NUMBER))
+                {
+                    case Constant.BACK:
                         print.NoticeBack();
+                        return;
+                    case Constant.SHOW_MYTIMETABLE:
+
+                        break;
+                    case Constant.SAVE_TIMETABLE:
+
                         break;
                 }
             }

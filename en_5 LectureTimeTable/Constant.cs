@@ -112,5 +112,11 @@ namespace en_5_LectureTimeTable
         public const int PADING_LANGUAGE = 12;
 
         public const int KOREAN_BYTES= 2;
+
+        //강의 검색후 뭐할건지 아닐건지 필요한가?????
+        public const int COURSE_SEARCH_FIRST = 1;
+        public const int COURSE_SEARCH_SECOND = 2;
+        public const string COURSE_SEARCH = "1";
+        public const string COURSE_CORRECTION = "2";
     }
 }

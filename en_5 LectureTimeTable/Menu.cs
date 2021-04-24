@@ -74,8 +74,7 @@ namespace en_5_LectureTimeTable
                         courseList.Add(new CourseVO((double)data.GetValue(row, Constant.COLUMN_NO), (string)data.GetValue(row, Constant.COLUMN_MAJOR), (string)data.GetValue(row, Constant.COLUMN_COURSE_NUMBER),
                         (string)data.GetValue(row, Constant.COLUMN_DIVISION_NUMBER), (string)data.GetValue(row, Constant.COLUMN_COURSE_TITLE), (string)data.GetValue(row, Constant.COLUMN_CATEGORIZATION),
                         (double)data.GetValue(row, Constant.COLUMN_TARGET_STUDENT), (double)data.GetValue(row, Constant.COLUMN_CREDIT), (string)data.GetValue(row, Constant.COLUMN_DATETIME),
-                        (string)data.GetValue(row, Constant.COLUMN_COURSEROOM), " ", (string)data.GetValue(row, Constant.COLUMN_LANGUAGE))); // ~12
-
+                        (string)data.GetValue(row, Constant.COLUMN_COURSEROOM), " ", (string)data.GetValue(row, Constant.COLUMN_LANGUAGE)));
                     }
                     else
                     {

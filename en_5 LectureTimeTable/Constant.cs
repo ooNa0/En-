@@ -99,7 +99,7 @@ namespace en_5_LectureTimeTable
         // LectureVO 패딩
         public const int PADING_NO = 4;
 
-        public const int PADING_MAJOR = 25;
+        public const int PADING_MAJOR = 19;
 
         public const int PADING_COURSE_TITLE = 33;
 
@@ -118,5 +118,20 @@ namespace en_5_LectureTimeTable
         public const int COURSE_SEARCH_SECOND = 2;
         public const string COURSE_SEARCH = "1";
         public const string COURSE_CORRECTION = "2";
+
+        // 학점 담기 최고치
+        public const int MAXIMUN_CREDITS = 21;
+
+        public const int MAXIMUN_CREDITS_INTERESTED_COURSE = 24;
+
+        // 데이터 no 숫자 크기
+        public const int MAXIMUN_COURSE_NO_LENGTH = 3;
+
+        public const int MINIMUN_COURSE_NO_LENGTH = 1;
+
+        // 엑셀 데이터 넘버 범위
+        public const int MAXIMUN_EXCEL_DATA_NO = 169;
+
+        public const int MINIMUN_EXCEL_DATA_NO = 1;
     }
 }

@@ -58,7 +58,7 @@ namespace en_5_LectureTimeTable
             //Console.Clear();
         }
 
-        public void ShowAllCourse(List<CourseVO> courseList)
+        public bool isShowAllCourse(List<CourseVO> courseList)
         {
             //Console.Clear();
             Console.SetWindowSize(Constant.CONSOLE_SHOW_ALL_COURSE_SIZE_X, Constant.CONSOLE_SHOW_ALL_COURSE_SIZE_Y);
@@ -69,7 +69,7 @@ namespace en_5_LectureTimeTable
             Console.WriteLine("───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
             if(count < 0)
             {
-                Console.WriteLine("\n등록된 시간표가 없습니다!\n");
+                Console.WriteLine("\n등록된 시간표가 없습니다!\n"); NoticeBack(); return false;
             }
             while (count >= 0)
             {
@@ -79,7 +79,7 @@ namespace en_5_LectureTimeTable
                 }
                 //Console.WriteLine("───────────────────────────────────────────────────────────────────────");
 
-                break;
+                return true;
             }
         }
     }

@@ -18,7 +18,7 @@ namespace en_5_LectureTimeTable
             bool hasEnded = false;
             while (!hasEnded)
             {
-                Console.Write("\n메뉴 번호 입력 :");
+                Console.Write("번호 입력 :");
                 inputMenuNumber = Console.ReadLine();
                 if (inputMenuNumber == "b") return inputMenuNumber; // "b"하고 ENTER를 누르면 뒤로가기
                 if (isNumberLength())
@@ -32,7 +32,7 @@ namespace en_5_LectureTimeTable
                     }
                 }
             }
-            Console.Clear();
+            //Console.Clear();
             return inputMenuNumber;
         }
         private bool isNumber()

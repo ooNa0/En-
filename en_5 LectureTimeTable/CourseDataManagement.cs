@@ -9,11 +9,14 @@ namespace en_5_LectureTimeTable
     {
         private InputCheck inputCheck;
         private Print print;
+        private int numberCount;
+        //private CourseVO CourseVO;
 
         public CourseDataManagement()
         {
             inputCheck = new InputCheck();
             print = new Print();
+            //numberCount = 0;
         }
 
         public void Add(List<CourseVO> courseList, List<CourseVO> editCourses, int addInterestedCourse) // 강의 추가
@@ -21,7 +24,7 @@ namespace en_5_LectureTimeTable
             print.ShowAllCourse(courseList);
             Console.WriteLine("(뒤로가기 \"b\" 하고 ENTER)\n강의 검색 후, 추가하기 : 1번, \n바로 강의 번호로 추가하기 : 2번\n");
 
-            int numberCount = 0;
+            //int numberCount = 0;
             string searchOrBack = inputCheck.EnterMenuNumber(Constant.COURSE_SEARCH_FIRST, Constant.COURSE_SEARCH_SECOND);
             if (searchOrBack == "1")
             {
@@ -31,11 +34,28 @@ namespace en_5_LectureTimeTable
             {
                 return;
             }
+            Console.WriteLine("(뒤로가기 \"b\" 하고 ENTER)");
             Console.Write("추가하실 ");
-            searchOrBack= inputCheck.EnterMenuNumber(Constant.COURSE_SEARCH_FIRST, courseList.Count);
-            for (int i = 0; i < Convert.ToInt32(searchOrBack); i++, numberCount++) ;
-            editCourses.Insert(editCourses.Count, courseList[numberCount-1]); // 강의 시간표에 강의 추가
-            courseList.RemoveAt(numberCount-1); // 기존 시간표에 삭제
+            searchOrBack= inputCheck.EnterCourseDataNumber(Constant.MINIMUN_EXCEL_DATA_NO, Constant.MAXIMUN_EXCEL_DATA_NO);
+            if (searchOrBack == "b")
+            {
+                return;
+            }
+            numberCount = 0;
+            for (int i = 0; i <= courseList.Count; i++)
+            {
+                if (courseList[numberCount].No == Convert.ToDouble(searchOrBack))
+                {
+                    break;
+                }
+                numberCount++;
+            }
+            //editCourses.Insert(editCourses.Count, courseList[numberCount]); // 강의 시간표에 강의 추가
+            editCourses.Add(new CourseVO(courseList[numberCount].No, courseList[numberCount].Major, courseList[numberCount].CourseNumber, courseList[numberCount].DivisionNumber,
+                        courseList[numberCount].CourseTitle, courseList[numberCount].Categorization,
+                        courseList[numberCount].TargetStudent, courseList[numberCount].Credit, courseList[numberCount].DateTime,
+                        courseList[numberCount].CourseRoom, courseList[numberCount].Lecturer, courseList[numberCount].Language));
+            courseList.RemoveAt(numberCount); // 기존 시간표에 삭제
             Console.WriteLine("시간표 추가 완료 >ㅡ0");
             print.NoticeBack();
         }
@@ -43,18 +63,21 @@ namespace en_5_LectureTimeTable
         public void Remove(List<CourseVO> courseList, List<CourseVO> editCourses) // 강의 지우기
         {
             print.ShowAllCourse(editCourses);
-            Console.Write("(뒤로가기 \"b\" 하고 ENTER)\n삭제하실 번호를 입력 :");
-            string wantRemove = Console.ReadLine();//inputCheck.EnterMenuNumber(1, 160);
+            Console.Write("(뒤로가기 \"b\" 하고 ENTER)\n삭제하실 ");
+            string wantRemove = inputCheck.EnterCourseDataNumber(Constant.MINIMUN_EXCEL_DATA_NO, Constant.MAXIMUN_EXCEL_DATA_NO);
             if (wantRemove == "b")
             {
                 return;
             }
-            for (int index = 0; index <= 160; index++)
+            for (int i = 0; i < editCourses.Count; i++, numberCount++)
             {
-                //if(ed)
+                if (editCourses[numberCount].No == Convert.ToDouble(wantRemove))
+                {
+                    break;
+                }
             }
-            courseList.Add(editCourses[Convert.ToInt32(wantRemove)-1]);
-            editCourses.RemoveAt(Convert.ToInt32(wantRemove)-1);
+            courseList.Add(editCourses[Convert.ToInt32(wantRemove)]);
+            editCourses.RemoveAt(Convert.ToInt32(wantRemove)+1);
             Console.Write("시간표 삭제 완료 >ㅡ0");
             print.NoticeBack();
         }

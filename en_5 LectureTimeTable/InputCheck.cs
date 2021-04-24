@@ -35,6 +35,29 @@ namespace en_5_LectureTimeTable
             //Console.Clear();
             return inputMenuNumber;
         }
+
+        public string EnterCourseDataNumber(int minimunNumber, int maximumNumber)
+        {
+            bool hasEnded = false;
+            while (!hasEnded)
+            {
+                Console.Write("번호 입력 :");
+                inputMenuNumber = Console.ReadLine();
+                if (inputMenuNumber == "b") return inputMenuNumber; // "b"하고 ENTER를 누르면 뒤로가기
+                if (isLength(Constant.MINIMUN_COURSE_NO_LENGTH, Constant.MAXIMUN_COURSE_NO_LENGTH))
+                {
+                    if (isNumber())
+                    {
+                        if (isNumberRange(minimunNumber, maximumNumber))
+                        {
+                            hasEnded = true;
+                        }
+                    }
+                }
+            }
+            //Console.Clear();
+            return inputMenuNumber;
+        }
         private bool isNumber()
         {
             if (!(Regex.Match(inputMenuNumber, "^[0-9]*$").Success))
@@ -48,9 +71,9 @@ namespace en_5_LectureTimeTable
             return true;
         }
 
-        private bool isLength(string input, int minimumLength, int maxLength)
+        private bool isLength(int minimumLength, int maxLength)
         {
-            if (minimumLength > input.Length || input.Length > maxLength)
+            if (minimumLength > inputMenuNumber.Length || inputMenuNumber.Length > maxLength)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("길이를 {0}이상, {1}이하로 입력해주세요.", minimumLength, maxLength); ;

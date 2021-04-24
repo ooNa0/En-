@@ -55,6 +55,7 @@ namespace en_5_LectureTimeTable
                         courseList[numberCount].CourseTitle, courseList[numberCount].Categorization,
                         courseList[numberCount].TargetStudent, courseList[numberCount].Credit, courseList[numberCount].DateTime,
                         courseList[numberCount].CourseRoom, courseList[numberCount].Lecturer, courseList[numberCount].Language));
+            // 시간표 정렬 no 대로
             courseList.RemoveAt(numberCount); // 기존 시간표에 삭제
             Console.WriteLine("시간표 추가 완료 >ㅡ0");
             print.NoticeBack();
@@ -62,30 +63,33 @@ namespace en_5_LectureTimeTable
 
         public void Remove(List<CourseVO> courseList, List<CourseVO> editCourses) // 강의 지우기
         {
-            print.ShowAllCourse(editCourses);
+            if(!print.ShowAllCourse(editCourses)) return;
             Console.Write("(뒤로가기 \"b\" 하고 ENTER)\n삭제하실 ");
             string wantRemove = inputCheck.EnterCourseDataNumber(Constant.MINIMUN_EXCEL_DATA_NO, Constant.MAXIMUN_EXCEL_DATA_NO);
             if (wantRemove == "b")
             {
                 return;
             }
-            for (int i = 0; i < editCourses.Count; i++, numberCount++)
+            numberCount = 0;
+            for (int i = 0; i <= editCourses.Count; i++)
             {
                 if (editCourses[numberCount].No == Convert.ToDouble(wantRemove))
                 {
                     break;
                 }
+                numberCount++;
             }
-            courseList.Add(editCourses[Convert.ToInt32(wantRemove)]);
-            editCourses.RemoveAt(Convert.ToInt32(wantRemove)+1);
+            courseList.Add(editCourses[Convert.ToInt32(numberCount)]);
+            // 시간표 정렬 no 대로
+            editCourses.RemoveAt(Convert.ToInt32(numberCount));
             Console.Write("시간표 삭제 완료 >ㅡ0");
             print.NoticeBack();
         }
 
         public void PrintMyCourse(List<CourseVO> editCourses) // 나의 강의 출력
         {
-            print.ShowAllCourse(editCourses);
-            print.NoticeBack();
+            if (!print.ShowAllCourse(editCourses)) return;
+            
         }
 
         public void Search(List<CourseVO> courseList, int addInterestedCourse) // 강의 찾기, addInterestedCourse는 수강신청시에 1, 아닐시에 0이다.

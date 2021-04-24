@@ -16,12 +16,12 @@ namespace en_5_LectureTimeTable
         {
             inputCheck = new InputCheck();
             print = new Print();
-            //numberCount = 0;
+            numberCount = 0;
         }
 
         public void Add(List<CourseVO> courseList, List<CourseVO> editCourses, int addInterestedCourse) // 강의 추가
         {
-            print.ShowAllCourse(courseList);
+            print.isShowAllCourse(courseList);
             Console.WriteLine("(뒤로가기 \"b\" 하고 ENTER)\n강의 검색 후, 추가하기 : 1번, \n바로 강의 번호로 추가하기 : 2번\n");
 
             //int numberCount = 0;
@@ -41,7 +41,7 @@ namespace en_5_LectureTimeTable
             {
                 return;
             }
-            numberCount = 0;
+            //numberCount = 0;
             for (int i = 0; i <= courseList.Count; i++)
             {
                 if (courseList[numberCount].No == Convert.ToDouble(searchOrBack))
@@ -63,14 +63,14 @@ namespace en_5_LectureTimeTable
 
         public void Remove(List<CourseVO> courseList, List<CourseVO> editCourses) // 강의 지우기
         {
-            if(!print.ShowAllCourse(editCourses)) return;
+            if(!print.isShowAllCourse(editCourses)) return;
             Console.Write("(뒤로가기 \"b\" 하고 ENTER)\n삭제하실 ");
             string wantRemove = inputCheck.EnterCourseDataNumber(Constant.MINIMUN_EXCEL_DATA_NO, Constant.MAXIMUN_EXCEL_DATA_NO);
             if (wantRemove == "b")
             {
                 return;
             }
-            numberCount = 0;
+            //numberCount = 0;
             for (int i = 0; i <= editCourses.Count; i++)
             {
                 if (editCourses[numberCount].No == Convert.ToDouble(wantRemove))
@@ -88,8 +88,7 @@ namespace en_5_LectureTimeTable
 
         public void PrintMyCourse(List<CourseVO> editCourses) // 나의 강의 출력
         {
-            if (!print.ShowAllCourse(editCourses)) return;
-            
+            if (!print.isShowAllCourse(editCourses)) return;
         }
 
         public void Search(List<CourseVO> courseList, int addInterestedCourse) // 강의 찾기, addInterestedCourse는 수강신청시에 1, 아닐시에 0이다.
@@ -126,5 +125,18 @@ namespace en_5_LectureTimeTable
                 }
             }
         }
+
+        public void InputTimeTable(string[,] timetablearray, List<CourseVO> courseList)
+        {
+            timetablearray[0, 0] = new DateTime(08, 00);
+            for (int index = 1; index < 24; index++)
+            {
+                timetablearray[index, 0] =
+                //userList[userNumber].BorrowDate = DateTime.Now.ToString("yyyy-MM-dd");
+                //userList[userNumber].RorrowDate = DateTime.Now.AddDays(7).ToString("yyyy-MM-dd");
+            }
+        }
     }
 }
+//string test = "20180828093711";
+//DateTime = DateTime.ParseExact(test,"yyyyMMddHHmmss",System.Globalization.CultureInfo.InvariantCulture);

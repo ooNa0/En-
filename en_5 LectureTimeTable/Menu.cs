@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Reflection.Metadata;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -16,6 +17,7 @@ namespace en_5_LectureTimeTable
         private List<CourseVO> courseList; // 엑셀 과목 데이터
         private List<CourseVO> interestedCourseList; // 관심과목
         private List<CourseVO> timeTableList; // 수강 과목
+        private string[,] timetable;
         public Menu()
         {
             print = new Print();
@@ -24,6 +26,7 @@ namespace en_5_LectureTimeTable
             courseList = new List<CourseVO>();
             interestedCourseList = new List<CourseVO>();
             timeTableList = new List<CourseVO>();
+            timetable = new string[24, 5];
         }
         public void Setting()
         {
@@ -61,28 +64,12 @@ namespace en_5_LectureTimeTable
 
                 for (int row = 1; row < Constant.EXCEL_ROW_RANGE; row++)
                 {
-                    if(data.GetValue(row, Constant.COLUMN_COURSEROOM) == null)
-                    {
-                        courseList.Add(new CourseVO((double)data.GetValue(row, Constant.COLUMN_NO), (string)data.GetValue(row, Constant.COLUMN_MAJOR), (string)data.GetValue(row, Constant.COLUMN_COURSE_NUMBER),
-                         (string)data.GetValue(row, Constant.COLUMN_DIVISION_NUMBER), (string)data.GetValue(row, Constant.COLUMN_COURSE_TITLE), (string)data.GetValue(row, Constant.COLUMN_CATEGORIZATION),
-                         (double)data.GetValue(row, Constant.COLUMN_TARGET_STUDENT), (double)data.GetValue(row, Constant.COLUMN_CREDIT), (string)data.GetValue(row, Constant.COLUMN_DATETIME),
-                         " ", (string)data.GetValue(row, Constant.COLUMN_LECTURER), (string)data.GetValue(row, Constant.COLUMN_LANGUAGE))); // ~12
 
-                    }
-                    else if(data.GetValue(row, Constant.COLUMN_LECTURER) == null)
-                    {
-                        courseList.Add(new CourseVO((double)data.GetValue(row, Constant.COLUMN_NO), (string)data.GetValue(row, Constant.COLUMN_MAJOR), (string)data.GetValue(row, Constant.COLUMN_COURSE_NUMBER),
-                        (string)data.GetValue(row, Constant.COLUMN_DIVISION_NUMBER), (string)data.GetValue(row, Constant.COLUMN_COURSE_TITLE), (string)data.GetValue(row, Constant.COLUMN_CATEGORIZATION),
-                        (double)data.GetValue(row, Constant.COLUMN_TARGET_STUDENT), (double)data.GetValue(row, Constant.COLUMN_CREDIT), (string)data.GetValue(row, Constant.COLUMN_DATETIME),
-                        (string)data.GetValue(row, Constant.COLUMN_COURSEROOM), " ", (string)data.GetValue(row, Constant.COLUMN_LANGUAGE)));
-                    }
-                    else
-                    {
-                        courseList.Add(new CourseVO((double)data.GetValue(row, Constant.COLUMN_NO), (string)data.GetValue(row, Constant.COLUMN_MAJOR), (string)data.GetValue(row, Constant.COLUMN_COURSE_NUMBER),
-                        (string)data.GetValue(row, Constant.COLUMN_DIVISION_NUMBER), (string)data.GetValue(row, Constant.COLUMN_COURSE_TITLE), (string)data.GetValue(row, Constant.COLUMN_CATEGORIZATION),
-                        (double)data.GetValue(row, Constant.COLUMN_TARGET_STUDENT), (double)data.GetValue(row, Constant.COLUMN_CREDIT), (string)data.GetValue(row, Constant.COLUMN_DATETIME),
-                        (string)data.GetValue(row, Constant.COLUMN_COURSEROOM), (string)data.GetValue(row, Constant.COLUMN_LECTURER), (string)data.GetValue(row, Constant.COLUMN_LANGUAGE))); // ~12
-                    }
+                    courseList.Add(new CourseVO((double)data.GetValue(row, Constant.COLUMN_NO), ((string)data.GetValue(row, Constant.COLUMN_MAJOR)).TrimEnd(), (string)data.GetValue(row, Constant.COLUMN_COURSE_NUMBER),
+                    (string)data.GetValue(row, Constant.COLUMN_DIVISION_NUMBER), (string)data.GetValue(row, Constant.COLUMN_COURSE_TITLE), (string)data.GetValue(row, Constant.COLUMN_CATEGORIZATION),
+                    (double)data.GetValue(row, Constant.COLUMN_TARGET_STUDENT), (double)data.GetValue(row, Constant.COLUMN_CREDIT), (string)data.GetValue(row, Constant.COLUMN_DATETIME),
+                    Convert.ToString(data.GetValue(row, Constant.COLUMN_COURSEROOM)), Convert.ToString(data.GetValue(row, Constant.COLUMN_LECTURER)), (string)data.GetValue(row, Constant.COLUMN_LANGUAGE))); // ~12
+
                 }
 
                 StartMenu(); // 메뉴 시작
@@ -145,7 +132,7 @@ namespace en_5_LectureTimeTable
                         //print.NoticeBack();
                         return;
                     case Constant.SHOW_ALL_COURSE: // 전체 강의 보기
-                        print.ShowAllCourse(courseList);
+                        print.isShowAllCourse(courseList);
                         break;
                     case Constant.ADD_COURSE: // 강의 추가
                         if (isInterestedCourse) // 관심과목일 경우
@@ -172,13 +159,11 @@ namespace en_5_LectureTimeTable
                     case Constant.PRINT_COURSE: // 나의 시간표 출력
                         if (isInterestedCourse) // 관심과목일 경우
                         {
-                            print.ShowAllCourse(interestedCourseList);
-                            print.NoticeBack();
+                            print.isShowAllCourse(interestedCourseList);
                         }
                         else // 수강신청일 경우
                         {
-                            print.ShowAllCourse(timeTableList);
-                            print.NoticeBack();
+                            print.isShowAllCourse(timeTableList);
                         }
                         break;
                 }
@@ -199,9 +184,26 @@ namespace en_5_LectureTimeTable
                         return;
                     case Constant.SHOW_MYTIMETABLE:
 
+                        //print.ShowMyTimeTable(timetable);
                         break;
                     case Constant.SAVE_TIMETABLE:
-
+                        // Excel Application 객체 생성
+                        Excel.Application application = new Excel.Application();
+                        // 워크북 추가
+                        Excel.Workbook workbook = application.Workbooks.Add();
+                        // 첫번째 워크 시트 가져오기
+                        Excel.Worksheet worksheet = workbook.Worksheets.get_Item(1) as Excel.Worksheet;
+                        int time = 9;
+                        int minute = 0;
+                        for (int index = 0; index < timeTableList.Count; index++)
+                        {
+                            //worksheet.Cells[] 
+                        }
+                        // 열 너비 자동 맞춤 
+                        worksheet.Columns.AutoFit();
+                        // 엑셀 파일 저장
+                        //application.workbook.SaveAs(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "나의시간표.xlsx"), Excel.XlFileFormat.xlWorkbookDefault);
+                        workbook.SaveAs(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\나의시간표.xlsx");
                         break;
                 }
             }

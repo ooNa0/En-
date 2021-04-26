@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace en_5_LectureTimeTable
 {
-    class Program
+    class SignUpCourse
     {
         static void Main(string[] args)
         {

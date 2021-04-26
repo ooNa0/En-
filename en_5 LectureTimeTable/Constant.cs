@@ -6,7 +6,7 @@ namespace en_5_LectureTimeTable
 {
     class Constant
     {
-        public const int CONSOLE_SIZE_X = 80;
+        public const int CONSOLE_SIZE_X = 55;
 
         public const int CONSOLE_SIZE_Y = 45;
 
@@ -116,8 +116,8 @@ namespace en_5_LectureTimeTable
         //강의 검색후 뭐할건지 아닐건지 필요한가?????
         public const int COURSE_SEARCH_FIRST = 1;
         public const int COURSE_SEARCH_SECOND = 2;
-        public const string COURSE_SEARCH = "1";
-        public const string COURSE_CORRECTION = "2";
+        //public const string COURSE_SEARCH = "1";
+        //public const string COURSE_CORRECTION = "2";
 
         // 학점 담기 최고치
         public const int MAXIMUN_CREDITS = 21;
@@ -133,5 +133,13 @@ namespace en_5_LectureTimeTable
         public const int MAXIMUN_EXCEL_DATA_NO = 169;
 
         public const int MINIMUN_EXCEL_DATA_NO = 1;
+
+        // 시간표 출력 행과 열 크기
+        public const int TIMETABLE_COLUMN = 24;
+
+        public const int TIMETABLE_ROW= 5;
+
+        // 시간 간격
+        public const double TIME_INTERVAL = 30;
     }
 }

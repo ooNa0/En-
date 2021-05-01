@@ -7,7 +7,7 @@ namespace en_5_LectureTimeTable
 {
     class LectureTimeTable
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Menu menu = new Menu();
             menu.Set();

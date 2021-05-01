@@ -53,7 +53,7 @@ namespace en_5_LectureTimeTable
         //ShowInterestedCourseMenu, 관심과목, 수강신청 메뉴
         public const int MINIMUN_INTERESTEDCOURSE_NUMBER = 0;
 
-        public const int MAXIMUN_INTERESTEDCOURSE_NUMBER = 3;
+        public const int MAXIMUN_INTERESTEDCOURSE_NUMBER = 4;
 
         public const string SHOW_ALL_COURSE = "1";
 

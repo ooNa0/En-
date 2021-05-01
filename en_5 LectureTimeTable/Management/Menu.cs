@@ -28,7 +28,6 @@ namespace en_5_LectureTimeTable
             inputCheck = new Checking();
             management = new CourseDataManagement();
             courseList = new List<CourseVO>();
-            //interestedCourseList = new List<CourseVO>();
             timeTableList = new List<CourseVO>();
             timetable = new string[24, 5];
         }
@@ -36,7 +35,7 @@ namespace en_5_LectureTimeTable
         {
             //StartMenu(); // 메뉴 시작
             Console.SetWindowSize(Constant.CONSOLE_SIZE_X, Constant.CONSOLE_SIZE_Y);
-            Console.WriteLine("\n                        로딩중. .. .\n");
+            print.ShowIntro();
             
             try
             {
@@ -125,7 +124,7 @@ namespace en_5_LectureTimeTable
                     print.ShowCourseRegistrationMenu();
                     addInterestedCourse = 1; // 수강신청시, 관심과목 검색 추가
                 }
-                switch (inputCheck.EnterMenuNumber(Constant.MINIMUN_INTERESTEDCOURSE_NUMBER, Constant.MAXIMUN_INTERESTEDCOURSE_NUMBER + addInterestedCourse))
+                switch (inputCheck.EnterMenuNumber(Constant.MINIMUN_INTERESTEDCOURSE_NUMBER, Constant.MAXIMUN_INTERESTEDCOURSE_NUMBER))
                 {
                     case Constant.BACK: // 뒤로가기
                         return;

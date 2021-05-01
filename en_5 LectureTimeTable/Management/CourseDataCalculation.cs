@@ -9,6 +9,7 @@ namespace en_5_LectureTimeTable.Management
 {
     class CourseDataCalculation
     {
+        private List<CourseVO> compareTimetableList = new List<CourseVO>();
 
         public double SumCredits(List<CourseVO> timeTable)
         {
@@ -91,8 +92,7 @@ namespace en_5_LectureTimeTable.Management
         public bool TimeCompare(int compareTimetableindex, List<CourseVO> editCourseList, List<CourseVO> courseList)
         {
             string[,] timeTableArray = InputTimeTable(editCourseList); // 배열 선언
-            List<CourseVO> compareTimetableList = new List<CourseVO>();
-
+            
             compareTimetableList.Add(new CourseVO(courseList[compareTimetableindex].No, courseList[compareTimetableindex].Major,
                 courseList[compareTimetableindex].CourseNumber, courseList[compareTimetableindex].DivisionNumber,
                 courseList[compareTimetableindex].CourseTitle, courseList[compareTimetableindex].Categorization,
@@ -102,10 +102,12 @@ namespace en_5_LectureTimeTable.Management
 
             string[,] compareTimeTableArray = InputTimeTable(compareTimetableList);
 
-            for (int i = 1; i < Constant.TIMETABLE_COLUMN; i++)
+            for (int i = 1; i < Constant.TIMETABLE_COLUMN + 1; i++)
             {
-                for (int j = 1; j < Constant.TIMETABLE_ROW; j++)
+                for (int j = 1; j < Constant.TIMETABLE_ROW+1; j++)
                 {
+                    //Console.WriteLine("timearray[{0},{1}] = {2}", i, j, timeTableArray[i, j]);
+                    //Console.WriteLine("compareTime[{0},{1}] = {2}", i, j, compareTimeTableArray[i, j]);
                     if (timeTableArray[i, j] != null && compareTimeTableArray[i, j] != null)
                     {
                         return false;
@@ -114,6 +116,7 @@ namespace en_5_LectureTimeTable.Management
             }
             return true;
         }
+        
         public string[,] InputTimeTable(List<CourseVO> timeTable)
         {
             string[,] timeTableArray = new string[Constant.TIMETABLE_COLUMN + 1, Constant.TIMETABLE_ROW + 1]; // 배열 선언

@@ -13,6 +13,7 @@ namespace en_5_LectureTimeTable
         {
             
         }
+        
         public string EnterMenuNumber(int minimunNumber, int maximumNumber)
         {
             bool hasEnded = false;
@@ -35,7 +36,6 @@ namespace en_5_LectureTimeTable
                     }
                 }
             }
-            
             //Console.Clear();
             return inputMenuNumber;
         }
@@ -63,6 +63,7 @@ namespace en_5_LectureTimeTable
             //Console.Clear();
             return inputMenuNumber;
         }
+        
         private bool isNumber()
         {
             int left = Console.CursorLeft, top = Console.CursorTop;

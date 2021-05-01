@@ -26,7 +26,7 @@ namespace en_5_LectureTimeTable
             Language = language;
         }
 
-        public double No { get; set; }
+        public double No { get ; set; }
         public string Major { get; set; }
         public string CourseNumber { get; set; }
         public string DivisionNumber { get; set; }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace en_5_LectureTimeTable
 {
@@ -11,7 +12,6 @@ namespace en_5_LectureTimeTable
         public void ShowDefaultOutput()
         {
             Console.WriteLine();
-            //Console.WriteLine("┌──────────────────────────────────────────────────────────────────────┐");
             Console.WriteLine("                            ◇");
             Console.WriteLine("                        ◇◇◇◇◇");
             Console.WriteLine("               ◇◇◇◇◇        ◇◇◇◇◇");
@@ -23,10 +23,44 @@ namespace en_5_LectureTimeTable
             Console.WriteLine("               ■■■ ■    ■ ▣   ▣");
             Console.WriteLine();
             Console.WriteLine("               ◇◇◇◇◇        ◇◇◇◇◇");
-            Console.WriteLine("                         ◇◇◇◇◇");
-            Console.WriteLine("                             ◇");
-            //Console.WriteLine("└──────────────────────────────────────────────────────────────────────┘");
+            Console.WriteLine("                        ◇◇◇◇◇");
+            Console.WriteLine("                            ◇");
             Console.WriteLine(); Console.WriteLine(); Console.WriteLine();
+        }
+
+        public void ShowIntro()
+        {
+            Console.CursorVisible = false;
+            Console.WriteLine();
+            Console.WriteLine("                            ◇");
+            Thread.Sleep(5);
+            Console.WriteLine("                        ◇◇◇◇◇");
+            Thread.Sleep(500);
+            Console.WriteLine("               ◇◇◇◇◇        ◇◇◇◇◇");
+            Thread.Sleep(500);
+            Console.WriteLine();
+            Thread.Sleep(500);
+            Console.WriteLine("               ■■■ ■    ■     ▣   ▣");
+            Thread.Sleep(1000);
+            Console.WriteLine("               ■     ■■  ■    ■#▣##");
+            Thread.Sleep(1000);
+            Console.WriteLine("               ■■■ ■ ■ ■   ▣   ▣");
+            Thread.Sleep(1000);
+            Console.WriteLine("               ■     ■  ■■  #▣■##");
+            Thread.Sleep(1000);
+            Console.WriteLine("               ■■■ ■    ■ ▣   ▣");
+            Thread.Sleep(500);
+            Console.WriteLine();
+            Thread.Sleep(500);
+            Console.WriteLine("               ◇◇◇◇◇        ◇◇◇◇◇");
+            Thread.Sleep(500);
+            Console.WriteLine("                        ◇◇◇◇◇");
+            Thread.Sleep(500);
+            Console.WriteLine("                            ◇");
+            Thread.Sleep(500);
+            Console.WriteLine();
+            Console.Write("                   로딩중 입니다 ."); Thread.Sleep(500); Console.Write(" ."); Thread.Sleep(500); Console.Write(" . "); Thread.Sleep(500);
+            Console.CursorVisible = true; Console.Write("!!!");
         }
 
         public void ShowStartMenu() // 처음 시작 메뉴
@@ -120,22 +154,38 @@ namespace en_5_LectureTimeTable
         public void ShowMyTimeTable(string [,] timeTableArray, CourseDataCalculation calculation) // 나의 시간표 출력
         {
             Console.Clear();
+            Console.WriteLine("");
             CourseDataManagement management = new CourseDataManagement();
             Console.SetWindowSize(Constant.CONSOLE_SHOW_ALL_COURSE_SIZE_X+55, Constant.CONSOLE_SHOW_ALL_COURSE_SIZE_Y);
             Console.Title = "나의 시간표";
             Console.WriteLine(" 시간                        월                                         화                                         수                                        목                                       금     ");
             Console.WriteLine("─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");
-            for(int index = 0; index < Constant.TIMETABLE_COLUMN; index++)
+            for (int index = 0; index < Constant.TIMETABLE_COLUMN; index++)
             {// 시간 월 화 수 목 금
-                int padingCourseTitleindex1 = Constant.EXCEL_PADING_COURSE_TITLE - calculation.StringByteLength(timeTableArray[index, 1]);
-                int padingCourseTitleindex2 = Constant.EXCEL_PADING_COURSE_TITLE - calculation.StringByteLength(timeTableArray[index, 2]);
-                int padingCourseTitleindex3 = Constant.EXCEL_PADING_COURSE_TITLE - calculation.StringByteLength(timeTableArray[index, 3]);
-                int padingCourseTitleindex4 = Constant.EXCEL_PADING_COURSE_TITLE - calculation.StringByteLength(timeTableArray[index, 4]);
-                int padingCourseTitleindex5 = Constant.EXCEL_PADING_COURSE_TITLE - calculation.StringByteLength(timeTableArray[index, 5]);
-                
-                Console.WriteLine(" " + timeTableArray[index, 0] + " | " + timeTableArray[index, 1] + "".PadLeft(padingCourseTitleindex1) + " | " + timeTableArray[index, 2] + "".PadLeft(padingCourseTitleindex2)
-                        + " | " + timeTableArray[index, 3] + "".PadLeft(padingCourseTitleindex3) + " | " + timeTableArray[index, 4] + "".PadLeft(padingCourseTitleindex4)
-                        + " | " + timeTableArray[index, 5] + "".PadLeft(padingCourseTitleindex5) + " |");
+                //Console.WriteLine(Constant.EXCEL_PADING_COURSE_TITLE - calculation.StringByteLength(timeTableArray[index, 1]));
+                int padingCourseTitleindex1 = ((Constant.EXCEL_PADING_COURSE_TITLE - calculation.StringByteLength(timeTableArray[index, 1]))); 
+                //if (Constant.EXCEL_PADING_COURSE_TITLE - calculation.StringByteLength(timeTableArray[index, 1]) % 2 == 1) { count1 = 2; Console.WriteLine("--"); }
+                int padingCourseTitleindex2 = ((Constant.EXCEL_PADING_COURSE_TITLE - calculation.StringByteLength(timeTableArray[index, 2])));// if (Constant.EXCEL_PADING_COURSE_TITLE - calculation.StringByteLength(timeTableArray[index, 2]) % 2 == 1) { count2 = 2; }
+                int padingCourseTitleindex3 = ((Constant.EXCEL_PADING_COURSE_TITLE - calculation.StringByteLength(timeTableArray[index, 3]))); //if (Constant.EXCEL_PADING_COURSE_TITLE - calculation.StringByteLength(timeTableArray[index, 3]) % 2 == 1) { count3 = 2; Console.WriteLine("--"); }
+                int padingCourseTitleindex4 = ((Constant.EXCEL_PADING_COURSE_TITLE - calculation.StringByteLength(timeTableArray[index, 4])));// if (Constant.EXCEL_PADING_COURSE_TITLE - calculation.StringByteLength(timeTableArray[index, 4]) % 2 == 1) { count4 = 2; Console.WriteLine("--"); }
+                int padingCourseTitleindex5 = ((Constant.EXCEL_PADING_COURSE_TITLE - calculation.StringByteLength(timeTableArray[index, 5]))); //if (Constant.EXCEL_PADING_COURSE_TITLE - calculation.StringByteLength(timeTableArray[index, 5]) % 2 == 1) { count5 = 2; Console.WriteLine("--"); }
+
+                Console.WriteLine(" " + timeTableArray[index, 0] + " | " 
+                    //+ "".PadLeft(padingCourseTitleindex1) 
+                    + timeTableArray[index, 1] + "".PadLeft(padingCourseTitleindex1) +
+                    " | "
+                    //+ "".PadLeft(padingCourseTitleindex2) 2
+                    + timeTableArray[index, 2] + "".PadLeft(padingCourseTitleindex2) +
+                    " | " 
+                   // + "".PadLeft(padingCourseTitleindex3) 
+                    + timeTableArray[index, 3] + "".PadLeft(padingCourseTitleindex3) + 
+                    " | " 
+                    //+ "".PadLeft(padingCourseTitleindex4) 
+                    + timeTableArray[index, 4] + "".PadLeft(padingCourseTitleindex4) + 
+                    " | " 
+                    //+ "".PadLeft(padingCourseTitleindex5) 
+                    + timeTableArray[index, 5] + "".PadLeft(padingCourseTitleindex5) + 
+                    " |");
 
 
                 Console.WriteLine("─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────");

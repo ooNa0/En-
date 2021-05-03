@@ -24,11 +24,11 @@ namespace en_6_Library_DB
             while (!isFinished)
             {
                 outputMenu.ShowUserMenu();
-                switch (inputManagement.getMenuNumber(Constant.MAXIMUN_USER_MENU_NUMBER))
+                switch (inputManagement.GetMenuNumber(Constant.MAXIMUN_USER_MENU_NUMBER))
                 {
                     case Constant.LOG_OUT:
                         Console.Clear();
-                        isFinished = false;
+                        //isFinished = false;
                         return;
                     case Constant.BORROW_BOOK:
                         //user.BorrowBook(userList, bookList, userNumber, print);
@@ -56,17 +56,17 @@ namespace en_6_Library_DB
 
         public void SignUpUser() // 유저 회원가입
         {
-            string identity = inputManagement.getIdentity();
+            string identity = inputManagement.GetIdentity();
             if (identity == Constant.BACK) return;
-            string password = inputManagement.getPassword();
+            string password = inputManagement.GetPassword();
             if (password == Constant.BACK) return;
-            string name = inputManagement.getName();
+            string name = inputManagement.GetName();
             if (name == Constant.BACK) return;
-            string brithYear = inputManagement.getBirthYear();
+            string brithYear = inputManagement.GetBirthYear();
             if (brithYear == Constant.BACK) return;
-            string phoneNumber = inputManagement.getPhoneNumber();
+            string phoneNumber = inputManagement.GetPhoneNumber();
             if (phoneNumber == Constant.BACK) return;
-            string address = inputManagement.getAddress();
+            string address = inputManagement.GetAddress();
             if (address == Constant.BACK) return;
             // 아이디 입력(영어, 숫자 5~10글자 입력하세요.) -> 틀리면 에러 출력 후, 커서 이동
             // 비밀번호 입력(영어, 숫자 8~15글자 입력하세요.)
@@ -75,6 +75,8 @@ namespace en_6_Library_DB
             // 전화번호('-'없이 번호만 입력해주세요.)
             // 이메일 주소?
             // 주소(우편번호, 도로명 주소)
+
+            // 데베에 넣기!!!!!!!!!!!
             userDataManagement.InputUserDataBase(identity, password, name, brithYear, phoneNumber, address);
             Console.WriteLine("회원가입이 완료되었습니다!");
             Console.WriteLine();

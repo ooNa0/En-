@@ -47,5 +47,15 @@ namespace en_6_Library_DB
 
         public const string SHOW_USER_INFOMATION = "5";
 
+        // 관리자 메뉴
+        public const string REGISTRATION_BOOK = "1";
+
+        public const string REMOVE_BOOK = "2";
+
+        public const string PRINT_USERLIST = "5";
+
+        public const string SEARCH_USER = "6";
+
+        public const string REMOVE_USER = "7";
     }
 }

@@ -18,28 +18,37 @@ namespace en_6_Library_DB
         {
             Console.Clear(); outputMenu.LibraryDefault();
             Console.WriteLine("도서명(저자_출판사명) - 대여 가능 수량 ");
-            if (dataSet.Tables.Count > 0)
-            {
+            Console.WriteLine("───────────────────────────────────────────────────────────────────────");
+            if(dataSet.Tables.Count == 0) { Console.WriteLine("존재하지 않습니다!"); }
+            //if (dataSet.Tables.Count > 0)
+           // {
                 foreach(DataRow row in dataSet.Tables[0].Rows)
                 {
                     Console.WriteLine("{0} {1}({2}_{3}) - {4}/{5} {6}", row["ID"], row["Title"], row["Author"], row["Publisher"], row["Number"], row["borrowedNumber"], row["Price"]);
                 }
                 Console.WriteLine("───────────────────────────────────────────────────────────────────────");
-             }
+            // }
+            Console.Write("엔터하면 뒤로갑니다.");
+            Console.ReadLine();
         }
 
         public void ShowAllUserList(DataSet dataSet)
         {
             Console.Clear(); outputMenu.LibraryDefault();
             Console.WriteLine("유저이름(아이디_생년) - 휴대폰번호 | 주소 ");
-            if (dataSet.Tables.Count > 0)
-            {
-                foreach (DataRow row in dataSet.Tables[0].Rows)
+            //Console.WriteLine(dataSet.Tables.Count);
+            Console.WriteLine("───────────────────────────────────────────────────────────────────────");
+            if (dataSet.Tables.Count == 0) { Console.WriteLine("존재하지 않습니다!"); }
+            //if (dataSet.Tables.Count > 0)
+            //{
+            foreach (DataRow row in dataSet.Tables[0].Rows)
                 {
                     Console.WriteLine("{0}({1}_{2}) - {3} {4}", row["Name"], row["ID"],row["BirthYear"], row["PhoneNumber"], row["Address"]);
                 }
                 Console.WriteLine("───────────────────────────────────────────────────────────────────────");
-            }
+            //}
+            Console.Write("엔터하면 뒤로갑니다.");
+            Console.ReadLine();
         }
         /*
         public void ShowUserInformation()

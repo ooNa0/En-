@@ -49,7 +49,7 @@ namespace en_6_Library_DB
         private void NoticeBack()
         {
             Console.ForegroundColor = ConsoleColor.White;
-            Console.Write("아무키나 입력하고 엔터하면 뒤로갑니다.");
+            Console.Write("엔터하면 뒤로갑니다.");
             Console.ReadLine();
         }
     }

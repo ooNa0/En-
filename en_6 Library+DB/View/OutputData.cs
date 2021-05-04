@@ -22,10 +22,7 @@ namespace en_6_Library_DB
             {
                 foreach(DataRow row in dataSet.Tables[0].Rows)
                 {
-                    Console.Write(row["ID"]); Console.Write(row["Title"]);
-                    Console.Write(row["Author"]); Console.Write(row["Publisher"]);
-                    Console.Write(row["Number"]); Console.Write(row["borrowedNumber"]);
-                    Console.Write(row["Price"]);
+                    Console.WriteLine("{0} {1}({2}_{3}) - {4}/{5} {6}", row["ID"], row["Title"], row["Author"], row["Publisher"], row["Number"], row["borrowedNumber"], row["Price"]);
                 }
                 Console.WriteLine("───────────────────────────────────────────────────────────────────────");
              }
@@ -39,14 +36,12 @@ namespace en_6_Library_DB
             {
                 foreach (DataRow row in dataSet.Tables[0].Rows)
                 {
-                    Console.Write(row["Name"]); Console.Write(row["ID"]);
-                    Console.Write(row["BirthYear"]); Console.Write(row["PhoneNumber"]);
-                    Console.Write(row["Address"]);
+                    Console.WriteLine("{0}({1}_{2}) - {3} {4}", row["Name"], row["ID"],row["BirthYear"], row["PhoneNumber"], row["Address"]);
                 }
                 Console.WriteLine("───────────────────────────────────────────────────────────────────────");
             }
         }
-
+        /*
         public void ShowUserInformation()
         {
             Console.WriteLine("\n[1] 이름 : {0}", userList[userNumber].Name);

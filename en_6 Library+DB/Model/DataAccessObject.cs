@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
+using System.Threading;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 
@@ -12,10 +13,11 @@ namespace en_6_Library_DB
         private MySqlConnection connection;
         private MySqlCommand command;
         private DataSet dataSet;
+        private MySqlDataReader dataReader;
         public DataAccessObject()
         {
             connection = new MySqlConnection(Constant.DATABASE_CONNECTION_INFOMATION);
-            command = new MySqlCommand();
+            //command = new MySqlCommand();
             dataSet = new DataSet();
         }
 
@@ -45,12 +47,21 @@ namespace en_6_Library_DB
             connection.Close(); // mysql DB 연결 종료
         }
 
-        public DataSet CheckUserData(string identity)
+        public string CheckUserData(string identity)
         { // ID가 존재하면 b 리턴, 맞으면 password 리턴
-            string quary = "select * from user where ID=" + identity;
-            MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(quary, connection);
-            mySqlDataAdapter.Fill(dataSet, "user");
-            return dataSet;
+            string password = "b";
+            connection.Open();
+            string quary = "select * from user where ID='"+identity +"'";
+            MySqlCommand command = new MySqlCommand(quary, connection);
+            MySqlDataReader dataReader = command.ExecuteReader();
+            while (dataReader.Read())
+            {
+                password = dataReader["PASSWORD"].ToString();
+                break;
+            }
+            dataReader.Close();
+            connection.Close();
+            return password;
         }
 
         public DataSet GetAllBookData()

@@ -100,28 +100,28 @@ namespace en_6_Library_DB
                 Console.Clear(); outputMenu.LibraryDefault();
                 identity = inputManagement.GetIdentity();
                 if (identity == "b") { return false; }
-                Thread.Sleep(1000);
-                Console.WriteLine(dataAccessObject.CheckUserData(identity));
-                Thread.Sleep(1000);
                 checkPassword = dataAccessObject.CheckUserData(identity);
                 if (checkPassword == "b") 
                 {
                     outputError.ShowUserLoginFailureID();
                     continue;
                 }
+                isCorrect = true;
             }
-
-            while (!isCorrect) // 비밀번호
+            int horizontalCursorPosition = Console.CursorLeft;
+            int verticalCursorPosition = Console.CursorTop;
+            while (isCorrect) // 비밀번호
             {
-                Console.Clear(); outputMenu.LibraryDefault();
                 password = inputManagement.GetPassword();
                 if (password == "b") { return false; }
 
                 if (!(checkPassword == password))
                 {
                     outputError.ShowUserLoginFailureID();
+                    inputManagement.InitializeInputValue(horizontalCursorPosition, verticalCursorPosition);
                     continue;
                 }
+                isCorrect = false;
             }
             Console.WriteLine("로그인을 완료하였습니다! 반가워요!"); // ~~님 이름 같이 출력
             return true;

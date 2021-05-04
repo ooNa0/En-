@@ -22,7 +22,7 @@ namespace en_6_Library_DB
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("아이디가 올바르지 않습니다!");
-            NoticeBack();
+            //NoticeBack();
         }
         public void ShowUserLoginFailurePassword()
         {

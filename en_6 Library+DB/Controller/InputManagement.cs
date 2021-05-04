@@ -314,7 +314,7 @@ namespace en_6_Library_DB
             return input;
         }
 
-        private void InitializeInputValue(int horizontalCursorPosition, int verticalCursorPosition)
+        public void InitializeInputValue(int horizontalCursorPosition, int verticalCursorPosition) // 비밀번호 로그인시만 public 필요
         {
             Console.WriteLine("ENTER을 눌러주세요. ");
             Console.ReadLine();

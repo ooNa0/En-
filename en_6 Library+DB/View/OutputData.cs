@@ -1,75 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 
 namespace en_6_Library_DB
 {
     class OutputData
     {
-        //private 
-        public OutputData()
+        private OutputMenu outputMenu;
+        public OutputData(OutputMenu outputMenu)
         {
+            this.outputMenu = outputMenu;
+        }
+        
 
-        }/*
-        public void ShowBookList(List<BookVO> bookList, Print print)
+        public void ShowAllBookList(DataSet dataSet)
         {
-            Console.Clear(); print.Library();
-            int count = bookList.Count - 1;
+            Console.Clear(); outputMenu.LibraryDefault();
             Console.WriteLine("도서명(저자_출판사명) - 대여 가능 수량 ");
-            while (count >= 0)
+            if (dataSet.Tables.Count > 0)
             {
-                Console.WriteLine("───────────────────────────────────────────────────────────────────────");
-                foreach (BookVO book in bookList)
+                foreach(DataRow row in dataSet.Tables[0].Rows)
                 {
-                    Console.WriteLine("{0}", book.ToString());
+                    Console.Write(row["ID"]); Console.Write(row["Title"]);
+                    Console.Write(row["Author"]); Console.Write(row["Publisher"]);
+                    Console.Write(row["Number"]); Console.Write(row["borrowedNumber"]);
+                    Console.Write(row["Price"]);
                 }
                 Console.WriteLine("───────────────────────────────────────────────────────────────────────");
-                break;
+             }
+        }
+
+        public void ShowAllUserList(DataSet dataSet)
+        {
+            Console.Clear(); outputMenu.LibraryDefault();
+            Console.WriteLine("유저이름(아이디_생년) - 휴대폰번호 | 주소 ");
+            if (dataSet.Tables.Count > 0)
+            {
+                foreach (DataRow row in dataSet.Tables[0].Rows)
+                {
+                    Console.Write(row["Name"]); Console.Write(row["ID"]);
+                    Console.Write(row["BirthYear"]); Console.Write(row["PhoneNumber"]);
+                    Console.Write(row["Address"]);
+                }
+                Console.WriteLine("───────────────────────────────────────────────────────────────────────");
             }
         }
 
-        public void ShowBookList(List<BookVO> bookList, Print print)
+        public void ShowUserInformation()
         {
-            Console.Clear(); print.Library();
-            int count = bookList.Count - 1;
-            Console.WriteLine("도서명(저자_출판사명) - 대여 가능 수량 ");
-            while (count >= 0)
-            {
-                Console.WriteLine("───────────────────────────────────────────────────────────────────────");
-                foreach (BookVO book in bookList)
-                {
-                    Console.WriteLine("{0}", book.ToString());
-                }
-                Console.WriteLine("───────────────────────────────────────────────────────────────────────");
-
-                break;
-            }
-        }
-
-        public void ShowUserList(List<UserVO> userList, Print print)
-        {
-            Console.Clear(); print.Library();
-            int count = userList.Count - 1;
-            Console.WriteLine("    이름        아이디              나이               전화번호");
-            while (count >= 0)
-            {
-                Console.WriteLine("───────────────────────────────────────────────────────────────────────");
-                foreach (UserVO user in userList)
-                {
-                    Console.WriteLine("{0}", user.ToString());
-                }
-                Console.WriteLine("───────────────────────────────────────────────────────────────────────");
-
-                break;
-            }
-        }
-
-        public void ShowUserInformation(List<UserVO> userList, int userNumber)
-        {
-            Console.WriteLine("\n이름 : {0}", userList[userNumber].Name);
-            Console.WriteLine("\n나이 : {0}", userList[userNumber].Age);
-            Console.WriteLine("\n아이디 : {0}", userList[userNumber].Id);
-            Console.WriteLine("\n비밀번호 : {0}", userList[userNumber].PhoneNumber);
+            Console.WriteLine("\n[1] 이름 : {0}", userList[userNumber].Name);
+            Console.WriteLine("\n[2] 나이 : {0}", userList[userNumber].Age);
+            Console.WriteLine("\n[3] 아이디 : {0}", userList[userNumber].Id);
+            Console.WriteLine("\n[4] 비밀번호 : {0}", userList[userNumber].PhoneNumber);
+            Console.WriteLine("\n[5] 전화번호 : {0}", userList[userNumber].Id);
+            Console.WriteLine("\n[6] 주소 : {0}", userList[userNumber].PhoneNumber);
             if (userList[userNumber].BorrowBook != "")
             {
                 Console.WriteLine("\n빌린 책 제목 : {0}", userList[userNumber].BorrowBook);

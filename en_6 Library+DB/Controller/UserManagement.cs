@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace en_6_Library_DB
 {
@@ -10,14 +11,16 @@ namespace en_6_Library_DB
         private InputManagement inputManagement;
         private OutputMenu outputMenu;
         private UserDataManagement userDataManagement;
-        private DateAccessObject dataAccessObject;// = new DateAccessObject();
-        public UserManagement(Exception exception, InputManagement inputManagement, UserDataManagement userDataManagement, OutputMenu outputMenu, DateAccessObject dataAccessObject)
+        private DataAccessObject dataAccessObject;
+        private OutputError outputError;
+        public UserManagement(Exception exception, InputManagement inputManagement, UserDataManagement userDataManagement, OutputMenu outputMenu, DataAccessObject dataAccessObject, OutputError outputError)
         {
             this.exception = exception;
             this.inputManagement = inputManagement;
             this.outputMenu = outputMenu;
             this.userDataManagement = userDataManagement;
             this.dataAccessObject = dataAccessObject;
+            this.outputError = outputError;
         }
 
         public void ManageUserMenu() // 유저 메뉴
@@ -83,6 +86,45 @@ namespace en_6_Library_DB
             Console.WriteLine("회원가입이 완료되었습니다!");
             Console.WriteLine();
             return;
+        }
+
+        public bool SignInUser()
+        {
+            string identity;
+            string password;
+            string checkPassword = "";
+            bool isCorrect = false;
+
+            while (!isCorrect) // 아이디
+            {
+                Console.Clear(); outputMenu.LibraryDefault();
+                identity = inputManagement.GetIdentity();
+                if (identity == "b") { return false; }
+                Thread.Sleep(1000);
+                Console.WriteLine(dataAccessObject.CheckUserData(identity));
+                Thread.Sleep(1000);
+                checkPassword = dataAccessObject.CheckUserData(identity);
+                if (checkPassword == "b") 
+                {
+                    outputError.ShowUserLoginFailureID();
+                    continue;
+                }
+            }
+
+            while (!isCorrect) // 비밀번호
+            {
+                Console.Clear(); outputMenu.LibraryDefault();
+                password = inputManagement.GetPassword();
+                if (password == "b") { return false; }
+
+                if (!(checkPassword == password))
+                {
+                    outputError.ShowUserLoginFailureID();
+                    continue;
+                }
+            }
+            Console.WriteLine("로그인을 완료하였습니다! 반가워요!"); // ~~님 이름 같이 출력
+            return true;
         }
     }
 }

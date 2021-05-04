@@ -10,12 +10,14 @@ namespace en_6_Library_DB
         private InputManagement inputManagement;
         private OutputMenu outputMenu;
         private UserDataManagement userDataManagement;
-        public UserManagement(Exception exception, InputManagement inputManagement, UserDataManagement userDataManagement, OutputMenu outputMenu)
+        private DateAccessObject dataAccessObject;// = new DateAccessObject();
+        public UserManagement(Exception exception, InputManagement inputManagement, UserDataManagement userDataManagement, OutputMenu outputMenu, DateAccessObject dataAccessObject)
         {
             this.exception = exception;
             this.inputManagement = inputManagement;
             this.outputMenu = outputMenu;
             this.userDataManagement = userDataManagement;
+            this.dataAccessObject = dataAccessObject;
         }
 
         public void ManageUserMenu() // 유저 메뉴
@@ -28,7 +30,6 @@ namespace en_6_Library_DB
                 {
                     case Constant.LOG_OUT:
                         Console.Clear();
-                        //isFinished = false;
                         return;
                     case Constant.BORROW_BOOK:
                         //user.BorrowBook(userList, bookList, userNumber, print);
@@ -56,6 +57,7 @@ namespace en_6_Library_DB
 
         public void SignUpUser() // 유저 회원가입
         {
+            outputMenu.LibraryDefault();
             string identity = inputManagement.GetIdentity();
             if (identity == Constant.BACK) return;
             string password = inputManagement.GetPassword();
@@ -77,7 +79,7 @@ namespace en_6_Library_DB
             // 주소(우편번호, 도로명 주소)
 
             // 데베에 넣기!!!!!!!!!!!
-            userDataManagement.InputUserDataBase(identity, password, name, brithYear, phoneNumber, address);
+            dataAccessObject.InputUserDateInDataBase(identity, password, name, brithYear, phoneNumber, address);
             Console.WriteLine("회원가입이 완료되었습니다!");
             Console.WriteLine();
             return;

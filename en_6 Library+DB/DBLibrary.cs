@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Data;
+using MySql.Data.MySqlClient;
 
 namespace en_6_Library_DB
 {
-    class Program
+    class DBLibrary
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            Console.WriteLine("Hello World!");
+            Menu menu = new Menu();
+            menu.MainMenu();
         }
     }
 }

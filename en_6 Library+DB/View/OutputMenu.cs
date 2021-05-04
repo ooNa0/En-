@@ -63,5 +63,17 @@ namespace en_6_Library_DB
             Console.WriteLine("                              [2] 출판사\n");
             Console.WriteLine("                              [3] 저자");
         }
+
+        public void ShowAskAction()
+        {
+            LibraryDefault();
+            Console.WriteLine("                              [0] 돌아가기\n");
+            Console.WriteLine("                              [1] 검색하기\n");
+        }
+
+        public void ShowAskOtherAction(string input)
+        {
+            Console.WriteLine("                              [2] {0}", input);
+        }
     }
 }

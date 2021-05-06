@@ -9,46 +9,60 @@ namespace en_6_Library_DB
         private string id;
         private string password;
         private string name;
-        private string age;
+        private string birthYear;
         private string phoneNumber;
+        private string address;
         private int borrowBookNumber;
         //private string borrowBook = "";
         //private string borrowDate; // 대출일
         //private string returnDate; // 반납일
-        /*
-        public UserDataTransferObject(string id, string password, string name, string age, string phoneNumber, int borrowBookNumber)
+        
+        public UserDataTransferObject(string id, string password, string name, string birthYear, string phoneNumber, string address)//borrowBookNumber
         {
-            this.Id = id;
-            this.Password = password;
-            this.Name = name;
-            this.Age = age;
-            this.PhoneNumber = phoneNumber;
-            this.borrowBookNumber = BorrowBookNumber;
-        }*/
+            this.id = id;
+            this.password = password;
+            this.name = name;
+            this.birthYear = birthYear;
+            this.phoneNumber = phoneNumber;
+            this.address = address;
+            //this.borrowBookNumber = BorrowBookNumber;
+        }
 
         public string GetId() // 아이디
         {
-            return id;
+            return this.id;
         }
         public string GetPassword() // 비밀번호
         {
-            return password;
+            return this.password;
         }
         public string GetName() // 이름
         {
-            return name;
+            return this.name;
         }
-        public string GetAge() // 나이
+        public string GetBirthYear() // 나이
         {
-            return age;
+            return this.birthYear;
         }
         public string GetPhoneNumber() // 전화번호
         {
-            return phoneNumber;
+            return this.phoneNumber;
         }
-        public int BorrowBookNumber()
+        public string GetAddress()
         {
-            return borrowBookNumber;
+            return this.address;
+        }
+        public int GetBorrowBookNumber()
+        {
+            return this.borrowBookNumber;
+        }
+        public void SetAddress(string address)
+        {
+            this.address = address;
+        }
+        public void SetPhoneNumber(string phoneNumber) // 전화번호
+        {
+            this.phoneNumber = phoneNumber;
         }
         //public override string ToString(){return " - " + Name.PadRight(10, ' ') + Id.PadRight(21, ' ') + Age.PadRight(15, ' ') + PhoneNumber;}
     }

@@ -6,24 +6,35 @@ namespace en_6_Library_DB
 {
     class Constant
     {
-        public const int CONSOLE_SIZE_X = 55;
+        public const string DATABASE_CONNECTION_INFOMATION = "Server=localhost;Port=3306;Database=enlibrary;Uid=root;Pwd=0000";
+
+        public const int CONSOLE_SIZE_X = 77;
 
         public const int CONSOLE_SIZE_Y = 45;
+
+        public const string NULL = null;
 
         public const string BACK = "b";
 
         public const int MENU_NUMBER_MINIMUN = 0;
+
         public const int NUMBER_LENGTH = 1; //숫자 하나만
 
-        public const string ADMINISTRATOR_PASSWORD = "****"; // 관리자 비밀번호
+        public const string ADMINISTRATOR_PASSWORD = "*"; // 관리자 비밀번호
 
-        public const int MAXIMUN_FIRST_MENU_NUMBER = 4; // 첫 메뉴 0~3
+        public const int MAXIMUN_FIRST_MENU_NUMBER = 3; // 첫 메뉴 0~3
 
         public const int MAXIMUN_SEARCH_MENU_NUMBER = 4; // 찾기 메뉴 0~3
 
         public const int MAXIMUN_USER_MENU_NUMBER = 6; // 유저 메뉴 0~5
 
-        public const int MAXIMUN_ADMINISTRATOR_MENU_NUMBER = 8; // 관리자 메뉴 0~7
+        public const int MAXIMUN_ADMINISTRATOR_MENU_NUMBER = 3; // 관리자 메뉴 0~3
+
+        public const int INFORMATION_EXIT_AND_SEARCH = 3; // 나갈건지 찾을건지
+
+        public const int SEARCH_MENU_NUMBER = 4; // 책 검색 메뉴
+
+
 
         // 첫 메뉴
         public const string EXIT = "0";
@@ -48,6 +59,14 @@ namespace en_6_Library_DB
         public const string SHOW_USER_INFOMATION = "5";
 
         // 관리자 메뉴
+        public const string ADMINISTRATOR_BOOK_MANAGEMENT = "1";
+
+        public const string ADMINISTRATOR_USER_MANAGEMENT = "2";
+
+        public const string LOG_INITALIZATION = "3";
+
+
+        // 메뉴
         public const string REGISTRATION_BOOK = "1";
 
         public const string REMOVE_BOOK = "2";
@@ -57,5 +76,41 @@ namespace en_6_Library_DB
         public const string SEARCH_USER = "6";
 
         public const string REMOVE_USER = "7";
+
+        // 입력 문자 길이
+        public const int MINIMUN_LENGTH = 0;
+
+        public const int MAXIMUM_LENGTH_BOOKTITLE = 15;
+
+        public const int MAXIMUM_LENGTH_BOOKAUTHOR = 10;
+
+        public const int MAXIMUM_LENGTH_BOOKPUBLISHER = 15;
+
+        public const int MAXIMUM_BOOKNUMBER = 5;
+
+        public const int MAXIMUM_BOOKPRICE = 7;
+
+        public const int BOOK_ID_LENGTH = 4;
+
+        // 책 검색
+        public const string SEARCH_BOOK_MENU = "1";
+        public const string BOOK_TITLE = "1";
+
+        public const string BOOK_PUBLISHER = "2";
+
+        public const string BOOK_AUTHOR = "3";
+
+        // DB 이름
+        public const string BOOK_TABLE = "book";
+        public const string USER_TABLE = "user";
+
+        public const string BOOK_COLUMN_TITLE = "Title";
+        public const string BOOK_COLUMN_PUBLISHER = "Publisher";
+        public const string BOOK_COLUMN_AUTHOR = "Author";
+
+        public const string USER_COLUMN_NAME = "Name";
+        public const string USER_COLUMN_BIRTHYEAR = "BirthYear";
+        public const string USER_COLUMN_ADDRESS = "Address";
+
     }
 }

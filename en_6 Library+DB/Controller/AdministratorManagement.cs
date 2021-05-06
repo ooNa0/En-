@@ -56,30 +56,13 @@ namespace en_6_Library_DB
             bool isFinished = false;
             while (!isFinished)
             {
-                outputMenu.ShowAdministratorMenu();
+                outputMenu.ShowAdministratorUserManagementMenu();
                 switch (inputManagement.GetMenuNumber(Constant.MAXIMUN_ADMINISTRATOR_MENU_NUMBER))
                 {
                     case Constant.EXIT:
                         Console.Clear();
                         isFinished = true;
                         return;
-                    case Constant.REGISTRATION_BOOK: // 책 등록
-                        RegistrateBook();
-                        break;
-                    case Constant.REMOVE_BOOK:
-                        outputMenu.ShowAskAction(); outputMenu.ShowAskOtherAction("삭제하기");
-                        input = inputManagement.GetMenuNumber(Constant.INFORMATION_EXIT_AND_SEARCH);
-                        if (input == "0") { continue; }
-                        else if (input == "1") { bookManagement.SearchBook(); }
-                        dataAccessObject.RemoveDateInDataBase(Constant.BOOK_TABLE, inputManagement.GetBookID());
-                        break;
-                    case Constant.PRINT_BOOKS:
-                        outputData.ShowAllBookList(dataAccessObject.GetAllBookData());
-                        Console.Write("엔터하면 뒤로갑니다.");
-                        Console.ReadLine(); break;
-                    case Constant.SEARCH_BOOK:
-                        bookManagement.SearchBook();
-                        break;
                     case Constant.PRINT_USERLIST:
                         outputData.ShowAllUserList(dataAccessObject.GetAllUserData());
                         Console.Write("엔터하면 뒤로갑니다.");
@@ -104,8 +87,8 @@ namespace en_6_Library_DB
             bool isFinished = false;
             while (!isFinished)
             {
-                outputMenu.ShowAdministratorMenu();
-                switch (inputManagement.GetMenuNumber(Constant.MAXIMUN_ADMINISTRATOR_MENU_NUMBER))
+                outputMenu.ShowAdministratorBookManagementMenu();
+                switch (inputManagement.GetMenuNumber(Constant.MAXIMUN_ADMINISTRATOR_BOOKMANAGEMENT_MENU_NUMBER))
                 {
                     case Constant.EXIT:
                         Console.Clear();
@@ -114,12 +97,8 @@ namespace en_6_Library_DB
                     case Constant.REGISTRATION_BOOK: // 책 등록
                         RegistrateBook();
                         break;
-                    case Constant.REMOVE_BOOK:
-                        outputMenu.ShowAskAction(); outputMenu.ShowAskOtherAction("삭제하기");
-                        input = inputManagement.GetMenuNumber(Constant.INFORMATION_EXIT_AND_SEARCH);
-                        if (input == "0") { continue; }
-                        else if (input == "1") { bookManagement.SearchBook(); }
-                        dataAccessObject.RemoveDateInDataBase(Constant.BOOK_TABLE, inputManagement.GetBookID());
+                    case Constant.NAVER_API_REGISTRATION_BOOK: // 네이버 책 등록
+                        //RegistrateBook();
                         break;
                     case Constant.PRINT_BOOKS:
                         outputData.ShowAllBookList(dataAccessObject.GetAllBookData());
@@ -128,20 +107,18 @@ namespace en_6_Library_DB
                     case Constant.SEARCH_BOOK:
                         bookManagement.SearchBook();
                         break;
-                    case Constant.PRINT_USERLIST:
-                        outputData.ShowAllUserList(dataAccessObject.GetAllUserData());
-                        Console.Write("엔터하면 뒤로갑니다.");
-                        Console.ReadLine(); break;
-                    case Constant.SEARCH_USER:
-                        userManagement.SearchUser();
+                    case Constant.SEARCH_NAVER_API_BOOK:
                         break;
-                    case Constant.REMOVE_USER: // 유저 삭제
+                    case Constant.EDIT_BOOK:
+                        break;
+                    case Constant.REMOVE_BOOK:
                         outputMenu.ShowAskAction(); outputMenu.ShowAskOtherAction("삭제하기");
                         input = inputManagement.GetMenuNumber(Constant.INFORMATION_EXIT_AND_SEARCH);
                         if (input == "0") { continue; }
-                        else if (input == "1") { userManagement.SearchUser(); }
-                        //outputData.ShowAllUserList(dataAccessObject.GetAllUserData());
-                        dataAccessObject.RemoveDateInDataBase(Constant.USER_TABLE, inputManagement.GetIdentity());
+                        else if (input == "1") { bookManagement.SearchBook(); }
+                        dataAccessObject.RemoveDateInDataBase(Constant.BOOK_TABLE, inputManagement.GetBookID());
+                        break;
+                    
                         break;
                 }
             }

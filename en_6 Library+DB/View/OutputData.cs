@@ -21,20 +21,23 @@ namespace en_6_Library_DB
         }
         
 
-        public void ShowAllBookList(DataSet dataSet)
+        public int ShowAllBookList(DataSet dataSet)
         {
             Console.Clear(); outputMenu.LibraryDefault();
+            //Console.WriteLine(dataSet);
             Console.WriteLine("도서명(저자_출판사명) - 수량, 가격 ");
             Console.WriteLine("───────────────────────────────────────────────────────────────────────");
-
-            //if (dataSet.Tables.Count > 0)
-           // {
-                foreach(DataRow row in dataSet.Tables[0].Rows)
+            //Console.WriteLine(dataSet.Tables.Count));
+            if (dataSet == null) { Console.WriteLine("등록된 책이 없습니다."); return 0; }
+                //
+                // {
+                foreach (DataRow row in dataSet.Tables[0].Rows)
                 {
                     Console.WriteLine("{0} {1}({2}_{3}) - {4}, {5}", row["ID"], row["Title"], row["Author"], row["Publisher"], row["Number"], row["Price"]);
                 }
                 Console.WriteLine("───────────────────────────────────────────────────────────────────────");
             // }
+            return 1;
         }
 
         public void ShowAllUserList(DataSet dataSet)
@@ -89,13 +92,13 @@ namespace en_6_Library_DB
                 return;
             }
             Console.WriteLine("네이버 도서 검색 결과 ");
+            Console.WriteLine("───────────────────────────────────────────────────────────────────────");
 
-           
+
             for (int i = 0; i < Constant.NAVER_API_DISPLAY_NUMBER; i++)
             {
-                Console.WriteLine("───────────────────────────────────────────────────────────────────────");
-                Console.Write("NO :{0}", i);
-                Console.WriteLine("도서 제목:{0}\n", parseJson["items"][i]["title"]);
+                Console.Write("NO :{0}\n", i);
+                Console.WriteLine("도서 제목:{0}", parseJson["items"][i]["title"]);
 
                 Console.WriteLine("저자:{0}", parseJson["items"][i]["author"]);
 
@@ -106,10 +109,12 @@ namespace en_6_Library_DB
                 Console.WriteLine("설명:{0}", parseJson["items"][i]["description"]);
                 Console.WriteLine("───────────────────────────────────────────────────────────────────────");
             }
-
+            int index = 0;
             if (isRegistration)
             {
-                int index = inputManagement.GetNaverBookNO();
+                Console.WriteLine(Convert.ToString(parseJson["items"][index]["title"]));
+                //index = inputManagement.GetNaverBookNO();
+                Console.WriteLine("______________");
                 dataAccessObject.InputBookDateInDataBase(Convert.ToString(parseJson["items"][index]["title"]),
                     Convert.ToString(parseJson["items"][index]["Author"]),
                     Convert.ToString(parseJson["items"][index]["Publisher"]),

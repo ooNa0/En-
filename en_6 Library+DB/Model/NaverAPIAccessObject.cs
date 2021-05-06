@@ -17,9 +17,8 @@ namespace en_6_Library_DB
         {
             this.outputData = outputData;
         }
-        public void ShowNaverBookList(string query)
+        public void ShowNaverBookList(string query, bool isRegistration)
         {
-            string description;
             string url = "https://openapi.naver.com/v1/search/book.json?query=" + query + Constant.NAVER_API_DISPLAY + Constant.NAVER_API_DISPLAY_NUMBER; // 결과가 JSON 포맷
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             // 한글을 URL에 추가하기 위해 UTF-8 형식으로 URL 인코딩
@@ -38,7 +37,7 @@ namespace en_6_Library_DB
             text = text.Replace("&gt;", ">");
             text = text.Replace("&quot;", "");
 
-            outputData.ShowAllNaverBookList(text);
+            outputData.ShowAllNaverBookList(text, isRegistration);
         }    
     }
 }

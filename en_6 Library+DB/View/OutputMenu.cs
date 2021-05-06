@@ -39,7 +39,7 @@ namespace en_6_Library_DB
             Console.WriteLine("                              [2] 도서 반납\n");
             Console.WriteLine("                              [3] 전체 도서 출력\n");
             Console.WriteLine("                              [4] 도서 검색\n");
-            Console.WriteLine("                              [5] 나의 정보");
+            Console.WriteLine("                              [5] 나의 정보 수정");
         }
 
         public void ShowAdministratorMenu()
@@ -47,8 +47,8 @@ namespace en_6_Library_DB
             LibraryDefault();
             Console.WriteLine("                              [0] 돌아가기\n");
             Console.WriteLine("                              [1] 도서 관리\n");
-            Console.WriteLine("                              [8] 회원 검색\n");
-            Console.WriteLine("                              [9] 회원 삭제");
+            Console.WriteLine("                              [2] 회원 관리\n");
+            Console.WriteLine("                              [3] 로그 초기화");
         }
 
         public void ShowAdministratorBookManagementMenu()
@@ -57,28 +57,20 @@ namespace en_6_Library_DB
             Console.WriteLine("                              [0] 돌아가기\n");
             Console.WriteLine("                              [1] 도서 등록\n");
             Console.WriteLine("                              [2] 네이버 도서 등록\n"); // 도서명을 입력해주세요. 수량도 입력?
-            Console.WriteLine("                              [3] 도서 삭제\n");
-            Console.WriteLine("                              [4] 등록된 도서 보기\n");
-            Console.WriteLine("                              [5] 도서 검색\n");
-            Console.WriteLine("                              [6] 네이버 도서 검색\n");
-            Console.WriteLine("                              [7] 회원 리스트 보기\n");
-            Console.WriteLine("                              [8] 회원 검색\n");
-            Console.WriteLine("                              [9] 회원 삭제");
+            Console.WriteLine("                              [3] 등록된 도서 보기\n");
+            Console.WriteLine("                              [4] 도서 검색\n");
+            Console.WriteLine("                              [5] 네이버 도서 검색\n");
+            Console.WriteLine("                              [6] 도서 정보 수정\n");
+            Console.WriteLine("                              [7] 도서 삭제\n");
         }
 
         public void ShowAdministratorUserManagementMenu()
         {
             LibraryDefault();
             Console.WriteLine("                              [0] 돌아가기\n");
-            Console.WriteLine("                              [1] 도서 등록\n");
-            Console.WriteLine("                              [2] 네이버 도서 등록\n"); // 도서명을 입력해주세요. 수량도 입력?
-            Console.WriteLine("                              [3] 도서 삭제\n");
-            Console.WriteLine("                              [4] 등록된 도서 보기\n");
-            Console.WriteLine("                              [5] 도서 검색\n");
-            Console.WriteLine("                              [6] 네이버 도서 검색\n");
-            Console.WriteLine("                              [7] 회원 리스트 보기\n");
-            Console.WriteLine("                              [8] 회원 검색\n");
-            Console.WriteLine("                              [9] 회원 삭제");
+            Console.WriteLine("                              [1] 회원 리스트 보기\n");
+            Console.WriteLine("                              [2] 회원 검색\n");
+            Console.WriteLine("                              [3] 회원 삭제");
         }
 
         public void ShowHowToSearchBook()
@@ -109,6 +101,12 @@ namespace en_6_Library_DB
         public void ShowAskOtherAction(string input)
         {
             Console.WriteLine("                              [2] {0}", input);
+        }
+
+        public void SearchBookApi()
+        {
+            LibraryDefault();
+            Console.WriteLine("                               검색할 책의 제목을 입력해주세요~!\n");
         }
     }
 }

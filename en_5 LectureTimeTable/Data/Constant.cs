@@ -44,7 +44,7 @@ namespace en_5_LectureTimeTable
 
         public const string INTERESTED_COURSE_MENU = "1";
 
-        public const string SOURSE_REGISTRATION_MENU = "2";
+        public const string COURSE_REGISTRATION_MENU = "2";
 
         public const string MY_TIMETABLE = "3";
 
@@ -92,9 +92,9 @@ namespace en_5_LectureTimeTable
         public const string SHOW_MYTIMETABLE = "1";
 
         public const string SAVE_TIMETABLE = "2";
-
-        //숫자 하나만
+//숫자 하나만
         public const int NUMBER_LENGTH = 1;
+        
 
         // LectureVO 패딩
         public const int PADING_NO = 4;

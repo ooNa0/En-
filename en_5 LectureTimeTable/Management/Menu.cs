@@ -95,7 +95,7 @@ namespace en_5_LectureTimeTable
                     case Constant.INTERESTED_COURSE_MENU: // 관심 과목 담기
                         ShowCourseMenu(Constant.IS_INTERESTED_COURSE);
                         break;
-                    case Constant.SOURSE_REGISTRATION_MENU: // 수강 신청
+                    case Constant.COURSE_REGISTRATION_MENU: // 수강 신청
                         ShowCourseMenu(!Constant.IS_INTERESTED_COURSE);
                         break;
                     case Constant.MY_TIMETABLE: // 나의 시간표

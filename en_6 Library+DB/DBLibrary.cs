@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 using MySql.Data.MySqlClient;
-
+// 관리자 비밀번호 * 입니다! 별하나요
 namespace en_6_Library_DB
 {
     class DBLibrary

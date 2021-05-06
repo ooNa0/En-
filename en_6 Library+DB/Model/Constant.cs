@@ -6,6 +6,11 @@ namespace en_6_Library_DB
 {
     class Constant
     {
+        public const string NAVER_API_CLIENT_ID = "iBLtZnxwGneJsLbGgDCa";
+        public const string NAVER_API_CLIENT_SECRET = "3Qm2iN4bbG";
+        public const string NAVER_API_DISPLAY = "&&display=";
+        public const int NAVER_API_DISPLAY_NUMBER = 15;
+
         public const string DATABASE_CONNECTION_INFOMATION = "Server=localhost;Port=3306;Database=enlibrary;Uid=root;Pwd=0000";
 
         public const int CONSOLE_SIZE_X = 77;
@@ -30,11 +35,11 @@ namespace en_6_Library_DB
 
         public const int MAXIMUN_ADMINISTRATOR_MENU_NUMBER = 3; // 관리자 메뉴 0~3
 
+        public const int MAXIMUN_ADMINISTRATOR_BOOKMANAGEMENT_MENU_NUMBER = 7; // 관리자 도서 관리 메뉴 0~3
+
         public const int INFORMATION_EXIT_AND_SEARCH = 3; // 나갈건지 찾을건지
 
         public const int SEARCH_MENU_NUMBER = 4; // 책 검색 메뉴
-
-
 
         // 첫 메뉴
         public const string EXIT = "0";
@@ -65,17 +70,23 @@ namespace en_6_Library_DB
 
         public const string LOG_INITALIZATION = "3";
 
+        // 관리자 책 메뉴
 
-        // 메뉴
+
+        // 관리자 책 관리 메뉴
         public const string REGISTRATION_BOOK = "1";
+        public const string NAVER_API_REGISTRATION_BOOK = "2";
 
-        public const string REMOVE_BOOK = "2";
+        public const string SEARCH_NAVER_API_BOOK = "5";
+        public const string EDIT_BOOK = "6";
+        public const string REMOVE_BOOK = "7";
 
-        public const string PRINT_USERLIST = "5";
+        // 관리자 유저 관리 메뉴
+        public const string PRINT_USERLIST = "1";
 
-        public const string SEARCH_USER = "6";
+        public const string SEARCH_USER = "2";
 
-        public const string REMOVE_USER = "7";
+        public const string REMOVE_USER = "3";
 
         // 입력 문자 길이
         public const int MINIMUN_LENGTH = 0;

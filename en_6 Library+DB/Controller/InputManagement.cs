@@ -37,6 +37,50 @@ namespace en_6_Library_DB
             return inputMenuNumber;
         }
 
+        public string SearchName()
+        {
+            bool hasEnded = false;
+            int horizontalCursorPosition = Console.CursorLeft;
+            int verticalCursorPosition = Console.CursorTop;
+            string input = Constant.BACK;
+            while (!hasEnded)
+            {
+                Console.Write("확인할 정보 :");
+                input = Console.ReadLine();
+                if (exception.SearchDataName(input))
+                {
+                    hasEnded = true;
+                }
+                else
+                {
+                    InitializeInputValue(horizontalCursorPosition, verticalCursorPosition);
+                }
+            }
+            return input;
+        }
+
+        public string SearchAge()
+        {
+            bool hasEnded = false;
+            int horizontalCursorPosition = Console.CursorLeft;
+            int verticalCursorPosition = Console.CursorTop;
+            string input = Constant.BACK;
+            while (!hasEnded)
+            {
+                Console.Write("찾으실 유저의 태어난 연도 :");
+                input = Console.ReadLine();
+                if (exception.SearchDataName(input))
+                {
+                    hasEnded = true;
+                }
+                else
+                {
+                    InitializeInputValue(horizontalCursorPosition, verticalCursorPosition);
+                }
+            }
+            return input;
+        }
+
         public string GetIdentity()
         {
             Console.WriteLine("(b누르고 ENTER : 뒤로가기)");
@@ -176,7 +220,7 @@ namespace en_6_Library_DB
             return input;
         }
 
-        public string GetBookID()
+        public string GetBookNO()
         {
             bool hasEnded = false;
             int horizontalCursorPosition = Console.CursorLeft;
@@ -184,10 +228,10 @@ namespace en_6_Library_DB
             string inputIdentity = Constant.BACK;
             while (!hasEnded)
             {
-                Console.Write("(숫자 4글자)도서 아이디 입력 :");
+                Console.Write("책의 NO을 입력해주세요:");
                 inputIdentity = Console.ReadLine();
                 if (inputIdentity == Constant.BACK) return inputIdentity;
-                if (!exception.HasEnglishAndNumber(inputIdentity))
+                if (exception.IsCorrectBookIDForm(inputIdentity))
                 {
                     hasEnded = true;
                 }
@@ -199,6 +243,7 @@ namespace en_6_Library_DB
             return inputIdentity;
         }
 
+
         public string GetBookTitle()
         {
             bool hasEnded = false;
@@ -209,8 +254,8 @@ namespace en_6_Library_DB
             {
                 Console.Write("(15글자 이내) 도서 제목 :");
                 input = Console.ReadLine();
-                if (input == Constant.BACK) return input;
-                if (!exception.IsCorrectLength(input, Constant.MAXIMUM_LENGTH_BOOKTITLE))
+                if (input == Constant.BACK) return input; // constant 변수 삭제
+                if (exception.HasEnglishAndNumberAndKorean(input, Constant.MAXIMUM_LENGTH_BOOKTITLE))
                 {
                     hasEnded = true;
                 }
@@ -233,7 +278,7 @@ namespace en_6_Library_DB
                 Console.Write("(10글자 이내) 도서 저자 :");
                 input = Console.ReadLine();
                 if (input == Constant.BACK) return input;
-                if (!exception.IsCorrectLength(input, Constant.MAXIMUM_LENGTH_BOOKAUTHOR))
+                if (exception.HasEnglishAndNumberAndKorean(input, Constant.MAXIMUM_LENGTH_BOOKAUTHOR))
                 {
                     hasEnded = true;
                 }
@@ -256,7 +301,7 @@ namespace en_6_Library_DB
                 Console.Write("(15글자 이내) 도서 출판사 :");
                 input = Console.ReadLine();
                 if (input == Constant.BACK) return input;
-                if (!exception.IsCorrectLength(input, Constant.MAXIMUM_LENGTH_BOOKPUBLISHER))
+                if (exception.HasEnglishAndNumberAndKorean(input, Constant.MAXIMUM_LENGTH_BOOKPUBLISHER))
                 {
                     hasEnded = true;
                 }
@@ -279,7 +324,7 @@ namespace en_6_Library_DB
                 Console.Write("(숫자만 입력) 도서 권수 :");
                 input = Console.ReadLine();
                 if (input == Constant.BACK) return input;
-                if (!exception.IsCorrectBookNumber(input))
+                if (exception.IsCorrectBookNumber(input))
                 {
                     hasEnded = true;
                 }
@@ -302,7 +347,7 @@ namespace en_6_Library_DB
                 Console.Write("(숫자만 입력) 도서 가격 :");
                 input = Console.ReadLine();
                 if (input == Constant.BACK) return input;
-                if (!exception.IsCorrectBookPrice(input))
+                if (exception.IsCorrectBookPrice(input))
                 {
                     hasEnded = true;
                 }

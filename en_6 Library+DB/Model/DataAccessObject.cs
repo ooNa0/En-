@@ -57,7 +57,6 @@ namespace en_6_Library_DB
             command.Parameters.AddWithValue("@PublisherParameter", Publisher);
             command.Parameters.AddWithValue("@NumberParameter", Convert.ToInt32(Number));
             command.Parameters.AddWithValue("@PriceParameter", Convert.ToInt32(Price));
-            Console.WriteLine("ssssssssssssssssssssssssssssssssss");
             if (PublicationDate == Constant.NULL) { command.Parameters.AddWithValue("@PublicationDateParameter", "        "); }
             else { command.Parameters.AddWithValue("@PublicationDateParameter", PublicationDate); }
             if (ISBN == Constant.NULL) { command.Parameters.AddWithValue("@ISBNParameter", "                 "); }
@@ -76,7 +75,8 @@ namespace en_6_Library_DB
             MySqlCommand command = new MySqlCommand(quary, connection);
             Console.WriteLine(command);
             MySqlDataReader reader = command.ExecuteReader();
-            Console.WriteLine("삭제를 완료하였습니다.");
+            if (reader.Read()) { Console.WriteLine("삭제를 완료하였습니다."); }
+            else { Console.WriteLine("삭제 실  ㅍ    ㅐ!!!!!!!!!1"); }
             Console.ReadLine();
             connection.Close(); // mysql DB 연결 종료
         }
@@ -111,7 +111,20 @@ namespace en_6_Library_DB
             connection.Close();
             return userDataTransferObject;
         }
-        public int EditBookDataDiscount(int bookID, int editdiscount, bool isEditDiscount)
+        public void EditBookDiscount(int bookID, int editdiscount)
+        {
+            connection.Open();
+            string query = "update * from book set discount ='" + editdiscount + "'where ID='" + bookID + "'";
+            MySqlCommand command = new MySqlCommand(query, connection);
+            connection.Close();
+
+            return;
+            // book id, 이게 수정인지 하나 삭제인지 int형
+            // 수정이면 수정
+            // 하나 삭제면 discount-1 이런식으로 넣어주기, 근데 discount가 0이면 return 0
+        }
+
+        public bool EditBookDataDiscount(int bookID, int editdiscount, bool isEditDiscount)
         {
             connection.Open();
             if (isEditDiscount)
@@ -120,21 +133,21 @@ namespace en_6_Library_DB
                 string quary = "update * from book set discount ='" + editdiscount + "'where ID='" + bookID + "'";
                 MySqlCommand command = new MySqlCommand(quary, connection);
                 connection.Close();
-                return 1;
+                return Constant.IS_EDIT_BOOK_DISCOUNT;
             }
             string query = "select * from book where ID='" + bookID + "'";
             command = new MySqlCommand(query, connection);
             MySqlDataReader dataReader = command.ExecuteReader();
             int discount = Convert.ToInt16(dataReader["Discount"]);
-            if (discount == 0)
+            if (discount == Constant.ZERO)
             {
-                Console.WriteLine("책을 빌릴 수 없습니다!"); return 0;
+                Console.WriteLine("책을 빌릴 수 없습니다!"); return !Constant.IS_EDIT_BOOK_DISCOUNT;
             }
             connection.Open();
             query = "update * from book set discount ='" + discount + editdiscount + "'where ID='" + bookID + "'";
             command = new MySqlCommand(query, connection);
             connection.Close();
-            return 1;
+            return Constant.IS_EDIT_BOOK_DISCOUNT;
             // book id, 이게 수정인지 하나 삭제인지 int형
             // 수정이면 수정
             // 하나 삭제면 discount-1 이런식으로 넣어주기, 근데 discount가 0이면 return 0

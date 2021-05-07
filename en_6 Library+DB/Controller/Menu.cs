@@ -29,7 +29,8 @@ namespace en_6_Library_DB
             outputError = new OutputError();
             outputData = new OutputData(outputMenu, dataAccessObject, inputManagement);
             dataAccessObject = new DataAccessObject();
-            connection = new MySqlConnection(Constant.DATABASE_CONNECTION_INFOMATION);//Server=localhost;port=3306; Database=; Uid=root; Pwd=0000; Charset=utf8            userSignUpDataManagement = new UserDataManagement();
+            if(connection == null)
+                connection = new MySqlConnection(Constant.DATABASE_CONNECTION_INFOMATION);//Server=localhost;port=3306; Database=; Uid=root; Pwd=0000; Charset=utf8            userSignUpDataManagement = new UserDataManagement();
             inputManagement = new InputManagement(exception, outputError);
             bookManagement = new BookManagement(outputMenu, outputData, inputManagement, dataAccessObject);
             userManagement = new UserManagement(exception, inputManagement, userSignUpDataManagement, outputMenu, dataAccessObject, outputError, outputData, bookManagement);

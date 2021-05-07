@@ -48,14 +48,14 @@ namespace en_6_Library_DB
                         else { outputData.ShowAllBookList(dataAccessObject.GetAllBookData()); }
                         bookNO = inputManagement.GetBookNO();
                         dataAccessObject.EditBookDataDiscount(bookNO, -1, false);
-                        dataAccessObject.UpdateCurrentBorrowedStatus(bookNO, userDataTransferObject.GetId(), false);
+                        dataAccessObject.UpdateCurrentBorrowedStatus(bookNO, userDataTransferObject.GetId(), !Constant.IS_EDIT_BOOK_DISCOUNT);
                         break;
                     case Constant.RETURN_BOOK:
                         dataAccessObject.ShowUserBorrowedStatus(userDataTransferObject.GetId());
                         //user.ReturnBook(userList, bookList, userNumber, print);
                         bookNO = inputManagement.GetBookNO();
                         dataAccessObject.EditBookDataDiscount(bookNO, 1, false);
-                        dataAccessObject.UpdateCurrentBorrowedStatus(bookNO, userDataTransferObject.GetId(), true);
+                        dataAccessObject.UpdateCurrentBorrowedStatus(bookNO, userDataTransferObject.GetId(), !Constant.IS_EDIT_BOOK_DISCOUNT);
                         // 유저의 책 빌린 정보 모두 출력
                         // 반납할 책 index 입력받기
                         // 책 discount + 1, currentstatus 에서 해당 줄 삭제

@@ -10,6 +10,7 @@ namespace en_6_Library_DB
         public const string NAVER_API_CLIENT_SECRET = "3Qm2iN4bbG";
         public const string NAVER_API_DISPLAY = "&&display=";
         public const int NAVER_API_DISPLAY_NUMBER = 15;
+        public const bool IS_REGISTRATION = true;
 
         public const string DATABASE_CONNECTION_INFOMATION = "Server=localhost;Port=3306;Database=enlibrary;Uid=root;Pwd=0000";
 
@@ -40,6 +41,13 @@ namespace en_6_Library_DB
         public const int INFORMATION_EXIT_AND_SEARCH = 3; // 나갈건지 찾을건지
 
         public const int SEARCH_MENU_NUMBER = 4; // 책 검색 메뉴
+
+        public const int EDIT_NUMBER = 3;
+
+        public const string WANT_EDITING = "1";
+
+        public const int MAXIMUN_EDIT_USER_DATA_NUMBER = 6;
+
 
         // 첫 메뉴
         public const string EXIT = "0";
@@ -110,6 +118,14 @@ namespace en_6_Library_DB
         public const string BOOK_PUBLISHER = "2";
 
         public const string BOOK_AUTHOR = "3";
+
+        // 유저 정보 수정
+        public const string EDIT_USER_DATA_NAME = "1";
+        public const string EDIT_USER_DATA_BIRTHYEAR = "2";
+        public const string EDIT_USER_DATA_ID = "3";
+        public const string EDIT_USER_DATA_PHONENUMBER = "4";
+        public const string EDIT_USER_DATA_ADDRESS = "5"; 
+        public const string UNSUBSCRIBE = "6";
 
         // DB 이름
         public const string BOOK_TABLE = "book";

@@ -115,14 +115,7 @@ namespace en_6_Library_DB
                 Console.WriteLine(Convert.ToString(parseJson["items"][index]["title"]));
                 //index = inputManagement.GetNaverBookNO();
                 Console.WriteLine("______________");
-                dataAccessObject.InputBookDateInDataBase(Convert.ToString(parseJson["items"][index]["title"]),
-                    Convert.ToString(parseJson["items"][index]["Author"]),
-                    Convert.ToString(parseJson["items"][index]["Publisher"]),
-                    Convert.ToString(parseJson["items"][index]["Number"]),
-                    Convert.ToString(parseJson["items"][index]["Price"]),
-                    Convert.ToString(parseJson["items"][index]["PublicationDate"]),
-                    Convert.ToString(parseJson["items"][index]["ISBN"]),
-                    Convert.ToString(parseJson["items"][index]["Explanation"]));
+                dataAccessObject.InputBookDateInDataBase(Convert.ToString(parseJson["items"][index]["title"]), Convert.ToString(parseJson["items"][index]["Author"]), Convert.ToString(parseJson["items"][index]["Publisher"]), Convert.ToString(parseJson["items"][index]["Number"]), Convert.ToString(parseJson["items"][index]["Price"]), Convert.ToString(parseJson["items"][index]["PublicationDate"]), Convert.ToString(parseJson["items"][index]["ISBN"]), Convert.ToString(parseJson["items"][index]["Explanation"]));
                 // 책 등록
             }
             Console.ReadLine();

@@ -69,16 +69,16 @@ namespace en_6_Library_DB
 
         public void RemoveDateInDataBase(string tableName, string identity)//, string password, string name, string brithYear, string phoneNumber, string address
         {
+            string quary;
             connection.Open();
-            string quary = "delete from "+ tableName+" where ID='"+identity+"';";
-            
+            if (tableName == Constant.BOOK_TABLE) { quary = "delete from " + tableName + " where ID='" + Convert.ToInt32(identity) + "';"; }
+            else { quary = "delete from " + tableName + " where ID='" + identity + "';"; }
             MySqlCommand command = new MySqlCommand(quary, connection);
-            Console.WriteLine(command);
-            MySqlDataReader reader = command.ExecuteReader();
-            if (reader.Read()) { Console.WriteLine("삭제를 완료하였습니다."); }
-            else { Console.WriteLine("삭제 실  ㅍ    ㅐ!!!!!!!!!1"); }
+            if (command.ExecuteNonQuery() <= 0) { Console.WriteLine("삭제를 실패하였습니다."); }
+            else { Console.WriteLine("삭제를 완료하였습니다."); }
             Console.ReadLine();
-            connection.Close(); // mysql DB 연결 종료
+            connection.Close();
+            // mysql DB 연결 종료
         }
 
         public UserDataTransferObject CheckUserData(string identity, UserDataTransferObject userDataTransferObject)
@@ -111,66 +111,79 @@ namespace en_6_Library_DB
             connection.Close();
             return userDataTransferObject;
         }
-        public void EditBookDiscount(int bookID, int editdiscount)
+
+        public bool EditBookDataNumber(string bookID, int editNumber)
         {
             connection.Open();
-            string query = "update * from book set discount ='" + editdiscount + "'where ID='" + bookID + "'";
-            MySqlCommand command = new MySqlCommand(query, connection);
+            string quary = "update book set Number='" + editNumber + "'where ID='" + bookID + "'";
+            MySqlCommand command = new MySqlCommand(quary, connection);
+            if (command.ExecuteNonQuery() <= 0) { Console.WriteLine("수정을 실패하였습니다."); }
+            else { Console.WriteLine("수정을 완료하였습니다."); }
+            Console.ReadLine();
             connection.Close();
-
-            return;
-            // book id, 이게 수정인지 하나 삭제인지 int형
-            // 수정이면 수정
-            // 하나 삭제면 discount-1 이런식으로 넣어주기, 근데 discount가 0이면 return 0
+            return Constant.IS_EDIT_BOOK_NUMBER;
         }
 
-        public bool EditBookDataDiscount(int bookID, int editdiscount, bool isEditDiscount)
+        public bool EditBorrowBookDataNumber(string bookID, int editNumber)
         {
+            string query; int number = 0;
             connection.Open();
-            if (isEditDiscount)
+            if (editNumber == -1)
             {
-                
-                string quary = "update * from book set discount ='" + editdiscount + "'where ID='" + bookID + "'";
-                MySqlCommand command = new MySqlCommand(quary, connection);
-                connection.Close();
-                return Constant.IS_EDIT_BOOK_DISCOUNT;
+                query = "select * from book where ID='" + bookID + "'";
+                command = new MySqlCommand(query, connection);
+                MySqlDataReader dataReader = command.ExecuteReader();
+                if (dataReader.Read())
+                {
+                    number = Convert.ToInt32(dataReader["Number"]);
+                    if (number == Constant.ZERO)
+                    {
+                        Console.WriteLine("책을 빌릴 수 없습니다!");
+                        dataReader.Close();
+                        connection.Close();
+                        return !Constant.IS_EDIT_BOOK_NUMBER;
+                    }
+                }
+                dataReader.Close();
             }
-            string query = "select * from book where ID='" + bookID + "'";
+            number += editNumber;
+            query = "update book set Number='" + number + "'where ID='" + bookID + "'";
+            Console.WriteLine(query);
             command = new MySqlCommand(query, connection);
-            MySqlDataReader dataReader = command.ExecuteReader();
-            int discount = Convert.ToInt16(dataReader["Discount"]);
-            if (discount == Constant.ZERO)
-            {
-                Console.WriteLine("책을 빌릴 수 없습니다!"); return !Constant.IS_EDIT_BOOK_DISCOUNT;
-            }
-            connection.Open();
-            query = "update * from book set discount ='" + discount + editdiscount + "'where ID='" + bookID + "'";
-            command = new MySqlCommand(query, connection);
+            if (command.ExecuteNonQuery() == 0)
+                Console.WriteLine("작업을 완료하였습니다.");
+            //connection.Open();
+            //dataReader.Close();
             connection.Close();
-            return Constant.IS_EDIT_BOOK_DISCOUNT;
-            // book id, 이게 수정인지 하나 삭제인지 int형
-            // 수정이면 수정
-            // 하나 삭제면 discount-1 이런식으로 넣어주기, 근데 discount가 0이면 return 0
+            return Constant.IS_EDIT_BOOK_NUMBER;
         }
 
         public string KnowBookTitle(int bookID)
         {
+            string bookTitle = Constant.BACK;
             string query = "select * from book where ID='" + bookID + "'";
             command = new MySqlCommand(query, connection);
             MySqlDataReader dataReader = command.ExecuteReader();
-            return Convert.ToString(dataReader["Title"]);
+            if (dataReader.Read())
+                bookTitle = Convert.ToString(dataReader["Title"]);
+        
+            dataReader.Close();
+            return bookTitle;
         }
 
-        public void UpdateCurrentBorrowedStatus(int bookID, string userID, bool isRemove)
+        public void UpdateCurrentBorrowedStatus(string bookID, string userID, bool isRemove)
         {
             string query;
             connection.Open();
+            Console.ReadLine();
             if (isRemove)
                 query = "delete from currentborrowedstatus where book_id='" + bookID + "' and user_id='" + userID +"';";
             else
-                query = "insert into currentborrowedstatus value(" + userID + "," + bookID + ","+ DateTime.Now + "," + KnowBookTitle(bookID) + ");";
-            
-            MySqlCommand command = new MySqlCommand(query, connection);
+                query = "insert into currentborrowedstatus value('" + userID + "'," + bookID + ",'"+ DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "',\"" + KnowBookTitle(Convert.ToInt32(bookID)) + "\");";
+            Console.WriteLine(query);
+            Console.ReadLine();
+            command = new MySqlCommand(query, connection);
+            command.ExecuteNonQuery(); 
             connection.Close();
         }
 
@@ -181,29 +194,26 @@ namespace en_6_Library_DB
             connection.Open();
             query = "select * from currentborrowedstatus where user_id='" + userID + "';";
             MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(query, connection);
-            mySqlDataAdapter.Fill(currentBorrowedBookStatus, "currentborrowedstatus where");
+            mySqlDataAdapter.Fill(currentBorrowedBookStatus, "currentborrowedstatus");
             connection.Close();
-
             return currentBorrowedBookStatus;
         }
 
         public DataSet GetAllBookData()
         {
             DataSet bookDataSet = new DataSet();
-                string quary = "select * from book";
-                MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(quary, connection);
-                mySqlDataAdapter.Fill(bookDataSet, "book");
-            
+            string quary = "select * from book";
+            MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(quary, connection);
+            mySqlDataAdapter.Fill(bookDataSet, "book");
             return bookDataSet;
         }
 
         public DataSet GetAllUserData()
         {
             userDataSet = new DataSet();
-                string quary = "select * from user";
-                MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(quary, connection);
-                mySqlDataAdapter.Fill(userDataSet, "user");
-            
+            string quary = "select * from user";
+            MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(quary, connection);
+            mySqlDataAdapter.Fill(userDataSet, "user");
             return userDataSet;
         }
 
@@ -214,7 +224,6 @@ namespace en_6_Library_DB
             MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(quary, connection);
             mySqlDataAdapter.Fill(dataSet, table);
             return dataSet;
-            //SELECT * FROM table_name WHERE column_name LIKE "%value%";
         }
 
         public DataSet CorrectDataList(string value)

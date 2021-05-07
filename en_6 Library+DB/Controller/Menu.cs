@@ -20,18 +20,18 @@ namespace en_6_Library_DB
         private AdministratorManagement administratorManagement;
         private MySqlConnection connection;
         private DataAccessObject dataAccessObject;// = new DateAccessObject();
-        private bookManagement bookManagement;
+        private BookManagement bookManagement;
 
         public Menu()
         {
             exception = new Exception();
             outputMenu = new OutputMenu();
             outputError = new OutputError();
-            outputData = new OutputData(outputMenu);
+            outputData = new OutputData(outputMenu, dataAccessObject, inputManagement);
             dataAccessObject = new DataAccessObject();
             connection = new MySqlConnection(Constant.DATABASE_CONNECTION_INFOMATION);//Server=localhost;port=3306; Database=; Uid=root; Pwd=0000; Charset=utf8            userSignUpDataManagement = new UserDataManagement();
             inputManagement = new InputManagement(exception, outputError);
-            bookManagement = new bookManagement(outputMenu, outputData, inputManagement, dataAccessObject);
+            bookManagement = new BookManagement(outputMenu, outputData, inputManagement, dataAccessObject);
             userManagement = new UserManagement(exception, inputManagement, userSignUpDataManagement, outputMenu, dataAccessObject, outputError, outputData, bookManagement);
             administratorManagement = new AdministratorManagement(exception, inputManagement, outputMenu, outputData, dataAccessObject, outputError, bookManagement, userManagement);
         }
@@ -55,7 +55,7 @@ namespace en_6_Library_DB
                         userManagement.SignUpUser();
                         break;
                     case Constant.ADMINISTRATOR_MODE:
-                        Console.Write("관리자 비밀번호를 입력해주세요 :");
+                        Console.Write("별하나 입니당~ >>*<< 이거용! 관리자 비밀번호를 입력해주세요 :");
                         adminPassword = Console.ReadLine();
                         if (adminPassword == Constant.ADMINISTRATOR_PASSWORD) { administratorManagement.AdministratorMenu(); }
                         else { outputError.ShowAdministratorLoginFailure(); }

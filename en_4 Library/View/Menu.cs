@@ -52,7 +52,6 @@ namespace en_4_Library
                     case Constant.SIGN_IN:
                         userNumber = user.SignIn(print, userList);
                         Console.WriteLine(userNumber);
-
                         if (userNumber > -1) // 로그인이 되면
                         {
                             StartUserMenu(userNumber);

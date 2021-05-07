@@ -28,7 +28,7 @@ namespace en_6_Library_DB
                     return 0;
                 case Constant.BOOK_TITLE: // 도서명
                     return outputData.ShowAllBookList(dataAccessObject.SearchDataList(Constant.BOOK_TABLE, Constant.BOOK_COLUMN_TITLE, inputManagement.SearchName()));
-                    //Console.Write("엔터하면 뒤로갑니다.");
+                    Console.Write("엔터하면 뒤로갑니다.");
                     //Console.ReadLine();
                     break;
                 case Constant.BOOK_PUBLISHER: // 출판사

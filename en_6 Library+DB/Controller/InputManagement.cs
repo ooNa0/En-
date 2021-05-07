@@ -222,6 +222,7 @@ namespace en_6_Library_DB
 
         public string GetBookNO()
         {
+            Console.WriteLine("(b누르고 ENTER : 뒤로가기)");
             bool hasEnded = false;
             int horizontalCursorPosition = Console.CursorLeft;
             int verticalCursorPosition = Console.CursorTop;
@@ -246,6 +247,7 @@ namespace en_6_Library_DB
 
         public string GetBookTitle()
         {
+            Console.WriteLine("(b누르고 ENTER : 뒤로가기)");
             bool hasEnded = false;
             int horizontalCursorPosition = Console.CursorLeft;
             int verticalCursorPosition = Console.CursorTop;

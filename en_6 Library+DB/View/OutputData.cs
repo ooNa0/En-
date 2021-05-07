@@ -59,17 +59,18 @@ namespace en_6_Library_DB
             Console.ReadLine();
         }
         
-        public void ShowUserInformation(DataSet dataSet)
+        public void ShowUserInformation(UserDataTransferObject userData)
         {
             Console.Clear(); outputMenu.LibraryDefault();
-            foreach (DataRow row in dataSet.Tables[0].Rows)
-            {
-                Console.WriteLine("\n[1] 이름 : {0}", row["Name"]);
-                Console.WriteLine("\n[2] 나이 : {0}", row["BirthYear"]);
-                Console.WriteLine("\n[3] 아이디 : {0}", row["ID"]);
-                Console.WriteLine("\n[4] 전화번호 : {0}", row["PhoneNumber"]);
-                Console.WriteLine("\n[5] 주소 : {0}", row["Address"]);
-                
+
+            Console.WriteLine("\n[1] 이름 : {0}", userData.GetName());
+            Console.WriteLine("\n[2] 생년월일 : {0}", userData.GetBirthYear());
+            Console.WriteLine("\n[3] 아이디 : {0}", userData.GetId());
+            Console.WriteLine("\n[4] 전화번호 : {0}", userData.GetPhoneNumber());
+            Console.WriteLine("\n[5] 주소 : {0}", userData.GetAddress());
+
+            Console.WriteLine("0: 뒤로가기, 1: 수정\n");
+
                 // 수정할거 컨트롤러에서 받기 -> 수정
                 /*if (userList[userNumber].BorrowBook != "")
                 {
@@ -77,7 +78,7 @@ namespace en_6_Library_DB
                     Console.WriteLine("\n대출일 : {0}", userList[userNumber].BorrowDate);
                     Console.WriteLine("\n반납일 : {0}", userList[userNumber].RorrowDate);
                 }*/
-            }
+            
         }
 
         public void ShowAllNaverBookList(string text, bool isRegistration)

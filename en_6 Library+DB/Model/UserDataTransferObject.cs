@@ -56,6 +56,23 @@ namespace en_6_Library_DB
         {
             return this.borrowBookNumber;
         }
+
+        public void SetId(string id)
+        {
+            this.id = id;
+        }
+        public void SetPassword(string password)
+        {
+            this.password = password;
+        }
+        public void SetName(string name)
+        {
+            this.name = name;
+        }
+        public void SetBirthYear(string birthYear)
+        {
+            this.birthYear = birthYear;
+        }
         public void SetAddress(string address)
         {
             this.address = address;

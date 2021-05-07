@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Crypto.Tls;
 
 namespace en_6_Library_DB
 {
@@ -14,23 +15,22 @@ namespace en_6_Library_DB
         private MySqlCommand command;
         private DataSet userDataSet;
         private DataSet bookDataSet;
-       // private MySqlDataReader dataReader;
+        // private MySqlDataReader dataReader;
+        private UserDataTransferObject userDataTransferObject;
         public DataAccessObject()
         {
-            connection = new MySqlConnection(Constant.DATABASE_CONNECTION_INFOMATION);
+            if(connection == null)
+                connection = new MySqlConnection(Constant.DATABASE_CONNECTION_INFOMATION);
             //command = new MySqlCommand();
             // dataSet = new DataSet();
-            userDataSet = new DataSet();
-            bookDataSet = new DataSet();
         }
 
         public void InputUserDateInDataBase(string identity, string password, string name, string brithYear, string phoneNumber, string address)
         {
-            if (command == null) { MySqlCommand command = new MySqlCommand(); }
+            if (command == null) { command = new MySqlCommand(); }
             connection.Open();
             command.Connection = connection;
             command.CommandText = "insert into user (ID, PASSWORD, Name, BirthYear, PhoneNumber, Address) value (@idParameter, @passwordParameter, @nameParameter, @birthYearParameter, @phoneNumberParameter, @addressParameter)";
-
             command.Parameters.AddWithValue("@idParameter", identity);
             command.Parameters.AddWithValue("@passwordParameter", password);
             command.Parameters.AddWithValue("@nameParameter", name);
@@ -42,14 +42,15 @@ namespace en_6_Library_DB
             connection.Close(); // mysql DB 연결 종료
         }
 
-        public void InputBookDateInDataBase(string identity, string Title, string Author, string Publisher, string Number, string Price, string PublicationDate, string ISBN, string Explanation)
-        {
-            if(command == null){ MySqlCommand command = new MySqlCommand(); }
+        public void InputBookDateInDataBase(string Title, string Author, string Publisher, string Number, string Price, string PublicationDate, string ISBN, string Explanation)
+        {//string identity, 
+            if (command == null){ command = new MySqlCommand(); }
             connection.Open();
             command.Connection = connection;
-            command.CommandText = "insert into book (ID, Title, Author, Publisher, Number, Price, PublicationDate, ISBN, Explanation) value (@idParameter, @TitleParameter, @AuthorParameter, @PublisherParameter, @NumberParameter, @PriceParameter, @PublicationDateParameter, @ISBNParameter, @ExplanationParameter)";
-
-            command.Parameters.AddWithValue("@idParameter", identity);
+            //command.CommandText = "insert into book (ID, Title, Author, Publisher, Number, Price, PublicationDate, ISBN, Explanation) value (@idParameter, @TitleParameter, @AuthorParameter, @PublisherParameter, @NumberParameter, @PriceParameter, @PublicationDateParameter, @ISBNParameter, @ExplanationParameter)";
+            command.CommandText = "insert into book (Title, Author, Publisher, Number, Price, PublicationDate, ISBN, Explanation) value (@TitleParameter, @AuthorParameter, @PublisherParameter, @NumberParameter, @PriceParameter, @PublicationDateParameter, @ISBNParameter, @ExplanationParameter)";
+            //command.Parameters.AddWithValue("@idParameter", 1);
+            //command.Parameters.AddWithValue("@idParameter", identity);
             command.Parameters.AddWithValue("@TitleParameter", Title);
             command.Parameters.AddWithValue("@AuthorParameter", Author);
             command.Parameters.AddWithValue("@PublisherParameter", Publisher);
@@ -65,7 +66,7 @@ namespace en_6_Library_DB
             connection.Close(); // mysql DB 연결 종료
         }
 
-        public void RemoveDateInDataBase(string tableName, string identity)//, string password, string name, string brithYear, string phoneNumber, string address
+        public void RemoveDateInDataBase(string tableName, int identity)//, string password, string name, string brithYear, string phoneNumber, string address
         {
             connection.Open();
             string quary = "delete from "+ tableName+" where ID='"+identity+"';";
@@ -78,44 +79,97 @@ namespace en_6_Library_DB
             connection.Close(); // mysql DB 연결 종료
         }
 
-        public string CheckUserData(string identity)
-        { // ID가 존재하면 b 리턴, 맞으면 password 리턴
+        public UserDataTransferObject CheckUserData(string identity, UserDataTransferObject userDataTransferObject)
+        { // ID의 값 가져오기! 다 가져오기
             string password = "b";
             connection.Open();
             string quary = "select * from user where ID='"+identity +"'";
             MySqlCommand command = new MySqlCommand(quary, connection);
             MySqlDataReader dataReader = command.ExecuteReader();
+            // userDataTransferObject();
             while (dataReader.Read())
             {
+                if (userDataTransferObject == null)
+                    userDataTransferObject = new UserDataTransferObject(Convert.ToString(dataReader["ID"]), Convert.ToString(dataReader["PASSWORD"]), Convert.ToString(dataReader["Name"]),
+                        Convert.ToString(dataReader["BirthYear"]), Convert.ToString(dataReader["PhoneNumber"]), Convert.ToString(dataReader["PhoneNumber"])
+                        );
+                else
+                {
+                    userDataTransferObject.SetId(Convert.ToString(dataReader["ID"]));
+                    userDataTransferObject.SetPassword(Convert.ToString(dataReader["PASSWORD"]));
+                    userDataTransferObject.SetName(Convert.ToString(dataReader["Name"]));
+                    userDataTransferObject.SetBirthYear(Convert.ToString(dataReader["BirthYear"]));
+                    userDataTransferObject.SetPhoneNumber(Convert.ToString(dataReader["PhoneNumber"]));
+                    userDataTransferObject.SetAddress(Convert.ToString(dataReader["PhoneNumber"]));
+                }
                 password = dataReader["PASSWORD"].ToString();
                 break;
             }
             dataReader.Close();
             connection.Close();
-            return password;
+            return userDataTransferObject;
+        }
+        public int EditBookDataDiscount(int bookID, int editdiscount, bool isEditDiscount)
+        {
+            if (isEditDiscount)
+            {
+                connection.Open();
+                string quary = "update * from book set discount ='" + editdiscount + "'where ID='" + bookID + "'";
+                MySqlCommand command = new MySqlCommand(quary, connection);
+                connection.Close();
+                return 1;
+            }
+            string query = "select * from book where ID='" + bookID + "'";
+            command = new MySqlCommand(query, connection);
+            MySqlDataReader dataReader = command.ExecuteReader();
+            int discount = Convert.ToInt16(dataReader["Discount"]);
+            if (discount == 0)
+            {
+                Console.WriteLine("책을 빌릴 수 없습니다!"); return 0;
+            }
+            connection.Open();
+            query = "update * from book set discount ='" + --discount + "'where ID='" + bookID + "'";
+            command = new MySqlCommand(query, connection);
+            connection.Close();
+            return 1;
+            // book id, 이게 수정인지 하나 삭제인지 int형
+            // 수정이면 수정
+            // 하나 삭제면 discount-1 이런식으로 넣어주기, 근데 discount가 0이면 return 0
+        }
+
+        public void UpdateCurrentBorrowedStatus(int bookID, string userID, bool isRemove)
+        {
+            string query;
+            connection.Open();
+            if (isRemove)
+            {
+                query = "delete from currentborrowedstatus where book_id='" + bookID + "' and user_id='" + userID +"';";
+            }
+            else
+            {
+                query = "insert into currentborrowedstatus value(" + bookID + "," + userID +","+ DateTime.Now + ");";
+            }
+            MySqlCommand command = new MySqlCommand(query, connection);
+            connection.Close();
         }
 
         public DataSet GetAllBookData()
         {
-            if (bookDataSet == null)
-            {
-                DataSet bookDataSet = new DataSet();
+            DataSet bookDataSet = new DataSet();
                 string quary = "select * from book";
                 MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(quary, connection);
                 mySqlDataAdapter.Fill(bookDataSet, "book");
-            }
+            
             return bookDataSet;
         }
 
         public DataSet GetAllUserData()
         {
-            if(userDataSet == null)
-            {
-                userDataSet = new DataSet();
+            userDataSet = new DataSet();
                 string quary = "select * from user";
                 MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(quary, connection);
                 mySqlDataAdapter.Fill(userDataSet, "user");
-            }
+            
             return userDataSet;
         }
 
@@ -134,8 +188,9 @@ namespace en_6_Library_DB
             DataSet dataSet = new DataSet();
             string quary = "select * from user where BirthYear='" + value + "'";
             MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(quary, connection);
-            mySqlDataAdapter.Fill(dataSet, "user");
+            mySqlDataAdapter.Fill(dataSet, Constant.USER_TABLE);
             return dataSet;
         }
+
     }
 }

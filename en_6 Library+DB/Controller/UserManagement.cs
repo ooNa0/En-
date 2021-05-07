@@ -30,7 +30,7 @@ namespace en_6_Library_DB
 
         public void ManageUserMenu() // 유저 메뉴
         {
-            string input; int bookNO;
+            string input; string bookNO;
             bool isFinished = false;
             while (!isFinished)
             {
@@ -43,19 +43,29 @@ namespace en_6_Library_DB
                     case Constant.BORROW_BOOK:
                         outputMenu.ShowAskAction(); outputMenu.ShowAskOtherAction("전체 도서 출력 후 대출하기");
                         input = inputManagement.GetMenuNumber(Constant.INFORMATION_EXIT_AND_SEARCH);
-                        if (input == "0") { continue; }
-                        else if (input == "1") { if (bookManagement.SearchBook() == 0) { Console.WriteLine("찾고자하는 책이 없습니다."); Console.ReadLine(); continue; } }
+                        if (input == Constant.EXIT) { continue; }
+                        else if (input == Constant.SEARCH_BOOK_MENU) { if (bookManagement.SearchBook() == 0) { Console.WriteLine("찾고자하는 책이 없습니다."); Console.ReadLine(); continue; } }
                         else { outputData.ShowAllBookList(dataAccessObject.GetAllBookData()); }
                         bookNO = inputManagement.GetBookNO();
-                        dataAccessObject.EditBookDataDiscount(bookNO, -1, false);
-                        dataAccessObject.UpdateCurrentBorrowedStatus(bookNO, userDataTransferObject.GetId(), !Constant.IS_EDIT_BOOK_DISCOUNT);
+                        if(bookNO != Constant.BACK)
+                        {
+                            dataAccessObject.EditBookDataDiscount(bookNO, -Constant.ADD_NUMBER, !Constant.IS_EDIT_BOOK_DISCOUNT);
+                            dataAccessObject.UpdateCurrentBorrowedStatus(bookNO, userDataTransferObject.GetId(), !Constant.IS_EDIT_BOOK_DISCOUNT);
+                        }
                         break;
                     case Constant.RETURN_BOOK:
-                        dataAccessObject.ShowUserBorrowedStatus(userDataTransferObject.GetId());
-                        //user.ReturnBook(userList, bookList, userNumber, print);
+                        if (outputData.ShowUserborrowedBook(dataAccessObject.ShowUserBorrowedStatus(userDataTransferObject.GetId())) == 0)
+                        {
+                            Console.WriteLine("반납할 책이 없습니다! ENTER를 눌러주세요.");
+                            Console.ReadLine();
+                            continue;
+                        }
                         bookNO = inputManagement.GetBookNO();
-                        dataAccessObject.EditBookDataDiscount(bookNO, 1, false);
-                        dataAccessObject.UpdateCurrentBorrowedStatus(bookNO, userDataTransferObject.GetId(), !Constant.IS_EDIT_BOOK_DISCOUNT);
+                        if (bookNO != Constant.BACK)
+                        {
+                            dataAccessObject.EditBookDataDiscount(bookNO, Constant.ADD_NUMBER, !Constant.IS_EDIT_BOOK_DISCOUNT);
+                            dataAccessObject.UpdateCurrentBorrowedStatus(bookNO, userDataTransferObject.GetId(), Constant.IS_EDIT_BOOK_DISCOUNT);
+                        }
                         // 유저의 책 빌린 정보 모두 출력
                         // 반납할 책 index 입력받기
                         // 책 discount + 1, currentstatus 에서 해당 줄 삭제

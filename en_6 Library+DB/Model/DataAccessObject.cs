@@ -15,6 +15,7 @@ namespace en_6_Library_DB
         private MySqlCommand command;
         private DataSet userDataSet;
         private DataSet bookDataSet;
+        private DataSet currentBorrowedBookStatus;
         // private MySqlDataReader dataReader;
         private UserDataTransferObject userDataTransferObject;
         public DataAccessObject()
@@ -56,6 +57,7 @@ namespace en_6_Library_DB
             command.Parameters.AddWithValue("@PublisherParameter", Publisher);
             command.Parameters.AddWithValue("@NumberParameter", Convert.ToInt32(Number));
             command.Parameters.AddWithValue("@PriceParameter", Convert.ToInt32(Price));
+            Console.WriteLine("ssssssssssssssssssssssssssssssssss");
             if (PublicationDate == Constant.NULL) { command.Parameters.AddWithValue("@PublicationDateParameter", "        "); }
             else { command.Parameters.AddWithValue("@PublicationDateParameter", PublicationDate); }
             if (ISBN == Constant.NULL) { command.Parameters.AddWithValue("@ISBNParameter", "                 "); }
@@ -66,13 +68,13 @@ namespace en_6_Library_DB
             connection.Close(); // mysql DB 연결 종료
         }
 
-        public void RemoveDateInDataBase(string tableName, int identity)//, string password, string name, string brithYear, string phoneNumber, string address
+        public void RemoveDateInDataBase(string tableName, string identity)//, string password, string name, string brithYear, string phoneNumber, string address
         {
             connection.Open();
             string quary = "delete from "+ tableName+" where ID='"+identity+"';";
             
             MySqlCommand command = new MySqlCommand(quary, connection);
-            
+            Console.WriteLine(command);
             MySqlDataReader reader = command.ExecuteReader();
             Console.WriteLine("삭제를 완료하였습니다.");
             Console.ReadLine();
@@ -111,9 +113,10 @@ namespace en_6_Library_DB
         }
         public int EditBookDataDiscount(int bookID, int editdiscount, bool isEditDiscount)
         {
+            connection.Open();
             if (isEditDiscount)
             {
-                connection.Open();
+                
                 string quary = "update * from book set discount ='" + editdiscount + "'where ID='" + bookID + "'";
                 MySqlCommand command = new MySqlCommand(quary, connection);
                 connection.Close();
@@ -128,7 +131,7 @@ namespace en_6_Library_DB
                 Console.WriteLine("책을 빌릴 수 없습니다!"); return 0;
             }
             connection.Open();
-            query = "update * from book set discount ='" + --discount + "'where ID='" + bookID + "'";
+            query = "update * from book set discount ='" + discount + editdiscount + "'where ID='" + bookID + "'";
             command = new MySqlCommand(query, connection);
             connection.Close();
             return 1;
@@ -137,20 +140,38 @@ namespace en_6_Library_DB
             // 하나 삭제면 discount-1 이런식으로 넣어주기, 근데 discount가 0이면 return 0
         }
 
+        public string KnowBookTitle(int bookID)
+        {
+            string query = "select * from book where ID='" + bookID + "'";
+            command = new MySqlCommand(query, connection);
+            MySqlDataReader dataReader = command.ExecuteReader();
+            return Convert.ToString(dataReader["Title"]);
+        }
+
         public void UpdateCurrentBorrowedStatus(int bookID, string userID, bool isRemove)
         {
             string query;
             connection.Open();
             if (isRemove)
-            {
                 query = "delete from currentborrowedstatus where book_id='" + bookID + "' and user_id='" + userID +"';";
-            }
             else
-            {
-                query = "insert into currentborrowedstatus value(" + bookID + "," + userID +","+ DateTime.Now + ");";
-            }
+                query = "insert into currentborrowedstatus value(" + userID + "," + bookID + ","+ DateTime.Now + "," + KnowBookTitle(bookID) + ");";
+            
             MySqlCommand command = new MySqlCommand(query, connection);
             connection.Close();
+        }
+
+        public DataSet ShowUserBorrowedStatus(string userID)
+        {
+            DataSet currentBorrowedBookStatus = new DataSet();
+            string query;
+            connection.Open();
+            query = "select * from currentborrowedstatus where user_id='" + userID + "';";
+            MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(query, connection);
+            mySqlDataAdapter.Fill(currentBorrowedBookStatus, "currentborrowedstatus where");
+            connection.Close();
+
+            return currentBorrowedBookStatus;
         }
 
         public DataSet GetAllBookData()

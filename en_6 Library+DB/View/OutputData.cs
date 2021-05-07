@@ -55,21 +55,34 @@ namespace en_6_Library_DB
                 }
                 Console.WriteLine("───────────────────────────────────────────────────────────────────────");
             //}
+        }
+
+        public void ShowUserborrowedBook(DataSet dataSet)
+        {
+            Console.WriteLine("빌린 책 이름  반납일");
+            Console.WriteLine("───────────────────────────────────────────────────────────────────────");
+
+            foreach (DataRow row in dataSet.Tables[0].Rows)
+            {
+                Console.WriteLine("{0}{1}", row["user"], row["ID"]);
+            }
+            Console.WriteLine("───────────────────────────────────────────────────────────────────────");
+           
             Console.Write("엔터하면 뒤로갑니다.");
             Console.ReadLine();
         }
-        
+
         public void ShowUserInformation(UserDataTransferObject userData)
         {
             Console.Clear(); outputMenu.LibraryDefault();
 
-            Console.WriteLine("\n[1] 이름 : {0}", userData.GetName());
-            Console.WriteLine("\n[2] 생년월일 : {0}", userData.GetBirthYear());
-            Console.WriteLine("\n[3] 아이디 : {0}", userData.GetId());
-            Console.WriteLine("\n[4] 전화번호 : {0}", userData.GetPhoneNumber());
-            Console.WriteLine("\n[5] 주소 : {0}", userData.GetAddress());
+            Console.WriteLine("\n\t[1] 이름 : {0}", userData.GetName());
+            Console.WriteLine("\n\t[2] 생년월일 : {0}", userData.GetBirthYear());
+            Console.WriteLine("\n\t[3] 아이디 : {0}", userData.GetId());
+            Console.WriteLine("\n\t[4] 전화번호 : {0}", userData.GetPhoneNumber());
+            Console.WriteLine("\n\t[5] 주소 : {0}", userData.GetAddress());
 
-            Console.WriteLine("0: 뒤로가기, 1: 수정\n");
+            Console.WriteLine("\n\n0을 누르면 뒤로가기, 1을 누르면 유저 정보 수정");
 
                 // 수정할거 컨트롤러에서 받기 -> 수정
                 /*if (userList[userNumber].BorrowBook != "")
@@ -83,9 +96,9 @@ namespace en_6_Library_DB
 
         public void ShowAllNaverBookList(string text, bool isRegistration)
         {
-            Console.Clear(); outputMenu.LibraryDefault();
+            //Console.Clear(); outputMenu.LibraryDefault();
             JObject parseJson = JObject.Parse(text);
-
+            Console.WriteLine(text);
             if (parseJson["items"].ToString() == "[]")
             {
                 Console.WriteLine("검색한 도서가 존재하지 않습니다!");
@@ -95,31 +108,54 @@ namespace en_6_Library_DB
             Console.WriteLine("네이버 도서 검색 결과 ");
             Console.WriteLine("───────────────────────────────────────────────────────────────────────");
 
-
-            for (int i = 0; i < Constant.NAVER_API_DISPLAY_NUMBER; i++)
+            //Console.WriteLine(parseJson["display"]);
+            int i = 0;
+            foreach(JToken jToken in parseJson["items"])
             {
-                Console.Write("NO :{0}\n", i);
-                Console.WriteLine("도서 제목:{0}", parseJson["items"][i]["title"]);
+                Console.Write("NO :[{0}]  ", i);
+                Console.WriteLine("도서 제목:{0}", jToken["title"]);
 
-                Console.WriteLine("저자:{0}", parseJson["items"][i]["author"]);
+                Console.WriteLine("저자:{0}", jToken["author"]);
 
-                Console.WriteLine("출판사:{0}", parseJson["items"][i]["publisher"]);
+                Console.WriteLine("출판사:{0}", jToken["publisher"]);
+                Console.WriteLine("출판일:{0}", jToken["pubdate"]);
 
-                Console.WriteLine("가격:{0} ISBN:{1}", parseJson["items"][i]["price"], parseJson["items"][i]["isbn"]);
+                Console.WriteLine("가격:{0}원, ISBN:{1}", jToken["price"], jToken["isbn"]);
                 //description = 
-                Console.WriteLine("설명:{0}", parseJson["items"][i]["description"]);
+                Console.WriteLine("설명:{0}", jToken["description"]);
                 Console.WriteLine("───────────────────────────────────────────────────────────────────────");
+                i++;
             }
+
+           
             int index = 0;
-            if (isRegistration)
+            string discount = "1";
+            if (isRegistration) // 따로 Controller의 bookmanagement에 빼고 싶다
             {
-                Console.WriteLine(Convert.ToString(parseJson["items"][index]["title"]));
-                //index = inputManagement.GetNaverBookNO();
-                Console.WriteLine("______________");
-                dataAccessObject.InputBookDateInDataBase(Convert.ToString(parseJson["items"][index]["title"]), Convert.ToString(parseJson["items"][index]["Author"]), Convert.ToString(parseJson["items"][index]["Publisher"]), Convert.ToString(parseJson["items"][index]["Number"]), Convert.ToString(parseJson["items"][index]["Price"]), Convert.ToString(parseJson["items"][index]["PublicationDate"]), Convert.ToString(parseJson["items"][index]["ISBN"]), Convert.ToString(parseJson["items"][index]["Explanation"]));
+                Console.WriteLine(parseJson["items"][index]["author"]);
+                //index = inputManagement.GetBookNO(); // 이거도 controller
+                //string discount = inputManagement.GetBookNumber();
+                //Console.WriteLine("______________");
+                dataAccessObject.InputBookDateInDataBase("11111",
+                    "11111",
+                    "11111", discount,
+                    "11111",
+                    "11111", 
+                    "11111", 
+                    "AAAA");
                 // 책 등록
             }
             Console.ReadLine();
         }
     }
 }
+/*
+ * dataAccessObject.InputBookDateInDataBase(Convert.ToString(parseJson["items"][index]["title"]), 
+                    Convert.ToString(parseJson["items"][index]["author"]), 
+                    Convert.ToString(parseJson["items"][index]["publisher"]), discount, 
+                    Convert.ToString(parseJson["items"][index]["price"]), 
+                    Convert.ToString(parseJson["items"][index]["pubdate"]), 
+                    Convert.ToString(parseJson["items"][index]["isbn"]), 
+                    "AAAA");
+
+    */

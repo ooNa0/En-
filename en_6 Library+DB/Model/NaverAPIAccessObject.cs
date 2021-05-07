@@ -13,9 +13,13 @@ namespace en_6_Library_DB
     class NaverAPIAccessObject
     {
         private OutputData outputData;
-        public NaverAPIAccessObject(OutputData outputData)
+        private DataAccessObject dataAccessObject;
+        private InputManagement inputManagement;
+        public NaverAPIAccessObject(OutputData outputData, DataAccessObject dataAccessObject, InputManagement inputManagement)
         {
             this.outputData = outputData;
+            this.dataAccessObject = dataAccessObject;
+            this.inputManagement = inputManagement;
         }
         public void ShowNaverBookList(string query, bool isRegistration)
         {
@@ -37,7 +41,56 @@ namespace en_6_Library_DB
             text = text.Replace("&gt;", ">");
             text = text.Replace("&quot;", "");
 
-            outputData.ShowAllNaverBookList(text, isRegistration);
+            //outputData.ShowAllNaverBookList(text, isRegistration);
+            JObject parseJson = JObject.Parse(text);
+            Console.WriteLine(text);
+            if (parseJson["items"].ToString() == "[]")
+            {
+                Console.WriteLine("검색한 도서가 존재하지 않습니다!");
+                Console.ReadLine();
+                return;
+            }
+            Console.WriteLine("네이버 도서 검색 결과 ");
+            Console.WriteLine("───────────────────────────────────────────────────────────────────────");
+
+            //Console.WriteLine(parseJson["display"]);
+            int i = 0;
+            foreach (JToken jToken in parseJson["items"])
+            {
+                Console.Write("NO :[{0}]  ", i);
+                Console.WriteLine("도서 제목:{0}", jToken["title"]);
+
+                Console.WriteLine("저자:{0}", jToken["author"]);
+
+                Console.WriteLine("출판사:{0}", jToken["publisher"]);
+                Console.WriteLine("출판일:{0}", jToken["pubdate"]);
+
+                Console.WriteLine("가격:{0}원, ISBN:{1}", jToken["price"], jToken["isbn"]);
+                //description = 
+                Console.WriteLine("설명:{0}", jToken["description"]);
+                Console.WriteLine("───────────────────────────────────────────────────────────────────────");
+                i++;
+            }
+
+            int index = 0;
+            string discount = "1";
+            if (isRegistration) // 따로 Controller의 bookmanagement에 빼고 싶다
+            {
+                Console.WriteLine(parseJson["items"][index]["author"]);
+                index = inputManagement.GetBookNO(); // 이거도 controller
+                discount = inputManagement.GetBookNumber();
+                //Console.WriteLine("______________");
+                dataAccessObject.InputBookDateInDataBase(Convert.ToString(parseJson["items"][index]["title"]),
+                     Convert.ToString(parseJson["items"][index]["author"]),
+                     Convert.ToString(parseJson["items"][index]["publisher"]), discount,
+                     Convert.ToString(parseJson["items"][index]["price"]),
+                     Convert.ToString(parseJson["items"][index]["pubdate"]),
+                     Convert.ToString(parseJson["items"][index]["isbn"]),
+                     Convert.ToString(parseJson["items"][index]["description"]));
+                // 책 등록
+            }
+            Console.WriteLine("책 등록 완료, ENTER를 눌러주세요.");
+            Console.ReadLine();
         }    
     }
 }

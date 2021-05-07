@@ -21,9 +21,11 @@ namespace en_6_Library_DB
         private MySqlConnection connection;
         private DataAccessObject dataAccessObject;// = new DateAccessObject();
         private BookManagement bookManagement;
+        private LogManagement log;
 
         public Menu()
         {
+            log = new LogManagement();
             exception = new Exception();
             outputMenu = new OutputMenu();
             outputError = new OutputError();
@@ -32,9 +34,10 @@ namespace en_6_Library_DB
             if(connection == null)
                 connection = new MySqlConnection(Constant.DATABASE_CONNECTION_INFOMATION);//Server=localhost;port=3306; Database=; Uid=root; Pwd=0000; Charset=utf8            userSignUpDataManagement = new UserDataManagement();
             inputManagement = new InputManagement(exception, outputError);
-            bookManagement = new BookManagement(outputMenu, outputData, inputManagement, dataAccessObject);
-            userManagement = new UserManagement(exception, inputManagement, userSignUpDataManagement, outputMenu, dataAccessObject, outputError, outputData, bookManagement);
-            administratorManagement = new AdministratorManagement(exception, inputManagement, outputMenu, outputData, dataAccessObject, outputError, bookManagement, userManagement);
+            bookManagement = new BookManagement(outputMenu, outputData, inputManagement, dataAccessObject, log);
+            userManagement = new UserManagement(exception, inputManagement, userSignUpDataManagement, outputMenu, dataAccessObject, outputError, outputData, bookManagement, log);
+            administratorManagement = new AdministratorManagement(exception, inputManagement, outputMenu, outputData, dataAccessObject, outputError, bookManagement, userManagement, log);
+            
         }
 
         public void MainMenu() // 첫 메뉴
@@ -58,7 +61,7 @@ namespace en_6_Library_DB
                     case Constant.ADMINISTRATOR_MODE:
                         Console.Write("별하나 입니당~ >>*<< 이거용! 관리자 비밀번호를 입력해주세요 :");
                         adminPassword = Console.ReadLine();
-                        if (adminPassword == Constant.ADMINISTRATOR_PASSWORD) { administratorManagement.AdministratorMenu(); }
+                        if (adminPassword == Constant.ADMINISTRATOR_PASSWORD) { log.AddLog("관리자가 로그인했습니다."); administratorManagement.AdministratorMenu(); }
                         else { outputError.ShowAdministratorLoginFailure(); }
                         break;
                 }

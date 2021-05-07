@@ -16,7 +16,9 @@ namespace en_6_Library_DB
         private OutputError outputError;
         private BookManagement bookManagement;
         private UserDataTransferObject userDataTransferObject;
-        public UserManagement(Exception exception, InputManagement inputManagement, UserDataManagement userDataManagement, OutputMenu outputMenu, DataAccessObject dataAccessObject, OutputError outputError, OutputData outputData, BookManagement bookManagement)
+        private LogManagement log;
+        public string stringLog;
+        public UserManagement(Exception exception, InputManagement inputManagement, UserDataManagement userDataManagement, OutputMenu outputMenu, DataAccessObject dataAccessObject, OutputError outputError, OutputData outputData, BookManagement bookManagement, LogManagement log)
         {
             this.exception = exception;
             this.inputManagement = inputManagement;
@@ -26,6 +28,7 @@ namespace en_6_Library_DB
             this.outputError = outputError;
             this.outputData = outputData;
             this.bookManagement = bookManagement;
+            this.log = log;
         }
 
         public void ManageUserMenu() // 유저 메뉴
@@ -47,10 +50,13 @@ namespace en_6_Library_DB
                         else if (input == Constant.SEARCH_BOOK_MENU) { if (bookManagement.SearchBook() == 0) { Console.WriteLine("찾고자하는 책이 없습니다."); Console.ReadLine(); continue; } }
                         else { outputData.ShowAllBookList(dataAccessObject.GetAllBookData()); }
                         bookNO = inputManagement.GetBookNO();
-                        if(bookNO != Constant.BACK)
+                        if (bookNO != Constant.BACK)
                         {
-                            dataAccessObject.EditBookDataDiscount(bookNO, -Constant.ADD_NUMBER, !Constant.IS_EDIT_BOOK_DISCOUNT);
-                            dataAccessObject.UpdateCurrentBorrowedStatus(bookNO, userDataTransferObject.GetId(), !Constant.IS_EDIT_BOOK_DISCOUNT);
+                            if (dataAccessObject.EditBorrowBookDataNumber(bookNO, -Constant.ADD_NUMBER))
+                            {
+                                dataAccessObject.UpdateCurrentBorrowedStatus(bookNO, userDataTransferObject.GetId(), !Constant.IS_EDIT_BOOK_NUMBER);
+                                stringLog = string.Format("{0}님이 BOOKNO가 {1}인 책을 빌리셨습니다.", inputManagement.GetName(), bookNO); log.AddLog(stringLog);
+                            }
                         }
                         break;
                     case Constant.RETURN_BOOK:
@@ -63,12 +69,13 @@ namespace en_6_Library_DB
                         bookNO = inputManagement.GetBookNO();
                         if (bookNO != Constant.BACK)
                         {
-                            dataAccessObject.EditBookDataDiscount(bookNO, Constant.ADD_NUMBER, !Constant.IS_EDIT_BOOK_DISCOUNT);
-                            dataAccessObject.UpdateCurrentBorrowedStatus(bookNO, userDataTransferObject.GetId(), Constant.IS_EDIT_BOOK_DISCOUNT);
-                        }
-                        // 유저의 책 빌린 정보 모두 출력
-                        // 반납할 책 index 입력받기
-                        // 책 discount + 1, currentstatus 에서 해당 줄 삭제
+                            if (dataAccessObject.EditBorrowBookDataNumber(bookNO, Constant.ADD_NUMBER))
+                            {
+                                dataAccessObject.UpdateCurrentBorrowedStatus(bookNO, userDataTransferObject.GetId(), Constant.IS_EDIT_BOOK_NUMBER);
+                                stringLog = string.Format("{0}님이 BOOKNO가 {1}인 책을 반납하셨습니다.", inputManagement.GetName(), bookNO); log.AddLog(stringLog);
+                            }
+                            }
+
                         break;
                     case Constant.PRINT_BOOKS:
                         outputData.ShowAllBookList(dataAccessObject.GetAllBookData());
@@ -89,7 +96,6 @@ namespace en_6_Library_DB
             bool isFinished = false;
             while (!isFinished)
             {
-                outputData.ShowUserInformation(userDataTransferObject);
                 if (inputManagement.GetMenuNumber(Constant.EDIT_NUMBER) == Constant.WANT_EDITING) { Console.WriteLine("수정하실 번호를 입력해주세요. 0:뒤로가기, 6: 회원탈퇴"); }
                 else { return; }
                 switch (inputManagement.GetMenuNumber(Constant.MAXIMUN_EDIT_USER_DATA_NUMBER))
@@ -98,21 +104,27 @@ namespace en_6_Library_DB
                         isFinished = true;
                         return;
                     case Constant.EDIT_USER_DATA_NAME:
+                        stringLog = string.Format("{0}님이 이름을 수정하였습니다.", inputManagement.GetName()); log.AddLog(stringLog);
                         userDataTransferObject.SetName(inputManagement.GetName());
                         break;
                     case Constant.EDIT_USER_DATA_BIRTHYEAR:
+                        stringLog = string.Format("{0}님이 생년을 수정하였습니다.", inputManagement.GetName()); log.AddLog(stringLog);
                         userDataTransferObject.SetBirthYear(inputManagement.GetBirthYear());
                         break;
                     case Constant.EDIT_USER_DATA_ID:
+                        stringLog = string.Format("{0}님이 ID를 수정하였습니다.", inputManagement.GetName()); log.AddLog(stringLog);
                         userDataTransferObject.SetId(inputManagement.GetIdentity());
                         break;
                     case Constant.EDIT_USER_DATA_PHONENUMBER:
+                        stringLog = string.Format("{0}님이 전화번호를 수정하였습니다.", inputManagement.GetName()); log.AddLog(stringLog);
                         userDataTransferObject.SetPhoneNumber(inputManagement.GetPhoneNumber());
                         break;
                     case Constant.EDIT_USER_DATA_ADDRESS:
+                        stringLog = string.Format("{0}님이 주소를 수정하였습니다.", inputManagement.GetName()); log.AddLog(stringLog);
                         userDataTransferObject.SetAddress(inputManagement.GetAddress());
                         break;
                     case Constant.UNSUBSCRIBE:
+                        stringLog = string.Format("{0}님이 회원탈퇴를 하였습니다.", inputManagement.GetName()); log.AddLog(stringLog);
                         dataAccessObject.RemoveDateInDataBase(Constant.USER_TABLE, userDataTransferObject.GetId());
                         break;
                 }
@@ -134,26 +146,19 @@ namespace en_6_Library_DB
             if (phoneNumber == Constant.BACK) return;
             string address = inputManagement.GetAddress();
             if (address == Constant.BACK) return;
-            // 아이디 입력(영어, 숫자 5~10글자 입력하세요.) -> 틀리면 에러 출력 후, 커서 이동
-            // 비밀번호 입력(영어, 숫자 8~15글자 입력하세요.)
-            // 이름(공백없이 한글 2~4글자 입력하세요.)
-            // 태어난 연도(연도만 입력해주세요. ex)2001)
-            // 전화번호('-'없이 번호만 입력해주세요.)
-            // 이메일 주소?
-            // 주소(우편번호, 도로명 주소)
 
-            // 데베에 넣기!!!!!!!!!!!
             dataAccessObject.InputUserDateInDataBase(identity, password, name, brithYear, phoneNumber, address);
             Console.WriteLine("{0}님, 회원가입이 완료되었습니다!", name);
+            stringLog = string.Format("{0}님이 회원가입하였습니다.", name); log.AddLog(stringLog);
             Console.WriteLine();
             return;
         }
 
         public bool SignInUser()
         {
+            string name;
             string identity;
             string password;
-            string checkPassword = "";
             bool isCorrect = false;
 
             while (!isCorrect) // 아이디
@@ -161,16 +166,7 @@ namespace en_6_Library_DB
                 Console.Clear(); outputMenu.LibraryDefault();
                 identity = inputManagement.GetIdentity();
                 if (identity == "b") { return false; }
-
-                //if (userDataTransferObject == null)
-                //    userDataTransferObject = new UserDataTransferObject;
-                //checkPassword = dataAccessObject.CheckUserData(identity, userDataTransferObject);
                 userDataTransferObject = dataAccessObject.CheckUserData(identity, userDataTransferObject);
-               // if (checkPassword == "b") 
-              //  {
-                //    outputError.ShowUserLoginFailureID();
-              //      continue;
-             //   }
                 isCorrect = true;
             }
             int horizontalCursorPosition = Console.CursorLeft;
@@ -189,6 +185,8 @@ namespace en_6_Library_DB
                 isCorrect = false;
             }
             Console.WriteLine("로그인을 완료하였습니다! 반가워요! {0}님 ><", userDataTransferObject.GetName()); // ~~님 이름 같이 출력
+            stringLog = string.Format("{0}님이 로그인했습니다.", userDataTransferObject.GetName());
+            log.AddLog(stringLog);
             Console.WriteLine();
             return true;
         }
@@ -196,19 +194,26 @@ namespace en_6_Library_DB
        
         public void SearchUser() // 이름 나이 주소
         {
+            string findInformation;
             outputMenu.ShowHowToSearchUser();
             switch (inputManagement.GetMenuNumber(Constant.SEARCH_MENU_NUMBER))
             {
                 case Constant.EXIT:
                     return;
                 case Constant.BOOK_TITLE: // 이름
-                    outputData.ShowAllUserList(dataAccessObject.SearchDataList(Constant.USER_TABLE, Constant.USER_COLUMN_NAME, inputManagement.SearchName()));
+                    findInformation = inputManagement.SearchName();
+                    stringLog = string.Format("관리자가 사용자의 이름 {0}을/를 검색했습니다.", findInformation); log.AddLog(stringLog);
+                    outputData.ShowAllUserList(dataAccessObject.SearchDataList(Constant.USER_TABLE, Constant.USER_COLUMN_NAME, findInformation));
                    break;
                 case Constant.BOOK_PUBLISHER: // 생년
-                    outputData.ShowAllUserList(dataAccessObject.CorrectDataList(inputManagement.SearchAge()));//Constant.USER_TABLE, Constant.USER_COLUMN_BIRTHYEAR, 
+                    findInformation = inputManagement.SearchAge();
+                    stringLog = string.Format("관리자가 사용자의 생년 {0}을/를 검색했습니다.", findInformation); log.AddLog(stringLog);
+                    outputData.ShowAllUserList(dataAccessObject.CorrectDataList(findInformation));
                     break;
                 case Constant.BOOK_AUTHOR: // 주소
-                    outputData.ShowAllUserList(dataAccessObject.SearchDataList(Constant.USER_TABLE, Constant.USER_COLUMN_ADDRESS, inputManagement.SearchName()));
+                    findInformation = inputManagement.SearchName();
+                    stringLog = string.Format("관리자가 사용자의 주소 {0}을/를 검색했습니다.", findInformation); log.AddLog(stringLog);
+                    outputData.ShowAllUserList(dataAccessObject.SearchDataList(Constant.USER_TABLE, Constant.USER_COLUMN_ADDRESS, findInformation));
                     break;
             }
         }

@@ -14,7 +14,9 @@ namespace en_6_Library_DB
         private BookManagement bookManagement;
         private UserManagement userManagement;
         private NaverAPIAccessObject naverAPIAccessObject;
-        public AdministratorManagement(Exception exception, InputManagement inputManagement, OutputMenu outputMenu, OutputData outputData, DataAccessObject dataAccessObject, OutputError outputError, BookManagement bookManagement, UserManagement userManagement)
+        private LogManagement log;
+        public string stringLog;
+        public AdministratorManagement(Exception exception, InputManagement inputManagement, OutputMenu outputMenu, OutputData outputData, DataAccessObject dataAccessObject, OutputError outputError, BookManagement bookManagement, UserManagement userManagement, LogManagement log)
         {
             this.exception = exception;
             this.inputManagement = inputManagement;
@@ -23,12 +25,14 @@ namespace en_6_Library_DB
             this.dataAccessObject = dataAccessObject;
             this.bookManagement = bookManagement;
             this.userManagement = userManagement;
-            naverAPIAccessObject = new NaverAPIAccessObject(outputData, dataAccessObject, inputManagement);
+            naverAPIAccessObject = new NaverAPIAccessObject(outputData, dataAccessObject, inputManagement, log);
+            this.log = log;
         }
 
         public void AdministratorMenu() // 관리자 메뉴
         {
             bool isFinished = false;
+
             while (!isFinished)
             {
                 outputMenu.ShowAdministratorMenu();
@@ -39,13 +43,15 @@ namespace en_6_Library_DB
                         isFinished = true;
                         return;
                     case Constant.ADMINISTRATOR_BOOK_MANAGEMENT:
+                        log.AddLog("관리자가 도서 관리 모드에 접속하였습니다.");
                         AdministratorBookMenu();
                         break;
                     case Constant.ADMINISTRATOR_USER_MANAGEMENT:
+                        log.AddLog("관리자가 사용자 관리 모드에 접속하였습니다."); 
                         AdministratorUserMenu();
                         break;
                     case Constant.LOG_INITALIZATION:
-                        // 로그 삭제 필요
+                        log.DeleteLogFile();
                         break;
                 }
             }
@@ -55,6 +61,7 @@ namespace en_6_Library_DB
         {
             string input;
             bool isFinished = false;
+
             while (!isFinished)
             {
                 outputMenu.ShowAdministratorUserManagementMenu();
@@ -72,10 +79,11 @@ namespace en_6_Library_DB
                         userManagement.SearchUser();
                         Console.Write("엔터하면 뒤로갑니다.");
                         Console.ReadLine(); break;
-                        break;
                     case Constant.REMOVE_USER: // 유저 삭제
                         outputData.ShowAllUserList(dataAccessObject.GetAllUserData());
-                        dataAccessObject.RemoveDateInDataBase(Constant.USER_TABLE, inputManagement.GetIdentity());
+                        input = inputManagement.GetIdentity();
+                        stringLog = string.Format("관리자가 사용자 ID:{0} 삭제를 시도하였습니다.", input); log.AddLog(stringLog);
+                        dataAccessObject.RemoveDateInDataBase(Constant.USER_TABLE, input);
                         break;
                 }
             }
@@ -84,6 +92,7 @@ namespace en_6_Library_DB
         {
             string bookNOString; string bookNumberString;
             bool isFinished = false;
+
             while (!isFinished)
             {
                 outputMenu.ShowAdministratorBookManagementMenu();
@@ -98,7 +107,6 @@ namespace en_6_Library_DB
                         break;
                     case Constant.NAVER_API_REGISTRATION_BOOK: // 네이버 책 등록
                         naverAPIAccessObject.ShowNaverBookList(inputManagement.GetBookTitle(), Constant.IS_REGISTRATION);
-                        //RegistrateBook();
                         break;
                     case Constant.PRINT_BOOKS:
                         outputData.ShowAllBookList(dataAccessObject.GetAllBookData());
@@ -116,11 +124,13 @@ namespace en_6_Library_DB
                         Console.WriteLine("수량을 수정할");
                         bookNOString = inputManagement.GetBookNO();
                         bookNumberString = inputManagement.GetBookNumber();
-                        if (bookNOString != Constant.BACK && bookNumberString != Constant.BACK) { dataAccessObject.EditBookDataDiscount(bookNOString, Convert.ToInt32(bookNumberString), Constant.IS_EDIT_BOOK_DISCOUNT); }
+                        stringLog = string.Format("관리자가 도서 ID:{0} 수량변경을 시도하였습니다.", bookNOString); log.AddLog(stringLog);
+                        if (bookNOString != Constant.BACK && bookNumberString != Constant.BACK) { dataAccessObject.EditBookDataNumber(bookNOString, Convert.ToInt32(bookNumberString)); }
                         break;
                     case Constant.REMOVE_BOOK:
                         outputData.ShowAllBookList(dataAccessObject.GetAllBookData());
                         bookNOString = inputManagement.GetBookNO();
+                        stringLog = string.Format("관리자가 도서 ID:{0} 삭제를 시도하였습니다.", bookNOString); log.AddLog(stringLog);
                         if (bookNOString != Constant.BACK) { dataAccessObject.RemoveDateInDataBase(Constant.BOOK_TABLE, bookNOString); }
                         break;
                 }
@@ -130,8 +140,6 @@ namespace en_6_Library_DB
         public void RegistrateBook() // 책 등록, 아이디 겹치는지 확인 예외처리 필요
         {
             outputMenu.LibraryDefault();
-            //string identity = inputManagement.GetBookID();
-            //if (identity == Constant.BACK) return;
             string title = inputManagement.GetBookTitle();
             if (title == Constant.BACK) return;
             string author = inputManagement.GetBookAuthor();
@@ -142,9 +150,10 @@ namespace en_6_Library_DB
             if (bookNumber == Constant.BACK) return;
             string price = inputManagement.GetBookPrice();
             if (price == Constant.BACK) return;
-            //identity, 
+
             dataAccessObject.InputBookDateInDataBase(title, author, publisher, bookNumber, price, Constant.NULL, Constant.NULL, Constant.NULL);
             Console.WriteLine("{0} 도서 등록이 완료되었습니다!\n", title);
+            stringLog = string.Format("관리자가 도서 :{0} 등록하였습니다.", title); log.AddLog(stringLog);
             Console.ReadLine();
             return;
         }

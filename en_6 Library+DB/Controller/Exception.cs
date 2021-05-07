@@ -11,11 +11,21 @@ namespace en_6_Library_DB
         {
             
         }
+        public bool SearchDataName(string input)
+        {
+            if (!(Regex.Match(input, "^[가-힣a-zA-Z0-9]{1,20}$").Success))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("정보를 정확히 입력해주세요.");
+                Console.ForegroundColor = ConsoleColor.White;
+                //Console.ReadLine();
+                return false;
+            }
+            return true;
+        }
 
         public bool IsMenuNumberForm(string inputMenuNumber, int maximumNumber)
         {
-            //bool hasEnded = false;
-            if (inputMenuNumber == Constant.BACK) return true; // "b"하고 ENTER를 누르면 뒤로가기
             if (IsNumber(inputMenuNumber))
             {
                 if (IsCorrectNumberRange(inputMenuNumber, maximumNumber))
@@ -49,6 +59,29 @@ namespace en_6_Library_DB
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("숫자를 {0}이상, {1}이하로 입력해주세요.", Constant.MENU_NUMBER_MINIMUN, maximumNumber);
+                Console.ForegroundColor = ConsoleColor.White;
+                return false;
+            }
+            return true;
+        }
+        public bool IsCorrectBookIDForm(string input)
+        {
+            if (!(Regex.Match(input, "^[0-9]{1,6}$").Success))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("숫자를 입력해주세요!");
+                Console.ForegroundColor = ConsoleColor.White;
+                return false;
+            }
+            return true;
+        }
+
+        public bool HasEnglishAndNumberAndKorean(string input, int maximunLength) // 정규식 {} 안에 변수 못넣나?
+        {
+            if (!(Regex.Match(input, "^[가-힣a-zA-Z0-9]{1,15}$").Success))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("영어와 숫자, 한국어를 15글자이내로 입력해주세요.");
                 Console.ForegroundColor = ConsoleColor.White;
                 return false;
             }
@@ -131,9 +164,6 @@ namespace en_6_Library_DB
         {
             if(Constant.MINIMUN_LENGTH < input.Length && input.Length < maximumLength)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("문자열 길이에 문제가 있습니다.");
-                Console.ForegroundColor = ConsoleColor.White;
                 return false;
             }
             return true;
@@ -141,11 +171,8 @@ namespace en_6_Library_DB
 
         public bool IsCorrectBookNumber(string input)
         {
-            if (IsNumber(input))
+            if (!IsNumber(input))
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("숫자를 입력해주세요.");
-                Console.ForegroundColor = ConsoleColor.White;
                 return false;
             }
             if (IsCorrectLength(input, Constant.MAXIMUM_BOOKNUMBER))
@@ -160,11 +187,8 @@ namespace en_6_Library_DB
 
         public bool IsCorrectBookPrice(string input)
         {
-            if (IsNumber(input))
+            if (!IsNumber(input))
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("숫자를 입력해주세요.");
-                Console.ForegroundColor = ConsoleColor.White;
                 return false;
             }
             if (IsCorrectLength(input, Constant.MAXIMUM_BOOKPRICE))

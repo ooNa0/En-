@@ -80,7 +80,7 @@ namespace en_6_Library_DB
             Console.WriteLine("\n\t[5] 주소 : {0}", userData.GetAddress());
 
 
-            Console.WriteLine("\n\n0을 누르면 뒤로가기, 1을 누르면 유저 정보 수정");
+            Console.WriteLine("\n\n[0]을 누르면 뒤로가기, [1]을 누르면 유저 정보 수정");
             
         }
 

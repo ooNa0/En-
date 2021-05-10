@@ -94,12 +94,12 @@ namespace en_6_Library_DB
             while (!isFinished)
             {
                 outputData.ShowUserInformation(userDataTransferObject);
-                if (inputManagement.GetMenuNumber(Constant.EDIT_NUMBER) == Constant.WANT_EDITING) { Console.WriteLine("수정하실 번호를 입력해주세요. 0:뒤로가기,1~5 해당 정보 수정"); }
+                if (inputManagement.GetMenuNumber(Constant.EDIT_NUMBER) == Constant.WANT_EDITING) { Console.WriteLine("수정하실 번호를 입력해주세요. [0]:뒤로가기,[1]~[5] 해당 정보 수정"); }
                 else { return; }
                 switch (inputManagement.GetMenuNumber(Constant.MAXIMUN_EDIT_USER_DATA_NUMBER))
                 {
                     case Constant.EXIT:
-                        isFinished = true;
+                        //isFinished = true;
                         return;
                     case Constant.EDIT_USER_DATA_NAME:
                         stringLog = string.Format("{0}님이 이름을 수정하였습니다.", userDataTransferObject.GetName()); log.AddLog(stringLog);

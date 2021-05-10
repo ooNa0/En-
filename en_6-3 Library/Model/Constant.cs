@@ -40,7 +40,7 @@ namespace en_6_Library_DB
 
         public const int SEARCH_MENU_NUMBER = 4; // 책 검색 메뉴
 
-        public const int EDIT_NUMBER = 3;
+        public const int EDIT_NUMBER = 1;
 
         public const string WANT_EDITING = "1";
 

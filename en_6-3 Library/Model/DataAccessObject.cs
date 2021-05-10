@@ -83,8 +83,7 @@ namespace en_6_Library_DB
             {
                 if (userDataTransferObject == null)
                     userDataTransferObject = new UserDataTransferObject(Convert.ToString(dataReader["ID"]), Convert.ToString(dataReader["PASSWORD"]), Convert.ToString(dataReader["Name"]),
-                        Convert.ToString(dataReader["BirthYear"]), Convert.ToString(dataReader["PhoneNumber"]), Convert.ToString(dataReader["PhoneNumber"])
-                        );
+                        Convert.ToString(dataReader["BirthYear"]), Convert.ToString(dataReader["PhoneNumber"]), Convert.ToString(dataReader["Address"]), 3);
                 else
                 {
                     userDataTransferObject.SetId(Convert.ToString(dataReader["ID"]));
@@ -92,7 +91,7 @@ namespace en_6_Library_DB
                     userDataTransferObject.SetName(Convert.ToString(dataReader["Name"]));
                     userDataTransferObject.SetBirthYear(Convert.ToString(dataReader["BirthYear"]));
                     userDataTransferObject.SetPhoneNumber(Convert.ToString(dataReader["PhoneNumber"]));
-                    userDataTransferObject.SetAddress(Convert.ToString(dataReader["PhoneNumber"]));
+                    userDataTransferObject.SetAddress(Convert.ToString(dataReader["Address"]));
                 }
                 password = dataReader["PASSWORD"].ToString();
                 break;

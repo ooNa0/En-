@@ -21,6 +21,7 @@ namespace en_6_Library_DB
             connection.Open();
             command.Connection = connection;
             command.CommandText = "insert into user (ID, PASSWORD, Name, BirthYear, PhoneNumber, Address) value (@idParameter, @passwordParameter, @nameParameter, @birthYearParameter, @phoneNumberParameter, @addressParameter)";
+            
             command.Parameters.AddWithValue("@idParameter", identity);
             command.Parameters.AddWithValue("@passwordParameter", password);
             command.Parameters.AddWithValue("@nameParameter", name);
@@ -40,15 +41,19 @@ namespace en_6_Library_DB
             connection.Open();
             command.Connection = connection;
             command.CommandText = "insert into book (Title, Author, Publisher, Number, Price, PublicationDate, ISBN, Explanation) value (@TitleParameter, @AuthorParameter, @PublisherParameter, @NumberParameter, @PriceParameter, @PublicationDateParameter, @ISBNParameter, @ExplanationParameter)";
+            
             command.Parameters.AddWithValue("@TitleParameter", Title);
             command.Parameters.AddWithValue("@AuthorParameter", Author);
             command.Parameters.AddWithValue("@PublisherParameter", Publisher);
             command.Parameters.AddWithValue("@NumberParameter", Convert.ToInt32(Number));
             command.Parameters.AddWithValue("@PriceParameter", Convert.ToInt32(Price));
+            
             if (PublicationDate == null) { command.Parameters.AddWithValue("@PublicationDateParameter", "등록되지 않음"); }
             else { command.Parameters.AddWithValue("@PublicationDateParameter", PublicationDate); }
+            
             if (ISBN == null) { command.Parameters.AddWithValue("@ISBNParameter", "등록되지 않음"); }
             else { command.Parameters.AddWithValue("@ISBNParameter", ISBN); }
+            
             if (Explanation == null) { command.Parameters.AddWithValue("@ExplanationParameter", "등록되지 않음"); }
             else { command.Parameters.AddWithValue("@ExplanationParameter", Explanation); }
             
@@ -186,22 +191,13 @@ namespace en_6_Library_DB
             return currentBorrowedBookStatus;
         }
 
-        public DataSet GetAllBookData()
+        public DataSet GetAllBookData(string tableName)
         {
             DataSet bookDataSet = new DataSet();
-            string quary = "select * from book";
-            MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(quary, connection);
-            mySqlDataAdapter.Fill(bookDataSet, "book");
+            string query = "select * from " + tableName;
+            MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(query, connection);
+            mySqlDataAdapter.Fill(bookDataSet, tableName);
             return bookDataSet;
-        }
-
-        public DataSet GetAllUserData()
-        {
-            userDataSet = new DataSet();
-            string quary = "select * from user";
-            MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(quary, connection);
-            mySqlDataAdapter.Fill(userDataSet, "user");
-            return userDataSet;
         }
 
         public DataSet SearchDataList(string table, string column, string value)

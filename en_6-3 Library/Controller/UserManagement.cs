@@ -45,12 +45,12 @@ namespace en_6_Library_DB
                         outputMenu.ShowAskAction(); outputMenu.ShowAskOtherAction("전체 도서 출력 후 대출하기");
                         input = inputManagement.GetMenuNumber(Constant.INFORMATION_EXIT_AND_SEARCH);
                         if (input == Constant.EXIT) { continue; }
-                        else if (input == Constant.SEARCH_BOOK_MENU) { if (bookManagement.SearchBook() == 0) { Console.WriteLine("찾고자하는 책이 없습니다."); Console.ReadLine(); continue; } }
+                        else if (input == Constant.SEARCH_BOOK_MENU) { if (bookManagement.SearchBook() == 0) { Console.WriteLine("\nENTER를 눌러주세요."); Console.ReadLine(); continue; } }
                         else { outputData.ShowAllBookList(dataAccessObject.GetAllBookData(Constant.BOOK_TABLE)); }
                         bookNO = inputManagement.GetBookNO();
                         if (bookNO != Constant.BACK)
                         {
-                            if (dataAccessObject.EditBorrowBookDataNumber(bookNO, -Constant.ADD_NUMBER))
+                            if (dataAccessObject.EditBorrowBookDataNumber(bookNO, userDataTransferObject.GetId(), - Constant.ADD_NUMBER))
                             {
                                 dataAccessObject.UpdateCurrentBorrowedStatus(bookNO, userDataTransferObject.GetId(), !Constant.IS_EDIT_BOOK_NUMBER);
                                 stringLog = string.Format("{0}님이 BOOKNO가 {1}인 책을 빌리셨습니다.", userDataTransferObject.GetName(), bookNO); log.AddLog(stringLog);
@@ -67,7 +67,7 @@ namespace en_6_Library_DB
                         bookNO = inputManagement.GetBookNO();
                         if (bookNO != Constant.BACK)
                         {
-                            if (dataAccessObject.EditBorrowBookDataNumber(bookNO, Constant.ADD_NUMBER))
+                            if (dataAccessObject.EditBorrowBookDataNumber(bookNO, userDataTransferObject.GetId(), Constant.ADD_NUMBER))
                             {
                                 dataAccessObject.UpdateCurrentBorrowedStatus(bookNO, userDataTransferObject.GetId(), Constant.IS_EDIT_BOOK_NUMBER);
                                 stringLog = string.Format("{0}님이 BOOKNO가 {1}인 책을 반납하셨습니다.", userDataTransferObject.GetName(), bookNO); log.AddLog(stringLog);

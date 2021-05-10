@@ -8,7 +8,7 @@ namespace en_6_Library_DB
     {
         private MySqlConnection connection;
         private MySqlCommand command;
-        private DataSet userDataSet;
+        private UserDataTransferObject userDataTransferObject;
         public DataAccessObject()
         {
             if(connection == null)
@@ -73,11 +73,11 @@ namespace en_6_Library_DB
             else { Console.WriteLine("삭제를 완료하였습니다."); }
             Console.ReadLine();
             connection.Close();
-            // mysql DB 연결 종료
         }
 
         public UserDataTransferObject CheckUserData(string identity, UserDataTransferObject userDataTransferObject)
-        { // ID의 값 가져오기! 다 가져오기
+        {
+            this.userDataTransferObject = userDataTransferObject;
             string password = "b";
             connection.Open();
             string quary = "select * from user where ID='"+identity +"'";
@@ -118,35 +118,56 @@ namespace en_6_Library_DB
             return Constant.IS_EDIT_BOOK_NUMBER;
         }
 
-        public bool EditBorrowBookDataNumber(string bookID, int editNumber)
+        public bool EditBorrowBookDataNumber(string bookID, string userID, int editNumber)
         {
-            string query; int number = 0;
+            string query;
+            int number = 0;
             connection.Open();
             if (editNumber == -1)
             {
                 query = "select * from book where ID='" + bookID + "'";
-                command = new MySqlCommand(query, connection);
-                MySqlDataReader dataReader = command.ExecuteReader();
-                if (dataReader.Read())
-                {
-                    number = Convert.ToInt32(dataReader["Number"]);
-                    if (number == Constant.ZERO)
-                    {
-                        Console.WriteLine("책을 빌릴 수 없습니다!");
-                        Console.ReadLine();
-                        dataReader.Close();
-                        connection.Close();
-                        return !Constant.IS_EDIT_BOOK_NUMBER;
-                    }
-                }
-                dataReader.Close();
             }
+            else
+            {
+                query = "select * from currentborrowbookstatus where user_id='" + userID + "'and book_id='" + bookID + "';";
+            }
+            command = new MySqlCommand(query, connection);
+            MySqlDataReader dataReader = command.ExecuteReader();
+            // 예외처리
+            if (dataReader.Read())
+            {
+                if (editNumber == -1 && Convert.ToInt32(dataReader["Number"]) == Constant.ZERO)
+                {
+                    Console.WriteLine("해당 도서의 남은 수량이 없어 빌릴 수 없습니다!\nENTER를 누르면 뒤로갑니다.");
+                    Console.ReadLine();
+                    dataReader.Close();
+                    connection.Close();
+                    return !Constant.IS_EDIT_BOOK_NUMBER;
+                }
+            }
+            else
+            {
+                Console.WriteLine("해당 NO의 도서가 없습니다!\nENTER를 누르면 뒤로갑니다.");
+                Console.ReadLine();
+                dataReader.Close();
+                connection.Close();
+                return !Constant.IS_EDIT_BOOK_NUMBER;
+            }
+            dataReader.Close();
             number += editNumber;
             query = "update book set Number='" + number + "'where ID='" + bookID + "'";
-            //Console.WriteLine(query);
             command = new MySqlCommand(query, connection);
-            if (command.ExecuteNonQuery() == 0)
-                Console.WriteLine("작업을 완료하였습니다.");
+            Console.WriteLine(command.ExecuteNonQuery());
+            if (command.ExecuteNonQuery() == 1)
+            {
+                Console.WriteLine("작업이 완료되었습니다.\nENTER를 눌러주세요.");
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.WriteLine("작업을 실패했습니다.\nENTER를 눌러주세요.");
+                Console.ReadLine();
+            }
             connection.Close();
             return Constant.IS_EDIT_BOOK_NUMBER;
         }
@@ -167,13 +188,10 @@ namespace en_6_Library_DB
         {
             string query;
             connection.Open();
-            Console.ReadLine();
             if (isRemove)
                 query = "delete from currentborrowbookstatus where book_id='" + bookID + "' and user_id='" + userID +"';";
             else
                 query = "insert into currentborrowbookstatus value('" + userID + "'," + bookID + ",'"+ DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "',\"" + KnowBookTitle(Convert.ToInt32(bookID)) + "\");";
-            //Console.WriteLine(query);
-            Console.ReadLine();
             command = new MySqlCommand(query, connection);
             command.ExecuteNonQuery(); 
             connection.Close();
@@ -215,7 +233,6 @@ namespace en_6_Library_DB
             string query = "select * from user where " + columnName + "='" + value + "'";
             MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(query, connection);
             mySqlDataAdapter.Fill(dataSet, Constant.USER_TABLE);
-            //Console.WriteLine(dataSet.Tables[0].Rows.Count);
             return dataSet;
         }
 

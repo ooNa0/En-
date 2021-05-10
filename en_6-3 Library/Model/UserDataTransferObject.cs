@@ -17,7 +17,7 @@ namespace en_6_Library_DB
         //private string borrowDate; // 대출일
         //private string returnDate; // 반납일
         
-        public UserDataTransferObject(string id, string password, string name, string birthYear, string phoneNumber, string address)//borrowBookNumber
+        public UserDataTransferObject(string id, string password, string name, string birthYear, string phoneNumber, string address)
         {
             this.id = id;
             this.password = password;
@@ -25,7 +25,6 @@ namespace en_6_Library_DB
             this.birthYear = birthYear;
             this.phoneNumber = phoneNumber;
             this.address = address;
-            //this.borrowBookNumber = BorrowBookNumber;
         }
 
         public string GetId() // 아이디
@@ -81,9 +80,11 @@ namespace en_6_Library_DB
         {
             this.phoneNumber = phoneNumber;
         }
-        //public override string ToString(){return " - " + Name.PadRight(10, ' ') + Id.PadRight(21, ' ') + Age.PadRight(15, ' ') + PhoneNumber;}
+        public void SetBorrowBookNumber(int borrowBookNumber)
+        {
+            this.borrowBookNumber = borrowBookNumber;
+        }
     }
-    //public void InputUserDataBase(string identity, string password, string name, string birthYear, string phoneNumber, string address)
 
 
 }

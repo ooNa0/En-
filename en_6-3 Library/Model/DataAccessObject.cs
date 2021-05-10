@@ -83,7 +83,7 @@ namespace en_6_Library_DB
             {
                 if (userDataTransferObject == null)
                     userDataTransferObject = new UserDataTransferObject(Convert.ToString(dataReader["ID"]), Convert.ToString(dataReader["PASSWORD"]), Convert.ToString(dataReader["Name"]),
-                        Convert.ToString(dataReader["BirthYear"]), Convert.ToString(dataReader["PhoneNumber"]), Convert.ToString(dataReader["Address"]), 3);
+                        Convert.ToString(dataReader["BirthYear"]), Convert.ToString(dataReader["PhoneNumber"]), Convert.ToString(dataReader["Address"]));
                 else
                 {
                     userDataTransferObject.SetId(Convert.ToString(dataReader["ID"]));

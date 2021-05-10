@@ -11,13 +11,13 @@ namespace en_6_Library_DB
             Console.Clear();
             Console.WriteLine("  ┌──────────────────────────────────────────────────────────────────────┐");
             Console.WriteLine("  │                                                                      │");
-            Console.WriteLine("  │            ■           ■  ■    ■            ■                   │");
-            Console.WriteLine("  │   ■■■■ ■   ■■■  ■  ■■■■  ■■■■  ■ ■■■■          │");
-            Console.WriteLine("  │         ■ ■■■     ■■  ■    ■        ■■■       ■          │");
-            Console.WriteLine("  │   ■■■■ ■  ■     ■■  ■■■■  ■■■■  ■ ■■■            │");
-            Console.WriteLine("  │   ■       ■   ■■■  ■            ■        ■ ■                │");
-            Console.WriteLine("  │   ■■■■ ■           ■ ■■■■■ ■■■■  ■  ■■■■         │");
-            Console.WriteLine("  │                                                                      │");
+            Console.WriteLine("  │            ■           ■  ■    ■            ■           ■      │");
+            Console.WriteLine("  │   ■■■■ ■   ■■■  ■  ■■■■  ■■■■  ■ ■■■■  ■      │");
+            Console.WriteLine("  │         ■ ■■■     ■■  ■    ■        ■■■       ■  ■      │");
+            Console.WriteLine("  │   ■■■■ ■  ■     ■■  ■■■■  ■■■■  ■ ■■■    ■      │");
+            Console.WriteLine("  │   ■       ■   ■■■  ■            ■        ■ ■        ■      │");
+            Console.WriteLine("  │   ■■■■ ■           ■ ■■■■■ ■■■■  ■  ■■■■ ■      │");
+            Console.WriteLine("  │            ■           ■                      ■           ■      │");
             Console.WriteLine("  └──────────────────────────────────────────────────────────────────────┘");
             Console.WriteLine(); Console.WriteLine();
         }

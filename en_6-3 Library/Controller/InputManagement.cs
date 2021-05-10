@@ -226,7 +226,7 @@ namespace en_6_Library_DB
 
             while (!hasEnded)
             {
-                Console.Write("(경기도 안산시 상록구 본이로1안길 52)주소 :");
+                Console.Write("(충청남도 천안시 서북구 한들2로 88)주소 :");
                 input = Console.ReadLine();
                 if (input == Constant.BACK) return input;
                 if (exception.IsCorrectAddress(input))

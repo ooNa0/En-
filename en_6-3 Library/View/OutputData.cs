@@ -25,16 +25,17 @@ namespace en_6_Library_DB
         {
             int count = 0;
             Console.Clear(); outputMenu.LibraryDefault();
-            Console.WriteLine("도서 목록");
+            Console.WriteLine("[도서 목록]");
             foreach (DataRow row in dataSet.Tables[0].Rows)
             {
                 count++;
                 Console.WriteLine("───────────────────────────────────────────────────────────────────────");
                 Console.Write("NO :[{0}]  ", row["ID"]);
+                Console.WriteLine("수량:{0}", row["Number"]);
                 Console.WriteLine("도서 제목:{0}", row["title"]);
                 Console.WriteLine("저자:{0}", row["Author"]);
                 Console.WriteLine("출판사:{0}", row["Publisher"]);
-                Console.WriteLine("출판일:{0} 수량:{1}", row["PublicationDate"], row["Number"]);
+                Console.WriteLine("출판일:{0}", row["PublicationDate"]);
                 Console.WriteLine("가격:{0}원, ISBN:{1}", row["Price"], row["ISBN"]);
                 Console.WriteLine("설명:{0}", row["Explanation"]);
             }
@@ -57,13 +58,13 @@ namespace en_6_Library_DB
         public int ShowUserborrowedBook(DataSet dataSet)
         {
             int count = 0;
-            Console.WriteLine("빌린 책 이름  반납일");
+            Console.WriteLine("[빌린 도서 목록]");
 
             foreach (DataRow row in dataSet.Tables[0].Rows)
             {
                 Console.WriteLine("───────────────────────────────────────────────────────────────────────");
                 count++;
-                Console.WriteLine(" NO:{0} 책이름: {1} 반납일:", row["book_id"], row["bookName"], row["time"]);
+                Console.WriteLine(" NO:{0}\n 책이름: {1}\n반납일:{2}", row["book_id"], row["bookName"], Convert.ToDateTime(row["time"]).AddDays(7));
             }
             Console.WriteLine("───────────────────────────────────────────────────────────────────────");
             return count;

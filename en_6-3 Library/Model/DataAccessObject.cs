@@ -209,12 +209,13 @@ namespace en_6_Library_DB
             return dataSet;
         }
 
-        public DataSet CorrectDataList(string value)
+        public DataSet CorrectDataInUser(string value, string columnName)
         {
             DataSet dataSet = new DataSet();
-            string quary = "select * from user where BirthYear='" + value + "'";
-            MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(quary, connection);
+            string query = "select * from user where " + columnName + "='" + value + "'";
+            MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(query, connection);
             mySqlDataAdapter.Fill(dataSet, Constant.USER_TABLE);
+            //Console.WriteLine(dataSet.Tables[0].Rows.Count);
             return dataSet;
         }
 

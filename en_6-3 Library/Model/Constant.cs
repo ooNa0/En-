@@ -139,6 +139,7 @@ namespace en_6_Library_DB
         public const string USER_COLUMN_NAME = "Name";
         public const string USER_COLUMN_BIRTHYEAR = "BirthYear";
         public const string USER_COLUMN_ADDRESS = "Address";
+        public const string USER_COLUMN_ID = "ID";
 
     }
 }

@@ -111,7 +111,7 @@ namespace en_6_Library_DB
                         break;
                     case Constant.EDIT_USER_DATA_ID:
                         stringLog = string.Format("{0}님이 ID를 수정하였습니다.", userDataTransferObject.GetName()); log.AddLog(stringLog);
-                        userDataTransferObject.SetId(inputManagement.GetIdentity());
+                        userDataTransferObject.SetId(inputManagement.GetIdentity(false));
                         break;
                     case Constant.EDIT_USER_DATA_PHONENUMBER:
                         stringLog = string.Format("{0}님이 전화번호를 수정하였습니다.", userDataTransferObject.GetName()); log.AddLog(stringLog);
@@ -132,7 +132,7 @@ namespace en_6_Library_DB
         public void SignUpUser() // 유저 회원가입
         {
             outputMenu.LibraryDefault();
-            string identity = inputManagement.GetIdentity();
+            string identity = inputManagement.GetIdentity(true);
             if (identity == Constant.BACK) return;
             string password = inputManagement.GetPassword();
             if (password == Constant.BACK) return;
@@ -161,7 +161,7 @@ namespace en_6_Library_DB
             while (!isCorrect) // 아이디
             {
                 Console.Clear(); outputMenu.LibraryDefault();
-                identity = inputManagement.GetIdentity();
+                identity = inputManagement.GetIdentity(false);
                 if (identity == "b") { return false; }
                 userDataTransferObject = dataAccessObject.CheckUserData(identity, userDataTransferObject);
                 isCorrect = true;
@@ -205,7 +205,7 @@ namespace en_6_Library_DB
                 case Constant.BOOK_PUBLISHER: // 생년
                     findInformation = inputManagement.SearchAge();
                     stringLog = string.Format("관리자가 사용자의 생년 {0}을/를 검색했습니다.", findInformation); log.AddLog(stringLog);
-                    outputData.ShowAllUserList(dataAccessObject.CorrectDataList(findInformation));
+                    outputData.ShowAllUserList(dataAccessObject.CorrectDataInUser(findInformation, Constant.USER_COLUMN_BIRTHYEAR));
                     break;
                 case Constant.BOOK_AUTHOR: // 주소
                     findInformation = inputManagement.SearchName();

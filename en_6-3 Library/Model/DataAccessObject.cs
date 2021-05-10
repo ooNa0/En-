@@ -157,7 +157,6 @@ namespace en_6_Library_DB
             number += editNumber;
             query = "update book set Number='" + number + "'where ID='" + bookID + "'";
             command = new MySqlCommand(query, connection);
-            Console.WriteLine(command.ExecuteNonQuery());
             if (command.ExecuteNonQuery() == 1)
             {
                 Console.WriteLine("작업이 완료되었습니다.\nENTER를 눌러주세요.");

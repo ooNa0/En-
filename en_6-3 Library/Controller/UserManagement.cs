@@ -80,7 +80,7 @@ namespace en_6_Library_DB
                         Console.ReadLine(); break;
                     case Constant.SEARCH_BOOK:
                         bookManagement.SearchBook();
-                        Console.ReadLine(); break;
+                        break;
                     case Constant.SHOW_USER_INFOMATION:
                         EditUserData();
                         break;

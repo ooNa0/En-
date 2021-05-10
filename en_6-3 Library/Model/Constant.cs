@@ -30,7 +30,7 @@ namespace en_6_Library_DB
 
         public const int MAXIMUN_SEARCH_MENU_NUMBER = 4; // 찾기 메뉴 0~3
 
-        public const int MAXIMUN_USER_MENU_NUMBER = 6; // 유저 메뉴 0~5
+        public const int MAXIMUN_USER_MENU_NUMBER = 5; // 유저 메뉴 0~5
 
         public const int MAXIMUN_ADMINISTRATOR_MENU_NUMBER = 3; // 관리자 메뉴 0~3
 

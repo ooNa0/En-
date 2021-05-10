@@ -9,11 +9,10 @@ namespace en_6_Library_DB
         public const string NAVER_API_CLIENT_ID = "iBLtZnxwGneJsLbGgDCa";
         public const string NAVER_API_CLIENT_SECRET = "3Qm2iN4bbG";
         public const string NAVER_API_DISPLAY = "&&display=";
-        public const int NAVER_API_DISPLAY_NUMBER = 15;
         public const bool IS_REGISTRATION = true;
         public const bool IS_PASSWORD = true;
 
-        public const string DATABASE_CONNECTION_INFOMATION = "Server=localhost;Port=3306;Database=enlibrary;Uid=root;Pwd=0000;allow user variables=true";
+        public const string DATABASE_CONNECTION_INFOMATION = "Server=localhost;Port=3307;Database=enlibrary;Uid=root;Pwd=0000;allow user variables=true";
 
         public const int CONSOLE_SIZE_X = 77;
 

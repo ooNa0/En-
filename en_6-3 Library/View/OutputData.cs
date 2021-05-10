@@ -25,7 +25,7 @@ namespace en_6_Library_DB
         {
             int count = 0;
             Console.Clear(); outputMenu.LibraryDefault();
-            Console.WriteLine("도서명(저자_출판사명) - 수량, 가격 ");
+            Console.WriteLine("도서 목록");
             foreach (DataRow row in dataSet.Tables[0].Rows)
             {
                 count++;
@@ -34,7 +34,7 @@ namespace en_6_Library_DB
                 Console.WriteLine("도서 제목:{0}", row["title"]);
                 Console.WriteLine("저자:{0}", row["Author"]);
                 Console.WriteLine("출판사:{0}", row["Publisher"]);
-                Console.WriteLine("출판일:{0}", row["PublicationDate"]);
+                Console.WriteLine("출판일:{0} 수량:{1}", row["PublicationDate"], row["Number"]);
                 Console.WriteLine("가격:{0}원, ISBN:{1}", row["Price"], row["ISBN"]);
                 Console.WriteLine("설명:{0}", row["Explanation"]);
             }

@@ -1,4 +1,0 @@
-C:\Users\구나영\Desktop\en#\en_6 Library+DB\bin\Debug\netcoreapp3.1\en_6 Library+DB.exe
-C:\Users\구나영\Desktop\en#\en_6 Library+DB\obj\Debug\netcoreapp3.1\en_6 Library+DB.csprojAssemblyReference.cache
-C:\Users\구나영\Desktop\en#\en_6 Library+DB\obj\Debug\netcoreapp3.1\en_6 Library+DB.AssemblyInfoInputs.cache
-C:\Users\구나영\Desktop\en#\en_6 Library+DB\obj\Debug\netcoreapp3.1\en_6 Library+DB.AssemblyInfo.cs

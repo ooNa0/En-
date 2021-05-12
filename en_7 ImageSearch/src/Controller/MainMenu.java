@@ -26,8 +26,30 @@ public class MainMenu extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Frame의 X를 누를경우 "제대로" 종료
 		setSize(700, 500); //Frame의 크기 설정
 		setResizable(false); // 창 크기 수정 불가능하게
+		setLocationRelativeTo(null); // 창 화면 가운데에 나오도록
 		createPanel();
 		setVisible(true); //생성한 Frame을 윈도우에 뿌리기
+		imageSearchButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new ImageSearch();
+				setVisible(false);
+			}
+            // 만들어진 버튼에 버튼이 눌러지면 발생하는 행동 정의
+		});
+		searchHistoryButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new SearchHistory();
+				setVisible(false);
+			}
+            // 만들어진 버튼에 버튼이 눌러지면 발생하는 행동 정의
+		});
+		
 	}
 	
 	private void createPanel() {

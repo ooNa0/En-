@@ -1,9 +1,8 @@
 package Controller;
 
-//public 
-class ImageSearch {
-	//public static void main() {
-	//	MainMenu menu = new MainMenu();
-	//}
-
+public class StartProgram {
+	public static void main(String[] args) {
+		MainMenu menu = new MainMenu();
+		menu.startMenu();
+	}
 }

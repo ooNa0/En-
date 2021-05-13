@@ -49,8 +49,10 @@ public class ImageSearch extends JFrame {
 		setVisible(true); //생성한 Frame을 윈도우에 뿌리기
 		
 		
-		Container c = getContentPane();
-		c.setLayout(new FlowLayout());
+		Container containerPanel = getContentPane(); // 화면 패널 얻어오기
+		containerPanel.setLayout(null);
+		
+		//c.setLayout(new FlowLayout());
 		JButton backBtn = new JButton("back");
 		backBtn.addActionListener(new ActionListener() {
 			@Override
@@ -63,8 +65,10 @@ public class ImageSearch extends JFrame {
 		String auth = "KakaoAK " + "4d74071d3fbd89dfcb53c6ab3e6dd5e0";
 		HttpsURLConnection hc;
 		try {
-			URL link = new URL("https://dapi.kakao.com/v2/search/image.json?query=cat");
+			URL link = new URL("https://dapi.kakao.com/v2/search/image.json?query=cat&&size=3");
+			// 접속
 			hc = (HttpsURLConnection)link.openConnection();
+			// 요청 헤더 추가
 			hc.setRequestMethod("GET");
 			hc.setRequestProperty("User-Agent", "Java-Client");	// https 호출시 user-agent 필요
 			hc.setRequestProperty("X-Requested-With", "curl");
@@ -74,7 +78,11 @@ public class ImageSearch extends JFrame {
             BufferedReader br;
             if(responseCode==200) 
             { // 정상 호출
-                br = new BufferedReader(new InputStreamReader(hc.getInputStream())); 
+                br = new BufferedReader(new InputStreamReader(hc.getInputStream(), "UTF-8")); 
+                //서버와 연결되어 있는 스트림을 추출한다.
+                //InputStream is = conn.getInputStream();
+                //InputStreamReader isr = new InputStreamReader(is, "UTF-8");
+                //BufferedReader br = new BufferedReader(isr);
             } 
             else 
             {  // 에러 발생
@@ -88,7 +96,10 @@ public class ImageSearch extends JFrame {
             	res.append(inputLine);
             }
             br.close();
-            System.out.println("sd>>  "+res.toString());
+            
+            System.out.println(res.toString());
+            //Component a = res;
+            //c.add(res)
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -163,8 +174,8 @@ public class ImageSearch extends JFrame {
 	//la.setText(labelName);
 		}*/
 		
-		c.add(la);
-		c.add(backBtn);
+		containerPanel.add(la);
+		containerPanel.add(backBtn);
 		setVisible(true);
 	}
 }

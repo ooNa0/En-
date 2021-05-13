@@ -3,6 +3,9 @@ package Controller;
 //import javax.swing.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import View.SetFrame;
+
 import javax.swing.JButton;
 
 import java.awt.event.ActionEvent;
@@ -14,19 +17,22 @@ public class MainMenu extends JFrame {
 	private JPanel panel;
 	private JButton imageSearchButton;
 	private JButton searchHistoryButton;
+	private SetFrame setFrame;
 	public MainMenu() {
 		panel = new JPanel(); //패널을 생성
-		imageSearchButton = new JButton("이미지 서치");
+		imageSearchButton = new JButton("이미지 찾기");
 		searchHistoryButton = new JButton("검색 내역 보기");
+		setFrame = new SetFrame();
 	}
-	
 	public void startMenu() {
 		setLayout(null); //Layout을 NULL로 설정 (컴포넌트의 위치를 사용자가 설정해주어야 함)
-		setTitle("Image Search Program"); //Frame의 타이틀 이름 주기
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Frame의 X를 누를경우 "제대로" 종료
-		setSize(700, 500); //Frame의 크기 설정
+		//setFrame.createFrame();
+		setTitle("Image Search"); //Frame의 타이틀 이름 주기
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(700, 500); //Frame의 크기 설정
 		setResizable(false); // 창 크기 수정 불가능하게
 		setLocationRelativeTo(null); // 창 화면 가운데에 나오도록
+        //setVisible(true);
 		createPanel();
 		setVisible(true); //생성한 Frame을 윈도우에 뿌리기
 		imageSearchButton.addActionListener(new ActionListener() {
@@ -34,8 +40,8 @@ public class MainMenu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				new ImageSearch();
-				setVisible(false);
+				new ImageSearch("아진짜");
+				//setVisible(false);
 			}
             // 만들어진 버튼에 버튼이 눌러지면 발생하는 행동 정의
 		});
@@ -44,8 +50,8 @@ public class MainMenu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				new SearchHistory();
-				setVisible(false);
+				new SearchHistory(setFrame);
+				//setVisible(false);
 			}
             // 만들어진 버튼에 버튼이 눌러지면 발생하는 행동 정의
 		});

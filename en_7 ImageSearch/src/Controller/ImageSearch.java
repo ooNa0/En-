@@ -4,14 +4,28 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.net.http.HttpHeaders;
+import java.net.http.HttpResponse;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+/*
 import com.ch.yoon.kakao.pay.imagesearch.repository.model.imagesearch.request.ImageSearchRequest;
 import com.ch.yoon.kakao.pay.imagesearch.repository.model.imagesearch.response.DetailImageInfo;
 import com.ch.yoon.kakao.pay.imagesearch.repository.model.imagesearch.response.ImageSearchResult;
-
+import org.json.JSONArray;
+import org.json.JSONObject;
+*/
+import javax.net.ssl.HttpsURLConnection;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 
 import View.SetFrame;
 
@@ -46,11 +60,109 @@ public class ImageSearch extends JFrame {
 			}
 		});
 		
-		curl -v -X GET "https://dapi.kakao.com/v2/search/image" \
-		--data-urlencode "query=설현" \
-		-H "Authorization: KakaoAK {4d74071d3fbd89dfcb53c6ab3e6dd5e0}"
+		String auth = "KakaoAK " + "4d74071d3fbd89dfcb53c6ab3e6dd5e0";
+		HttpsURLConnection hc;
+		try {
+			URL link = new URL("https://dapi.kakao.com/v2/search/image.json?query=cat");
+			hc = (HttpsURLConnection)link.openConnection();
+			hc.setRequestMethod("GET");
+			hc.setRequestProperty("User-Agent", "Java-Client");	// https 호출시 user-agent 필요
+			hc.setRequestProperty("X-Requested-With", "curl");
+			hc.setRequestProperty("Authorization", auth);
+
+            int responseCode = hc.getResponseCode(); //
+            BufferedReader br;
+            if(responseCode==200) 
+            { // 정상 호출
+                br = new BufferedReader(new InputStreamReader(hc.getInputStream())); 
+            } 
+            else 
+            {  // 에러 발생
+                br = new BufferedReader(new InputStreamReader(hc.getErrorStream()));
+            }
+
+            String inputLine;
+            StringBuffer res = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) 
+            {
+            	res.append(inputLine);
+            }
+            br.close();
+            System.out.println("sd>>  "+res.toString());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
-		la.setText(labelName);
+		
+		/*
+		 * try 
+		 
+        {
+            //String text = URLEncoder.encode("안녕하세요", "UTF-8");//번역될 문장
+     
+            String postParams = "src_lang=kr&target_lang=en&query=번역해주세요"; 
+            
+            String apiURL = "https://kapi.kakao.com/v1/translation/translate?"+postParams;
+            URL url = new URL(apiURL);
+            HttpsURLConnection con = (HttpsURLConnection)url.openConnection();
+
+            con.setRequestMethod("GET");
+
+            con.setRequestProperty("Authorization", "KakaoAK {4d74071d3fbd89dfcb53c6ab3e6dd5e0}");
+        	Map<String, List<String>> map = con.getRequestProperties();
+        	 
+        	System.out.println("Printing Response Header...\n");
+         
+        	for (Entry<String, List<String>> entry : map.entrySet()) {
+        		System.out.println("Key : " + entry.getKey() 
+                                   + " ,Value : " + entry.getValue());
+        	}
+            
+            
+            con.setUseCaches(false);
+            con.setDoInput(true);
+            con.setDoOutput(true);
+         
+            int responseCode = con.getResponseCode(); //
+            BufferedReader br;
+            if(responseCode==200) 
+            { // 정상 호출
+                br = new BufferedReader(new InputStreamReader(con.getInputStream())); 
+            } 
+            else 
+            {  // 에러 발생
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
+            String inputLine;
+            StringBuffer res = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) 
+            {
+            	res.append(inputLine);
+            }
+            br.close();
+            System.out.println("sd>>  "+res.toString());
+            
+ 
+        } 
+        catch (Exception e) 
+        {
+        	System.out.println("--확인용-- T_TranslatorNaver.java에서 오류 발생" );
+            System.out.println(e);
+        }*/
+		/*
+		 * String searchItem;
+		 
+		try {
+			String query = "https://dapi.kakao.com/v2/search/image.json?query=고양이"
+					+ URLEncoder.encode(searchItem, "UTF-8");
+			HttpHeaders headers = new HttpHeaders();
+            headers.add("Authorization", "KakaoAK {4d74071d3fbd89dfcb53c6ab3e6dd5e0}");
+	//ObjectMapper objectMapper = new ObjectMapper();
+	//objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+	//la.setText(labelName);
+		}*/
+		
 		c.add(la);
 		c.add(backBtn);
 		setVisible(true);

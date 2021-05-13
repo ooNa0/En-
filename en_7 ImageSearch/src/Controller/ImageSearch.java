@@ -22,11 +22,16 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 */
 import javax.net.ssl.HttpsURLConnection;
+import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
+import Model.KakaoAPI;
 import View.SetFrame;
 
 public class ImageSearch extends JFrame {
@@ -34,76 +39,116 @@ public class ImageSearch extends JFrame {
 	public ImageSearch(SetFrame setFrame) {
 		this.setFrame = setFrame;
 	}*/
-	JLabel la = new JLabel("You");
-	ImageSearch(String labelName){
-		super("YourFrame");
-		
-		
-		setLayout(null); //Layout을 NULL로 설정 (컴포넌트의 위치를 사용자가 설정해주어야 함)
+	//JFrame frame ;
+	JLabel label;
+	/*
+	ComboBoxModel<Int> items = {10, 20, 30};
+	JComboBox<Int> comboBox = new JComboBox<Int>(items);
+	JComboBox<Int> combo;MemberBook() {
+		try {
+			makeGui();
+			initTable(); // 테이블 초기화		
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	private void makeGui() {
+		frame = new JFrame("StarMall Member Book");
+		label = new JLabel("스타몰 회원 리스트",JLabel.CENTER);
+		Font font = new Font("맑은 고딕", Font.BOLD, 30); //***
+		label.setFont(font); //***
+		num = new JLabel(" 번 호:  ",JLabel.CENTER);
+		fnum = new JTextField(15);
+		pid = new JPanel();
+		pid.add(num);
+		pid.add(fnum);
+
+		name = new JLabel("이 름 : ");
+		fname = new JTextField(15);
+		pname = new JPanel();
+		pname.add(name);
+		pname.add(fname);
+
+		phone = new JLabel("전 화 : ");
+		fphone = new JTextField(15);
+		pphone = new JPanel();
+		pphone.add(phone);
+		pphone.add(fphone);
+	}*/
+
+	//public ImageSearch() {
+	public ImageSearch(String labelName){//
+		//super("YourFra
+		JPanel panel = new JPanel();
+		JLabel la = new JLabel("검색할 것 입력:");
+		JTextField fname = new JTextField(15);
+		//setLayout(null); //Layout을 NULL로 설정 (컴포넌트의 위치를 사용자가 설정해주어야 함)
 		//setFrame.createFrame();
 		setTitle("Image Search"); //Frame의 타이틀 이름 주기
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700, 500); //Frame의 크기 설정
 		setResizable(false); // 창 크기 수정 불가능하게
 		setLocationRelativeTo(null); // 창 화면 가운데에 나오도록
-		setVisible(true); //생성한 Frame을 윈도우에 뿌리기
+		//setVisible(true); //생성한 Frame을 윈도우에 뿌리기
 		
-		
-		Container containerPanel = getContentPane(); // 화면 패널 얻어오기
-		containerPanel.setLayout(null);
-		
+		//Container containerPanel = getContentPane(); // 화면 패널 얻어오기
+		//containerPanel.setLayout(null);		
+
 		//c.setLayout(new FlowLayout());
-		JButton backBtn = new JButton("back");
-		backBtn.addActionListener(new ActionListener() {
+		JButton backButton = new JButton("뒤로가기");
+		JButton searchButton = new JButton("검색하기");
+		
+		panel.add(la);
+		panel.add(fname);
+		panel.add(searchButton);
+		panel.add(backButton);
+		add(panel);
+		setVisible(true);
+		
+		backButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 					//setVisible(false);
 					new MainMenu().startMenu();
 			}
 		});
+		searchButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					//setVisible(false);
+
+		        System.out.println(new KakaoAPI().getImageData("cat").toString());
+					// 검색하기 버튼을 누르면, 그 값을 입력받아서 query에 보냄
+					// 그걸 출력
+			}
+		});
+	}
+	/*
+	private void search() {
+        // 콤보박스 값 알아내기 - 검색기준
+        String field = (String)combo.getSelectedItem();
+        
+        // 텍스트필드값 알아오기 - 검색어
+        String word = search.getText();
+        Vector<Vector> sresult = new Vector<>();
+        // 찾아서 가져오기
+        int index = 1;
+        if(field.equals("주소")){
+            index = 3;
+        }
+        for(Vector<String> in : outer){
+            if(word.equals(in.get(index))){
+                sresult.add(in);
+            }
+        }
+        // 검색결과 체크후 테이블에 표시
+        if(sresult.size()>0){
+            model.setDataVector(sresult, title);
+        }else{
+            showMessage("검색 결과가 없습니다.");
+        }
+    }	*/
 		
-		String auth = "KakaoAK " + "4d74071d3fbd89dfcb53c6ab3e6dd5e0";
-		HttpsURLConnection hc;
-		try {
-			URL link = new URL("https://dapi.kakao.com/v2/search/image.json?query=cat&&size=3");
-			// 접속
-			hc = (HttpsURLConnection)link.openConnection();
-			// 요청 헤더 추가
-			hc.setRequestMethod("GET");
-			hc.setRequestProperty("User-Agent", "Java-Client");	// https 호출시 user-agent 필요
-			hc.setRequestProperty("X-Requested-With", "curl");
-			hc.setRequestProperty("Authorization", auth);
-
-            int responseCode = hc.getResponseCode(); //
-            BufferedReader br;
-            if(responseCode==200) 
-            { // 정상 호출
-                br = new BufferedReader(new InputStreamReader(hc.getInputStream(), "UTF-8")); 
-                //서버와 연결되어 있는 스트림을 추출한다.
-                //InputStream is = conn.getInputStream();
-                //InputStreamReader isr = new InputStreamReader(is, "UTF-8");
-                //BufferedReader br = new BufferedReader(isr);
-            } 
-            else 
-            {  // 에러 발생
-                br = new BufferedReader(new InputStreamReader(hc.getErrorStream()));
-            }
-
-            String inputLine;
-            StringBuffer res = new StringBuffer();
-            while ((inputLine = br.readLine()) != null) 
-            {
-            	res.append(inputLine);
-            }
-            br.close();
-            
-            System.out.println(res.toString());
-            //Component a = res;
-            //c.add(res)
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		
 		
 		/*
@@ -174,8 +219,8 @@ public class ImageSearch extends JFrame {
 	//la.setText(labelName);
 		}*/
 		
-		containerPanel.add(la);
-		containerPanel.add(backBtn);
-		setVisible(true);
-	}
+		//containerPanel.add(la);
+		//containerPanel.add(backBtn);
+		//setVisible(true);
+	//}
 }

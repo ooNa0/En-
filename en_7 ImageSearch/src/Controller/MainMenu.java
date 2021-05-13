@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import View.SetFrame;
+import View.ShowPanel;
 
 import javax.swing.JButton;
 
@@ -19,7 +20,7 @@ public class MainMenu extends JFrame {
 	private JButton searchHistoryButton;
 	private SetFrame setFrame;
 	public MainMenu() {
-		panel = new JPanel(); //패널을 생성
+		//panel = new JPanel(); //패널을 생성
 		imageSearchButton = new JButton("이미지 찾기");
 		searchHistoryButton = new JButton("검색 내역 보기");
 		setFrame = new SetFrame();
@@ -33,7 +34,15 @@ public class MainMenu extends JFrame {
 		setResizable(false); // 창 크기 수정 불가능하게
 		setLocationRelativeTo(null); // 창 화면 가운데에 나오도록
         //setVisible(true);
-		createPanel();
+		panel = new ShowPanel().createPanel();
+		imageSearchButton.setBounds(70, 250, 200, 70); //크기 지정
+		searchHistoryButton.setBounds(400, 250, 200, 70);
+	  
+  	    //panel.add(testArea); //패널에 TextArea add
+	    panel.add(imageSearchButton); //패널에 버튼 add
+	    panel.add(searchHistoryButton); 
+	    this.add(panel);  //Frame에 Panel add (JFrame을 상속받았기에 this(생략가능)가 JFrame)
+	
 		setVisible(true); //생성한 Frame을 윈도우에 뿌리기
 		imageSearchButton.addActionListener(new ActionListener() {
 
@@ -58,22 +67,5 @@ public class MainMenu extends JFrame {
 		
 	}
 	
-	private void createPanel() {
-		panel.setLayout(null); //패널의 Layout을 NULL
-		panel.setBounds(0, 0, 700, 500); //패널의 크기 및 위치 지정 (x,y로 부터 넓이(width, 높이(height))
-	  
-		//JTextArea testArea = new JTextArea();  //JTextArea 생성
-	    //testArea.setBounds(50, 50, 300, 300); //JTeatArea 크기 및 위치 지정
-	    //testArea.setEditable(false); //실행시 JtextArea edit 금지 (글을 쓸 수 없음) true면 가능
-
-		//JButton imageSearchButton = new JButton("이미지 서치");  //버튼 생성
-		//JButton searchHistoryButton = new JButton("검색 내역 보기");
-		imageSearchButton.setBounds(70, 250, 200, 70); //크기 지정
-		searchHistoryButton.setBounds(400, 250, 200, 70);
-	  
-  	    //panel.add(testArea); //패널에 TextArea add
-	    panel.add(imageSearchButton); //패널에 버튼 add
-	    panel.add(searchHistoryButton); 
-	    this.add(panel);  //Frame에 Panel add (JFrame을 상속받았기에 this(생략가능)가 JFrame)
-	}
+	
 }

@@ -84,21 +84,16 @@ public class ImageSearch extends JFrame{// implements ActionListener, KeyListene
 		//backButton.addActionListener(this);
 		JButton searchButton = new JButton("검색하기");
 		//searchButton.addActionListener(this);
-		Integer[] numbers = {10, 20, 30};
+		Integer[] numbers = {5, 10, 15, 20, 25, 30};
 		JComboBox<Integer> comboBox = new JComboBox<Integer>(numbers);
 		panel.add(comboBox);
 		panel.add(la);
 		panel.add(inputSearchText);
 		panel.add(searchButton);
 		panel.add(backButton);
-		JPanel imagePanel = new JPanel();
-		GridLayout layout = new GridLayout(3,3, 1, 1);
-		imagePanel.setBackground(new Color(120,0,0));
-		imagePanel.setLayout(layout);
 		add(panel, BorderLayout.NORTH);
-
-		add(imagePanel);
 		setVisible(true);
+		
 		
 		//inputSearchText.addActionListener(this); // 엔터 누르면 버튼 실행
 		
@@ -113,6 +108,13 @@ public class ImageSearch extends JFrame{// implements ActionListener, KeyListene
 			@Override
 			public void actionPerformed(ActionEvent e) {
 					//setVisible(false);
+				JPanel imagePanel = new JPanel();
+				GridLayout layout = new GridLayout(3,3, 1, 1);
+				//imagePanel.setBackground(new Color(120,0,0));
+				imagePanel.setLayout(layout);
+
+				add(imagePanel);
+				setVisible(true);
 				JSONArray jsonArray1 = new KakaoAPI().getImageData(inputSearchText.getText(), comboBox.getSelectedItem().toString());
 					// 검색하기 버튼을 누르면, 그 값을 입력받아서 query에 보냄
 					// 그걸 출력
@@ -121,7 +123,7 @@ public class ImageSearch extends JFrame{// implements ActionListener, KeyListene
 	                   //System.out.println("검색결과"+ i +" : " +jsonArray1.get(i));            
 	                   JSONObject objectInArray = (JSONObject) jsonArray1.get(i);
 	                   try {
-						URL url = new URL(objectInArray.get("image_url").toString());
+						URL url = new URL(objectInArray.get("thumbnail_url").toString());//image_url
 	                	ImageIcon img = new ImageIcon(url);
 	                	JLabel imageLabel = new JLabel(img);
 	                	imagePanel.add(imageLabel);

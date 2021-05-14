@@ -10,13 +10,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -66,10 +69,14 @@ public class SearchHistory extends JFrame{
 			//GridLayout layout = new GridLayout(3,3, 1, 1);
 			//imagePanel.setBackground(new Color(120,0,0));
 			imagePanel.setLayout(new FlowLayout());
-			JTextArea tx = new JTextArea("아아", 10, 30);
-			add(tx);
-			ResultSet queryArray = database.showDataBase();
-			System.out.println(queryArray);
+			//JTextArea tx = new JTextArea("아아", 10, 30);
+			//imagePanel.add(tx);
+			Vector queryArray = database.showDataBase();
+			JList<?> list = new JList();
+			list.setListData(queryArray);
+			add(new JScrollPane(list), "Center");
+			//System.out.println(queryArray);
+
 			/*try {
 				while(queryArray.next()==true){
 				       System.out.println("아 오 안될까용");
@@ -81,7 +88,7 @@ public class SearchHistory extends JFrame{
 			} finally {
 			try {queryArray.close();} catch (SQLException e1) {e1.printStackTrace();}
 			}*/
-			add(imagePanel);
+			//add(imagePanel);
 			setVisible(true);
 			//inputSearchText.addActionListener(this); // 엔터 누르면 버튼 실행
 			

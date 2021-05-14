@@ -22,18 +22,23 @@ public class DataBase {
             connection = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3307/ImageSearch", "root", "0000");
             state = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             result = state.executeQuery("select * from searchitem where input='" + searchItem + "';");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Calendar date = Calendar.getInstance(); 
             if(result.next() == true) {
             	// 삭제
-            	result.deleteRow();
+            	//update searchitem set time='2021-05-11 23:41:04' where input='고양이';
+            	result = state.executeQuery("update searchitem set time='" + dateFormat.format(date.getTime()) 
+            	+ "' where input='" + searchItem + "';");
+            	//result.deleteRow();
             	//result.updateString(0, searchItem);
             }
             // 갱신
             //result.close();
             //result.moveToInsertRow();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Calendar date = Calendar.getInstance(); 
-            result = state.executeQuery("insert into searchitem values('" + searchItem + "','" + 
-            dateFormat.format(date.getTime())+ "');");
+            else {
+                result = state.executeQuery("insert into searchitem values('" + searchItem + "','" + 
+                dateFormat.format(date.getTime())+ "');");
+            }
             //result.updateString(searchItem, dateFormat.format(date.getTime()));
            // result.insertRow();
             //result = state.executeQuery("select * from log where searchItem='" + searchItem + "';");

@@ -94,4 +94,18 @@ public class DataBase {
         
         return vector;
 	}
+	
+	public void resetDataBase() {
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			// 单捞磐海捞胶 立加
+	        connection = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3307/ImageSearch", "root", "0000");
+	        state = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+	        result = state.executeQuery("truncate searchitem;");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.toString());
+		}
+        
+	}
 }

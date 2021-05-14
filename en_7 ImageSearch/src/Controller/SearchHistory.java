@@ -57,10 +57,10 @@ public class SearchHistory extends JFrame{
 			//c.setLayout(new FlowLayout());
 			JButton backButton = new JButton("뒤로가기");
 			//backButton.addActionListener(this);
-			JButton searchButton = new JButton("데이터 베이스 초기화");
+			JButton resetButton = new JButton("데이터 베이스 초기화");
 			//searchButton.addActionListener(this);
 			panel.add(la);
-			panel.add(searchButton);
+			panel.add(resetButton);
 			panel.add(backButton);
 			add(panel, BorderLayout.NORTH);
 			//setVisible(true);
@@ -99,11 +99,16 @@ public class SearchHistory extends JFrame{
 						new MainMenu().startMenu();
 				}
 			});
-			searchButton.addActionListener(new ActionListener() { // 찾기 버튼
+			resetButton.addActionListener(new ActionListener() { // 데베 초기화 버튼
 				@Override
 				public void actionPerformed(ActionEvent e) {
 						//setVisible(false);
-					
+					database.resetDataBase();
+					Vector queryArray = database.showDataBase();
+					JList<?> list = new JList();
+					list.setListData(queryArray);
+					add(new JScrollPane(list), "Center");
+					setVisible(true);
 						// 그걸 출력
 					
 				}

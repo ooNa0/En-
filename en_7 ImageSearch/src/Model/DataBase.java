@@ -9,12 +9,13 @@ import java.util.Calendar;
  
  
 public class DataBase {
+
+    Connection connection = null;
+    Statement state = null;
+    ResultSet result = null;
 	public void inputDataBase(String searchItem) {
         // DB 접속 객체선언
-        Connection connection = null;
-        Statement state = null;
-        ResultSet result = null;
-        
+		 result = null;
         try {
             // Maria db 드라이버 로드
             Class.forName("org.mariadb.jdbc.Driver");
@@ -49,15 +50,12 @@ public class DataBase {
             try {state.close();} catch (Exception e) {}
             try {result.close();} catch (Exception e) {}
         }
-        if (connection != null) {
-            System.out.println("접속성공");
-        }
     }
 	
 	public ResultSet showDataBase() {
-		Connection connection = null;
-        Statement state = null;
-        ResultSet result = null;
+		//Connection connection = null;
+        //Statement state = null;
+        result = null;// ResultSet 
         
         try {
             // Maria db 드라이버 로드
@@ -66,7 +64,7 @@ public class DataBase {
             connection = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3307/ImageSearch", "root", "0000");
             state = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             result = state.executeQuery("select * from log;");
-            
+            System.out.println(result.next());
             //result = state.executeQuery("select * from log where searchItem='" + searchItem + "';");
         } catch (Exception e) {
             System.out.println(e.toString());
@@ -76,8 +74,9 @@ public class DataBase {
             try {result.close();} catch (Exception e) {}
         }
         if (connection != null) {
-            System.out.println("접속성공");
+            System.out.println(result);
         }
+        
         return result;
 	}
 }

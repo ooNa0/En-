@@ -44,6 +44,7 @@ import javax.swing.JTextField;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import Model.DataBase;
 import Model.KakaoAPI;
 import View.ImageSearchMenu;
 import View.SetFrame;
@@ -55,6 +56,7 @@ public class ImageSearch extends JFrame{// implements ActionListener, KeyListene
 	}*/
 	//JFrame frame ;
 	JLabel label;
+	DataBase database = new DataBase();
 	//JButton backButton = new JButton("뒤로가기");
 	//JButton searchButton = new JButton("검색하기");
 
@@ -109,13 +111,15 @@ public class ImageSearch extends JFrame{// implements ActionListener, KeyListene
 			public void actionPerformed(ActionEvent e) {
 					//setVisible(false);
 				JPanel imagePanel = new JPanel();
+				String searchItem = inputSearchText.getText();
 				GridLayout layout = new GridLayout(3,3, 1, 1);
 				//imagePanel.setBackground(new Color(120,0,0));
 				imagePanel.setLayout(layout);
 
 				add(imagePanel);
 				setVisible(true);
-				JSONArray jsonArray1 = new KakaoAPI().getImageData(inputSearchText.getText(), comboBox.getSelectedItem().toString());
+				JSONArray jsonArray1 = new KakaoAPI().getImageData(searchItem, comboBox.getSelectedItem().toString());
+				database.inputDataBase(searchItem);
 					// 검색하기 버튼을 누르면, 그 값을 입력받아서 query에 보냄
 					// 그걸 출력
 				

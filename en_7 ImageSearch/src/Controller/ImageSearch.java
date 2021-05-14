@@ -64,7 +64,7 @@ public class ImageSearch extends JFrame{// implements ActionListener, KeyListene
 	public ImageSearch(String labelName){//
 		//new ImageSearchMenu().main(null);
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(120,255,0));
+		panel.setBackground(new Color(140,140,140));
 		//panel.setPreferredSize(new Dimension(400, 60));
 		JLabel la = new JLabel("검색할 것 입력:");
 		JTextField inputSearchText = new JTextField(15);
@@ -104,6 +104,7 @@ public class ImageSearch extends JFrame{// implements ActionListener, KeyListene
 			public void actionPerformed(ActionEvent e) {
 					//setVisible(false);
 					new MainMenu().startMenu();
+					
 			}
 		});
 		searchButton.addActionListener(new ActionListener() { // 찾기 버튼

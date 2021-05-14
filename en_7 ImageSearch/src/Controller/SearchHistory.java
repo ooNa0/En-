@@ -38,7 +38,7 @@ public class SearchHistory extends JFrame{
 		//JButton searchButton = new JButton("검색하기")
 			//new ImageSearchMenu().main(null);
 			JPanel panel = new JPanel();
-			panel.setBackground(new Color(120,255,0));
+			panel.setBackground(new Color(140,140,140));
 			//panel.setPreferredSize(new Dimension(400, 60));
 			JLabel la = new JLabel("검색 기록 보기");
 			//inputSearchText.addKeyListener(this);

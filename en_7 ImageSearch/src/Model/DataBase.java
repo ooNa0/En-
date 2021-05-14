@@ -19,9 +19,9 @@ public class DataBase {
             // Maria db 드라이버 로드
             Class.forName("org.mariadb.jdbc.Driver");
             // 데이터베이스 접속
-            connection = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3307/ai_db", "root", "0000");
+            connection = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3307/ImageSearch", "root", "0000");
             state = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            result = state.executeQuery("select * from log where searchItem='" + searchItem + "';");
+            result = state.executeQuery("select * from searchitem where input='" + searchItem + "';");
             if(result.next() == true) {
             	// 삭제
             	result.deleteRow();
@@ -29,11 +29,13 @@ public class DataBase {
             }
             // 갱신
             //result.close();
-            result.moveToInsertRow();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("[yyyy/MM/dd HH:mm:ss]");
+            //result.moveToInsertRow();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Calendar date = Calendar.getInstance(); 
-            result.updateString(searchItem, dateFormat.format(date.getTime()));
-            result.insertRow();
+            result = state.executeQuery("insert into searchitem values('" + searchItem + "','" + 
+            dateFormat.format(date.getTime())+ "');");
+            //result.updateString(searchItem, dateFormat.format(date.getTime()));
+           // result.insertRow();
             //result = state.executeQuery("select * from log where searchItem='" + searchItem + "';");
         } catch (Exception e) {
             System.out.println(e.toString());
@@ -56,7 +58,7 @@ public class DataBase {
             // Maria db 드라이버 로드
             Class.forName("org.mariadb.jdbc.Driver");
             // 데이터베이스 접속
-            connection = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3307/ai_db", "root", "0000");
+            connection = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3307/ImageSearch", "root", "0000");
             state = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             result = state.executeQuery("select * from log;");
             

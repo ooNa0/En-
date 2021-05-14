@@ -59,8 +59,9 @@ public class MainMenu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				new SearchHistory(setFrame);
+				new SearchHistory();//setFrame
 				//setVisible(false);
+				
 			}
             // 만들어진 버튼에 버튼이 눌러지면 발생하는 행동 정의
 		});

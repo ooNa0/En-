@@ -26,7 +26,7 @@ public class DataBase {
             connection = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3307/ImageSearch", "root", "0000");
             state = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             result = state.executeQuery("select * from searchitem where input='" + searchItem + "';");
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Calendar date = Calendar.getInstance(); 
             if(result.next() == true) {
             	// ªË¡¶

@@ -1,9 +1,11 @@
 package Model;
 
 import java.awt.List;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.ParseException;
@@ -11,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.net.ssl.HttpsURLConnection;
 
 import org.json.simple.JSONArray;
@@ -25,13 +28,13 @@ import org.json.simple.parser.JSONParser;
 public class KakaoAPI {
 	//Map<String, Object> rtnObj = new HashMap<> ();
 	@SuppressWarnings("unchecked")
-	public String getImageData(String searchItem) {
+	public JSONArray getImageData(String searchItem, String size) {
 		String auth = "KakaoAK " + "4d74071d3fbd89dfcb53c6ab3e6dd5e0";
 		HttpsURLConnection hc;
         String inputLine;
         StringBuffer res = new StringBuffer();
 		try {
-			String linkString =  "https://dapi.kakao.com/v2/search/image.json?size=3&&query=" + URLEncoder.encode(searchItem, "UTF-8");
+			String linkString =  "https://dapi.kakao.com/v2/search/image.json?query=" + URLEncoder.encode(searchItem, "UTF-8") + "&&size=" + size;
 			URL link = new URL(linkString);
 			 System.out.println(link);
 			// 접속
@@ -72,7 +75,7 @@ public class KakaoAPI {
 		
 	       JSONParser jsonParser1 = new JSONParser();
 	        JSONObject jsonObject1 = null;
-
+	        BufferedImage image;
      	       try {
 				jsonObject1 = (JSONObject)jsonParser1.parse(res.toString());
 			} catch (org.json.simple.parser.ParseException e) {
@@ -80,19 +83,32 @@ public class KakaoAPI {
 				e.printStackTrace();
 			}
                 JSONArray jsonArray1 = (JSONArray) jsonObject1.get("documents"); 
-                System.out.println((JSONArray) jsonObject1.get("documents"));    
-               /*for(int i=0; i<jsonArray1.size(); i++){
-                   System.out.println("검색결과"+ i +" : " +jsonArray1.get(i));            
+                //System.out.println((JSONArray) jsonObject1.get("documents"));    
+               for(int i=0; i<jsonArray1.size(); i++){
+                   //System.out.println("검색결과"+ i +" : " +jsonArray1.get(i));            
                    JSONObject objectInArray = (JSONObject) jsonArray1.get(i);
+                   URL url;
+				try {
+					url = new URL(objectInArray.get("image_url").toString());
+	                try {
+						image = ImageIO.read(url);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
                    System.out.println("image_url값은 "+objectInArray.get("image_url"));
-                   System.out.println("height값은 "+objectInArray.get("height"));
-               }*/
+               }
                
 		//System.out.println(inputLine);
 	    // 가장 큰 JSONObject를 가져옵니다.JSONParser parser = new JSONParser(); 
 
 		// json array
-		return res.toString();
+               
+		return jsonArray1;
 	}
 }
 

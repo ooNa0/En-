@@ -5,6 +5,7 @@ public class Constant {
 	
 	public static String KAKAO_API_LINK = "https://dapi.kakao.com/v2/search/image.json?query=";
 	public static String KAKAO_API_SIZE = "&&size=";
+	public static String DATABASE_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
 	public static String ENCODE_KOREAN = "UTF-8";
 	public static String IMAGESEARCH_BUTTON = "이미지 찾기";

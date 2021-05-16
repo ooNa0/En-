@@ -7,13 +7,9 @@ import javax.swing.JPanel;
 import Model.Constant;
 import View.ShowPanel;
 
-import javax.swing.DebugGraphics;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 @SuppressWarnings("serial")

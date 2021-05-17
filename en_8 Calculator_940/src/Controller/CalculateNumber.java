@@ -115,7 +115,7 @@ public class CalculateNumber extends JPanel implements ActionListener{
 			
 		} else if(e.getActionCommand().equals("CE")) {	
 			
-			inputNumberField.setText("0");
+			inputNumberField.setText("0");a = 0;
 			
 		} else if(e.getActionCommand().equals("+")) {
 			
@@ -155,24 +155,26 @@ public class CalculateNumber extends JPanel implements ActionListener{
 				calculationProcessString = a+"=";
 				calculationProcessField.setText(calculationProcessString);
 			}
-			isInputOperator = true;
+			isInputOperator = true;a = 0;
 			c= 5;
 
 		} else if(e.getActionCommand().equals("¡¿")) {
 			if(a != 0) {
-				inputNumberField.setText(null);
 				inputNumberField.setText(arithmetic());
+				calculationProcessString += b + "x";
 			}
-			a = Integer.valueOf(inputNumberField.getText());
-			calculationProcessString += a + "x";
+			else {
+				calculationProcessString += a + "x";
+			}
 			calculationProcessField.setText(calculationProcessString);
+			a = Integer.valueOf(inputNumberField.getText());
 			//inputNumberField.setText("0");
 			isInputOperator = true;
 			c = 3;
 
 		} else if(e.getActionCommand().equals("¡À")) {
 			if(a != 0) {
-				arithmetic();
+				inputNumberField.setText(arithmetic());
 			}
 			a = Integer.valueOf(inputNumberField.getText());
 			calculationProcessString += a + "¡À";

@@ -21,7 +21,7 @@ import View.ViewCalculator;
 
 @SuppressWarnings("serial")
 public class CalculateNumber extends JPanel implements ActionListener{
-	private String calculationProcessString = "";
+	private String calculationProcessString;
 	private JFrame frame;
 	private JTextField inputNumberField;
 	private JTextField calculationProcessField;
@@ -32,6 +32,8 @@ public class CalculateNumber extends JPanel implements ActionListener{
 	JButton[] btns;
 
 	int a = 0, b = 0, c = 0;
+	int number = 0;
+	boolean isInputOperator;
 	String lastInput;
 
 	public CalculateNumber() {
@@ -100,76 +102,84 @@ public class CalculateNumber extends JPanel implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if(c == 5) {
+			calculationProcessString = null;
+			calculationProcessField.setText(null);			
+		}
 		if(e.getActionCommand().equals("C")) {
 			
 			calculationProcessString = null;
 			calculationProcessField.setText(null);
 			inputNumberField.setText("0");
-			a = -1;
+			a = 0;
 			
 		} else if(e.getActionCommand().equals("CE")) {	
 			
 			inputNumberField.setText("0");
 			
 		} else if(e.getActionCommand().equals("+")) {
-			if(a != -1) {
-				arithmetic();
+			if(a != 0) {
+				inputNumberField.setText(arithmetic());
 			}
 			a = Integer.valueOf(inputNumberField.getText());
 
 			calculationProcessString += a + "+";
 			calculationProcessField.setText(calculationProcessString);
-			//inputNumberField.setText("0");
-			
+
+			inputNumberField.setText("0");
+			isInputOperator = true;
 			c = 1;
 
 		} else if(e.getActionCommand().equals("-")) {
-			if(a != -1) {
-				arithmetic();
+			if(a != 0) {
+				inputNumberField.setText(arithmetic());
 			}
 			a = Integer.valueOf(inputNumberField.getText());
 			calculationProcessString += a + "-";
 			calculationProcessField.setText(calculationProcessString);
 			//inputNumberField.setText("0");
-
+			isInputOperator = true;
 			c = 2;
 
 		} else if(e.getActionCommand().equals("=")) {
 
-			if(a != -1) {
-				arithmetic();
+			if(a != 0) {
+				inputNumberField.setText(arithmetic());
 				calculationProcessString = null;
-				calculationProcessField.setText(calculationProcessString);
+				calculationProcessField.setText(null);
 			}
 			else {
 				a = Integer.valueOf(inputNumberField.getText());
 				calculationProcessString = a+"=";
 				calculationProcessField.setText(calculationProcessString);
 			}
+			isInputOperator = true;
+			c= 5;
 
 		} else if(e.getActionCommand().equals("¡¿")) {
-			if(a != -1) {
-				arithmetic();
+			if(a != 0) {
+				inputNumberField.setText(null);
+				inputNumberField.setText(arithmetic());
 			}
 			a = Integer.valueOf(inputNumberField.getText());
 			calculationProcessString += a + "x";
 			calculationProcessField.setText(calculationProcessString);
 			//inputNumberField.setText("0");
-
+			isInputOperator = true;
 			c = 3;
 
 		} else if(e.getActionCommand().equals("¡À")) {
-			if(a != -1) {
+			if(a != 0) {
 				arithmetic();
 			}
 			a = Integer.valueOf(inputNumberField.getText());
 			calculationProcessString += a + "¡À";
 			calculationProcessField.setText(calculationProcessString);
 			//inputNumberField.setText("0");
-
+			isInputOperator = true;
 			c = 4;
 
-		} else {
+		} else {isInputOperator = false;
 
 			if(inputNumberField.getText().equals("0")) {
 
@@ -191,15 +201,17 @@ public class CalculateNumber extends JPanel implements ActionListener{
 		//if()
 		return true;
 	}
-	void arithmetic() {
+	String arithmetic() {
 		b = Integer.valueOf(inputNumberField.getText());
-
+		System.out.println("a =" + a);
+		System.out.println("b =" + b);
 		switch(c) {
-		case 1 : inputNumberField.setText(String.valueOf(a + b)); break;
-		case 2 : inputNumberField.setText(String.valueOf(a - b)); break;
-		case 3 : inputNumberField.setText(String.valueOf(a * b)); break;
-		case 4 : inputNumberField.setText(String.valueOf(a / b)); break;
+		case 1 : inputNumberField.setText(String.valueOf(a + b)); return String.valueOf(a + b);
+		case 2 : inputNumberField.setText(String.valueOf(a - b)); return String.valueOf(a - b);
+		case 3 : inputNumberField.setText(String.valueOf(a * b)); return String.valueOf(a * b);
+		case 4 : inputNumberField.setText(String.valueOf(a / b)); return String.valueOf(a / b);
 		}
+		return "";
 	}
 	void init() {
 

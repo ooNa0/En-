@@ -181,7 +181,11 @@ public class CalculateNumber extends JPanel implements ActionListener{
 			isInputOperator = true;
 			c = 4;
 
-		} else {isInputOperator = false;
+		} else {
+			if(isInputOperator) {
+				inputNumberField.setText(null);
+			}
+			isInputOperator = false;
 
 			if(inputNumberField.getText().equals("0")) {
 

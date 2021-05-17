@@ -131,7 +131,6 @@ public class CalculateNumber extends JPanel implements ActionListener{
 		} else if(e.getActionCommand().equals("=")) {
 
 			if(a != 0) {
-
 				b = Integer.valueOf(inputNumberField.getText());
 
 				switch(c) {
@@ -170,6 +169,7 @@ public class CalculateNumber extends JPanel implements ActionListener{
 				inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
 
 			} else {
+				inputNumberField.setText(null);
 
 				inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
 

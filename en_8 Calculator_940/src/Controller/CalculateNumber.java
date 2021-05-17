@@ -23,8 +23,8 @@ import View.ViewCalculator;
 public class CalculateNumber extends JPanel implements ActionListener{
 
 	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField inputNumberField;
+	private JTextField calculationProcessField;
 	private JButton[] buttons;
 	//JFrame frame;
 
@@ -42,16 +42,16 @@ public class CalculateNumber extends JPanel implements ActionListener{
 		
 		JPanel panel = new JPanel();
 		
-		textField = new JTextField();
-		textField.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField.setFont(new Font("±¼¸²", Font.PLAIN, 30));
-		textField.setColumns(10);
-		textField.setEditable(false);
+		inputNumberField = new JTextField();
+		inputNumberField.setHorizontalAlignment(SwingConstants.RIGHT);
+		inputNumberField.setFont(new Font("±¼¸²", Font.PLAIN, 30));
+		inputNumberField.setColumns(10);
+		inputNumberField.setEditable(false);
 		
-		textField_1 = new JTextField();
-		textField_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_1.setColumns(10);
-		textField_1.setEditable(false);
+		calculationProcessField = new JTextField();
+		calculationProcessField.setHorizontalAlignment(SwingConstants.RIGHT);
+		calculationProcessField.setColumns(10);
+		calculationProcessField.setEditable(false);
 		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
@@ -59,8 +59,8 @@ public class CalculateNumber extends JPanel implements ActionListener{
 				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(textField_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
-						.addComponent(textField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+						.addComponent(calculationProcessField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+						.addComponent(inputNumberField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
 						.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE))
 					.addContainerGap())
 		);
@@ -68,9 +68,9 @@ public class CalculateNumber extends JPanel implements ActionListener{
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(textField_1, GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+					.addComponent(calculationProcessField, GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textField, GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+					.addComponent(inputNumberField, GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
 					.addContainerGap())
@@ -98,67 +98,33 @@ public class CalculateNumber extends JPanel implements ActionListener{
 
 		frame.setVisible(true);	
 		//new ViewCalculator();
-		/*
-		setPreferredSize(new Dimension(500, 600));
-		setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
-		setLayout(new BorderLayout());
-		
-
-		p1 = new JPanel(new BorderLayout());
-
-
-		p2 = new JPanel();
-		p2.setLayout(new GridLayout(4, 4, 2, 2));
-
-		String[] str = {
-				"C", "+", "-", "¡¿",
-				"7", "8", "9", "¡À",
-				"4", "5", "6", "=",
-				"1", "2", "3", "0"};
-
-		btns = new JButton[16];
-
-		for(int i = 0; i < btns.length; i++) {
-
-			btns[i] = new JButton(str[i]);
-			btns[i].addActionListener(this);
-
-			p2.add(btns[i]);
-
-		}
-
-		jtf = new JTextField(10);
-		jtf.setEditable(false);
-		jtf.setText("0");
-
-		p1.add(jtf);
-
-		add(BorderLayout.NORTH, p1);
-		add(BorderLayout.CENTER, p2);
-		
-		init();
-		*/
-		
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("C")) {
-
-			textField.setText("0");
-
+			
+			calculationProcessField.setText(null);
+			inputNumberField.setText("0");
+			
+		} else if(e.getActionCommand().equals("CE")) {	
+			
+			inputNumberField.setText("0");
+			
 		} else if(e.getActionCommand().equals("+")) {
 
-			a = Integer.valueOf(textField.getText());
+			a = Integer.valueOf(inputNumberField.getText());
 
-			textField.setText("0");
+			calculationProcessField.setText(inputNumberField.getText()+"+");
+			//inputNumberField.setText("0");
 			
 			c = 1;
 
 		} else if(e.getActionCommand().equals("-")) {
 
-			a = Integer.valueOf(textField.getText());
+			a = Integer.valueOf(inputNumberField.getText());
 
-			textField.setText("0");
+			calculationProcessField.setText(inputNumberField.getText()+"-");
+			//inputNumberField.setText("0");
 
 			c = 2;
 
@@ -166,44 +132,46 @@ public class CalculateNumber extends JPanel implements ActionListener{
 
 			if(a != 0) {
 
-				b = Integer.valueOf(textField.getText());
+				b = Integer.valueOf(inputNumberField.getText());
 
 				switch(c) {
-				case 1 : textField.setText(String.valueOf(a + b)); break;
-				case 2 : textField.setText(String.valueOf(a - b)); break;
-				case 3 : textField.setText(String.valueOf(a * b)); break;
-				case 4 : textField.setText(String.valueOf(a / b)); break;
+				case 1 : inputNumberField.setText(String.valueOf(a + b)); break;
+				case 2 : inputNumberField.setText(String.valueOf(a - b)); break;
+				case 3 : inputNumberField.setText(String.valueOf(a * b)); break;
+				case 4 : inputNumberField.setText(String.valueOf(a / b)); break;
 				}
-
+				calculationProcessField.setText(null);
 			}
 
 		} else if(e.getActionCommand().equals("¡¿")) {
 
-			a = Integer.valueOf(textField.getText());
+			a = Integer.valueOf(inputNumberField.getText());
 
-			textField.setText("0");
+			calculationProcessField.setText(inputNumberField.getText()+"¡¿");
+			//inputNumberField.setText("0");
 
 			c = 3;
 
 		} else if(e.getActionCommand().equals("¡À")) {
 
-			a = Integer.valueOf(textField.getText());
+			a = Integer.valueOf(inputNumberField.getText());
 
-			textField.setText("0");
+			calculationProcessField.setText(inputNumberField.getText()+"¡À");
+			//inputNumberField.setText("0");
 
 			c = 4;
 
 		} else {
 
-			if(textField.getText().equals("0")) {
+			if(inputNumberField.getText().equals("0")) {
 
-				textField.setText(null);
+				inputNumberField.setText(null);
 
-				textField.setText(textField.getText() + e.getActionCommand());
+				inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
 
 			} else {
 
-				textField.setText(textField.getText() + e.getActionCommand());
+				inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
 
 			}
 

@@ -21,7 +21,7 @@ import View.ViewCalculator;
 
 @SuppressWarnings("serial")
 public class CalculateNumber extends JPanel implements ActionListener{
-	private String calculationProcessString;
+	private String calculationProcessString = "";
 	private JFrame frame;
 	private JTextField inputNumberField;
 	private JTextField calculationProcessField;
@@ -29,9 +29,9 @@ public class CalculateNumber extends JPanel implements ActionListener{
 
 
 	
-	JButton[] btns;
+	private JButton[] btns;
 
-	int a = 0, b = 0, c = 0;
+	private int a = 0, b = 0, c = 0;
 	int number = 0;
 	boolean isInputOperator;
 	String lastInput;
@@ -49,7 +49,7 @@ public class CalculateNumber extends JPanel implements ActionListener{
 		inputNumberField.setColumns(10);
 		inputNumberField.setEditable(false);
 		
-		calculationProcessField = new JTextField();
+		calculationProcessField = new JTextField(" ");
 		calculationProcessField.setHorizontalAlignment(SwingConstants.RIGHT);
 		calculationProcessField.setColumns(10);
 		calculationProcessField.setEditable(false);
@@ -102,7 +102,7 @@ public class CalculateNumber extends JPanel implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if(c == 5) {
+		if(c == 5) { // 연산자가 = 일 경우, 위의 로그 값 모두 초기화
 			calculationProcessString = null;
 			calculationProcessField.setText(null);			
 		}
@@ -118,15 +118,17 @@ public class CalculateNumber extends JPanel implements ActionListener{
 			inputNumberField.setText("0");
 			
 		} else if(e.getActionCommand().equals("+")) {
+			
 			if(a != 0) {
 				inputNumberField.setText(arithmetic());
 			}
+			
 			a = Integer.valueOf(inputNumberField.getText());
 
 			calculationProcessString += a + "+";
 			calculationProcessField.setText(calculationProcessString);
 
-			inputNumberField.setText("0");
+			//inputNumberField.setText("0");
 			isInputOperator = true;
 			c = 1;
 

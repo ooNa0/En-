@@ -102,8 +102,8 @@ public class CalculateNumber extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("C")) {
 			
-			calculationProcessString = "0";
-			calculationProcessField.setText(calculationProcessString);
+			calculationProcessString = null;
+			calculationProcessField.setText(null);
 			inputNumberField.setText("0");
 			a = -1;
 			
@@ -171,17 +171,17 @@ public class CalculateNumber extends JPanel implements ActionListener{
 
 		} else {
 
-			//if(inputNumberField.getText().equals("0")) {
+			if(inputNumberField.getText().equals("0")) {
 
-			//	inputNumberField.setText(null);
+				inputNumberField.setText(null);
 
 				inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
 
-			//} else {
+			} else {
 
-			//	inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
+				inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
 
-			//}
+			}
 
 		}
 

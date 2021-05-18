@@ -200,23 +200,28 @@ public class CalculateNumber extends JPanel implements ActionListener{
 			c = 4;lastInput = 4;
 
 		} else if(e.getActionCommand().equals("=")) {
-			System.out.println("a =" + a);
-			System.out.println("b =" + b);
-			System.out.println("c =" + c);
 			if(isInputOperator) { // 앞에가 연산자였으면, 
-				switch(c) {
-				case 1 : inputNumberField.setText(String.valueOf(a + b)); break;// calculationProcessString += "+";
-				case 2 : inputNumberField.setText("-300");break;// calculationProcessString += "-";
-				case 3 : inputNumberField.setText(String.valueOf(a * b));break;// calculationProcessString += "x";
-				case 4 : inputNumberField.setText(String.valueOf(a / b));break;// calculationProcessString += "÷";
+				if(lastInput != 5) {
+					b = Integer.valueOf(inputNumberField.getText());//a;					
 				}
-				
+				calculationProcessString = String.valueOf(a);
+				System.out.println("a =" + a);
+				System.out.println("b =" + b);
+				System.out.println("c =" + c);
+				switch(c) {
+				case 1 : inputNumberField.setText(String.valueOf(a + b)); calculationProcessString += "+";break;// 
+				case 2 : inputNumberField.setText(Integer.toString(a - b)); calculationProcessString += "-"; break;// 
+				case 3 : inputNumberField.setText(String.valueOf(a * b)); calculationProcessString += "x"; break;// 
+				case 4 : inputNumberField.setText(String.valueOf(a / b)); calculationProcessString += "÷"; break;// 
+				}
+				calculationProcessString += String.valueOf(b);
+				calculationProcessField.setText(calculationProcessString);
 			}
 			else if(a != -1) {
 				b = Integer.valueOf(inputNumberField.getText());
 				inputNumberField.setText(arithmetic());
 				calculationProcessString = "";
-				calculationProcessField.setText(null);	
+				calculationProcessField.setText(null);
 			}		
 				a = Integer.valueOf(inputNumberField.getText());
 			

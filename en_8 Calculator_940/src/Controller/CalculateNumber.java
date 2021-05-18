@@ -34,7 +34,7 @@ public class CalculateNumber extends JPanel implements ActionListener{
 	private int a = -1, b = 0, c = 0;
 	int number = 0;
 	boolean isInputOperator;
-	String lastInput;
+	int lastInput = 0;
 
 	public CalculateNumber() {
 		frame = new JFrame("계산기");
@@ -113,6 +113,7 @@ public class CalculateNumber extends JPanel implements ActionListener{
 			inputNumberField.setText("0");
 			a = -1;
 			c = 0;
+			lastInput = 0;
 			
 		} else if(e.getActionCommand().equals("CE")) { // 연산자 기록은 그대로
 			
@@ -124,6 +125,7 @@ public class CalculateNumber extends JPanel implements ActionListener{
 				//calculationProcessField.setText(calculationProcessString + "-");
 			}
 			else if(a != -1) {
+				b = Integer.valueOf(inputNumberField.getText());
 				inputNumberField.setText(arithmetic());
 				calculationProcessString += b;
 				a = Integer.valueOf(inputNumberField.getText());
@@ -137,13 +139,14 @@ public class CalculateNumber extends JPanel implements ActionListener{
 
 			//inputNumberField.setText("0");
 			isInputOperator = true;
-			c = 1;
+			c = 1;lastInput = 1;
 
 		} else if(e.getActionCommand().equals("-")) {
 			if(isInputOperator) { // 앞에가 연산자였으면, 
 				//calculationProcessField.setText(calculationProcessString + "-");
 			}
 			else if(a != -1) {
+				b = Integer.valueOf(inputNumberField.getText());
 				inputNumberField.setText(arithmetic());
 				calculationProcessString += b;
 				a = Integer.valueOf(inputNumberField.getText());
@@ -155,13 +158,14 @@ public class CalculateNumber extends JPanel implements ActionListener{
 			calculationProcessField.setText(calculationProcessString + "-");
 			//inputNumberField.setText("0");
 			isInputOperator = true;
-			c = 2;
+			c = 2;lastInput = 2;
 
 		} else if(e.getActionCommand().equals("×")) {
 			if(isInputOperator) { // 앞에가 연산자였으면, 
 				//calculationProcessField.setText(calculationProcessString + "-");
 			}
 			else if(a != -1) {
+				b = Integer.valueOf(inputNumberField.getText());
 				inputNumberField.setText(arithmetic());
 				calculationProcessString += b;
 				a = Integer.valueOf(inputNumberField.getText());
@@ -174,14 +178,14 @@ public class CalculateNumber extends JPanel implements ActionListener{
 			a = Integer.valueOf(inputNumberField.getText());
 			//inputNumberField.setText("0");
 			isInputOperator = true;
-			c = 3;
+			c = 3;lastInput = 3;
 
 		} else if(e.getActionCommand().equals("÷")) {
 			if(isInputOperator) { // 앞에가 연산자였으면, 
 				//calculationProcessField.setText(calculationProcessString + "-");
 			}
 			else if(a != -1) {
-				a = Integer.valueOf(inputNumberField.getText());
+				b = Integer.valueOf(inputNumberField.getText());//a = Integer.valueOf(inputNumberField.getText());
 				inputNumberField.setText(arithmetic());
 				calculationProcessString += b;
 			}
@@ -193,23 +197,34 @@ public class CalculateNumber extends JPanel implements ActionListener{
 			calculationProcessField.setText(calculationProcessString + "÷");
 			//inputNumberField.setText("0");
 			isInputOperator = true;
-			c = 4;
+			c = 4;lastInput = 4;
 
 		} else if(e.getActionCommand().equals("=")) {
 			System.out.println("a =" + a);
-			if(a != -1) {
+			System.out.println("b =" + b);
+			System.out.println("c =" + c);
+			if(isInputOperator) { // 앞에가 연산자였으면, 
+				switch(c) {
+				case 1 : inputNumberField.setText(String.valueOf(a + b)); break;// calculationProcessString += "+";
+				case 2 : inputNumberField.setText("-300");break;// calculationProcessString += "-";
+				case 3 : inputNumberField.setText(String.valueOf(a * b));break;// calculationProcessString += "x";
+				case 4 : inputNumberField.setText(String.valueOf(a / b));break;// calculationProcessString += "÷";
+				}
+				
+			}
+			else if(a != -1) {
+				b = Integer.valueOf(inputNumberField.getText());
 				inputNumberField.setText(arithmetic());
 				calculationProcessString = "";
 				calculationProcessField.setText(null);	
-			}			
-			else{
+			}		
 				a = Integer.valueOf(inputNumberField.getText());
-			}
+			
 			
 			isInputOperator = true;
 			//a = 0;
 			//c= 5;
-
+			lastInput = 5;
 		} else {
 			if(isInputOperator) {
 				inputNumberField.setText(null);
@@ -237,10 +252,8 @@ public class CalculateNumber extends JPanel implements ActionListener{
 		return true;
 	}
 	String arithmetic() {
-		b = Integer.valueOf(inputNumberField.getText());
 		switch(c) {
-		case 1 : 
-			inputNumberField.setText(String.valueOf(a + b)); calculationProcessString += "+";return String.valueOf(a + b);
+		case 1 : inputNumberField.setText(String.valueOf(a + b)); calculationProcessString += "+";return String.valueOf(a + b);
 		case 2 : inputNumberField.setText(String.valueOf(a - b)); calculationProcessString += "-";return String.valueOf(a - b);
 		case 3 : inputNumberField.setText(String.valueOf(a * b)); calculationProcessString += "x";return String.valueOf(a * b);
 		case 4 : inputNumberField.setText(String.valueOf(a / b)); calculationProcessString += "÷";return String.valueOf(a / b);

@@ -138,11 +138,21 @@ public class CalculateNumber extends JPanel implements ActionListener{
 				b += ".";
 				inputNumberField.setText(b);
 			}
-			// flag값 줘서 소수점이 있는지 없는지 유무 판단, 그리고 지울때도 소수점을 지우면 flag값 수정하게! 그리고 
+		} else if(e.getActionCommand().equals("+/-")) { // +/- 버튼
+			BigDecimal u = new BigDecimal(inputNumberField.getText());
+			System.out.println("u ="+u);
+			// 앞에 연산자면 negate(~~) 필요하고, 아니라면 -만 붙었다 안붙었다
+			if(!isInputOperator) {
+				
+			}
+			inputNumberField.setText(String.valueOf(u.multiply(BigDecimal.valueOf(-1))));
+			
 		} else if(e.getActionCommand().equals("+")) {			
 			if(isFristInput || isInputOperator) {
+				if(c != 1){
 				firstOperand = new BigDecimal(inputNumberField.getText());
-				calculationProcessString += firstOperand;		//if(isFristInput) 				
+				calculationProcessString += firstOperand;
+				}
 			}
 			else {
 				secondOperand = new BigDecimal(inputNumberField.getText());
@@ -159,8 +169,10 @@ public class CalculateNumber extends JPanel implements ActionListener{
 
 		} else if(e.getActionCommand().equals("-")) {
 			if(isFristInput || isInputOperator) {
-				firstOperand = new BigDecimal(inputNumberField.getText());
-				calculationProcessString += firstOperand;		//if(isFristInput) 						
+				if(c != 2){
+					firstOperand = new BigDecimal(inputNumberField.getText());
+					calculationProcessString += firstOperand;
+				}					
 			}
 			else {
 				secondOperand = new BigDecimal(inputNumberField.getText());
@@ -175,8 +187,10 @@ public class CalculateNumber extends JPanel implements ActionListener{
 
 		} else if(e.getActionCommand().equals("×")) {
 			if(isFristInput || isInputOperator) {
-				firstOperand = new BigDecimal(inputNumberField.getText());
-				calculationProcessString += firstOperand;		//if(isFristInput) 					
+				if(c != 3){
+					firstOperand = new BigDecimal(inputNumberField.getText());
+					calculationProcessString += firstOperand;
+				}				
 			}
 			else {
 				secondOperand = new BigDecimal(inputNumberField.getText());
@@ -192,8 +206,10 @@ public class CalculateNumber extends JPanel implements ActionListener{
 
 		} else if(e.getActionCommand().equals("÷")) {
 			if(isFristInput || isInputOperator) {
-				firstOperand = new BigDecimal(inputNumberField.getText());
-				calculationProcessString += firstOperand;		//if(isFristInput) 		
+				if(c != 4){
+					firstOperand = new BigDecimal(inputNumberField.getText());
+					calculationProcessString += firstOperand;
+				}
 			}
 			else {
 				secondOperand = new BigDecimal(inputNumberField.getText());

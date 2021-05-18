@@ -212,9 +212,14 @@ public class CalculateNumber extends JPanel implements ActionListener{
 				if(lastInput != 5) {
 					b = Integer.valueOf(inputNumberField.getText());//a;					
 				}
+				else {
+					a = Integer.valueOf(inputNumberField.getText());
+				}
 				System.out.println("a ="+a);
 				System.out.println("b ="+b);
+				System.out.println("c ="+c);
 				//calculationProcessString = String.valueOf(a);
+				System.out.println("result ="+arithmetic());
 				inputNumberField.setText(arithmetic());
 				//calculationProcessString += String.valueOf(b) + "=";
 				

@@ -205,16 +205,8 @@ public class CalculateNumber extends JPanel implements ActionListener{
 					b = Integer.valueOf(inputNumberField.getText());//a;					
 				}
 				calculationProcessString = String.valueOf(a);
-				System.out.println("a =" + a);
-				System.out.println("b =" + b);
-				System.out.println("c =" + c);
-				switch(c) {
-				case 1 : inputNumberField.setText(String.valueOf(a + b)); calculationProcessString += "+";break;// 
-				case 2 : inputNumberField.setText(Integer.toString(a - b)); calculationProcessString += "-"; break;// 
-				case 3 : inputNumberField.setText(String.valueOf(a * b)); calculationProcessString += "x"; break;// 
-				case 4 : inputNumberField.setText(String.valueOf(a / b)); calculationProcessString += "¡À"; break;// 
-				}
-				calculationProcessString += String.valueOf(b);
+				arithmetic();
+				calculationProcessString += String.valueOf(b) + "=";
 				calculationProcessField.setText(calculationProcessString);
 			}
 			else if(a != -1) {

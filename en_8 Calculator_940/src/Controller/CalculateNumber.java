@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
@@ -32,12 +33,12 @@ public class CalculateNumber extends JPanel implements ActionListener{
 	
 	private JButton[] btns;
 
-	private int a = -1, b = 0, c = 0;
+	private int c = 0;//a = -1,  b = 0, 
 	int number = 0;
 	boolean isInputOperator;
 	int lastInput = 0;
-	private BigDecimal firstOperand = new BigDecimal("-1"); // 오차가 안생기게 하기 위해서는 string 값으로 선언 필요
-	private BigDecimal secondOperand = new BigDecimal("-1"); // 오차가 안생기게 하기 위해서는 string 값으로 선언 필요
+	private BigDecimal firstOperand; // 오차가 안생기게 하기 위해서는 string 값으로 선언 필요
+	private BigDecimal secondOperand = BigDecimal.ZERO; // 오차가 안생기게 하기 위해서는 string 값으로 선언 필요
 	
 	boolean isFristInput = true;
 	public CalculateNumber() {
@@ -106,35 +107,31 @@ public class CalculateNumber extends JPanel implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		/*if(c == 5) { // 연산자가 = 일 경우, 위의 로그 값 모두 초기화
-			calculationProcessString = "";
-			calculationProcessField.setText(null);			
-		}*/
 		if(e.getActionCommand().equals("C")) { // 연산자 기록까지 초기화
 
 			calculationProcessString = "";
 			calculationProcessField.setText(null);	
 			inputNumberField.setText("0");
 			isFristInput = true;
-			a = -1;
+			firstOperand = BigDecimal.ZERO;
 			c = 0;
 			lastInput = 0;
 			
 		} else if(e.getActionCommand().equals("CE")) { // 연산자 기록은 그대로
 			
 			inputNumberField.setText("0");
-			a = -1;
+			firstOperand = BigDecimal.ZERO;
 			
 		} else if(e.getActionCommand().equals("+")) {			
 			if(isFristInput || isInputOperator) {
-				a = Integer.valueOf(inputNumberField.getText());
-				calculationProcessString += a;				
+				firstOperand = new BigDecimal(inputNumberField.getText());
+				calculationProcessString += firstOperand;		//if(isFristInput) 				
 			}
 			else {
-				b = Integer.valueOf(inputNumberField.getText());
+				secondOperand = new BigDecimal(inputNumberField.getText());
 				inputNumberField.setText(arithmetic());
-				calculationProcessString += b;
-				a = Integer.valueOf(inputNumberField.getText());
+				calculationProcessString += secondOperand;
+				firstOperand = new BigDecimal(inputNumberField.getText());
 			}
 			
 			calculationProcessField.setText(calculationProcessString + "+");
@@ -144,18 +141,15 @@ public class CalculateNumber extends JPanel implements ActionListener{
 			c = 1;lastInput = 1;
 
 		} else if(e.getActionCommand().equals("-")) {
-			if(isInputOperator) { // 앞에가 연산자였으면, 
-				//calculationProcessField.setText(calculationProcessString + "-");
-			}
-			else if(isFristInput) {
-				a = Integer.valueOf(inputNumberField.getText());
-				calculationProcessString += a;				
+			if(isFristInput || isInputOperator) {
+				firstOperand = new BigDecimal(inputNumberField.getText());
+				calculationProcessString += firstOperand;		//if(isFristInput) 						
 			}
 			else {
-				b = Integer.valueOf(inputNumberField.getText());
+				secondOperand = new BigDecimal(inputNumberField.getText());
 				inputNumberField.setText(arithmetic());
-				calculationProcessString += b;
-				a = Integer.valueOf(inputNumberField.getText());
+				calculationProcessString += secondOperand;
+				firstOperand = new BigDecimal(inputNumberField.getText());
 			}
 			calculationProcessField.setText(calculationProcessString + "-");
 			//inputNumberField.setText("0");
@@ -164,35 +158,33 @@ public class CalculateNumber extends JPanel implements ActionListener{
 
 		} else if(e.getActionCommand().equals("×")) {
 			if(isFristInput || isInputOperator) {
-				a = Integer.valueOf(inputNumberField.getText());
-				calculationProcessString += a;				
+				firstOperand = new BigDecimal(inputNumberField.getText());
+				calculationProcessString += firstOperand;		//if(isFristInput) 					
 			}
 			else {
-				b = Integer.valueOf(inputNumberField.getText());
+				secondOperand = new BigDecimal(inputNumberField.getText());
 				inputNumberField.setText(arithmetic());
-				calculationProcessString += b;
-				a = Integer.valueOf(inputNumberField.getText());
+				calculationProcessString += secondOperand;
+				firstOperand = new BigDecimal(inputNumberField.getText());
 			}
 			calculationProcessField.setText(calculationProcessString + "x");
-			a = Integer.valueOf(inputNumberField.getText());
+			firstOperand = new BigDecimal(inputNumberField.getText());
 			//inputNumberField.setText("0");
 			isInputOperator = true;isFristInput = false;
 			c = 3;lastInput = 3;
 
 		} else if(e.getActionCommand().equals("÷")) {
-			if(isInputOperator) { // 앞에가 연산자였으면, 
-				//calculationProcessField.setText(calculationProcessString + "-");
-			}
-			else if(isFristInput) {
-				a = Integer.valueOf(inputNumberField.getText());
-				calculationProcessString += a;				
+			if(isFristInput || isInputOperator) {
+				firstOperand = new BigDecimal(inputNumberField.getText());
+				calculationProcessString += firstOperand;		//if(isFristInput) 		
 			}
 			else {
-				b = Integer.valueOf(inputNumberField.getText());//a = Integer.valueOf(inputNumberField.getText());
+				secondOperand = new BigDecimal(inputNumberField.getText());
 				inputNumberField.setText(arithmetic());
-				calculationProcessString += b;
+				calculationProcessString += secondOperand;
 			}
-			a = Integer.valueOf(inputNumberField.getText());
+			firstOperand = new BigDecimal(inputNumberField.getText());
+			//if(!secondOperand.equals(BigDecimal.ZERO)) 
 			calculationProcessField.setText(calculationProcessString + "÷");
 			//inputNumberField.setText("0");
 			isInputOperator = true;isFristInput = false;
@@ -204,13 +196,13 @@ public class CalculateNumber extends JPanel implements ActionListener{
 			}
 			else {
 				if(lastInput != 5) {
-					b = Integer.valueOf(inputNumberField.getText());//a;					
+					secondOperand = new BigDecimal(inputNumberField.getText());		
 				}
 				else {
-					a = Integer.valueOf(inputNumberField.getText());
+					firstOperand = new BigDecimal(inputNumberField.getText());
 				}
-				System.out.println("a ="+a);
-				System.out.println("b ="+b);
+				System.out.println("a ="+firstOperand);
+				System.out.println("b ="+secondOperand);
 				System.out.println("c ="+c);
 				//calculationProcessString = String.valueOf(a);
 				System.out.println("result ="+arithmetic());
@@ -255,10 +247,17 @@ public class CalculateNumber extends JPanel implements ActionListener{
 	}
 	String arithmetic() {
 		switch(c) {
-		case 1 : inputNumberField.setText(String.valueOf(a + b)); calculationProcessString += "+";return String.valueOf(a + b);
-		case 2 : inputNumberField.setText(String.valueOf(a - b)); calculationProcessString += "-";return String.valueOf(a - b);
-		case 3 : inputNumberField.setText(String.valueOf(a * b)); calculationProcessString += "x";return String.valueOf(a * b);
-		case 4 : inputNumberField.setText(String.valueOf(a / b)); calculationProcessString += "÷";return String.valueOf(a / b);
+		case 1 : inputNumberField.setText(String.valueOf(firstOperand.add(secondOperand))); calculationProcessString += "+";return String.valueOf(firstOperand.add(secondOperand));
+		case 2 : inputNumberField.setText(String.valueOf(firstOperand.subtract(secondOperand))); calculationProcessString += "-";return String.valueOf(firstOperand.subtract(secondOperand));
+		case 3 : inputNumberField.setText(String.valueOf(firstOperand.multiply(secondOperand))); calculationProcessString += "x";return String.valueOf(firstOperand.multiply(secondOperand));
+		case 4 : /*
+			if(secondOperand.equals(BigDecimal.ZERO)) {
+				calculationProcessString = "";
+				return "정의되지 않은 결과입니다.";
+			}*/
+			inputNumberField.setText(String.valueOf(firstOperand.divide(secondOperand, 16, RoundingMode.HALF_UP)));
+			calculationProcessString += "÷";
+			return String.valueOf(firstOperand.divide(secondOperand));
 		}
 		return "";
 	}

@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
@@ -35,7 +36,10 @@ public class CalculateNumber extends JPanel implements ActionListener{
 	int number = 0;
 	boolean isInputOperator;
 	int lastInput = 0;
-
+	private BigDecimal firstOperand = new BigDecimal("-1"); // 오차가 안생기게 하기 위해서는 string 값으로 선언 필요
+	private BigDecimal secondOperand = new BigDecimal("-1"); // 오차가 안생기게 하기 위해서는 string 값으로 선언 필요
+	
+	boolean isFristInput = true;
 	public CalculateNumber() {
 		frame = new JFrame("계산기");
 		frame.setBounds(100, 100, 500, 600);
@@ -111,6 +115,7 @@ public class CalculateNumber extends JPanel implements ActionListener{
 			calculationProcessString = "";
 			calculationProcessField.setText(null);	
 			inputNumberField.setText("0");
+			isFristInput = true;
 			a = -1;
 			c = 0;
 			lastInput = 0;
@@ -124,100 +129,101 @@ public class CalculateNumber extends JPanel implements ActionListener{
 			if(isInputOperator) { // 앞에가 연산자였으면, 
 				//calculationProcessField.setText(calculationProcessString + "-");
 			}
-			else if(a != -1) {
+			else if(isFristInput) {
+				a = Integer.valueOf(inputNumberField.getText());
+				calculationProcessString += a;				
+			}
+			else {
 				b = Integer.valueOf(inputNumberField.getText());
 				inputNumberField.setText(arithmetic());
 				calculationProcessString += b;
 				a = Integer.valueOf(inputNumberField.getText());
 			}
-			else {
-				a = Integer.valueOf(inputNumberField.getText());
-				calculationProcessString += a;
-			}
 			
 			calculationProcessField.setText(calculationProcessString + "+");
 
 			//inputNumberField.setText("0");
-			isInputOperator = true;
+			isInputOperator = true;isFristInput = false;
 			c = 1;lastInput = 1;
 
 		} else if(e.getActionCommand().equals("-")) {
 			if(isInputOperator) { // 앞에가 연산자였으면, 
 				//calculationProcessField.setText(calculationProcessString + "-");
 			}
-			else if(a != -1) {
+			else if(isFristInput) {
+				a = Integer.valueOf(inputNumberField.getText());
+				calculationProcessString += a;				
+			}
+			else {
 				b = Integer.valueOf(inputNumberField.getText());
 				inputNumberField.setText(arithmetic());
 				calculationProcessString += b;
 				a = Integer.valueOf(inputNumberField.getText());
 			}
-			else {
-				a = Integer.valueOf(inputNumberField.getText());
-				calculationProcessString += a;
-			}
 			calculationProcessField.setText(calculationProcessString + "-");
 			//inputNumberField.setText("0");
-			isInputOperator = true;
+			isInputOperator = true;isFristInput = false;
 			c = 2;lastInput = 2;
 
 		} else if(e.getActionCommand().equals("×")) {
 			if(isInputOperator) { // 앞에가 연산자였으면, 
 				//calculationProcessField.setText(calculationProcessString + "-");
 			}
-			else if(a != -1) {
+			else if(isFristInput) {
+				a = Integer.valueOf(inputNumberField.getText());
+				calculationProcessString += a;				
+			}
+			else {
 				b = Integer.valueOf(inputNumberField.getText());
 				inputNumberField.setText(arithmetic());
 				calculationProcessString += b;
 				a = Integer.valueOf(inputNumberField.getText());
 			}
-			else {
-				a = Integer.valueOf(inputNumberField.getText());
-				calculationProcessString += a;
-			}
 			calculationProcessField.setText(calculationProcessString + "x");
 			a = Integer.valueOf(inputNumberField.getText());
 			//inputNumberField.setText("0");
-			isInputOperator = true;
+			isInputOperator = true;isFristInput = false;
 			c = 3;lastInput = 3;
 
 		} else if(e.getActionCommand().equals("÷")) {
 			if(isInputOperator) { // 앞에가 연산자였으면, 
 				//calculationProcessField.setText(calculationProcessString + "-");
 			}
-			else if(a != -1) {
+			else if(isFristInput) {
+				a = Integer.valueOf(inputNumberField.getText());
+				calculationProcessString += a;				
+			}
+			else {
 				b = Integer.valueOf(inputNumberField.getText());//a = Integer.valueOf(inputNumberField.getText());
 				inputNumberField.setText(arithmetic());
 				calculationProcessString += b;
 			}
-			else {
-				a = Integer.valueOf(inputNumberField.getText());
-				calculationProcessString += a;
-			}
 			a = Integer.valueOf(inputNumberField.getText());
 			calculationProcessField.setText(calculationProcessString + "÷");
 			//inputNumberField.setText("0");
-			isInputOperator = true;
+			isInputOperator = true;isFristInput = false;
 			c = 4;lastInput = 4;
 
 		} else if(e.getActionCommand().equals("=")) {
-			if(isInputOperator) { // 앞에가 연산자였으면, 
+			if(isFristInput) { // 첫 입력이었을때에는 아무것도 없어야 함,, 그냥 동일한 값 계속 출력
+				//b = Integer.valueOf(inputNumberField.getText());				
+			}
+			else {
 				if(lastInput != 5) {
 					b = Integer.valueOf(inputNumberField.getText());//a;					
 				}
-				calculationProcessString = String.valueOf(a);
-				arithmetic();
-				calculationProcessString += String.valueOf(b) + "=";
-				calculationProcessField.setText(calculationProcessString);
-			}
-			else if(a != -1) {
-				b = Integer.valueOf(inputNumberField.getText());
+				System.out.println("a ="+a);
+				System.out.println("b ="+b);
+				//calculationProcessString = String.valueOf(a);
 				inputNumberField.setText(arithmetic());
-				calculationProcessString = "";
-				calculationProcessField.setText(null);
-			}		
-				a = Integer.valueOf(inputNumberField.getText());
-			
-			
+				//calculationProcessString += String.valueOf(b) + "=";
+				
+				//calculationProcessField.setText(calculationProcessString);
+				//a = Integer.valueOf(inputNumberField.getText());
+				//inputNumberField.setText(arithmetic());
+			}
+			calculationProcessString = "";
+			calculationProcessField.setText(null);
 			isInputOperator = true;
 			//a = 0;
 			//c= 5;

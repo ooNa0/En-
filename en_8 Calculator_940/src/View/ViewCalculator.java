@@ -4,6 +4,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import Controller.CalculateNumber;
+import Controller.EventHandler;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -12,13 +13,13 @@ import javax.swing.*;
 
 
 @SuppressWarnings("serial")
-public class ViewCalculator extends JPanel implements ActionListener {
+public class ViewCalculator extends JFrame {
 
-	private JFrame frame;
-	private JTextField inputNumberField;
-	private JTextField calculationProcessField;
-	private JButton[] buttons;
-	private CalculateNumber calculate = new CalculateNumber();
+	public JFrame frame;
+	public JTextField inputNumberField;
+	public JTextField calculationProcessField;
+	public JButton[] buttons;
+	//private CalculateNumber calculate = new CalculateNumber();
 	/**
 	 * Launch the application.
 	 */
@@ -28,11 +29,10 @@ public class ViewCalculator extends JPanel implements ActionListener {
 	public ViewCalculator() {
 		//initialize();
 	}
-
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public JFrame initialize() {
+	public void initialize() {
 		frame = new JFrame("°è»ê±â");
 		frame.setBounds(100, 100, 500, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,20 +91,12 @@ public class ViewCalculator extends JPanel implements ActionListener {
 					calculate.actionPerformed(e);
 				}
 			});*/
-			//buttons[i].addActionListener(calculate.actionPerformed((ActionEvent e));
+			buttons[i].addActionListener(new EventHandler());
 			panel.add(buttons[i]);
 		}
 		
 		frame.getContentPane().setLayout(groupLayout);		
 
-		frame.setVisible(true);	
-		
-		return frame;
-	}
-
-	
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		frame.setVisible(true);
 	}
 }

@@ -122,6 +122,16 @@ public class CalculateNumber extends JPanel implements ActionListener{
 			inputNumberField.setText("0");
 			firstOperand = BigDecimal.ZERO;
 			
+		} else if(e.getActionCommand().equals("\u2190")) { // 하나 지우기
+			if(inputNumberField.getText().length() == 0 || inputNumberField.getText().length() == 1) {
+				inputNumberField.setText("0");
+			}
+			else if(inputNumberField.getText().length() > 1) {
+				String a = inputNumberField.getText().substring(0, inputNumberField.getText().length() - 1);
+				inputNumberField.setText(a);
+				//inputNumberField.setText(String.valueOf(new BigDecimal(inputNumberField.getText()).divide(BigDecimal.TEN)));
+			}
+			
 		} else if(e.getActionCommand().equals("+")) {			
 			if(isFristInput || isInputOperator) {
 				firstOperand = new BigDecimal(inputNumberField.getText());
@@ -236,9 +246,7 @@ public class CalculateNumber extends JPanel implements ActionListener{
 				inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
 
 			}
-
 		}
-
 	}
 
 	boolean isOperator() {
@@ -257,7 +265,7 @@ public class CalculateNumber extends JPanel implements ActionListener{
 			}*/
 			inputNumberField.setText(String.valueOf(firstOperand.divide(secondOperand, 16, RoundingMode.HALF_UP)));
 			calculationProcessString += "÷";
-			return String.valueOf(firstOperand.divide(secondOperand));
+			return String.valueOf(firstOperand.divide(secondOperand, 16, RoundingMode.HALF_UP));
 		}
 		return "";
 	}

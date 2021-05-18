@@ -30,9 +30,6 @@ public class CalculateNumber extends JPanel implements ActionListener{
 	private JButton[] buttons;
 
 
-	
-	private JButton[] btns;
-
 	private int c = 0;//a = -1,  b = 0, 
 	int number = 0;
 	boolean isInputOperator;
@@ -42,6 +39,9 @@ public class CalculateNumber extends JPanel implements ActionListener{
 	
 	boolean isFristInput = true;
 	public CalculateNumber() {
+		
+		
+		
 		frame = new JFrame("계산기");
 		frame.setBounds(100, 100, 500, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,6 +104,7 @@ public class CalculateNumber extends JPanel implements ActionListener{
 
 		frame.setVisible(true);	
 		//new ViewCalculator();
+		
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -140,12 +141,14 @@ public class CalculateNumber extends JPanel implements ActionListener{
 			}
 		} else if(e.getActionCommand().equals("+/-")) { // +/- 버튼
 			BigDecimal u = new BigDecimal(inputNumberField.getText());
-			System.out.println("u ="+u);
+			//System.out.println("u ="+u);
 			// 앞에 연산자면 negate(~~) 필요하고, 아니라면 -만 붙었다 안붙었다
-			if(!isInputOperator) {
-				
-			}
-			inputNumberField.setText(String.valueOf(u.multiply(BigDecimal.valueOf(-1))));
+			//if(isInputOperator) { // 왜.?
+			//	calculationProcessField.setText(calculationProcessString + c + "negate(" + u + ")");
+			//}
+			//else{
+				inputNumberField.setText(String.valueOf(u.multiply(BigDecimal.valueOf(-1))));
+			//}
 			
 		} else if(e.getActionCommand().equals("+")) {			
 			if(isFristInput || isInputOperator) {

@@ -126,10 +126,7 @@ public class CalculateNumber extends JPanel implements ActionListener{
 			a = -1;
 			
 		} else if(e.getActionCommand().equals("+")) {			
-			if(isInputOperator) { // 앞에가 연산자였으면, 
-				//calculationProcessField.setText(calculationProcessString + "-");
-			}
-			else if(isFristInput) {
+			if(isFristInput || isInputOperator) {
 				a = Integer.valueOf(inputNumberField.getText());
 				calculationProcessString += a;				
 			}
@@ -166,10 +163,7 @@ public class CalculateNumber extends JPanel implements ActionListener{
 			c = 2;lastInput = 2;
 
 		} else if(e.getActionCommand().equals("×")) {
-			if(isInputOperator) { // 앞에가 연산자였으면, 
-				//calculationProcessField.setText(calculationProcessString + "-");
-			}
-			else if(isFristInput) {
+			if(isFristInput || isInputOperator) {
 				a = Integer.valueOf(inputNumberField.getText());
 				calculationProcessString += a;				
 			}

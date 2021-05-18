@@ -103,13 +103,13 @@ public class CalculateNumber extends JPanel implements ActionListener{
 
 	public void actionPerformed(ActionEvent e) {
 		if(c == 5) { // 연산자가 = 일 경우, 위의 로그 값 모두 초기화
-			calculationProcessString = null;
+			calculationProcessString = "";
 			calculationProcessField.setText(null);			
 		}
 		if(e.getActionCommand().equals("C")) {
-			
-			calculationProcessString = null;
-			calculationProcessField.setText(null);
+
+			calculationProcessString = "";
+			calculationProcessField.setText(null);	
 			inputNumberField.setText("0");
 			a = 0;
 			
@@ -152,8 +152,8 @@ public class CalculateNumber extends JPanel implements ActionListener{
 		} else if(e.getActionCommand().equals("=")) {
 			if(a != 0) {
 				inputNumberField.setText(arithmetic());
-				calculationProcessString = null;
-				calculationProcessField.setText(null);
+				calculationProcessString = "";
+				calculationProcessField.setText(null);	
 			}
 				a = Integer.valueOf(inputNumberField.getText());
 				calculationProcessString = a+"=";

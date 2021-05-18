@@ -123,7 +123,7 @@ public class CalculateNumber extends JPanel implements ActionListener{
 			firstOperand = BigDecimal.ZERO;
 			
 		} else if(e.getActionCommand().equals("\u2190")) { // 하나 지우기
-			if(inputNumberField.getText().length() == 0 || inputNumberField.getText().length() == 1) {
+			if(inputNumberField.getText().length() == 1) {
 				inputNumberField.setText("0");
 			}
 			else if(inputNumberField.getText().length() > 1) {
@@ -132,6 +132,13 @@ public class CalculateNumber extends JPanel implements ActionListener{
 				//inputNumberField.setText(String.valueOf(new BigDecimal(inputNumberField.getText()).divide(BigDecimal.TEN)));
 			}
 			
+		} else if(e.getActionCommand().equals(".")) { // 소수점 붙이기!
+			if(!inputNumberField.getText().contains(".")) { // 텍스트 공간에 . 이 없을 경우에 추가가능!
+				String b = inputNumberField.getText();
+				b += ".";
+				inputNumberField.setText(b);
+			}
+			// flag값 줘서 소수점이 있는지 없는지 유무 판단, 그리고 지울때도 소수점을 지우면 flag값 수정하게! 그리고 
 		} else if(e.getActionCommand().equals("+")) {			
 			if(isFristInput || isInputOperator) {
 				firstOperand = new BigDecimal(inputNumberField.getText());

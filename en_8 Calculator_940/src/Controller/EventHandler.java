@@ -130,7 +130,7 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 				.addPreferredGap(ComponentPlacement.RELATED)
 				.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE).addContainerGap()));
 
-			panel_1.setLayout(new GridLayout(0, 4, 3, 3));
+		panel_1.setLayout(new GridLayout(0, 4, 3, 3));
 
 		String[] str = { "CE", "C", "\u2190", "÷", "7", "8", "9", "×", "4", "5", "6", "-", "1", "2", "3", "+", "±", "0",
 				".", "=" };
@@ -140,10 +140,10 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 
 			buttons[i] = new JButton(str[i]);
 			buttons[i].setFont(new Font("굴림", Font.PLAIN, 30));
-			if((i == 4)||(i == 5)||(i == 6)||(i == 8)||(i == 9)||(i == 10)||(i == 12)||(i == 13)||(i == 14)||(i == 17)) {
+			if ((i == 4) || (i == 5) || (i == 6) || (i == 8) || (i == 9) || (i == 10) || (i == 12) || (i == 13)
+					|| (i == 14) || (i == 17)) {
 				buttons[i].setBackground(new Color(255, 255, 255));
-			}
-			else{
+			} else {
 				buttons[i].setBackground(new Color(230, 230, 230));
 			}
 			/*
@@ -156,58 +156,90 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			panel_1.add(buttons[i]);
 		}
 		panel.setLayout(gl_panel);
-		//panel.addKeyListener(this);
+		// panel.addKeyListener(this);
 		frame.getContentPane().setLayout(groupLayout);
 
 		frame.setVisible(true);
 	}
-	public void keyTyped(KeyEvent e) {}
+
+	// @SuppressWarnings("deprecation")
+	public void keyTyped(KeyEvent e) {
+
+	}
+
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-			buttons[2].doClick();
+		if ((e.getModifiers() & 1) != 0) {
+			if (e.getKeyCode() == 61) {
+				buttons[15].doClick();
+			}
+			if (e.getKeyCode() == 56) {
+				buttons[7].doClick();
+			}
+		} else {
+			if (e.getKeyCode() == 56) {
+				buttons[5].doClick();
+			}
 		}
 	}
+
 	public void keyPressed(KeyEvent e) {
-				switch (e.getKeyCode()) {
-				case KeyEvent.VK_ENTER:
-					buttons[19].doClick();
-				case 48: // 0
-					buttons[17].doClick();
-					break;
-				case 49:
-					buttons[12].doClick();
-					break;
-				case 50:
-					buttons[13].doClick();
-					break;
-				case 51:
-					buttons[14].doClick();
-					break;
-				case 52:
-					buttons[8].doClick();
-					break;
-				case 53:
-					buttons[9].doClick();
-					break;
-				case 54:
-					buttons[10].doClick();
-					break;
-				case 55:
-					buttons[4].doClick();
-					break;
-				case 56:
-					buttons[5].doClick();
-					break;
-				case 57:
-					buttons[6].doClick();
-					break;
-				}
-			}
+		System.out.println(e.getKeyCode());
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_BACK_SPACE:
+			buttons[2].doClick(); // 뒤로가기.
+			break;
+		case KeyEvent.VK_ENTER: // 엔터
+			buttons[19].doClick();
+			break;
+		case 27: // esc
+			buttons[1].doClick(); // C
+			break;
+		case 127: // delete
+			buttons[0].doClick(); // CE
+			break;
+		case 45: // - 버튼
+			buttons[11].doClick();break;
+		case 47: // / 버튼
+			buttons[3].doClick();break;
+		case 46: // .
+			buttons[18].doClick();break;
+		case 48: // 0
+			buttons[17].doClick();
+			break;
+		case 49:
+			buttons[12].doClick();
+			break;
+		case 50:
+			buttons[13].doClick();
+			break;
+		case 51:
+			buttons[14].doClick();
+			break;
+		case 52:
+			buttons[8].doClick();
+			break;
+		case 53:
+			buttons[9].doClick();
+			break;
+		case 54:
+			buttons[10].doClick();
+			break;
+		case 55:
+			buttons[4].doClick();
+			break;
+		case 56:
+			// buttons[5].doClick();
+			break;
+		case 57:
+			buttons[6].doClick();
+			break;
+		}
+	}
 
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getActionCommand().equals("C")) { // 연산자 기록까지 초기화
-			
+
 			calculationProcessString = "";
 			calculationProcessField.setText(null);
 			inputNumberField.setText(Constant.DEFAULT_VALUE);
@@ -245,8 +277,7 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			if (isInputOperator) {
 				calculationProcessField.setText(calculationProcessString + operatorConversion() + "negate(" + u + ")");
 			}
-				inputNumberField.setText(String.valueOf(u.multiply(BigDecimal.valueOf(-1))));
-			
+			inputNumberField.setText(String.valueOf(u.multiply(BigDecimal.valueOf(-1))));
 
 		} else if (e.getActionCommand().equals("+")) {
 			fourRuleCalculation(1);
@@ -265,29 +296,26 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			row[0] = calculationProcessField.getText();
 			BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText()));
 			if (isFristInput) { // 첫 입력이었을때에는 아무것도 없어야 함,, 그냥 동일한 값 계속 출력
-			} 
-			else {
+			} else {
 				if (lastInput != Constant.EQUAL_NUMBER) {
 					secondOperand = new BigDecimal(inputNumberField.getText());
 					row[0] += secondOperand;
-				} 
-				else {
+				} else {
 					firstOperand = new BigDecimal(inputNumberField.getText());
 					row[0] += firstOperand + operatorConversion();
 					row[0] += secondOperand;
 				}
 				System.out.println("계산결과 =" + arithmetic());
 				inputNumberField.setText(arithmetic());
-				System.out.println("계산결과 =" + (arithmetic()==null));
-				if(arithmetic() == null) {
+				System.out.println("계산결과 =" + (arithmetic() == null));
+				if (arithmetic() == null) {
 					inputNumberField.setText(String.valueOf(big));
 					row[0] = "=" + String.valueOf(inputNumberField.getText());
-				}
-				else {
+				} else {
 					row[0] += "=" + String.valueOf(inputNumberField.getText());
 				}
 				System.out.println("=" + inputNumberField.getText());
-			}		
+			}
 			model.addRow(row);
 
 			calculationProcessString = "";

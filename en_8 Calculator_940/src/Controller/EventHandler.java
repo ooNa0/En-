@@ -1,0 +1,383 @@
+package Controller;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+
+import Model.Constant;
+
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+
+public class EventHandler extends JFrame implements ActionListener, KeyListener {
+
+	private JFrame frame;
+	private String calculationProcessString = "";
+	private JTextField inputNumberField;
+	private JTextField calculationProcessField;
+	private int operator = 0;// a = -1, b = 0,
+	int number = 0;
+	boolean isInputOperator;
+	int lastInput = 0;
+	boolean isFristInput = true;
+	public JButton[] buttons;
+	private BigDecimal firstOperand; // 오차가 안생기게 하기 위해서는 string 값으로 선언 필요
+	private BigDecimal secondOperand = BigDecimal.ZERO; // 오차가 안생기게 하기 위해서는 string 값으로 선언 필요
+	private DefaultTableModel model;
+
+	public void initialize() {
+		frame = new JFrame("계산기");
+		frame.setBounds(100, 100, 550, 600);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		JPanel panel = new JPanel();
+		/*
+		 * scroll = new JScrollPane(panel);
+		 * 
+		 * panel.setLayout(new BorderLayout()); panel.add(scroll, BorderLayout.CENTER);
+		 * 
+		 * panel.addComponentListener(new ComponentAdapter(){
+		 * 
+		 * @Override public void componentResized(ComponentEvent e){ Rectangle
+		 * lastChildBounds = panel .getComponent(panel.getComponentCount() -
+		 * 1).getBounds(); Dimension preferred = new Dimension( scroll.getWidth(),
+		 * lastChildBounds.y + lastChildBounds.height); if
+		 * (scroll.getVerticalScrollBar().isVisible()) { preferred.width -=
+		 * scroll.getVerticalScrollBar().getWidth(); } //
+		 * System.err.println("setting inner panel size to " + preferred);
+		 * panel.setPreferredSize(preferred); panel.repaint(); } });
+		 */
+		String[] columnName = new String[] { "계산 기록" };
+		model = new DefaultTableModel(columnName, 0) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		JTable table = new JTable(model);
+		JScrollPane scrollPane = new JScrollPane(table);
+		// scrollPane.set
+
+		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		groupLayout
+				.setHorizontalGroup(
+						groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup().addContainerGap()
+										.addComponent(panel, GroupLayout.PREFERRED_SIZE, 254, Short.MAX_VALUE)
+										.addPreferredGap(ComponentPlacement.RELATED).addComponent(scrollPane,
+												GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+										.addContainerGap()));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(Alignment.TRAILING,
+				groupLayout.createSequentialGroup().addContainerGap()
+						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 241,
+										Short.MAX_VALUE)
+								.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))
+						.addContainerGap()));
+
+		// JTable table = new JTable();
+		// scrollPane.setColumnHeaderView(table);
+
+		inputNumberField = new JTextField(Constant.DEFAULT_VALUE);
+		inputNumberField.setHorizontalAlignment(SwingConstants.RIGHT);
+		inputNumberField.setFont(new Font("굴림", Font.PLAIN, 15));
+		inputNumberField.setColumns(10);
+		inputNumberField.setEditable(false);
+
+		calculationProcessField = new JTextField(" ");
+		calculationProcessField.setHorizontalAlignment(SwingConstants.RIGHT);
+		calculationProcessField.setFont(new Font("굴림", Font.PLAIN, 15));
+		calculationProcessField.setColumns(10);
+		calculationProcessField.setEditable(false);
+
+		JPanel panel_1 = new JPanel();
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.TRAILING).addGroup(gl_panel
+				.createSequentialGroup().addContainerGap()
+				.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(panel_1, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 230, Short.MAX_VALUE)
+						.addComponent(inputNumberField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 230,
+								Short.MAX_VALUE)
+						.addComponent(calculationProcessField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 230,
+								Short.MAX_VALUE))
+				.addContainerGap()));
+		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel
+				.createSequentialGroup().addContainerGap()
+				.addComponent(calculationProcessField, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(ComponentPlacement.RELATED)
+				.addComponent(inputNumberField, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(ComponentPlacement.RELATED)
+				.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE).addContainerGap()));
+
+			panel_1.setLayout(new GridLayout(0, 4, 3, 3));
+
+		String[] str = { "CE", "C", "\u2190", "÷", "7", "8", "9", "×", "4", "5", "6", "-", "1", "2", "3", "+", "±", "0",
+				".", "=" };
+		buttons = new JButton[20];
+		// panel_1.addKeyListener(this);
+		for (int i = 0; i < buttons.length; i++) {
+
+			buttons[i] = new JButton(str[i]);
+			buttons[i].setFont(new Font("굴림", Font.PLAIN, 30));
+			if((i == 4)||(i == 5)||(i == 6)||(i == 8)||(i == 9)||(i == 10)||(i == 12)||(i == 13)||(i == 14)||(i == 17)) {
+				buttons[i].setBackground(new Color(255, 255, 255));
+			}
+			else{
+				buttons[i].setBackground(new Color(230, 230, 230));
+			}
+			/*
+			 * buttons[i].addActionListener(new ActionListener() { public void
+			 * actionPerformed(ActionEvent e) { //calculate.actionPerformed(e); } });
+			 */
+			// buttons[i].addActionListener(new EventHandler());
+			buttons[i].addActionListener(this);
+			buttons[i].addKeyListener(this);
+			panel_1.add(buttons[i]);
+		}
+		panel.setLayout(gl_panel);
+		//panel.addKeyListener(this);
+		frame.getContentPane().setLayout(groupLayout);
+
+		frame.setVisible(true);
+	}
+	public void keyTyped(KeyEvent e) {}
+	public void keyReleased(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+			buttons[2].doClick();
+		}
+	}
+	public void keyPressed(KeyEvent e) {
+				switch (e.getKeyCode()) {
+				case KeyEvent.VK_ENTER:
+					buttons[19].doClick();
+				case 48: // 0
+					buttons[17].doClick();
+					break;
+				case 49:
+					buttons[12].doClick();
+					break;
+				case 50:
+					buttons[13].doClick();
+					break;
+				case 51:
+					buttons[14].doClick();
+					break;
+				case 52:
+					buttons[8].doClick();
+					break;
+				case 53:
+					buttons[9].doClick();
+					break;
+				case 54:
+					buttons[10].doClick();
+					break;
+				case 55:
+					buttons[4].doClick();
+					break;
+				case 56:
+					buttons[5].doClick();
+					break;
+				case 57:
+					buttons[6].doClick();
+					break;
+				}
+			}
+
+	public void actionPerformed(ActionEvent e) {
+
+		if (e.getActionCommand().equals("C")) { // 연산자 기록까지 초기화
+			
+			calculationProcessString = "";
+			calculationProcessField.setText(null);
+			inputNumberField.setText(Constant.DEFAULT_VALUE);
+			isFristInput = true;
+			firstOperand = BigDecimal.ZERO;
+			operator = 0;
+			lastInput = 0;
+
+		} else if (e.getActionCommand().equals("CE")) { // 연산자 기록은 그대로
+
+			inputNumberField.setText(Constant.DEFAULT_VALUE);
+			firstOperand = BigDecimal.ZERO;
+
+		} else if (e.getActionCommand().equals("\u2190")) { // 하나 지우기
+
+			if (inputNumberField.getText().length() == Constant.MINIMUM_TEXT) {
+				inputNumberField.setText(Constant.DEFAULT_VALUE);
+			} else if (inputNumberField.getText().length() > Constant.MINIMUM_TEXT) {
+				String a = inputNumberField.getText().substring(0, inputNumberField.getText().length() - 1);
+				inputNumberField.setText(a);
+			}
+
+		} else if (e.getActionCommand().equals(".")) { // 소수점 붙이기!
+
+			if (!inputNumberField.getText().contains(".")) { // 텍스트 공간에 . 이 없을 경우에 추가가능!
+				String b = inputNumberField.getText();
+				b += ".";
+				inputNumberField.setText(b);
+			}
+
+		} else if (e.getActionCommand().equals("±")) { // +/- 버튼
+
+			BigDecimal u = new BigDecimal(inputNumberField.getText());
+			// 앞에 연산자면 negate(~~) 필요하고, 아니라면 -만 붙었다 안붙었다
+			if (isInputOperator) {
+				calculationProcessField.setText(calculationProcessString + operatorConversion() + "negate(" + u + ")");
+			}
+				inputNumberField.setText(String.valueOf(u.multiply(BigDecimal.valueOf(-1))));
+			
+
+		} else if (e.getActionCommand().equals("+")) {
+			fourRuleCalculation(1);
+
+		} else if (e.getActionCommand().equals("-")) {
+			fourRuleCalculation(2);
+
+		} else if (e.getActionCommand().equals("×")) {
+			fourRuleCalculation(3);
+
+		} else if (e.getActionCommand().equals("÷")) {
+			fourRuleCalculation(4);
+
+		} else if (e.getActionCommand().equals("=")) {
+			String[] row = new String[1];
+			row[0] = calculationProcessField.getText();
+			BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText()));
+			if (isFristInput) { // 첫 입력이었을때에는 아무것도 없어야 함,, 그냥 동일한 값 계속 출력
+			} 
+			else {
+				if (lastInput != Constant.EQUAL_NUMBER) {
+					secondOperand = new BigDecimal(inputNumberField.getText());
+					row[0] += secondOperand;
+				} 
+				else {
+					firstOperand = new BigDecimal(inputNumberField.getText());
+					row[0] += firstOperand + operatorConversion();
+					row[0] += secondOperand;
+				}
+				System.out.println("계산결과 =" + arithmetic());
+				inputNumberField.setText(arithmetic());
+				System.out.println("계산결과 =" + (arithmetic()==null));
+				if(arithmetic() == null) {
+					inputNumberField.setText(String.valueOf(big));
+					row[0] = "=" + String.valueOf(inputNumberField.getText());
+				}
+				else {
+					row[0] += "=" + String.valueOf(inputNumberField.getText());
+				}
+				System.out.println("=" + inputNumberField.getText());
+			}		
+			model.addRow(row);
+
+			calculationProcessString = "";
+			calculationProcessField.setText(null);
+			lastInput = Constant.EQUAL_NUMBER;// operator = Constant.EQUAL_NUMBER;
+			// if(isFristInput == false) isFristInput = true; else
+			isFristInput = false;
+			isInputOperator = true;
+		} else {
+			if (isInputOperator) {
+				inputNumberField.setText(null);
+			}
+			isInputOperator = false;
+
+			if (inputNumberField.getText().equals(Constant.DEFAULT_VALUE)) {
+
+				inputNumberField.setText(null);
+				inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
+
+			} else {
+
+				inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
+
+			}
+		}
+	}
+
+	String arithmetic() {
+
+		System.out.println("firstOperand =" + firstOperand);
+		System.out.println("secondOperand =" + secondOperand);
+		switch (operator) { // Constant.SUBSTRACT_NUMBER 하면 case expressions must be constant expressions
+							// 에러뜸 ㅠ
+		case 1:
+			inputNumberField.setText(String.valueOf(firstOperand.add(secondOperand)));
+			calculationProcessString += "+";
+			return String.valueOf(firstOperand.add(secondOperand));
+		case 2:
+			inputNumberField.setText(String.valueOf(firstOperand.subtract(secondOperand)));
+			calculationProcessString += "-";
+			return String.valueOf(firstOperand.subtract(secondOperand));
+		case 3:
+			inputNumberField.setText(String.valueOf(firstOperand.multiply(secondOperand)));
+			calculationProcessString += "x";
+			return String.valueOf(firstOperand.multiply(secondOperand));
+		case 4:
+			inputNumberField.setText(String.valueOf(firstOperand.divide(secondOperand, 16, RoundingMode.HALF_UP)));
+			calculationProcessString += "÷";
+			return String.valueOf(firstOperand.divide(secondOperand, 16, RoundingMode.HALF_UP));
+		}
+		return null;
+	}
+
+	String operatorConversion() {
+		String calculatorString = "=";
+		if (operator == Constant.PLUS_NUMBER)
+			calculatorString = "+";
+		if (operator == Constant.SUBSTRACT_NUMBER)
+			calculatorString = "-";
+		if (operator == Constant.MULTIPLY_NUMBER)
+			calculatorString = "x";
+		if (operator == Constant.DIVISION_NUMBER)
+			calculatorString = "÷";
+		return calculatorString;
+	}
+
+	void fourRuleCalculation(int calculateOperator) {
+		System.out.println("isFristInput =" + isFristInput);
+		System.out.println("isInputOperator =" + isInputOperator);
+
+		if (isFristInput || isInputOperator) {
+			if (lastInput == Constant.EQUAL_NUMBER) {
+				firstOperand = new BigDecimal(inputNumberField.getText());
+				calculationProcessString += firstOperand;
+			} else if (operator != calculateOperator) {
+				firstOperand = new BigDecimal(inputNumberField.getText());
+				if (isFristInput)
+					calculationProcessString += firstOperand;
+			}
+		} else {
+			// operator = calculateOperator;
+			secondOperand = new BigDecimal(inputNumberField.getText());
+			inputNumberField.setText(arithmetic());
+			calculationProcessString += secondOperand;
+		}
+		firstOperand = new BigDecimal(inputNumberField.getText());
+		operator = calculateOperator;
+		calculationProcessField.setText(calculationProcessString + operatorConversion());
+		isInputOperator = true;
+		isFristInput = false;
+		lastInput = calculateOperator;
+	}
+}

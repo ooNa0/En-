@@ -284,6 +284,8 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 				calculationProcessField.setText(calculationProcessString + operatorConversion() + "negate(" + u + ")");
 			}
 			inputNumberField.setText(String.valueOf(u.multiply(BigDecimal.valueOf(-1))));
+			isInputOperator = false;
+			//isFristInput = false;
 
 		} else if (e.getActionCommand().equals("+")) {
 			fourRuleCalculation(1);

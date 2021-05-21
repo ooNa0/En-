@@ -68,14 +68,17 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 		 * System.err.println("setting inner panel size to " + preferred);
 		 * panel.setPreferredSize(preferred); panel.repaint(); } });
 		 */
-		String[] columnName = new String[] { "계산 기록" };
-		model = new DefaultTableModel(columnName, 0) {
+		String[] columnName = new String[] { "계산 기록"};
+		model = new DefaultTableModel(columnName, 1) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
+				System.out.println(row);
+				System.out.println(column);
 				return false;
 			}
 		};
 		JTable table = new JTable(model);
+		
 		JScrollPane scrollPane = new JScrollPane(table);
 		// scrollPane.set
 
@@ -296,21 +299,23 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			System.out.println("secondOperand =" + secondOperand);
 			System.out.println("operator =" + operator);
 			String[] row = new String[1];
-			row[0] = calculationProcessField.getText();
 			BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText()));
 			if (isFristInput) { // 첫 입력이었을때에는 아무것도 없어야 함,, 그냥 동일한 값 계속 출력
+				row[0] = inputNumberField.getText();
+				calculationProcessString = inputNumberField.getText();
 			} else {
 				if (lastInput != Constant.EQUAL_NUMBER) {
 					secondOperand = new BigDecimal(inputNumberField.getText());
-					row[0] += secondOperand;
+					row[0] += secondOperand + operatorConversion();
+					calculationProcessString += secondOperand + operatorConversion();
 				} else {
 					firstOperand = new BigDecimal(inputNumberField.getText());
-					row[0] += firstOperand + operatorConversion();
-					row[0] += secondOperand;
+					row[0] += firstOperand;
+					calculationProcessString += firstOperand;
 				}
-				System.out.println("계산결과 =" + arithmetic());
+				//System.out.println("계산결과 =" + arithmetic());
 				inputNumberField.setText(arithmetic());
-				System.out.println("계산결과 =" + (arithmetic() == null));
+				//System.out.println("계산결과 =" + (arithmetic() == null));
 				if (arithmetic() == null) {
 					inputNumberField.setText(String.valueOf(big));
 				} else {
@@ -318,11 +323,11 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 				}
 				System.out.println("=" + inputNumberField.getText());
 			}
-			row[0] = "=" + String.valueOf(inputNumberField.getText());
+			row[0] += "=" + String.valueOf(inputNumberField.getText());
 			model.addRow(row);
-
+			calculationProcessString += "=";
+			calculationProcessField.setText(calculationProcessString);
 			calculationProcessString = "";
-			//calculationProcessField.setText(null);
 			lastInput = Constant.EQUAL_NUMBER;// operator = Constant.EQUAL_NUMBER;
 			// if(isFristInput == false) isFristInput = true; else
 			isFristInput = false;
@@ -389,11 +394,11 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 		System.out.println("isFristInput =" + isFristInput);
 		System.out.println("isInputOperator =" + isInputOperator);
 
-		if (isFristInput || isInputOperator) {
+		if (isFristInput || isInputOperator) { // 첫입력이거나, 전에 연산자였는지
 			if (lastInput == Constant.EQUAL_NUMBER) {
 				firstOperand = new BigDecimal(inputNumberField.getText());
 				calculationProcessString += firstOperand;
-			} else if (operator != calculateOperator) {
+			} else if (operator != calculateOperator) { // 동일 연산자 입력이 아니라면
 				firstOperand = new BigDecimal(inputNumberField.getText());
 				if (isFristInput)
 					calculationProcessString += firstOperand;

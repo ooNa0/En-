@@ -14,6 +14,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -68,7 +70,7 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 		 * System.err.println("setting inner panel size to " + preferred);
 		 * panel.setPreferredSize(preferred); panel.repaint(); } });
 		 */
-		String[] columnName = new String[] { "계산 기록"};
+		String[] columnName = new String[] { "계산 기록" };
 		model = new DefaultTableModel(columnName, 1) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -78,7 +80,7 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			}
 		};
 		JTable table = new JTable(model);
-		
+
 		JScrollPane scrollPane = new JScrollPane(table);
 		// scrollPane.set
 
@@ -138,7 +140,6 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 		String[] str = { "CE", "C", "\u2190", "÷", "7", "8", "9", "×", "4", "5", "6", "-", "1", "2", "3", "+", "±", "0",
 				".", "=" };
 		buttons = new JButton[20];
-		// panel_1.addKeyListener(this);
 		for (int i = 0; i < buttons.length; i++) {
 
 			buttons[i] = new JButton(str[i]);
@@ -200,11 +201,14 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			buttons[0].doClick(); // CE
 			break;
 		case 45: // - 버튼
-			buttons[11].doClick();break;
+			buttons[11].doClick();
+			break;
 		case 47: // / 버튼
-			buttons[3].doClick();break;
+			buttons[3].doClick();
+			break;
 		case 46: // .
-			buttons[18].doClick();break;
+			buttons[18].doClick();
+			break;
 		case 48: // 0
 			buttons[17].doClick();
 			break;
@@ -301,7 +305,7 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText()));
 			if (isFristInput) { // 첫 입력이었을때에는 아무것도 없어야 함,, 그냥 동일한 값 계속 출력
 				row[0] = inputNumberField.getText();
-				calculationProcessString = inputNumberField.getText();
+				// calculationProcessString = inputNumberField.getText();
 			} else {
 				if (lastInput != Constant.EQUAL_NUMBER) {
 					secondOperand = new BigDecimal(inputNumberField.getText());
@@ -309,16 +313,17 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 					calculationProcessString += secondOperand + operatorConversion();
 				} else {
 					firstOperand = new BigDecimal(inputNumberField.getText());
-					row[0] += firstOperand;
+					row[0] = inputNumberField.getText();
 					calculationProcessString += firstOperand;
 				}
-				//System.out.println("계산결과 =" + arithmetic());
-				inputNumberField.setText(arithmetic());
-				//System.out.println("계산결과 =" + (arithmetic() == null));
-				if (arithmetic() == null) {
+				System.out.println("계산결과 =" + arithmetic());
+				String resultArithmetic = arithmetic();
+				inputNumberField.setText(resultArithmetic);
+				// System.out.println("계산결과 =" + (arithmetic() == null));
+				if (resultArithmetic == null) {
 					inputNumberField.setText(String.valueOf(big));
 				} else {
-					//row[0] += "=" + String.valueOf(inputNumberField.getText());
+					// row[0] += "=" + String.valueOf(inputNumberField.getText());
 				}
 				System.out.println("=" + inputNumberField.getText());
 			}
@@ -332,29 +337,34 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			isFristInput = false;
 			isInputOperator = true;
 		} else {
-			if(inputNumberField.getText().length() < 16) {
-			if (isInputOperator) {
-				inputNumberField.setText(null);
+			if (inputNumberField.getText().length() < 16) {
+				if (isInputOperator) {
+					inputNumberField.setText(null);
+				}
+				isInputOperator = false;
+
+				if (inputNumberField.getText().equals(Constant.DEFAULT_VALUE)) {
+
+					inputNumberField.setText(null);
+					System.out.println(e.getActionCommand());
+					inputNumberField.setText(e.getActionCommand());//inputNumberField.getText() +
+
+				} else {
+					//if(inputNumberField.getText().contains(".")) { // 콤마가 있을경우에는 그냥
+						inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());						
+					
+						//inputNumberField.setText(NumberFormat.getInstance(Locale.getDefault()).format(Integer.valueOf(calculationProcessString.getText()+e.getActionCommand())));						
+					
+
+				}
 			}
-			isInputOperator = false;
-
-			if (inputNumberField.getText().equals(Constant.DEFAULT_VALUE)) {
-
-				inputNumberField.setText(null);
-				inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
-
-			} else {
-
-				inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
-
-			}}
 		}
 	}
 
 	String arithmetic() {
 
-		//System.out.println("firstOperand =" + firstOperand);
-		//System.out.println("secondOperand =" + secondOperand);
+		// System.out.println("firstOperand =" + firstOperand);
+		// System.out.println("secondOperand =" + secondOperand);
 		switch (operator) { // Constant.SUBSTRACT_NUMBER 하면 case expressions must be constant expressions
 							// 에러뜸 ㅠ
 		case 1:
@@ -403,11 +413,11 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 				if (isFristInput)
 					calculationProcessString += firstOperand;
 			}
-		} else { // 연산자를 입력받았는데, 앞에가 첫입력도 아니고 숫자라면
+		} else { // 연산자를 입력받았는데, 앞에가 첫입력도 아닌데 숫자라면
 			// operator = calculateOperator;
 			secondOperand = new BigDecimal(inputNumberField.getText());
 			inputNumberField.setText(arithmetic());
-			calculationProcessString += secondOperand;
+			calculationProcessString = inputNumberField.getText();//secondOperand;
 		}
 		firstOperand = new BigDecimal(inputNumberField.getText());
 		operator = calculateOperator;

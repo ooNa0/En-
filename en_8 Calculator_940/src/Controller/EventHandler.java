@@ -75,14 +75,18 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 		 * panel.setPreferredSize(preferred); panel.repaint(); } });
 		 */
 		String[] columnName = new String[] { "계산 기록" };
-		model = new DefaultTableModel(columnName, 1) {
+		//String[] columnRemoveName = new String[] { "클릭 시 기록 초기화" };
+		model = new DefaultTableModel(columnName, 0) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
-				System.out.println(row);
-				System.out.println(column);
+				if(row == 0 && column == 0) {
+					model.setNumRows(0); // 기록 초기화
+					model.addRow(new Object[] {"클릭 시, 계산 기록 초기화"});
+				}
 				return false;
 			}
 		};
+		model.addRow(new Object[] {"클릭 시, 계산 기록 초기화"});
 		JTable table = new JTable(model);
 
 		JScrollPane scrollPane = new JScrollPane(table);
@@ -277,9 +281,12 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			}
 
 		} else if (e.getActionCommand().equals(".")) { // 소수점 붙이기!
-
+			if(isInputOperator) {
+				inputNumberField.setText("0.");
+			}
 			if (!inputNumberField.getText().contains(".")) { // 텍스트 공간에 . 이 없을 경우에 추가가능!
 				String b = inputNumberField.getText().replaceAll("\\,", "");
+				
 				b += ".";
 				inputNumberField.setText(b);
 			}
@@ -292,7 +299,7 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 				calculationProcessField.setText(calculationProcessString + operatorConversion() + "negate(" + u + ")");
 			}
 			inputNumberField.setText(String.valueOf(u.multiply(BigDecimal.valueOf(-1))));
-			isInputOperator = false;
+			isInputOperator = true; // . 에,,
 			// isFristInput = false;
 
 		} else if (e.getActionCommand().equals("+")) {

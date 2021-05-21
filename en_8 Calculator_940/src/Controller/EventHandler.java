@@ -13,6 +13,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -373,9 +374,10 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	String arithmetic() {
 
-		// System.out.println("firstOperand =" + firstOperand);
+		System.out.println("값값값" + String.valueOf((firstOperand.multiply(secondOperand)).setScale(14, BigDecimal.ROUND_HALF_UP)));
 		// System.out.println("secondOperand =" + secondOperand);
 		switch (operator) { // Constant.SUBSTRACT_NUMBER 하면 case expressions must be constant expressions
 							// 에러뜸 ㅠ
@@ -388,13 +390,13 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			// calculationProcessString += "-";
 			return String.valueOf(firstOperand.subtract(secondOperand));
 		case 3:
-			inputNumberField.setText(String.valueOf((firstOperand.multiply(secondOperand)).setScale(3, RoundingMode.HALF_EVEN)));
+			inputNumberField.setText(String.valueOf((firstOperand.multiply(secondOperand)).setScale(14, BigDecimal.ROUND_HALF_UP)));
 			// calculationProcessString += "x";
-			return String.valueOf(firstOperand.multiply(secondOperand).setScale(16, RoundingMode.HALF_EVEN));
+			return String.valueOf((firstOperand.multiply(secondOperand)).setScale(14, BigDecimal.ROUND_HALF_UP));//.setScale(16, RoundingMode.HALF_EVEN)
 		case 4:
-			inputNumberField.setText(String.valueOf(firstOperand.divide(secondOperand, 16, RoundingMode.HALF_UP)));
+			inputNumberField.setText(String.valueOf(firstOperand.divide(secondOperand, MathContext.DECIMAL64)));
 			// calculationProcessString += "÷";
-			return String.valueOf(firstOperand.divide(secondOperand, 16, RoundingMode.HALF_UP));
+			return String.valueOf(firstOperand.divide(secondOperand, MathContext.DECIMAL64));
 		}
 		return null;
 	}

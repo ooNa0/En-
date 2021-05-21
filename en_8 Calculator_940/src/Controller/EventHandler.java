@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -119,7 +120,7 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 		calculationProcessField.setFont(new Font("굴림", Font.PLAIN, 15));
 		calculationProcessField.setColumns(10);
 		calculationProcessField.setEditable(false);
-		
+
 		JPanel panel_1 = new JPanel();
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.TRAILING).addGroup(gl_panel
@@ -265,31 +266,31 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 
 		} else if (e.getActionCommand().equals("\u2190")) { // 하나 지우기
 
-			if (inputNumberField.getText().length() == Constant.MINIMUM_TEXT) {
+			if (inputNumberField.getText().replaceAll("\\,", "").length() == Constant.MINIMUM_TEXT) {
 				inputNumberField.setText(Constant.DEFAULT_VALUE);
-			} else if (inputNumberField.getText().length() > Constant.MINIMUM_TEXT) {
-				String a = inputNumberField.getText().substring(0, inputNumberField.getText().length() - 1);
+			} else if (inputNumberField.getText().replaceAll("\\,", "").length() > Constant.MINIMUM_TEXT) {
+				String a = inputNumberField.getText().replaceAll("\\,", "").substring(0, inputNumberField.getText().replaceAll("\\,", "").length() - 1);
 				inputNumberField.setText(a);
 			}
 
 		} else if (e.getActionCommand().equals(".")) { // 소수점 붙이기!
 
 			if (!inputNumberField.getText().contains(".")) { // 텍스트 공간에 . 이 없을 경우에 추가가능!
-				String b = inputNumberField.getText();
+				String b = inputNumberField.getText().replaceAll("\\,", "");
 				b += ".";
 				inputNumberField.setText(b);
 			}
 
 		} else if (e.getActionCommand().equals("±")) { // +/- 버튼
 
-			BigDecimal u = new BigDecimal(inputNumberField.getText());
+			BigDecimal u = new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
 			// 앞에 연산자면 negate(~~) 필요하고, 아니라면 -만 붙었다 안붙었다
 			if (isInputOperator) {
 				calculationProcessField.setText(calculationProcessString + operatorConversion() + "negate(" + u + ")");
 			}
 			inputNumberField.setText(String.valueOf(u.multiply(BigDecimal.valueOf(-1))));
 			isInputOperator = false;
-			//isFristInput = false;
+			// isFristInput = false;
 
 		} else if (e.getActionCommand().equals("+")) {
 			fourRuleCalculation(1);
@@ -307,20 +308,19 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			System.out.println("firstOperand =" + firstOperand);
 			System.out.println("secondOperand =" + secondOperand);
 			System.out.println("operator =" + operator);
-			BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText()));
+			BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", "")));
 			if (isFristInput) { // 첫 입력이었을때에는 아무것도 없어야 함,, 그냥 동일한 값 계속 출력
 				row[0] = inputNumberField.getText();
 				calculationProcessString = inputNumberField.getText();
-			} 
-			else {
+			} else {
 				if (lastInput != Constant.EQUAL_NUMBER) {
-					secondOperand = new BigDecimal(inputNumberField.getText());
+					secondOperand = new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
 					row[0] += secondOperand + operatorConversion();
 					calculationProcessString += secondOperand + operatorConversion();
 				} else {
-					firstOperand = new BigDecimal(inputNumberField.getText());
-					row[0] = inputNumberField.getText();
-					calculationProcessString += firstOperand;// + operatorConversion();
+					firstOperand = new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
+					row[0] = inputNumberField.getText().replaceAll("\\,", "");
+					calculationProcessString += firstOperand + operatorConversion() + secondOperand;
 				}
 				System.out.println("계산결과 =" + arithmetic());
 				String resultArithmetic = arithmetic();
@@ -343,24 +343,25 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			isFristInput = false;
 			isInputOperator = true;
 		} else {
-			if (inputNumberField.getText().length() < 16) {
+			if (inputNumberField.getText().replaceAll("\\,", "").length() < 16) {
 				if (isInputOperator) {
 					inputNumberField.setText(null);
 				}
 				isInputOperator = false;
 
-				if (inputNumberField.getText().equals(Constant.DEFAULT_VALUE)) {
+				if (inputNumberField.getText().replaceAll("\\,", "").equals(Constant.DEFAULT_VALUE)) {
 
 					inputNumberField.setText(null);
 					System.out.println(e.getActionCommand());
-					inputNumberField.setText(e.getActionCommand());//inputNumberField.getText() +
+					inputNumberField.setText(e.getActionCommand());// inputNumberField.getText() +
 
 				} else {
-					//if(inputNumberField.getText().contains(".")) { // 콤마가 있을경우에는 그냥
-						inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());						
-					
-						//inputNumberField.setText(NumberFormat.getInstance(Locale.getDefault()).format(Integer.valueOf(calculationProcessString.getText()+e.getActionCommand())));						
-					
+					NumberFormat nf = NumberFormat.getCurrencyInstance( Locale.KOREA );
+					nf.setMaximumFractionDigits(16);
+					// if(inputNumberField.getText().contains(".")) { // 콤마가 있을경우에는 그냥
+					//inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
+					BigDecimal u = new BigDecimal(inputNumberField.getText().replaceAll("\\,", "") +e.getActionCommand());
+					 inputNumberField.setText(new DecimalFormat("#,###").format(u));
 
 				}
 			}
@@ -375,19 +376,19 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 							// 에러뜸 ㅠ
 		case 1:
 			inputNumberField.setText(String.valueOf(firstOperand.add(secondOperand)));
-			//calculationProcessString += "+";
+			// calculationProcessString += "+";
 			return String.valueOf(firstOperand.add(secondOperand));
 		case 2:
 			inputNumberField.setText(String.valueOf(firstOperand.subtract(secondOperand)));
-			//calculationProcessString += "-";
+			// calculationProcessString += "-";
 			return String.valueOf(firstOperand.subtract(secondOperand));
 		case 3:
 			inputNumberField.setText(String.valueOf(firstOperand.multiply(secondOperand)));
-			//calculationProcessString += "x";
+			// calculationProcessString += "x";
 			return String.valueOf(firstOperand.multiply(secondOperand));
 		case 4:
 			inputNumberField.setText(String.valueOf(firstOperand.divide(secondOperand, 16, RoundingMode.HALF_UP)));
-			//calculationProcessString += "÷";
+			// calculationProcessString += "÷";
 			return String.valueOf(firstOperand.divide(secondOperand, 16, RoundingMode.HALF_UP));
 		}
 		return null;
@@ -412,22 +413,24 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 
 		if (isFristInput || isInputOperator) { // 첫입력이거나, 전에 연산자였는지
 			if (lastInput == Constant.EQUAL_NUMBER) {
-				firstOperand = new BigDecimal(inputNumberField.getText());
-				calculationProcessString += firstOperand;
+				firstOperand = new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
+				//calculationProcessString += firstOperand;
 			} else if (operator != calculateOperator) { // 동일 연산자 입력이 아니라면
-				firstOperand = new BigDecimal(inputNumberField.getText());
+				firstOperand = new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
 				if (isFristInput)
 					calculationProcessString += firstOperand;
 			}
 		} else { // 연산자를 입력받았는데, 앞에가 첫입력도 아닌데 숫자라면
 			// operator = calculateOperator;
-			secondOperand = new BigDecimal(inputNumberField.getText());
+			secondOperand = new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
 			inputNumberField.setText(arithmetic());
-			calculationProcessString = inputNumberField.getText();//secondOperand;
-			row[0] = firstOperand + operatorConversion() + secondOperand + "=" + inputNumberField.getText(); 
-			model.addRow(row);
+			calculationProcessString = inputNumberField.getText().replaceAll("\\,", "");// secondOperand;
+			if (lastInput != Constant.EQUAL_NUMBER) {
+				row[0] = firstOperand + operatorConversion() + secondOperand + "=" + inputNumberField.getText().replaceAll("\\,", "");
+				model.addRow(row);
+			}
 		}
-		firstOperand = new BigDecimal(inputNumberField.getText());
+		firstOperand = new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
 		operator = calculateOperator;
 		calculationProcessField.setText(calculationProcessString + operatorConversion());
 		isInputOperator = true;

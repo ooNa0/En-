@@ -165,7 +165,6 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 		frame.setVisible(true);
 	}
 
-	// @SuppressWarnings("deprecation")
 	public void keyTyped(KeyEvent e) {
 
 	}
@@ -333,6 +332,7 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			isFristInput = false;
 			isInputOperator = true;
 		} else {
+			if(inputNumberField.getText().length() < 16) {
 			if (isInputOperator) {
 				inputNumberField.setText(null);
 			}
@@ -347,7 +347,7 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 
 				inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
 
-			}
+			}}
 		}
 	}
 
@@ -403,7 +403,7 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 				if (isFristInput)
 					calculationProcessString += firstOperand;
 			}
-		} else {
+		} else { // 연산자를 입력받았는데, 앞에가 첫입력도 아니고 숫자라면
 			// operator = calculateOperator;
 			secondOperand = new BigDecimal(inputNumberField.getText());
 			inputNumberField.setText(arithmetic());

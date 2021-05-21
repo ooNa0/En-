@@ -307,8 +307,9 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText()));
 			if (isFristInput) { // 첫 입력이었을때에는 아무것도 없어야 함,, 그냥 동일한 값 계속 출력
 				row[0] = inputNumberField.getText();
-				// calculationProcessString = inputNumberField.getText();
-			} else {
+				calculationProcessString = inputNumberField.getText();
+			} 
+			else {
 				if (lastInput != Constant.EQUAL_NUMBER) {
 					secondOperand = new BigDecimal(inputNumberField.getText());
 					row[0] += secondOperand + operatorConversion();
@@ -316,7 +317,7 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 				} else {
 					firstOperand = new BigDecimal(inputNumberField.getText());
 					row[0] = inputNumberField.getText();
-					calculationProcessString += firstOperand;
+					calculationProcessString += firstOperand;// + operatorConversion();
 				}
 				System.out.println("계산결과 =" + arithmetic());
 				String resultArithmetic = arithmetic();
@@ -371,19 +372,19 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 							// 에러뜸 ㅠ
 		case 1:
 			inputNumberField.setText(String.valueOf(firstOperand.add(secondOperand)));
-			calculationProcessString += "+";
+			//calculationProcessString += "+";
 			return String.valueOf(firstOperand.add(secondOperand));
 		case 2:
 			inputNumberField.setText(String.valueOf(firstOperand.subtract(secondOperand)));
-			calculationProcessString += "-";
+			//calculationProcessString += "-";
 			return String.valueOf(firstOperand.subtract(secondOperand));
 		case 3:
 			inputNumberField.setText(String.valueOf(firstOperand.multiply(secondOperand)));
-			calculationProcessString += "x";
+			//calculationProcessString += "x";
 			return String.valueOf(firstOperand.multiply(secondOperand));
 		case 4:
 			inputNumberField.setText(String.valueOf(firstOperand.divide(secondOperand, 16, RoundingMode.HALF_UP)));
-			calculationProcessString += "÷";
+			//calculationProcessString += "÷";
 			return String.valueOf(firstOperand.divide(secondOperand, 16, RoundingMode.HALF_UP));
 		}
 		return null;

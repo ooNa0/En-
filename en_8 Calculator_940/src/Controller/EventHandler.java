@@ -40,14 +40,15 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 	private JTextField inputNumberField;
 	private JTextField calculationProcessField;
 	private int operator = 0;// a = -1, b = 0,
-	int number = 0;
-	boolean isInputOperator;
-	int lastInput = 0;
-	boolean isFristInput = true;
+	private int number = 0;
+	private boolean isInputOperator;
+	private int lastInput = 0;
+	private boolean isFristInput = true;
 	public JButton[] buttons;
 	private BigDecimal firstOperand; // 오차가 안생기게 하기 위해서는 string 값으로 선언 필요
 	private BigDecimal secondOperand = BigDecimal.ZERO; // 오차가 안생기게 하기 위해서는 string 값으로 선언 필요
 	private DefaultTableModel model;
+	private String[] row = new String[1];
 
 	public void initialize() {
 		frame = new JFrame("계산기");
@@ -306,7 +307,6 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			System.out.println("firstOperand =" + firstOperand);
 			System.out.println("secondOperand =" + secondOperand);
 			System.out.println("operator =" + operator);
-			String[] row = new String[1];
 			BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText()));
 			if (isFristInput) { // 첫 입력이었을때에는 아무것도 없어야 함,, 그냥 동일한 값 계속 출력
 				row[0] = inputNumberField.getText();
@@ -424,6 +424,8 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			secondOperand = new BigDecimal(inputNumberField.getText());
 			inputNumberField.setText(arithmetic());
 			calculationProcessString = inputNumberField.getText();//secondOperand;
+			row[0] = firstOperand + operatorConversion() + secondOperand + "=" + inputNumberField.getText(); 
+			model.addRow(row);
 		}
 		firstOperand = new BigDecimal(inputNumberField.getText());
 		operator = calculateOperator;

@@ -25,6 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
 import Model.Constant;
@@ -105,17 +106,19 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 		// scrollPane.setColumnHeaderView(table);
 
 		inputNumberField = new JTextField(Constant.DEFAULT_VALUE);
+		inputNumberField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		inputNumberField.setHorizontalAlignment(SwingConstants.RIGHT);
-		inputNumberField.setFont(new Font("±¼¸²", Font.PLAIN, 15));
+		inputNumberField.setFont(new Font("±¼¸²", Font.BOLD, 30));
 		inputNumberField.setColumns(10);
 		inputNumberField.setEditable(false);
 
 		calculationProcessField = new JTextField(" ");
+		calculationProcessField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		calculationProcessField.setHorizontalAlignment(SwingConstants.RIGHT);
 		calculationProcessField.setFont(new Font("±¼¸²", Font.PLAIN, 15));
 		calculationProcessField.setColumns(10);
 		calculationProcessField.setEditable(false);
-
+		
 		JPanel panel_1 = new JPanel();
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.TRAILING).addGroup(gl_panel

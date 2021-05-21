@@ -165,7 +165,6 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			panel_1.add(buttons[i]);
 		}
 		panel.setLayout(gl_panel);
-		// panel.addKeyListener(this);
 		frame.getContentPane().setLayout(groupLayout);
 
 		frame.setVisible(true);
@@ -331,10 +330,12 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 				// System.out.println("계산결과 =" + (arithmetic() == null));
 				if (resultArithmetic == null) {
 					inputNumberField.setText(String.valueOf(big));
+					inputNumberField.setText(String.valueOf(big));
 				} else {
 					// row[0] += "=" + String.valueOf(inputNumberField.getText());
 				}
 				System.out.println("=" + inputNumberField.getText());
+				isFristInput = false;
 			}
 			row[0] += "=" + String.valueOf(inputNumberField.getText());
 			model.addRow(row);
@@ -343,10 +344,10 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			calculationProcessString = "";
 			lastInput = Constant.EQUAL_NUMBER;// operator = Constant.EQUAL_NUMBER;
 			// if(isFristInput == false) isFristInput = true; else
-			isFristInput = false;
+			
 			isInputOperator = true;
 		} else {
-			if (inputNumberField.getText().replaceAll("\\,", "").length() < 16) {
+			if (inputNumberField.getText().replaceAll("\\,", "").length() < 20) {
 				if (isInputOperator) {
 					inputNumberField.setText(null);
 				}
@@ -387,9 +388,9 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			// calculationProcessString += "-";
 			return String.valueOf(firstOperand.subtract(secondOperand));
 		case 3:
-			inputNumberField.setText(String.valueOf(firstOperand.multiply(secondOperand)));
+			inputNumberField.setText(String.valueOf((firstOperand.multiply(secondOperand)).setScale(3, RoundingMode.HALF_EVEN)));
 			// calculationProcessString += "x";
-			return String.valueOf(firstOperand.multiply(secondOperand));
+			return String.valueOf(firstOperand.multiply(secondOperand).setScale(16, RoundingMode.HALF_EVEN));
 		case 4:
 			inputNumberField.setText(String.valueOf(firstOperand.divide(secondOperand, 16, RoundingMode.HALF_UP)));
 			// calculationProcessString += "÷";

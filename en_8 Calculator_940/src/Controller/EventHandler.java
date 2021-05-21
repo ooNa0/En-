@@ -292,6 +292,9 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			fourRuleCalculation(4);
 
 		} else if (e.getActionCommand().equals("=")) {
+			System.out.println("firstOperand =" + firstOperand);
+			System.out.println("secondOperand =" + secondOperand);
+			System.out.println("operator =" + operator);
 			String[] row = new String[1];
 			row[0] = calculationProcessField.getText();
 			BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText()));
@@ -310,16 +313,16 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 				System.out.println("계산결과 =" + (arithmetic() == null));
 				if (arithmetic() == null) {
 					inputNumberField.setText(String.valueOf(big));
-					row[0] = "=" + String.valueOf(inputNumberField.getText());
 				} else {
-					row[0] += "=" + String.valueOf(inputNumberField.getText());
+					//row[0] += "=" + String.valueOf(inputNumberField.getText());
 				}
 				System.out.println("=" + inputNumberField.getText());
 			}
+			row[0] = "=" + String.valueOf(inputNumberField.getText());
 			model.addRow(row);
 
 			calculationProcessString = "";
-			calculationProcessField.setText(null);
+			//calculationProcessField.setText(null);
 			lastInput = Constant.EQUAL_NUMBER;// operator = Constant.EQUAL_NUMBER;
 			// if(isFristInput == false) isFristInput = true; else
 			isFristInput = false;
@@ -345,8 +348,8 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 
 	String arithmetic() {
 
-		System.out.println("firstOperand =" + firstOperand);
-		System.out.println("secondOperand =" + secondOperand);
+		//System.out.println("firstOperand =" + firstOperand);
+		//System.out.println("secondOperand =" + secondOperand);
 		switch (operator) { // Constant.SUBSTRACT_NUMBER 하면 case expressions must be constant expressions
 							// 에러뜸 ㅠ
 		case 1:

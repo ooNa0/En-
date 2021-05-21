@@ -269,7 +269,8 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			if (inputNumberField.getText().replaceAll("\\,", "").length() == Constant.MINIMUM_TEXT) {
 				inputNumberField.setText(Constant.DEFAULT_VALUE);
 			} else if (inputNumberField.getText().replaceAll("\\,", "").length() > Constant.MINIMUM_TEXT) {
-				String a = inputNumberField.getText().replaceAll("\\,", "").substring(0, inputNumberField.getText().replaceAll("\\,", "").length() - 1);
+				String a = inputNumberField.getText().replaceAll("\\,", "").substring(0,
+						inputNumberField.getText().replaceAll("\\,", "").length() - 1);
 				inputNumberField.setText(a);
 			}
 
@@ -315,12 +316,12 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			} else {
 				if (lastInput != Constant.EQUAL_NUMBER) {
 					secondOperand = new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
-					row[0] += secondOperand + operatorConversion();
+					row[0] = inputNumberField.getText().replaceAll("\\,", "") + operatorConversion() + firstOperand;
 					calculationProcessString += secondOperand + operatorConversion();
 				} else {
 					firstOperand = new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
-					row[0] = inputNumberField.getText().replaceAll("\\,", "");
-					calculationProcessString += firstOperand + operatorConversion() + secondOperand;
+					row[0] = inputNumberField.getText().replaceAll("\\,", "") + operatorConversion() + secondOperand;
+					calculationProcessString = firstOperand + operatorConversion() + secondOperand;
 				}
 				System.out.println("계산결과 =" + arithmetic());
 				String resultArithmetic = arithmetic();
@@ -333,6 +334,7 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 				}
 				System.out.println("=" + inputNumberField.getText());
 			}
+			calculationProcessString = row[0];
 			row[0] += "=" + String.valueOf(inputNumberField.getText());
 			model.addRow(row);
 			calculationProcessString += "=";
@@ -356,13 +358,14 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 					inputNumberField.setText(e.getActionCommand());// inputNumberField.getText() +
 
 				} else {
-					NumberFormat nf = NumberFormat.getCurrencyInstance( Locale.KOREA );
+					NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.KOREA);
 					nf.setMaximumFractionDigits(16);
-					// if(inputNumberField.getText().contains(".")) { // 콤마가 있을경우에는 그냥
-					//inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
-					BigDecimal u = new BigDecimal(inputNumberField.getText().replaceAll("\\,", "") +e.getActionCommand());
-					 inputNumberField.setText(new DecimalFormat("#,###").format(u));
-
+					//if (inputNumberField.getText().contains(".")) { // 콤마가 있을경우에는 그냥
+						inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
+					//} else {
+					//	BigDecimal u = new BigDecimal(inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand());
+					//	inputNumberField.setText(new DecimalFormat("#,###").format(u));
+					//}
 				}
 			}
 		}
@@ -414,7 +417,7 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 		if (isFristInput || isInputOperator) { // 첫입력이거나, 전에 연산자였는지
 			if (lastInput == Constant.EQUAL_NUMBER) {
 				firstOperand = new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
-				//calculationProcessString += firstOperand;
+				// calculationProcessString += firstOperand;
 			} else if (operator != calculateOperator) { // 동일 연산자 입력이 아니라면
 				firstOperand = new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
 				if (isFristInput)
@@ -426,7 +429,8 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			inputNumberField.setText(arithmetic());
 			calculationProcessString = inputNumberField.getText().replaceAll("\\,", "");// secondOperand;
 			if (lastInput != Constant.EQUAL_NUMBER) {
-				row[0] = firstOperand + operatorConversion() + secondOperand + "=" + inputNumberField.getText().replaceAll("\\,", "");
+				row[0] = firstOperand + operatorConversion() + secondOperand + "="
+						+ inputNumberField.getText().replaceAll("\\,", "");
 				model.addRow(row);
 			}
 		}

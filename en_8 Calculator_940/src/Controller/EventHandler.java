@@ -60,7 +60,6 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 		JPanel panel = new JPanel();
 		
 		String[] columnName = new String[] { "계산 기록" };
-		//String[] columnRemoveName = new String[] { "클릭 시 기록 초기화" };
 		model = new DefaultTableModel(columnName, 0) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -73,10 +72,7 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 		};
 		model.addRow(new Object[] {"클릭 시, 계산 기록 초기화"});
 		JTable table = new JTable(model);
-
 		JScrollPane scrollPane = new JScrollPane(table);
-		// scrollPane.set
-
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout
 				.setHorizontalGroup(
@@ -94,13 +90,10 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 								.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))
 						.addContainerGap()));
 
-		// JTable table = new JTable();
-		// scrollPane.setColumnHeaderView(table);
-
 		inputNumberField = new JTextField(Constant.DEFAULT_VALUE);
 		inputNumberField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		inputNumberField.setHorizontalAlignment(SwingConstants.RIGHT);
-		inputNumberField.setFont(new Font("굴림", Font.BOLD, 30));
+		inputNumberField.setFont(new Font("굴림", Font.BOLD, 20));
 		inputNumberField.setColumns(10);
 		inputNumberField.setEditable(false);
 
@@ -227,9 +220,6 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 		case 55:
 			buttons[4].doClick();
 			break;
-		case 56:
-			// buttons[5].doClick();
-			break;
 		case 57:
 			buttons[6].doClick();
 			break;
@@ -278,13 +268,13 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 
 		} else if (e.getActionCommand().equals("±")) { // +/- 버튼
 
-			BigDecimal u = new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
+			BigDecimal u = new BigDecimal(inputNumberField.getText().replaceAll("\\,", "")).negate();
 			// 앞에 연산자면 negate(~~) 필요하고, 아니라면 -만 붙었다 안붙었다
 			if (isInputOperator) {
-				calculationProcessField.setText(calculationProcessString + operatorConversion() + "negate(" + u + ")");
+				calculationProcessField.setText(calculationProcessString + operatorConversion() + u);//"negate(" + u + ")"
 			}
-			inputNumberField.setText(String.valueOf(u.multiply(BigDecimal.valueOf(-1))));
-			isInputOperator = true; // . 에,,
+			inputNumberField.setText(String.valueOf(u));//.negate()));//String.valueOf(u.multiply(BigDecimal.valueOf(-1))));
+			//isInputOperator = true; // . 에,,
 			// isFristInput = false;
 
 		} else if (e.getActionCommand().equals("+")) {
@@ -300,6 +290,7 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			fourRuleCalculation(4);
 
 		} else if (e.getActionCommand().equals("=")) {
+			String resultArithmetic = null;
 			System.out.println("firstOperand =" + firstOperand);
 			System.out.println("secondOperand =" + secondOperand);
 			System.out.println("operator =" + operator);
@@ -317,34 +308,34 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 				}
 				row[0] = firstOperand + operatorConversion() + secondOperand;//inputNumberField.getText().replaceAll("\\,", "");
 				calculationProcessString = firstOperand + operatorConversion() + secondOperand;
-				String resultArithmetic = arithmetic();
-				inputNumberField.setText(resultArithmetic);
-				if (resultArithmetic == null) {
-					inputNumberField.setText(String.valueOf(big));
-				}
-				isFristInput = false;
+				resultArithmetic = arithmetic();
 			}
-			row[0] += "=" + big;//String.valueOf(inputNumberField.getText());
-			model.addRow(row);
-			calculationProcessString += "=";
-			calculationProcessField.setText(calculationProcessString);
-			calculationProcessString = "";
-			lastInput = Constant.EQUAL_NUMBER;// operator = Constant.EQUAL_NUMBER;
-			// if(isFristInput == false) isFristInput = true; else
-			
-			isInputOperator = true;
+			if (resultArithmetic == null && !isFristInput) {
+				//inputNumberField.setText(String.valueOf(big));
+			}
+			else {
+				inputNumberField.setText(resultArithmetic);	
+				row[0] += "=" + big;//String.valueOf(inputNumberField.getText());
+				model.addRow(row);
+				calculationProcessString += "=";
+				calculationProcessField.setText(calculationProcessString);
+				calculationProcessString = "";
+				isInputOperator = true;
+				isFristInput = false;
+				lastInput = Constant.EQUAL_NUMBER;// operator = Constant.EQUAL_NUMBER;
+				// if(isFristInput == false) isFristInput = true; else
+			}			
 		} else {
-			if (inputNumberField.getText().replaceAll("\\,", "").length() < 17) {
-				if (isInputOperator) {
-					inputNumberField.setText(null);
-				}
-				isInputOperator = false;
+			if (isInputOperator) {
+				inputNumberField.setText(null);
+			}isInputOperator = false;
+			if (inputNumberField.getText().replaceAll("\\,", "").length() < 16) {
 
 				if (inputNumberField.getText().replaceAll("\\,", "").equals(Constant.DEFAULT_VALUE)) {
 
 					inputNumberField.setText(null);
 					System.out.println(e.getActionCommand());
-					inputNumberField.setText(e.getActionCommand());// inputNumberField.getText() +
+					inputNumberField.setText(e.getActionCommand());
 
 				} else {
 					//NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.KOREA);
@@ -373,8 +364,12 @@ public class EventHandler extends JFrame implements ActionListener, KeyListener 
 			inputNumberField.setText(String.valueOf(((firstOperand.multiply(secondOperand)).setScale(14, BigDecimal.ROUND_HALF_UP)).setScale(0)));//new DecimalFormat("#,###").format
 			return String.valueOf((firstOperand.multiply(secondOperand)).setScale(14, BigDecimal.ROUND_HALF_UP).setScale(0));
 		case 4:
-			inputNumberField.setText(String.valueOf((firstOperand.divide(secondOperand, MathContext.DECIMAL64))));//new DecimalFormat("#,###").format
-			return String.valueOf(firstOperand.divide(secondOperand, MathContext.DECIMAL64));
+			if(secondOperand.equals(BigDecimal.ZERO)) {
+				inputNumberField.setText("정의되지 않은 결과입니다.");return null;
+			}
+			else{
+				inputNumberField.setText(String.valueOf((firstOperand.divide(secondOperand, MathContext.DECIMAL64))));//new DecimalFormat("#,###").format
+				return String.valueOf(firstOperand.divide(secondOperand, MathContext.DECIMAL64));}
 		}
 		return null;
 	}

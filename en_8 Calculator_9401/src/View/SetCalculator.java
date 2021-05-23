@@ -16,6 +16,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 
+import Controller.InputManagement;
 import Model.Constant;
 
 public class SetCalculator {
@@ -28,13 +29,37 @@ public class SetCalculator {
 	private JTextField inputNumberField;
 	private JTextField calculationProcessField;
 	public JButton[] buttons;
+	/*
+	public SetCalculator(JFrame frame, JPanel panel, DefaultTableModel model, 
+			JTable table, JScrollPane scrollPane, JTextField inputNumberField, JTextField calculationProcessField) {
+		this.frame = frame;
+		this.panel = panel;
+		this.model = model;
+		this.table = table;
+		this.scrollPane = scrollPane;
+		this.inputNumberField = inputNumberField;
+		this.calculationProcessField = calculationProcessField;
+	}*/
+	
+	public JTextField setTextField(String firstInput, int fontSize) {
+		JTextField TextField = new JTextField(firstInput);
+		TextField.setHorizontalAlignment(SwingConstants.RIGHT);
+		TextField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		if(fontSize == 20) {
+			TextField.setFont(new Font("굴림", Font.BOLD, fontSize));			
+		}
+		else {
+			TextField.setFont(new Font("굴림", Font.PLAIN, fontSize));			
+		}
+		TextField.setColumns(10);
+		TextField.setEditable(false);
+		return TextField;
+	}
 	
 	public void initialize() {
 		frame = new JFrame("9계산기0");
 		frame.setBounds(100, 100, 550, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		panel = new JPanel();
 		
 		// 기록
 		String[] columnName = new String[] { "계산 기록" };
@@ -110,10 +135,12 @@ public class SetCalculator {
 				else{
 					buttons[i].setBackground(new Color(230, 230, 230));
 				}
-				buttons[i].addActionListener(this);
-				buttons[i].addKeyListener(this);
+				buttons[i].addActionListener(new InputManagement());
+				buttons[i].addKeyListener(new InputManagement());
 				panel_1.add(buttons[i]);
 			}
 			panel.setLayout(gl_panel);
+			JButton btnNewButton_8 = new JButton("New button");
+			scrollPane.setViewportView(btnNewButton_8);
 	}
 }

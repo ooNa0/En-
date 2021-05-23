@@ -16,4 +16,5 @@ public class Constant {
 	public static Integer EQUAL_NUMBER = 5;
 	
 	public static Integer MINIMUM_TEXT = 1;
+	public static Integer MAXIMUM_TEXT = 16;
 }

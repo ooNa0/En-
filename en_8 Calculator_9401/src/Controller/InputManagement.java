@@ -282,7 +282,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			operator = 0;
 			lastInput = 0;
 
-		} else if (e.getActionCommand().equals("클릭 시, 계산기록 초기화")) {
+		} else if (e.getActionCommand().equals("계산기록 초기화")) {
 
 			model.setNumRows(0); // 기록 초기화
 
@@ -365,7 +365,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			fourRuleCalculation(4);
 
 		} else if (e.getActionCommand().equals("=")) {
-			String resultArithmetic = null;
+			String resultArithmeticString = null;
 			System.out.println("firstOperand =" + firstOperand);
 			System.out.println("secondOperand =" + secondOperand);
 			System.out.println("operator =" + operator);
@@ -384,16 +384,19 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 				row[0] = firstOperand + calculate.operatorConversion(operator) + secondOperand;// inputNumberField.getText().replaceAll("\\,",
 																								// "");
 				calculationProcessString = firstOperand + calculate.operatorConversion(operator) + secondOperand;
-				resultArithmetic = calculate.arithmetic(operator, firstOperand, secondOperand, inputNumberField);
+				resultArithmeticString = calculate.arithmetic(operator, firstOperand, secondOperand, inputNumberField);
 			}
-			if (resultArithmetic == null && isFristInput) {
+			if (resultArithmeticString == null && isFristInput) {
 				System.out.println("2222222222222222222222222222222222222222222222222222222222222");
 				//inputNumberField.setText(String.valueOf(big));
 			} else {
-				System.out.println("resultArithmetic = " + resultArithmetic);
+				System.out.println("resultArithmetic = " + resultArithmeticString);
+				System.out.println(resultArithmeticString.length());
+				BigDecimal resultArithmetic = new BigDecimal(resultArithmeticString);
 				//System.out.println("resultArithmetic = " + String.format("%.15E", resultArithmetic));
-				if(resultArithmetic.length() > 16) {
-					inputNumberField.setText(String.format("%.15E", new BigDecimal(resultArithmetic)));
+				if(resultArithmeticString.length() > 16) {
+					inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.15e", resultArithmetic))));
+					//inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.15e", resultArithmetic.stripTrailingZeros())).stripTrailingZeros()));
 				}
 				else{
 					inputNumberField.setText(new DecimalFormat("###,###.##").format(resultArithmetic));

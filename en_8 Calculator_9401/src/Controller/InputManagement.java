@@ -72,6 +72,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		frame.pack();
 		frame.setBounds(100, 100, 455, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setMinimumSize(new Dimension(455, 600));
 		frame.setLocationRelativeTo(null); // 정중앙에 띄우기
 		/*
 		 * public AutoLabel() { setHorizontalAlignment(SwingConstants.CENTER);

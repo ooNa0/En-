@@ -180,8 +180,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		buttons[3].requestFocusInWindow();
 		frame.setVisible(true);
 	}
-	public void keyTyped(KeyEvent e) {
-	}
+	public void keyTyped(KeyEvent e) {}
 
 	public void keyReleased(KeyEvent e) {
 		if ((e.getModifiers() & 1) != 0) {
@@ -279,9 +278,8 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 					if (inputNumberField.getText().replaceAll("\\,", "").length() == Constant.MINIMUM_TEXT) {
 						inputNumberField.setText(Constant.DEFAULT_VALUE);
 					} else if (inputNumberField.getText().replaceAll("\\,", "").length() > Constant.MINIMUM_TEXT) {
-						String a = inputNumberField.getText().replaceAll("\\,", "").substring(0,
-								inputNumberField.getText().replaceAll("\\,", "").length() - 1);
-						inputNumberField.setText(a);
+						String a = inputNumberField.getText().replaceAll("\\,", "").substring(0,inputNumberField.getText().replaceAll("\\,", "").length() - 1);
+						inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(a)));
 					}				
 				}
 			}			
@@ -290,11 +288,11 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			if(isInputOperator) {
 				inputNumberField.setText("0.");
 			}
-			if (!inputNumberField.getText().contains(".")) { // 텍스트 공간에 . 이 없을 경우에 추가가능!
+			if (!inputNumberField.getText().replaceAll("\\,", "").contains(".")) { // 텍스트 공간에 . 이 없을 경우에 추가가능!
 				String b = inputNumberField.getText().replaceAll("\\,", "");				
 				b += ".";
 				//b = new DecimalFormat("###,###.##").format(new BigDecimal(b));
-				inputNumberField.setText(b);
+				inputNumberField.setText(new DecimalFormat("#,###,###,###,###.").format(new BigDecimal(b)));
 				//inputNumberField.setText(new DecimalFormat("###,###.##").format(new BigDecimal(inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand())));
 				
 			}
@@ -387,9 +385,10 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 					//nf.setMaximumFractionDigits(16);
 					//if (inputNumberField.getText().contains(".")) { // 콤마가 있을경우에는 그냥
 						//inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
+					
 					//} else {
 						//BigDecimal input = new BigDecimal(inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand());
-						inputNumberField.setText(inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand());
+						inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand())));
 					//}//new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(
 				}
 			}negatecheck = false;
@@ -429,6 +428,11 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		isInputOperator = true;
 		isFristInput = false;negatecheck = false;
 		lastInput = calculateOperator;
+	}
+	
+	String inputFloatingPoint() { // 지수로 변환
+		
+		return "";
 	}
 	
 	void setPanel() {

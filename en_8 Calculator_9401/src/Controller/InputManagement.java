@@ -372,6 +372,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			calculationProcessString += "=";
 			System.out.println(calculationProcessString);
 			calculationProcessField.setText(calculationProcessString);
+			inputFloatingPoint(calculationProcessString);
 			calculationProcessString = "";
 			model.addRow(row);negatecheck = false;
 			
@@ -439,15 +440,20 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 	
 	String inputFloatingPoint(String replaceString) { // 지수로 변환
 		// <클때>
-		int exponentNumber = 0;
+		int exponentNumber = 16;
 		BigDecimal replaceDecimal = new BigDecimal(replaceString);
-		if(replaceDecimal.compareTo(new BigDecimal("10000000000000000"))  == 1) { // 100~000 보다 큰 경우
-			
+		BigDecimal dividNumber = new BigDecimal("10000000000000000");
+		if(replaceDecimal.compareTo(dividNumber) > -1) { // 100~000 보다 크거나 같을 경우
+			replaceDecimal.divide(secondOperand, MathContext.DECIMAL64);
+			while(replaceDecimal.divide(new BigDecimal("10")).compareTo(new BigDecimal("0")) == 1) { // 0보다 클경우
+				exponentNumber += 1;
+			}
 		}
 		// bigDecimal 값을 1 000 000 000 000 000 0 으로 나누기
 		// 나눈 값이 만약에 1 > 이라면 ! 
 		// % 해서 나머지
-		return "";
+		System.out.println(replaceDecimal + "e+" + exponentNumber);
+		return String.valueOf(replaceDecimal) + "e+" + exponentNumber;
 	}
 	
 	void setPanel() {

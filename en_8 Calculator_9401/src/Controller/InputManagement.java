@@ -49,7 +49,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 	private JTextField calculationProcessField;
 	private int operator = 0;
 	private boolean negatecheck = false;
-	private boolean isInputOperator = true;
+	private boolean isInputOperator = false;
 	private int lastInput = 0;
 	private boolean isFristInput = true;
 	public JButton[] buttons;
@@ -73,7 +73,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		frame.setBounds(100, 100, 458, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setMinimumSize(new Dimension(458, 600));
-		frame.setLocationRelativeTo(null); // 정중앙에 띄우기
+		//frame.setLocationRelativeTo(null); // 정중앙에 띄우기
 		/*
 		 * public AutoLabel() { setHorizontalAlignment(SwingConstants.CENTER);
 		 * setText("AutoLable"); addComponentListener(new ComponentAdapter() {
@@ -309,9 +309,10 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 						inputNumberField.setText(Constant.DEFAULT_VALUE);
 
 					} else if (inputNumberField.getText().replaceAll("\\,", "").length() > Constant.MINIMUM_TEXT) {
-
 						String a = inputNumberField.getText().replaceAll("\\,", "").substring(0,inputNumberField.getText().replaceAll("\\,", "").length() - 1);
-						inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(a)));
+						
+						//String a = inputNumberField.getText().substring(0,inputNumberField.getText().length() - 1);
+						inputNumberField.setText(a);//new DecimalFormat("#,###,###,###,###.################").format(
 					}
 				}
 			}
@@ -321,14 +322,12 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 				inputNumberField.setText("0.");
 			}
 			if (!inputNumberField.getText().replaceAll("\\,", "").contains(".")) { // 텍스트 공간에 . 이 없을 경우에 추가가능!
-				String b = inputNumberField.getText();//.replaceAll("\\,", "")
-				b += ".";
+				//String b = inputNumberField.getText().replaceAll("\\,", "");
+				//b += ".";
 				// b = new DecimalFormat("###,###.##").format(new BigDecimal(b));
 				//inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(b)));
-				inputNumberField.setText(b);
-				// BigDecimal(inputNumberField.getText().replaceAll("\\,", "") +
-				// e.getActionCommand())));
-
+				//inputNumberField.setText(String.valueOf(new BigDecimal(b)));
+				inputNumberField.setText(inputNumberField.getText().replaceAll("\\,", "") +e.getActionCommand());
 			}
 
 		} else if (e.getActionCommand().equals("±")) { // +/- 버튼
@@ -336,6 +335,9 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			BigDecimal u = new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
 			System.out.println("u =" + operator);
 			// 앞에 연산자면 negate(~~) 필요하고, 아니라면 -만 붙었다 안붙었다//inputnegate
+			if(isFristInput) {
+				isInputOperator = true;				
+			}
 			if (isInputOperator) {
 				if (negatecheck) {// 앞이 네게이트라면
 					inputnegate = "negate(" + inputnegate + ")";
@@ -425,7 +427,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			}
 			isInputOperator = false;
 			if (inputNumberField.getText().replaceAll("\\,", "").length() < Constant.MAXIMUM_TEXT) {
-				System.out.println("이거 뭐여 .이 안대?? : " + new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand())));
+				System.out.println("0이랑 같은 지:" + inputNumberField.getText().replaceAll("\\,", "").equals(Constant.DEFAULT_VALUE));
 				if (inputNumberField.getText().replaceAll("\\,", "").equals(Constant.DEFAULT_VALUE)) {
 
 					inputNumberField.setText(null);
@@ -435,18 +437,19 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 				} else {
 					// NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.KOREA);
 					// nf.setMaximumFractionDigits(16);
-					// if (inputNumberField.getText().contains(".")) { // 콤마가 있을경우에는 그냥
-					// inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
+					if (inputNumberField.getText().contains(".")) { // 콤마가 있을경우에는 그냥
+					 inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
 
-					// } else {
+					 } else {
 					// BigDecimal input = new
 					// BigDecimal(inputNumberField.getText().replaceAll("\\,", "") +
 					// e.getActionCommand());
 					//System.out.println("이거 뭐여 .이 안대." + inputNumberField.getText().replaceAll("\\,", "")+ e.getActionCommand());
+					//System.out.println("0이랑 같은 지:" + new BigDecimal(inputNumberField.getText() + e.getActionCommand()));
 					inputNumberField.setText(String.valueOf(new BigDecimal(inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand())));
 					//inputNumberField.setText(String.valueOf(new BigDecimal(inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand())));
 					//inputNumberField.setText(String.format("%.15E", new BigDecimal(inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand())));
-					// }
+					 }
 				}
 			}
 			negatecheck = false;
@@ -458,7 +461,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		System.out.println("isInputOperator =" + isInputOperator);
 		System.out.println("firstOperand =" + firstOperand);
 		System.out.println("secondOperand =" + secondOperand);
-		BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", "")));
+		BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", ""))).stripTrailingZeros();;
 		System.out.println("big =" + big);
 		// if(big.scale() < 0) big = big.setScale(0);		
 		//inputNumberField.setText(String.valueOf(big));

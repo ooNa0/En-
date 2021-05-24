@@ -41,7 +41,7 @@ import View.SetCalculator;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-public class InputManagement extends JFrame implements ActionListener, KeyListener, FocusListener {
+public class InputManagement extends JFrame implements ActionListener, KeyListener{
 
 	private JFrame frame;
 	private String calculationProcessString = "";
@@ -71,7 +71,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		frame = new JFrame("나영's 계산기");
 		frame.setBounds(100, 100, 550, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		/*
 	        addComponentListener(new ComponentAdapter() {
 	            @Override
 	            public void componentResized(ComponentEvent e) {
@@ -91,7 +91,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 	            }
 	            j++;    
 	        }
-	    
+	    */
 		JPanel panel = new JPanel();
 		
 		String[] columnName = new String[] { "계산 기록" };
@@ -108,6 +108,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		model.addRow(new Object[] {"클릭 시, 계산 기록 초기화"});
 		JTable table = new JTable(model);
 		JScrollPane scrollPane = new JScrollPane(table);
+		setPanel();
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout
 				.setHorizontalGroup(
@@ -174,6 +175,8 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		buttonpanel.requestFocus();
 		panel.setLayout(gl_panel);
 		frame.getContentPane().setLayout(groupLayout);
+		frame.pack();
+		buttons[3].requestFocusInWindow();
 		frame.setVisible(true);
 	}
     public void mouseClicked(MouseEvent e) {
@@ -445,6 +448,10 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		isInputOperator = true;
 		isFristInput = false;negatecheck = false;
 		lastInput = calculateOperator;
+	}
+	
+	void setPanel() {
+		
 	}
 }
 /*

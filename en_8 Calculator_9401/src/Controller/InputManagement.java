@@ -69,8 +69,11 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 	
 	public void initialize() {
 		frame = new JFrame("나영's 계산기");
+
+		frame.pack();
 		frame.setBounds(100, 100, 550, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null); // 정중앙에 띄우기
 		/*
 	        addComponentListener(new ComponentAdapter() {
 	            @Override
@@ -175,7 +178,6 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		buttonpanel.requestFocus();
 		panel.setLayout(gl_panel);
 		frame.getContentPane().setLayout(groupLayout);
-		frame.pack();
 		buttons[3].requestFocusInWindow();
 		frame.setVisible(true);
 	}

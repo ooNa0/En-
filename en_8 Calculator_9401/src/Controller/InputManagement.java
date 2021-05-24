@@ -25,6 +25,7 @@ import java.util.Locale;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -70,7 +71,27 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		frame = new JFrame("나영's 계산기");
 		frame.setBounds(100, 100, 550, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		
+	        addComponentListener(new ComponentAdapter() {
+	            @Override
+	            public void componentResized(ComponentEvent e) {
+	                resize();
+	            }
+	        });
+	    
+	        int i=0;
+	        while(true) {
+	            Font before = getFont();
+	            Font font = new Font(before.getName(), before.getStyle(), i);
+	            setFont(font);
+	            if(getPreferredSize().getWidth()>getWidth() || getPreferredSize().getHeight()>getHeight()) {
+	                font = new Font(before.getName(), before.getStyle(), i-1);
+	                setFont(font);
+	                break;
+	            }
+	            i++;    
+	        }
+	    
 		JPanel panel = new JPanel();
 		
 		String[] columnName = new String[] { "계산 기록" };
@@ -426,3 +447,33 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		lastInput = calculateOperator;
 	}
 }
+/*
+public class AutoLabel extends JLabel {
+	 
+    public AutoLabel() {
+        setHorizontalAlignment(SwingConstants.CENTER);
+        setText("AutoLable");
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                resize();
+            }
+        });
+    }
+ 
+    void resize() {
+        int i=0;
+        while(true) {
+            Font before = getFont();
+            Font font = new Font(before.getName(), before.getStyle(), i);
+            setFont(font);
+            if(getPreferredSize().getWidth()>getWidth() || getPreferredSize().getHeight()>getHeight()) {
+                font = new Font(before.getName(), before.getStyle(), i-1);
+                setFont(font);
+                break;
+            }
+            i++;    
+        }
+    }
+ 
+}*/

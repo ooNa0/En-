@@ -374,7 +374,8 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			System.out.println("firstOperand =" + firstOperand);
 			System.out.println("secondOperand =" + secondOperand);
 			System.out.println("operator =" + operator);
-			BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", ""))).stripTrailingZeros();
+			//BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", ""))).stripTrailingZeros();
+			BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText()));
 			// if(big.scale() < 0) big = big.setScale(0);
 			// inputNumberField.setText(String.valueOf(big));
 			if (isFristInput) { // 첫 입력이었을때에는 아무것도 없어야 함,, 그냥 동일한 값 계속 출력

@@ -310,8 +310,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 
 					} else if (inputNumberField.getText().replaceAll("\\,", "").length() > Constant.MINIMUM_TEXT) {
 
-						String a = inputNumberField.getText().replaceAll("\\,", "").substring(0,
-								inputNumberField.getText().replaceAll("\\,", "").length() - 1);
+						String a = inputNumberField.getText().replaceAll("\\,", "").substring(0,inputNumberField.getText().replaceAll("\\,", "").length() - 1);
 						inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(a)));
 					}
 				}
@@ -322,11 +321,11 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 				inputNumberField.setText("0.");
 			}
 			if (!inputNumberField.getText().replaceAll("\\,", "").contains(".")) { // 텍스트 공간에 . 이 없을 경우에 추가가능!
-				String b = inputNumberField.getText().replaceAll("\\,", "");
+				String b = inputNumberField.getText();//.replaceAll("\\,", "")
 				b += ".";
 				// b = new DecimalFormat("###,###.##").format(new BigDecimal(b));
-				inputNumberField.setText(new DecimalFormat("#,###,###,###,###.").format(new BigDecimal(b)));
-				// inputNumberField.setText(new DecimalFormat("###,###.##").format(new
+				//inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(b)));
+				inputNumberField.setText(b);
 				// BigDecimal(inputNumberField.getText().replaceAll("\\,", "") +
 				// e.getActionCommand())));
 
@@ -422,7 +421,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			}
 			isInputOperator = false;
 			if (inputNumberField.getText().replaceAll("\\,", "").length() < Constant.MAXIMUM_TEXT) {
-
+				System.out.println("이거 뭐여 .이 안대." + inputNumberField.getText().replaceAll("\\,", "").equals(Constant.DEFAULT_VALUE));
 				if (inputNumberField.getText().replaceAll("\\,", "").equals(Constant.DEFAULT_VALUE)) {
 
 					inputNumberField.setText(null);
@@ -439,6 +438,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 					// BigDecimal input = new
 					// BigDecimal(inputNumberField.getText().replaceAll("\\,", "") +
 					// e.getActionCommand());
+					System.out.println("이거 뭐여 .이 안대." + inputNumberField.getText().replaceAll("\\,", "")+ e.getActionCommand());
 					inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand())));
 					//inputNumberField.setText(String.format("%.15E", new BigDecimal(inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand())));
 					// }

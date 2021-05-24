@@ -272,12 +272,19 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		} else if (e.getActionCommand().equals("\u2190")) { // 하나 지우기
 			if(!isInputOperator) {
 				if(lastInput == Constant.EQUAL_NUMBER) {
+					
 					calculationProcessString = "";
 					calculationProcessField.setText(null);
+					
 				}else {
+					
 					if (inputNumberField.getText().replaceAll("\\,", "").length() == Constant.MINIMUM_TEXT) {
+						
 						inputNumberField.setText(Constant.DEFAULT_VALUE);
-					} else if (inputNumberField.getText().replaceAll("\\,", "").length() > Constant.MINIMUM_TEXT) {
+						
+					}
+					else if (inputNumberField.getText().replaceAll("\\,", "").length() > Constant.MINIMUM_TEXT) {
+						
 						String a = inputNumberField.getText().replaceAll("\\,", "").substring(0,inputNumberField.getText().replaceAll("\\,", "").length() - 1);
 						inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(a)));
 					}				
@@ -430,8 +437,16 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		lastInput = calculateOperator;
 	}
 	
-	String inputFloatingPoint() { // 지수로 변환
-		
+	String inputFloatingPoint(String replaceString) { // 지수로 변환
+		// <클때>
+		int exponentNumber = 0;
+		BigDecimal replaceDecimal = new BigDecimal(replaceString);
+		if(replaceDecimal.compareTo(new BigDecimal("10000000000000000"))  == 1) { // 100~000 보다 큰 경우
+			
+		}
+		// bigDecimal 값을 1 000 000 000 000 000 0 으로 나누기
+		// 나눈 값이 만약에 1 > 이라면 ! 
+		// % 해서 나머지
 		return "";
 	}
 	

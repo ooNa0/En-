@@ -41,7 +41,7 @@ import View.SetCalculator;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-public class InputManagement extends JFrame implements ActionListener, KeyListener{
+public class InputManagement extends JFrame implements ActionListener, KeyListener {
 
 	private JFrame frame;
 	private String calculationProcessString = "";
@@ -53,64 +53,52 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 	private int lastInput = 0;
 	private boolean isFristInput = true;
 	public JButton[] buttons;
-	private BigDecimal firstOperand; // ¿ÀÂ÷°¡ ¾È»ı±â°Ô ÇÏ±â À§ÇØ¼­´Â string °ªÀ¸·Î ¼±¾ğ ÇÊ¿ä
-	private BigDecimal secondOperand = BigDecimal.ZERO; // ¿ÀÂ÷°¡ ¾È»ı±â°Ô ÇÏ±â À§ÇØ¼­´Â string °ªÀ¸·Î ¼±¾ğ ÇÊ¿ä
+	private BigDecimal firstOperand; // ì˜¤ì°¨ê°€ ì•ˆìƒê¸°ê²Œ í•˜ê¸° ìœ„í•´ì„œëŠ” string ê°’ìœ¼ë¡œ ì„ ì–¸ í•„ìš”
+	private BigDecimal secondOperand = BigDecimal.ZERO; // ì˜¤ì°¨ê°€ ì•ˆìƒê¸°ê²Œ í•˜ê¸° ìœ„í•´ì„œëŠ” string ê°’ìœ¼ë¡œ ì„ ì–¸ í•„ìš”
 	private DefaultTableModel model;
 	private String[] row = new String[1];
 	private CalculateManagement calculate;
 	private SetCalculator setting;
 	private String inputnegate = "";
-	
+
 	public InputManagement() {
 		calculate = new CalculateManagement();
 		setting = new SetCalculator();
-		
-	}//calculate.operatorConversion(operator)
-	
+
+	}// calculate.operatorConversion(operator)
+
 	public void initialize() {
-		frame = new JFrame("³ª¿µ's °è»ê±â");
+		frame = new JFrame("ë‚˜ì˜'s ê³„ì‚°ê¸°");
 		frame.pack();
 		frame.setBounds(100, 100, 550, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocationRelativeTo(null); // Á¤Áß¾Ó¿¡ ¶ç¿ì±â
+		frame.setLocationRelativeTo(null); // ì •ì¤‘ì•™ì— ë„ìš°ê¸°
 		/*
-	        addComponentListener(new ComponentAdapter() {
-	            @Override
-	            public void componentResized(ComponentEvent e) {
-	                //resize();
-	            }
-	        });
-	    
-	        int j=0;
-	        while(true) {
-	            Font before = getFont();
-	            Font font = new Font(before.getName(), before.getStyle(), j);
-	            setFont(font);
-	            if(getPreferredSize().getWidth()>getWidth() || getPreferredSize().getHeight()>getHeight()) {
-	                font = new Font(before.getName(), before.getStyle(), j-1);
-	                setFont(font);
-	                break;
-	            }
-	            j++;    
-	        }
-	    */
+		 * public AutoLabel() { setHorizontalAlignment(SwingConstants.CENTER);
+		 * setText("AutoLable"); addComponentListener(new ComponentAdapter() {
+		 * 
+		 * @Override public void componentResized(ComponentEvent e) { resize(); } }); }
+		 * 
+		 * void resize() { int j=0; while(true) { Font before = getFont(); Font font =
+		 * new Font(before.getName(), before.getStyle(), j); setFont(font);
+		 * if(getPreferredSize().getWidth()>getWidth() ||
+		 * getPreferredSize().getHeight()>getHeight()) { font = new
+		 * Font(before.getName(), before.getStyle(), j-1); setFont(font); break; } j++;
+		 * }
+		 */
 		JPanel panel = new JPanel();
-		
-		String[] columnName = new String[] { "°è»ê ±â·Ï" };
+
+		String[] columnName = new String[] { "ê³„ì‚° ê¸°ë¡" };
 		model = new DefaultTableModel(columnName, 0) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
-				if(row == 0 && column == 0) {
-					model.setNumRows(0); // ±â·Ï ÃÊ±âÈ­
-					model.addRow(new Object[] {"Å¬¸¯ ½Ã, °è»ê ±â·Ï ÃÊ±âÈ­"});
-				}
 				return false;
 			}
 		};
-		model.addRow(new Object[] {"Å¬¸¯ ½Ã, °è»ê ±â·Ï ÃÊ±âÈ­"});
 		JTable table = new JTable(model);
 		JScrollPane scrollPane = new JScrollPane(table);
 		setPanel();
+		/*
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout
 				.setHorizontalGroup(
@@ -126,8 +114,36 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 								.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 241,
 										Short.MAX_VALUE)
 								.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))
-						.addContainerGap()));
+						.addContainerGap()));*/
 
+		JButton resetButton = new JButton("í´ë¦­ ì‹œ, ê³„ì‚°ê¸°ë¡ ì´ˆê¸°í™”");
+		resetButton.addActionListener(this);
+		resetButton.setBackground(new Color(210, 210, 210));
+		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(resetButton, GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(resetButton, GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+							.addContainerGap())
+						.addComponent(panel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)))
+		);
+		
 		inputNumberField = setting.setTextField(Constant.DEFAULT_VALUE, 20);
 		calculationProcessField = setting.setTextField(" ", 15);
 
@@ -152,13 +168,13 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 
 		buttonpanel.setLayout(new GridLayout(0, 4, 3, 3));
 
-		String[] str = { "CE", "C", "\u2190", "¡À", "7", "8", "9", "¡¿", "4", "5", "6", "-", "1", "2", "3", "+", "¡¾", "0",
+		String[] str = { "CE", "C", "\u2190", "Ã·", "7", "8", "9", "Ã—", "4", "5", "6", "-", "1", "2", "3", "+", "Â±", "0",
 				".", "=" };
 		buttons = new JButton[20];
 		for (int i = 0; i < buttons.length; i++) {
 
 			buttons[i] = new JButton(str[i]);
-			buttons[i].setFont(new Font("±¼¸²", Font.PLAIN, 30));
+			buttons[i].setFont(new Font("êµ´ë¦¼", Font.PLAIN, 30));
 			if ((i == 4) || (i == 5) || (i == 6) || (i == 8) || (i == 9) || (i == 10) || (i == 12) || (i == 13)
 					|| (i == 14) || (i == 17)) {
 				buttons[i].setBackground(new Color(255, 255, 255));
@@ -180,7 +196,9 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		buttons[3].requestFocusInWindow();
 		frame.setVisible(true);
 	}
-	public void keyTyped(KeyEvent e) {}
+
+	public void keyTyped(KeyEvent e) {
+	}
 
 	public void keyReleased(KeyEvent e) {
 		if ((e.getModifiers() & 1) != 0) {
@@ -200,9 +218,9 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_BACK_SPACE:
-			buttons[2].doClick(); // µÚ·Î°¡±â.
+			buttons[2].doClick(); // ë’¤ë¡œê°€ê¸°.
 			break;
-		case KeyEvent.VK_ENTER: // ¿£ÅÍ
+		case KeyEvent.VK_ENTER: // ì—”í„°
 			buttons[19].doClick();
 			break;
 		case 27: // esc
@@ -211,10 +229,10 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		case 127: // delete
 			buttons[0].doClick(); // CE
 			break;
-		case 45: // - ¹öÆ°
+		case 45: // - ë²„íŠ¼
 			buttons[11].doClick();
 			break;
-		case 47: // / ¹öÆ°
+		case 47: // / ë²„íŠ¼
 			buttons[3].doClick();
 			break;
 		case 46: // .
@@ -252,7 +270,8 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 
 	public void actionPerformed(ActionEvent e) {
 
-		if (e.getActionCommand().equals("C")) { // ¿¬»êÀÚ ±â·Ï±îÁö ÃÊ±âÈ­
+		// 
+		if (e.getActionCommand().equals("C")) { // ì—°ì‚°ì ê¸°ë¡ê¹Œì§€ ì´ˆê¸°í™”
 
 			calculationProcessString = "";
 			calculationProcessField.setText(null);
@@ -262,66 +281,75 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			operator = 0;
 			lastInput = 0;
 
-		} else if (e.getActionCommand().equals("CE")) { // ¿¬»êÀÚ ±â·ÏÀº ±×´ë·Î
-			//firstOperand = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", ""))).stripTrailingZeros();
-			inputNumberField.setText(Constant.DEFAULT_VALUE);
-			//firstOperand = BigDecimal.ZERO;
-			//calculationProcessString = "";
-			//calculationProcessField.setText(null);
+		} else if (e.getActionCommand().equals("í´ë¦­ ì‹œ, ê³„ì‚°ê¸°ë¡ ì´ˆê¸°í™”")) {
 
-		} else if (e.getActionCommand().equals("\u2190")) { // ÇÏ³ª Áö¿ì±â
-			if(!isInputOperator) {
-				if(lastInput == Constant.EQUAL_NUMBER) {
-					
+			model.setNumRows(0); // ê¸°ë¡ ì´ˆê¸°í™”
+
+		} else if (e.getActionCommand().equals("CE")) { // ì—°ì‚°ì ê¸°ë¡ì€ ê·¸ëŒ€ë¡œ
+			// firstOperand = new
+			// BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,",
+			// ""))).stripTrailingZeros();
+			inputNumberField.setText(Constant.DEFAULT_VALUE);
+			// firstOperand = BigDecimal.ZERO;
+			// calculationProcessString = "";
+			// calculationProcessField.setText(null);
+
+		} else if (e.getActionCommand().equals("\u2190")) { // í•˜ë‚˜ ì§€ìš°ê¸°
+			if (!isInputOperator) {
+				if (lastInput == Constant.EQUAL_NUMBER) {
+
 					calculationProcessString = "";
 					calculationProcessField.setText(null);
-					
-				}else {
-					
-					if (inputNumberField.getText().replaceAll("\\,", "").length() == Constant.MINIMUM_TEXT) {
-						
-						inputNumberField.setText(Constant.DEFAULT_VALUE);
-						
-					}
-					else if (inputNumberField.getText().replaceAll("\\,", "").length() > Constant.MINIMUM_TEXT) {
-						
-						String a = inputNumberField.getText().replaceAll("\\,", "").substring(0,inputNumberField.getText().replaceAll("\\,", "").length() - 1);
-						inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(a)));
-					}				
-				}
-			}			
 
-		} else if (e.getActionCommand().equals(".")) { // ¼Ò¼öÁ¡ ºÙÀÌ±â!
-			if(isInputOperator) {
+				} else {
+
+					if (inputNumberField.getText().replaceAll("\\,", "").length() == Constant.MINIMUM_TEXT) {
+
+						inputNumberField.setText(Constant.DEFAULT_VALUE);
+
+					} else if (inputNumberField.getText().replaceAll("\\,", "").length() > Constant.MINIMUM_TEXT) {
+
+						String a = inputNumberField.getText().replaceAll("\\,", "").substring(0,
+								inputNumberField.getText().replaceAll("\\,", "").length() - 1);
+						inputNumberField.setText(
+								new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(a)));
+					}
+				}
+			}
+
+		} else if (e.getActionCommand().equals(".")) { // ì†Œìˆ˜ì  ë¶™ì´ê¸°!
+			if (isInputOperator) {
 				inputNumberField.setText("0.");
 			}
-			if (!inputNumberField.getText().replaceAll("\\,", "").contains(".")) { // ÅØ½ºÆ® °ø°£¿¡ . ÀÌ ¾øÀ» °æ¿ì¿¡ Ãß°¡°¡´É!
-				String b = inputNumberField.getText().replaceAll("\\,", "");				
+			if (!inputNumberField.getText().replaceAll("\\,", "").contains(".")) { // í…ìŠ¤íŠ¸ ê³µê°„ì— . ì´ ì—†ì„ ê²½ìš°ì— ì¶”ê°€ê°€ëŠ¥!
+				String b = inputNumberField.getText().replaceAll("\\,", "");
 				b += ".";
-				//b = new DecimalFormat("###,###.##").format(new BigDecimal(b));
+				// b = new DecimalFormat("###,###.##").format(new BigDecimal(b));
 				inputNumberField.setText(new DecimalFormat("#,###,###,###,###.").format(new BigDecimal(b)));
-				//inputNumberField.setText(new DecimalFormat("###,###.##").format(new BigDecimal(inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand())));
-				
+				// inputNumberField.setText(new DecimalFormat("###,###.##").format(new
+				// BigDecimal(inputNumberField.getText().replaceAll("\\,", "") +
+				// e.getActionCommand())));
+
 			}
 
-		} else if (e.getActionCommand().equals("¡¾")) { // +/- ¹öÆ°
+		} else if (e.getActionCommand().equals("Â±")) { // +/- ë²„íŠ¼
 
 			BigDecimal u = new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
 			System.out.println("u =" + u);
-			// ¾Õ¿¡ ¿¬»êÀÚ¸é negate(~~) ÇÊ¿äÇÏ°í, ¾Æ´Ï¶ó¸é -¸¸ ºÙ¾ú´Ù ¾ÈºÙ¾ú´Ù//inputnegate
+			// ì•ì— ì—°ì‚°ìë©´ negate(~~) í•„ìš”í•˜ê³ , ì•„ë‹ˆë¼ë©´ -ë§Œ ë¶™ì—ˆë‹¤ ì•ˆë¶™ì—ˆë‹¤//inputnegate
 			if (isInputOperator) {
-				if(negatecheck) {// ¾ÕÀÌ ³×°ÔÀÌÆ®¶ó¸é
+				if (negatecheck) {// ì•ì´ ë„¤ê²Œì´íŠ¸ë¼ë©´
 					inputnegate = "negate(" + inputnegate + ")";
-				}
-				else {
+				} else {
 					inputnegate = String.valueOf(u);
-					inputnegate = "negate(" + inputnegate + ")";//negatecheck
+					inputnegate = "negate(" + inputnegate + ")";// negatecheck
 					negatecheck = true;
 				}
-				calculationProcessField.setText(calculationProcessString + calculate.operatorConversion(operator) + inputnegate);//"negate(" + u + ")"
+				calculationProcessField
+						.setText(calculationProcessString + calculate.operatorConversion(operator) + inputnegate);
 			}
-			inputNumberField.setText(String.valueOf(u.negate()));////String.valueOf(u.multiply(BigDecimal.valueOf(-1))));
-			//isInputOperator = true; // . ¿¡,,
+			inputNumberField.setText(String.valueOf(u.negate()));//// String.valueOf(u.multiply(BigDecimal.valueOf(-1))));
+			// isInputOperator = true; // . ì—,,
 			// isFristInput = false;
 
 		} else if (e.getActionCommand().equals("+")) {
@@ -330,10 +358,10 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		} else if (e.getActionCommand().equals("-")) {
 			fourRuleCalculation(2);
 
-		} else if (e.getActionCommand().equals("¡¿")) {
+		} else if (e.getActionCommand().equals("Ã—")) {
 			fourRuleCalculation(3);
 
-		} else if (e.getActionCommand().equals("¡À")) {
+		} else if (e.getActionCommand().equals("Ã·")) {
 			fourRuleCalculation(4);
 
 		} else if (e.getActionCommand().equals("=")) {
@@ -341,27 +369,28 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			System.out.println("firstOperand =" + firstOperand);
 			System.out.println("secondOperand =" + secondOperand);
 			System.out.println("operator =" + operator);
-			BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", ""))).stripTrailingZeros();
-			//if(big.scale() < 0) big = big.setScale(0);
-			//inputNumberField.setText(String.valueOf(big));
-			if (isFristInput) { // Ã¹ ÀÔ·ÂÀÌ¾úÀ»¶§¿¡´Â ¾Æ¹«°Íµµ ¾ø¾î¾ß ÇÔ,, ±×³É µ¿ÀÏÇÑ °ª °è¼Ó Ãâ·Â
+			BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", "")))
+					.stripTrailingZeros();
+			// if(big.scale() < 0) big = big.setScale(0);
+			// inputNumberField.setText(String.valueOf(big));
+			if (isFristInput) { // ì²« ì…ë ¥ì´ì—ˆì„ë•Œì—ëŠ” ì•„ë¬´ê²ƒë„ ì—†ì–´ì•¼ í•¨,, ê·¸ëƒ¥ ë™ì¼í•œ ê°’ ê³„ì† ì¶œë ¥
 				row[0] = String.valueOf(big);
 				calculationProcessString = String.valueOf(big);
 			} else {
 				if (lastInput != Constant.EQUAL_NUMBER) {
-					secondOperand = big;//new BigDecimal(inputNumberField.getText().replaceAll("\\,", "")).setScale(0);
+					secondOperand = big;// new BigDecimal(inputNumberField.getText().replaceAll("\\,", "")).setScale(0);
 				} else {
-					firstOperand = big;//new BigDecimal(inputNumberField.getText().replaceAll("\\,", "")).setScale(0);
+					firstOperand = big;// new BigDecimal(inputNumberField.getText().replaceAll("\\,", "")).setScale(0);
 				}
-				row[0] = firstOperand + calculate.operatorConversion(operator) + secondOperand;//inputNumberField.getText().replaceAll("\\,", "");
+				row[0] = firstOperand + calculate.operatorConversion(operator) + secondOperand;// inputNumberField.getText().replaceAll("\\,",
+																								// "");
 				calculationProcessString = firstOperand + calculate.operatorConversion(operator) + secondOperand;
 				resultArithmetic = calculate.arithmetic(operator, firstOperand, secondOperand, inputNumberField);
 			}
 			if (resultArithmetic == null && isFristInput) {
 				inputNumberField.setText(String.valueOf(big));
-			}
-			else {
-				//inputNumberField.setText(resultArithmetic);
+			} else {
+				// inputNumberField.setText(resultArithmetic);
 				isFristInput = false;
 				lastInput = Constant.EQUAL_NUMBER;// operator = Constant.EQUAL_NUMBER;
 				// if(isFristInput == false) isFristInput = true; else
@@ -372,14 +401,16 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			calculationProcessString += "=";
 			System.out.println(calculationProcessString);
 			calculationProcessField.setText(calculationProcessString);
-			inputFloatingPoint(calculationProcessString);
+			//inputFloatingPoint(calculationProcessString);
 			calculationProcessString = "";
-			model.addRow(row);negatecheck = false;
-			
+			model.addRow(row);
+			negatecheck = false;
+
 		} else {
 			if (isInputOperator) {
 				inputNumberField.setText(null);
-			}isInputOperator = false;
+			}
+			isInputOperator = false;
 			if (inputNumberField.getText().replaceAll("\\,", "").length() < Constant.MAXIMUM_TEXT) {
 
 				if (inputNumberField.getText().replaceAll("\\,", "").equals(Constant.DEFAULT_VALUE)) {
@@ -389,17 +420,22 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 					inputNumberField.setText(e.getActionCommand());
 
 				} else {
-					//NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.KOREA);
-					//nf.setMaximumFractionDigits(16);
-					//if (inputNumberField.getText().contains(".")) { // ÄŞ¸¶°¡ ÀÖÀ»°æ¿ì¿¡´Â ±×³É
-						//inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
-					
-					//} else {
-						//BigDecimal input = new BigDecimal(inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand());
-						inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand())));
-					//}//new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(
+					// NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.KOREA);
+					// nf.setMaximumFractionDigits(16);
+					// if (inputNumberField.getText().contains(".")) { // ì½¤ë§ˆê°€ ìˆì„ê²½ìš°ì—ëŠ” ê·¸ëƒ¥
+					// inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
+
+					// } else {
+					// BigDecimal input = new
+					// BigDecimal(inputNumberField.getText().replaceAll("\\,", "") +
+					// e.getActionCommand());
+					inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(
+							new BigDecimal(inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand())));
+					// }//new DecimalFormat("#,###,###,###,###.################").format(new
+					// BigDecimal(
 				}
-			}negatecheck = false;
+			}
+			negatecheck = false;
 		}
 	}
 
@@ -407,86 +443,76 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		System.out.println("isFristInput =" + isFristInput);
 		System.out.println("isInputOperator =" + isInputOperator);
 		BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", ""))).stripTrailingZeros();
-		//if(big.scale() < 0) big = big.setScale(0);
-		//inputNumberField.setText(String.valueOf(big));
-		if (isFristInput || isInputOperator || calculationProcessString == "") { // Ã¹ÀÔ·ÂÀÌ°Å³ª, Àü¿¡ ¿¬»êÀÚ¿´´ÂÁö
+		// if(big.scale() < 0) big = big.setScale(0);
+		// inputNumberField.setText(String.valueOf(big));
+		if (isFristInput || isInputOperator || calculationProcessString == "") { // ì²«ì…ë ¥ì´ê±°ë‚˜, ì „ì— ì—°ì‚°ìì˜€ëŠ”ì§€
 			if (lastInput == Constant.EQUAL_NUMBER) {
-				firstOperand = big;//new BigDecimal(inputNumberField.getText().replaceAll("\\,", "")).stripTrailingZeros();
+				firstOperand = big;// new BigDecimal(inputNumberField.getText().replaceAll("\\,",
+									// "")).stripTrailingZeros();
 				calculationProcessString += firstOperand;
-			} else if (operator != calculateOperator) { // µ¿ÀÏ ¿¬»êÀÚ ÀÔ·ÂÀÌ ¾Æ´Ï¶ó¸é
-				firstOperand = big;//new BigDecimal(inputNumberField.getText().replaceAll("\\,", "")).stripTrailingZeros();
+			} else if (operator != calculateOperator) { // ë™ì¼ ì—°ì‚°ì ì…ë ¥ì´ ì•„ë‹ˆë¼ë©´
+				firstOperand = big;// new BigDecimal(inputNumberField.getText().replaceAll("\\,",
+									// "")).stripTrailingZeros();
 				if (isFristInput)
 					calculationProcessString += firstOperand;
 			}
-		} else { // ¿¬»êÀÚ¸¦ ÀÔ·Â¹Ş¾Ò´Âµ¥, ¾Õ¿¡°¡ Ã¹ÀÔ·Âµµ ¾Æ´Ñµ¥ ¼ıÀÚ¶ó¸é
-			secondOperand = big;//new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
+		} else { // ì—°ì‚°ìë¥¼ ì…ë ¥ë°›ì•˜ëŠ”ë°, ì•ì—ê°€ ì²«ì…ë ¥ë„ ì•„ë‹Œë° ìˆ«ìë¼ë©´
+			secondOperand = big;// new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
 			inputNumberField.setText(calculate.arithmetic(operator, firstOperand, secondOperand, inputNumberField));
-			calculationProcessString = inputNumberField.getText();//.replaceAll("\\,", "");
+			calculationProcessString = inputNumberField.getText();// .replaceAll("\\,", "");
 			if (lastInput != Constant.EQUAL_NUMBER) {
 				row[0] = firstOperand + calculate.operatorConversion(operator) + secondOperand + "="
-						+ inputNumberField.getText();//.replaceAll("\\,", "");
+						+ inputNumberField.getText();// .replaceAll("\\,", "");
 				model.addRow(row);
 			}
 		}
 		big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", ""))).stripTrailingZeros();
-		//if(big.scale() < 0) big = big.setScale(0);
+		// if(big.scale() < 0) big = big.setScale(0);
 		firstOperand = big;
 		operator = calculateOperator;
 		calculationProcessField.setText(calculationProcessString + calculate.operatorConversion(operator));
 		isInputOperator = true;
-		isFristInput = false;negatecheck = false;
+		isFristInput = false;
+		negatecheck = false;
 		lastInput = calculateOperator;
 	}
-	
-	String inputFloatingPoint(String replaceString) { // Áö¼ö·Î º¯È¯
-		// <Å¬¶§>
+
+	String inputFloatingPoint(String replaceString) { // ì§€ìˆ˜ë¡œ ë³€í™˜
+		// <í´ë•Œ>
 		int exponentNumber = 16;
 		BigDecimal replaceDecimal = new BigDecimal(replaceString);
 		BigDecimal dividNumber = new BigDecimal("10000000000000000");
-		if(replaceDecimal.compareTo(dividNumber) > -1) { // 100~000 º¸´Ù Å©°Å³ª °°À» °æ¿ì
+		if (replaceDecimal.compareTo(dividNumber) > -1) { // 100~000 ë³´ë‹¤ í¬ê±°ë‚˜ ê°™ì„ ê²½ìš°
 			replaceDecimal.divide(secondOperand, MathContext.DECIMAL64);
-			while(replaceDecimal.divide(new BigDecimal("10")).compareTo(new BigDecimal("0")) == 1) { // 0º¸´Ù Å¬°æ¿ì
+			while (replaceDecimal.divide(new BigDecimal("10")).compareTo(new BigDecimal("0")) == 1) { // 0ë³´ë‹¤ í´ê²½ìš°
 				exponentNumber += 1;
 			}
 		}
-		// bigDecimal °ªÀ» 1 000 000 000 000 000 0 À¸·Î ³ª´©±â
-		// ³ª´« °ªÀÌ ¸¸¾à¿¡ 1 > ÀÌ¶ó¸é ! 
-		// % ÇØ¼­ ³ª¸ÓÁö
+		// bigDecimal ê°’ì„ 1 000 000 000 000 000 0 ìœ¼ë¡œ ë‚˜ëˆ„ê¸°
+		// ë‚˜ëˆˆ ê°’ì´ ë§Œì•½ì— 1 > ì´ë¼ë©´ !
+		// % í•´ì„œ ë‚˜ë¨¸ì§€
 		System.out.println(replaceDecimal + "e+" + exponentNumber);
 		return String.valueOf(replaceDecimal) + "e+" + exponentNumber;
 	}
-	
+
 	void setPanel() {
-		
+
 	}
 }
 /*
-public class AutoLabel extends JLabel {
-	 
-    public AutoLabel() {
-        setHorizontalAlignment(SwingConstants.CENTER);
-        setText("AutoLable");
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                resize();
-            }
-        });
-    }
- 
-    void resize() {
-        int i=0;
-        while(true) {
-            Font before = getFont();
-            Font font = new Font(before.getName(), before.getStyle(), i);
-            setFont(font);
-            if(getPreferredSize().getWidth()>getWidth() || getPreferredSize().getHeight()>getHeight()) {
-                font = new Font(before.getName(), before.getStyle(), i-1);
-                setFont(font);
-                break;
-            }
-            i++;    
-        }
-    }
- 
-}*/
+ * public class AutoLabel extends JLabel {
+ * 
+ * public AutoLabel() { setHorizontalAlignment(SwingConstants.CENTER);
+ * setText("AutoLable"); addComponentListener(new ComponentAdapter() {
+ * 
+ * @Override public void componentResized(ComponentEvent e) { resize(); } }); }
+ * 
+ * void resize() { int i=0; while(true) { Font before = getFont(); Font font =
+ * new Font(before.getName(), before.getStyle(), i); setFont(font);
+ * if(getPreferredSize().getWidth()>getWidth() ||
+ * getPreferredSize().getHeight()>getHeight()) { font = new
+ * Font(before.getName(), before.getStyle(), i-1); setFont(font); break; } i++;
+ * } }
+ * 
+ * }
+ */

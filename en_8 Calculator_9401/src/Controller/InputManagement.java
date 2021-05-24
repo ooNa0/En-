@@ -75,21 +75,21 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 	        addComponentListener(new ComponentAdapter() {
 	            @Override
 	            public void componentResized(ComponentEvent e) {
-	                resize();
+	                //resize();
 	            }
 	        });
 	    
-	        int i=0;
+	        int j=0;
 	        while(true) {
 	            Font before = getFont();
-	            Font font = new Font(before.getName(), before.getStyle(), i);
+	            Font font = new Font(before.getName(), before.getStyle(), j);
 	            setFont(font);
 	            if(getPreferredSize().getWidth()>getWidth() || getPreferredSize().getHeight()>getHeight()) {
-	                font = new Font(before.getName(), before.getStyle(), i-1);
+	                font = new Font(before.getName(), before.getStyle(), j-1);
 	                setFont(font);
 	                break;
 	            }
-	            i++;    
+	            j++;    
 	        }
 	    
 		JPanel panel = new JPanel();

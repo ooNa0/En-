@@ -69,7 +69,6 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 	
 	public void initialize() {
 		frame = new JFrame("나영's 계산기");
-
 		frame.pack();
 		frame.setBounds(100, 100, 550, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -181,29 +180,10 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		buttons[3].requestFocusInWindow();
 		frame.setVisible(true);
 	}
-    public void mouseClicked(MouseEvent e) {
-
-    }
-    public void mousePressed(MouseEvent e) {
-    	//buttonpanel.requestFocus(true);
-        //((javax.swing.JButton)e.getSource()).requestFocus();
-    }
-    public void mouseReleased(MouseEvent e) {
-
-    }
-    public void mouseEntered(MouseEvent e) {
-
-    }
-    public void mouseExited(MouseEvent e) {
-
-    }
 	public void keyTyped(KeyEvent e) {
-		((javax.swing.JButton)e.getSource()).requestFocus();
-		System.out.println(e.getSource().getClass().getName());
 	}
 
 	public void keyReleased(KeyEvent e) {
-		System.out.println(e.getSource().getClass().getName());
 		if ((e.getModifiers() & 1) != 0) {
 			if (e.getKeyCode() == 61) {
 				buttons[15].doClick();
@@ -219,9 +199,6 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 	}
 
 	public void keyPressed(KeyEvent e) {
-		System.out.println(e.getSource().getClass().getName());
-		((JButton)e.getSource()).requestFocusInWindow();
-		System.out.println(e.getKeyCode());
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_BACK_SPACE:
 			buttons[2].doClick(); // 뒤로가기.
@@ -287,25 +264,27 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			lastInput = 0;
 
 		} else if (e.getActionCommand().equals("CE")) { // 연산자 기록은 그대로
-
+			//firstOperand = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", ""))).stripTrailingZeros();
 			inputNumberField.setText(Constant.DEFAULT_VALUE);
-			firstOperand = BigDecimal.ZERO;
-			calculationProcessString = "";
-			calculationProcessField.setText(null);
+			//firstOperand = BigDecimal.ZERO;
+			//calculationProcessString = "";
+			//calculationProcessField.setText(null);
 
 		} else if (e.getActionCommand().equals("\u2190")) { // 하나 지우기
-			if(lastInput == Constant.EQUAL_NUMBER) {
-				calculationProcessString = "";
-				calculationProcessField.setText(null);
-			}else {
-				if (inputNumberField.getText().replaceAll("\\,", "").length() == Constant.MINIMUM_TEXT) {
-					inputNumberField.setText(Constant.DEFAULT_VALUE);
-				} else if (inputNumberField.getText().replaceAll("\\,", "").length() > Constant.MINIMUM_TEXT) {
-					String a = inputNumberField.getText().replaceAll("\\,", "").substring(0,
-							inputNumberField.getText().replaceAll("\\,", "").length() - 1);
-					inputNumberField.setText(a);
-				}				
-			}
+			if(!isInputOperator) {
+				if(lastInput == Constant.EQUAL_NUMBER) {
+					calculationProcessString = "";
+					calculationProcessField.setText(null);
+				}else {
+					if (inputNumberField.getText().replaceAll("\\,", "").length() == Constant.MINIMUM_TEXT) {
+						inputNumberField.setText(Constant.DEFAULT_VALUE);
+					} else if (inputNumberField.getText().replaceAll("\\,", "").length() > Constant.MINIMUM_TEXT) {
+						String a = inputNumberField.getText().replaceAll("\\,", "").substring(0,
+								inputNumberField.getText().replaceAll("\\,", "").length() - 1);
+						inputNumberField.setText(a);
+					}				
+				}
+			}			
 
 		} else if (e.getActionCommand().equals(".")) { // 소수점 붙이기!
 			if(isInputOperator) {

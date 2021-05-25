@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -41,7 +42,7 @@ import View.SetCalculator;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-public class InputManagement extends JFrame implements ActionListener, KeyListener {
+public class InputManagement extends JFrame implements ActionListener, KeyListener, ComponentListener {
 
 	private JFrame frame;
 	private String calculationProcessString = "";
@@ -72,9 +73,10 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		frame = new JFrame("나영's 계산기");
 		frame.pack();
 		frame.setBounds(100, 100, 458, 600);
+
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setMinimumSize(new Dimension(458, 600));
-		//frame.setLocationRelativeTo(null); // 정중앙에 띄우기
+		// frame.setLocationRelativeTo(null); // 정중앙에 띄우기
 		/*
 		 * public AutoLabel() { setHorizontalAlignment(SwingConstants.CENTER);
 		 * setText("AutoLable"); addComponentListener(new ComponentAdapter() {
@@ -100,73 +102,69 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		JTable table = new JTable(model);
 		JScrollPane scrollPane = new JScrollPane(table);
 		/*
-		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		groupLayout
-				.setHorizontalGroup(
-						groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup().addContainerGap()
-										.addComponent(panel, GroupLayout.PREFERRED_SIZE, 254, Short.MAX_VALUE)
-										.addPreferredGap(ComponentPlacement.RELATED).addComponent(scrollPane,
-												GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
-										.addContainerGap()));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(Alignment.TRAILING,
-				groupLayout.createSequentialGroup().addContainerGap()
-						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 241,
-										Short.MAX_VALUE)
-								.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))
-						.addContainerGap()));*/
+		 * GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		 * groupLayout .setHorizontalGroup(
+		 * groupLayout.createParallelGroup(Alignment.LEADING)
+		 * .addGroup(groupLayout.createSequentialGroup().addContainerGap()
+		 * .addComponent(panel, GroupLayout.PREFERRED_SIZE, 254, Short.MAX_VALUE)
+		 * .addPreferredGap(ComponentPlacement.RELATED).addComponent(scrollPane,
+		 * GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+		 * .addContainerGap()));
+		 * groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.
+		 * LEADING).addGroup(Alignment.TRAILING,
+		 * groupLayout.createSequentialGroup().addContainerGap()
+		 * .addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+		 * .addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 241,
+		 * Short.MAX_VALUE) .addComponent(panel, Alignment.LEADING,
+		 * GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)) .addContainerGap()));
+		 */
 
 		JButton resetButton = new JButton("계산기록 초기화");
 		resetButton.addActionListener(this);
 		resetButton.setBackground(new Color(210, 210, 210));
 		resetButton.setFont(new Font("굴림", Font.BOLD, 20));
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(resetButton, GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE))
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(resetButton, GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
-							.addContainerGap())
-						.addComponent(panel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)))
-		);
-		
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(resetButton, GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+								.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE))
+						.addContainerGap()));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+										.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addComponent(resetButton, GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+										.addContainerGap())
+								.addComponent(panel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 511,
+										Short.MAX_VALUE))));
+
 		inputNumberField = setting.setTextField(Constant.DEFAULT_VALUE, 20);
 		calculationProcessField = setting.setTextField(" ", 15);
 
 		JPanel buttonPanel = new JPanel();
 		GroupLayout bottonsGroupPanel = new GroupLayout(panel);
-		bottonsGroupPanel.setHorizontalGroup(bottonsGroupPanel.createParallelGroup(Alignment.TRAILING).addGroup(bottonsGroupPanel
-				.createSequentialGroup().addContainerGap()
-				.addGroup(bottonsGroupPanel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(buttonPanel, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 230, Short.MAX_VALUE)
-						.addComponent(inputNumberField, Alignment.LEADING, 400, 400,
-								Short.MAX_VALUE)
-						.addComponent(calculationProcessField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 230,
-								Short.MAX_VALUE))
-				.addContainerGap()));
-		bottonsGroupPanel.setVerticalGroup(bottonsGroupPanel.createParallelGroup(Alignment.LEADING).addGroup(bottonsGroupPanel
-				.createSequentialGroup().addContainerGap()
-				.addComponent(calculationProcessField, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addComponent(inputNumberField, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addComponent(buttonPanel, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE).addContainerGap()));
+		bottonsGroupPanel.setHorizontalGroup(bottonsGroupPanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(bottonsGroupPanel.createSequentialGroup().addContainerGap()
+						.addGroup(bottonsGroupPanel.createParallelGroup(Alignment.TRAILING)
+								.addComponent(buttonPanel, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 230,
+										Short.MAX_VALUE)
+								.addComponent(inputNumberField, Alignment.LEADING, 400, 400, Short.MAX_VALUE)
+								.addComponent(calculationProcessField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 230,
+										Short.MAX_VALUE))
+						.addContainerGap()));
+		bottonsGroupPanel.setVerticalGroup(bottonsGroupPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(bottonsGroupPanel.createSequentialGroup().addContainerGap()
+						.addComponent(calculationProcessField, GroupLayout.PREFERRED_SIZE, 29,
+								GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(inputNumberField, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(buttonPanel, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE).addContainerGap()));
 
 		buttonPanel.setLayout(new GridLayout(0, 4, 3, 3));
 
@@ -196,40 +194,113 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		panel.setLayout(bottonsGroupPanel);
 		frame.getContentPane().setLayout(groupLayout);
 		buttons[3].requestFocusInWindow();
+		frame.addComponentListener(this);
 		frame.setVisible(true);
 	}
+			public void componentResized(ComponentEvent e) {
+				System.out.println("222222222222");
+				resize();
+			}
+			@Override
+			public void componentHidden(ComponentEvent arg0) { // setVisible(false)되면 호출
+			System.out.println("componentHidden() 메서드 호출 - setVisible(false)되면 호출");
+			}
 
-	public void keyTyped(KeyEvent e) {}
+			@Override
+			public void componentMoved(ComponentEvent arg0) { // 컴포넌트가 이동될 때 호출
+			System.out.println("componentMoved() 메서드 호출 - 컴포넌트가 이동될 때 호출");
+			}
+			@Override
+			public void componentShown(ComponentEvent arg0) { // 호출 화면에 표시되면 호출
+			System.out.println("componentShown() 메서드 호출 - 호출 화면에 표시되면 호출");
+			}
+
+	void resize() {
+		int j = 0;
+		while (true) {
+			Font before = getFont();
+			Font font = new Font(before.getName(), before.getStyle(), j);
+			setFont(font);
+			if (getPreferredSize().getWidth() > getWidth() || getPreferredSize().getHeight() > getHeight()) {
+				font = new Font(before.getName(), before.getStyle(), j - 1);
+				setFont(font);
+				break;
+			}
+			j++;
+		}
+	}
+
+	public void keyTyped(KeyEvent e) {
+	}
 
 	public void keyReleased(KeyEvent e) {
 		if ((e.getModifiers() & 1) != 0) {
-			if (e.getKeyCode() == 61) { buttons[15].doClick(); }
-			if (e.getKeyCode() == 56) { buttons[7].doClick(); }
-		} 
-		else { 
-			if (e.getKeyCode() == 56) { buttons[5].doClick(); } 
-			if (e.getKeyCode() == 61) { buttons[19].doClick(); }
+			if (e.getKeyCode() == 61) {
+				buttons[15].doClick();
 			}
+			if (e.getKeyCode() == 56) {
+				buttons[7].doClick();
+			}
+		} else {
+			if (e.getKeyCode() == 56) {
+				buttons[5].doClick();
+			}
+			if (e.getKeyCode() == 61) {
+				buttons[19].doClick();
+			}
+		}
 	}
 
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
-		case KeyEvent.VK_BACK_SPACE: buttons[2].doClick(); break;// 뒤로가기.			
-		case KeyEvent.VK_ENTER: buttons[19].doClick(); break; // 엔터
-		case 27: buttons[1].doClick(); break; // esc// C
-		case 127: buttons[0].doClick(); break;// delete // CE
-		case 45: buttons[11].doClick();	break; // - 버튼
-		case 47: buttons[3].doClick(); break;// / 버튼
-		case 46: buttons[18].doClick(); break;// .
-		case 48: buttons[17].doClick(); break;
-		case 49: buttons[12].doClick();	break;
-		case 50: buttons[13].doClick();	break;
-		case 51: buttons[14].doClick();	break;
-		case 52: buttons[8].doClick();	break;
-		case 53: buttons[9].doClick();	break;
-		case 54: buttons[10].doClick();	break;
-		case 55: buttons[4].doClick();	break;
-		case 57: buttons[6].doClick();	break;
+		case KeyEvent.VK_BACK_SPACE:
+			buttons[2].doClick();
+			break;// 뒤로가기.
+		case KeyEvent.VK_ENTER:
+			buttons[19].doClick();
+			break; // 엔터
+		case 27:
+			buttons[1].doClick();
+			break; // esc// C
+		case 127:
+			buttons[0].doClick();
+			break;// delete // CE
+		case 45:
+			buttons[11].doClick();
+			break; // - 버튼
+		case 47:
+			buttons[3].doClick();
+			break;// / 버튼
+		case 46:
+			buttons[18].doClick();
+			break;// .
+		case 48:
+			buttons[17].doClick();
+			break;
+		case 49:
+			buttons[12].doClick();
+			break;
+		case 50:
+			buttons[13].doClick();
+			break;
+		case 51:
+			buttons[14].doClick();
+			break;
+		case 52:
+			buttons[8].doClick();
+			break;
+		case 53:
+			buttons[9].doClick();
+			break;
+		case 54:
+			buttons[10].doClick();
+			break;
+		case 55:
+			buttons[4].doClick();
+			break;
+		case 57:
+			buttons[6].doClick();
+			break;
 		}
 	}
 
@@ -275,28 +346,35 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 						inputNumberField.setText(Constant.DEFAULT_VALUE);
 
 					} else if (inputNumberField.getText().replaceAll("\\,", "").length() > Constant.MINIMUM_TEXT) {
-						String a = inputNumberField.getText().replaceAll("\\,", "").substring(0,inputNumberField.getText().replaceAll("\\,", "").length() - 1);
-						//inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(a));
-						//String a = inputNumberField.getText().substring(0,inputNumberField.getText().length() - 1);
-						inputNumberField.setText(a);//new DecimalFormat("#,###,###,###,###.################").format(a)
+						String a = inputNumberField.getText().replaceAll("\\,", "").substring(0,
+								inputNumberField.getText().replaceAll("\\,", "").length() - 1);
+						// inputNumberField.setText(new
+						// DecimalFormat("#,###,###,###,###.################").format(a));
+						// String a =
+						// inputNumberField.getText().substring(0,inputNumberField.getText().length() -
+						// 1);
+						inputNumberField.setText(a);// new DecimalFormat("#,###,###,###,###.################").format(a)
 					}
 				}
 			}
-			//1 뒤로가기 후 negate안먹어야 댐
+			// 1 뒤로가기 후 negate안먹어야 댐
 			isBackspace = true;
 
 		} else if (e.getActionCommand().equals(".")) { // 소수점 붙이기!
 			if (isInputOperator) {
-				if(negatecheck) calculationProcessField.setText(calculationProcessString + calculate.operatorConversion(operator));
+				if (negatecheck)
+					calculationProcessField.setText(calculationProcessString + calculate.operatorConversion(operator));
 				inputNumberField.setText("0.");
 			}
 			if (!inputNumberField.getText().replaceAll("\\,", "").contains(".")) { // 텍스트 공간에 . 이 없을 경우에 추가가능!
-				//String b = inputNumberField.getText().replaceAll("\\,", "");
-				//b += ".";
+				// String b = inputNumberField.getText().replaceAll("\\,", "");
+				// b += ".";
 				// b = new DecimalFormat("###,###.##").format(new BigDecimal(b));
-				//inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(b)));
-				//inputNumberField.setText(String.valueOf(new BigDecimal(b)));
-				inputNumberField.setText(inputNumberField.getText().replaceAll("\\,", "") +e.getActionCommand());
+				// inputNumberField.setText(new
+				// DecimalFormat("#,###,###,###,###.################").format(new
+				// BigDecimal(b)));
+				// inputNumberField.setText(String.valueOf(new BigDecimal(b)));
+				inputNumberField.setText(inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand());
 			}
 
 		} else if (e.getActionCommand().equals("±")) { // +/- 버튼
@@ -304,8 +382,8 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			BigDecimal u = new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
 			System.out.println("u =" + operator);
 			// 앞에 연산자면 negate(~~) 필요하고, 아니라면 -만 붙었다 안붙었다//inputnegate
-			if(isFristInput && !isBackspace) {
-				isInputOperator = true;				
+			if (isFristInput && !isBackspace) {
+				isInputOperator = true;
 			}
 			if (isInputOperator) {
 				if (negatecheck) {// 앞이 네게이트라면
@@ -315,29 +393,34 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 					inputnegate = "negate(" + inputnegate + ")";// negatecheck
 					negatecheck = true;
 				}
-				if(operator == 0) {
-					calculationProcessField.setText(inputnegate);					
-				}
-				else {
-					calculationProcessField.setText(calculationProcessString + calculate.operatorConversion(operator) + inputnegate);					
+				if (operator == 0) {
+					calculationProcessField.setText(inputnegate);
+				} else {
+					calculationProcessField
+							.setText(calculationProcessString + calculate.operatorConversion(operator) + inputnegate);
 				}
 			}
 			inputNumberField.setText(String.valueOf(u.negate()));//// String.valueOf(u.multiply(BigDecimal.valueOf(-1))));
-			//isInputOperator = true; // . 에,,
+			// isInputOperator = true; // . 에,,
 			// isFristInput = false;
 
-		} 
-		else if (e.getActionCommand().equals("+")) { fourRuleCalculation(1); }
-		else if (e.getActionCommand().equals("-")) { fourRuleCalculation(2); } 
-		else if (e.getActionCommand().equals("×")) { fourRuleCalculation(3); }
-		else if (e.getActionCommand().equals("÷")) { fourRuleCalculation(4); }
-		else if (e.getActionCommand().equals("=")) {
-			
+		} else if (e.getActionCommand().equals("+")) {
+			fourRuleCalculation(1);
+		} else if (e.getActionCommand().equals("-")) {
+			fourRuleCalculation(2);
+		} else if (e.getActionCommand().equals("×")) {
+			fourRuleCalculation(3);
+		} else if (e.getActionCommand().equals("÷")) {
+			fourRuleCalculation(4);
+		} else if (e.getActionCommand().equals("=")) {
+
 			String resultArithmeticString = null;
 			System.out.println("firstOperand =" + firstOperand);
 			System.out.println("secondOperand =" + secondOperand);
 			System.out.println("operator =" + operator);
-			//BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", ""))).stripTrailingZeros();
+			// BigDecimal big = new
+			// BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,",
+			// ""))).stripTrailingZeros();
 			BigDecimal big = new BigDecimal(inputNumberField.getText().replaceAll("\\,", "")).stripTrailingZeros();
 			inputNumberField.setText(String.valueOf(big));
 			System.out.println("big = " + big);
@@ -358,8 +441,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 				resultArithmeticString = calculate.arithmetic(operator, firstOperand, secondOperand, inputNumberField);
 			}
 			if (resultArithmeticString == null) {// && isFristInput
-				System.out.println("2222222222222222222222222222222222222222222222222222222222222");
-				//inputNumberField.setText(String.valueOf(big));
+				// inputNumberField.setText(String.valueOf(big));
 			} else {
 				System.out.println("resultArithmetic = " + resultArithmeticString);
 				System.out.println(resultArithmeticString.length());
@@ -367,21 +449,22 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 				System.out.println("resultArithmetic = " + resultArithmetic);
 				System.out.println("resultArithmetic PlainString = " + resultArithmetic.toPlainString());
 				int maximum = 16;
-				if(inputNumberField.getText().replaceAll("\\,", "").contains(".")) {
+				if (inputNumberField.getText().replaceAll("\\,", "").contains(".")) {
 					maximum = 17;
 				}
-				if(resultArithmetic.toPlainString().length() > maximum) {
-					if(inputNumberField.getText().replaceAll("\\,", "").contains(".")) {
-						inputNumberField.setText(String.valueOf(new BigDecimal(String.format(
-								"%.16e", resultArithmetic)).stripTrailingZeros()));
-						}
-					else{
-						inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.15e", resultArithmetic)).stripTrailingZeros()));
+				if (resultArithmetic.toPlainString().length() > maximum) {
+					if (inputNumberField.getText().replaceAll("\\,", "").contains(".")) {
+						inputNumberField.setText(String.valueOf(
+								new BigDecimal(String.format("%.17e", resultArithmetic)).stripTrailingZeros()));
+					} else {
+						inputNumberField.setText(String.valueOf(
+								new BigDecimal(String.format("%.15e", resultArithmetic)).stripTrailingZeros()));
 					}
-					//inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.15e", resultArithmetic.stripTrailingZeros())).stripTrailingZeros()));
-				}
-				else{
-					inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(resultArithmetic));
+					// inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.15e",
+					// resultArithmetic.stripTrailingZeros())).stripTrailingZeros()));
+				} else {
+					inputNumberField
+							.setText(new DecimalFormat("#,###,###,###,###.################").format(resultArithmetic));
 				}
 				isFristInput = false;
 				lastInput = Constant.EQUAL_NUMBER;// operator = Constant.EQUAL_NUMBER;
@@ -393,7 +476,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			calculationProcessString += "=";
 			System.out.println(calculationProcessString);
 			calculationProcessField.setText(calculationProcessString);
-			//inputFloatingPoint(calculationProcessString);
+			// inputFloatingPoint(calculationProcessString);
 			calculationProcessString = "";
 			model.addRow(row);
 			negatecheck = false;
@@ -404,9 +487,10 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			}
 			isInputOperator = false;
 			int maximum = 16;
-			if(inputNumberField.getText().replaceAll("\\,", "").contains(".")) maximum = 17;
+			if (inputNumberField.getText().replaceAll("\\,", "").contains("."))
+				maximum = 17;
 			System.out.println(inputNumberField.getText().replaceAll("\\,", "").replaceAll("\\.", "").length());
-			if (inputNumberField.getText().replaceAll("\\,", "").replaceAll("\\.", "").length() < maximum) {//Constant.MAXIMUM_TEXT
+			if (inputNumberField.getText().replaceAll("\\,", "").replaceAll("\\.", "").length() < maximum) {// Constant.MAXIMUM_TEXT
 				if (inputNumberField.getText().replaceAll("\\,", "").equals(Constant.DEFAULT_VALUE)) {
 
 					inputNumberField.setText(null);
@@ -417,18 +501,25 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 					// NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.KOREA);
 					// nf.setMaximumFractionDigits(16);
 					if (inputNumberField.getText().contains(".")) { // 콤마가 있을경우에는 그냥
-					 inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
+						inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
 
-					 } else {
-					// BigDecimal input = new
-					// BigDecimal(inputNumberField.getText().replaceAll("\\,", "") +
-					// e.getActionCommand());
-					//System.out.println("이거 뭐여 .이 안대." + inputNumberField.getText().replaceAll("\\,", "")+ e.getActionCommand());
-					//System.out.println("0이랑 같은 지:" + new BigDecimal(inputNumberField.getText() + e.getActionCommand()));
-					inputNumberField.setText(String.valueOf(new BigDecimal(inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand())));
-					//inputNumberField.setText(String.valueOf(new BigDecimal(inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand())));
-					//inputNumberField.setText(String.format("%.15E", new BigDecimal(inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand())));
-					 }
+					} else {
+						// BigDecimal input = new
+						// BigDecimal(inputNumberField.getText().replaceAll("\\,", "") +
+						// e.getActionCommand());
+						// System.out.println("이거 뭐여 .이 안대." +
+						// inputNumberField.getText().replaceAll("\\,", "")+ e.getActionCommand());
+						// System.out.println("0이랑 같은 지:" + new BigDecimal(inputNumberField.getText() +
+						// e.getActionCommand()));
+						inputNumberField.setText(String.valueOf(new BigDecimal(
+								inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand())));
+						// inputNumberField.setText(String.valueOf(new
+						// BigDecimal(inputNumberField.getText().replaceAll("\\,", "") +
+						// e.getActionCommand())));
+						// inputNumberField.setText(String.format("%.15E", new
+						// BigDecimal(inputNumberField.getText().replaceAll("\\,", "") +
+						// e.getActionCommand())));
+					}
 				}
 			}
 			negatecheck = false;
@@ -440,18 +531,19 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		System.out.println("isInputOperator =" + isInputOperator);
 		System.out.println("firstOperand =" + firstOperand);
 		System.out.println("secondOperand =" + secondOperand);
-		BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", ""))).stripTrailingZeros();
+		BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", "")))
+				.stripTrailingZeros();
 		inputNumberField.setText(String.valueOf(big));
 		System.out.println("big =" + big);
-		// if(big.scale() < 0) big = big.setScale(0);		
-		//inputNumberField.setText(String.valueOf(big));
+		// if(big.scale() < 0) big = big.setScale(0);
+		// inputNumberField.setText(String.valueOf(big));
 		if (isFristInput || isInputOperator || calculationProcessString == "") { // 첫입력이거나, 전에 연산자였는지
 			if (lastInput == Constant.EQUAL_NUMBER) {
 				firstOperand = big;// new BigDecimal(inputNumberField.getText().replaceAll("\\,",
 									// "")).stripTrailingZeros();
 				calculationProcessString += firstOperand;
 			} else if (operator != calculateOperator) { // 동일 연산자 입력이 아니라면
-				
+
 				firstOperand = big;// new BigDecimal(inputNumberField.getText().replaceAll("\\,",
 									// "")).stripTrailingZeros();
 				if (isFristInput)
@@ -459,10 +551,10 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			}
 		} else { // 연산자를 입력받았는데, 앞에가 첫입력도 아닌데 숫자라면
 			secondOperand = big;// new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
-			System.out.println("길이 : "+inputNumberField.getText().length());
-			
-				inputNumberField.setText(calculate.arithmetic(operator, firstOperand, secondOperand, inputNumberField));//String.format("%.15E", 
-			
+			System.out.println("길이 : " + inputNumberField.getText().length());
+
+			inputNumberField.setText(calculate.arithmetic(operator, firstOperand, secondOperand, inputNumberField));// String.format("%.15E",
+
 			calculationProcessString = inputNumberField.getText();// .replaceAll("\\,", "");
 			if (lastInput != Constant.EQUAL_NUMBER) {
 				row[0] = firstOperand + calculate.operatorConversion(operator) + secondOperand + "="
@@ -476,34 +568,29 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		firstOperand = big;
 		System.out.println("firstOperand =" + firstOperand);
 		operator = calculateOperator;
-		calculationProcessField.setText(calculationProcessString + calculate.operatorConversion(operator));//String.format("%.15E", 
+		calculationProcessField.setText(calculationProcessString + calculate.operatorConversion(operator));// String.format("%.15E",
 		isInputOperator = true;
 		isFristInput = false;
 		negatecheck = false;
 		lastInput = calculateOperator;
 	}
-/*
-	String inputFloatingPoint(String replaceString) { // 지수로 변환
-		// <클때>
-		int exponentNumber = 16;
-		BigDecimal replaceDecimal = new BigDecimal(replaceString);
-		BigDecimal dividNumber = new BigDecimal("10000000000000000");
-		if (replaceDecimal.compareTo(dividNumber) > -1) { // 100~000 보다 크거나 같을 경우
-			replaceDecimal.divide(secondOperand, MathContext.DECIMAL64);
-			while (replaceDecimal.divide(new BigDecimal("10")).compareTo(new BigDecimal("0")) == 1) { // 0보다 클경우
-				exponentNumber += 1;
-			}
-		}
-		// bigDecimal 값을 1 000 000 000 000 000 0 으로 나누기
-		// 나눈 값이 만약에 1 > 이라면 !
-		// % 해서 나머지
-		System.out.println(replaceDecimal + "e+" + exponentNumber);
-		return String.valueOf(replaceDecimal) + "e+" + exponentNumber;
-	}
-
-	void setPanel() {
-
-	}*/
+	/*
+	 * String inputFloatingPoint(String replaceString) { // 지수로 변환 // <클때> int
+	 * exponentNumber = 16; BigDecimal replaceDecimal = new
+	 * BigDecimal(replaceString); BigDecimal dividNumber = new
+	 * BigDecimal("10000000000000000"); if (replaceDecimal.compareTo(dividNumber) >
+	 * -1) { // 100~000 보다 크거나 같을 경우 replaceDecimal.divide(secondOperand,
+	 * MathContext.DECIMAL64); while (replaceDecimal.divide(new
+	 * BigDecimal("10")).compareTo(new BigDecimal("0")) == 1) { // 0보다 클경우
+	 * exponentNumber += 1; } } // bigDecimal 값을 1 000 000 000 000 000 0 으로 나누기 //
+	 * 나눈 값이 만약에 1 > 이라면 ! // % 해서 나머지 System.out.println(replaceDecimal + "e+" +
+	 * exponentNumber); return String.valueOf(replaceDecimal) + "e+" +
+	 * exponentNumber; }
+	 * 
+	 * void setPanel() {
+	 * 
+	 * }
+	 */
 }
 /*
  * public class AutoLabel extends JLabel {

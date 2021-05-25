@@ -205,7 +205,11 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		if ((e.getModifiers() & 1) != 0) {
 			if (e.getKeyCode() == 61) { buttons[15].doClick(); }
 			if (e.getKeyCode() == 56) { buttons[7].doClick(); }
-		} else { if (e.getKeyCode() == 56) { buttons[5].doClick(); } }
+		} 
+		else { 
+			if (e.getKeyCode() == 56) { buttons[5].doClick(); } 
+			if (e.getKeyCode() == 61) { buttons[19].doClick(); }
+			}
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -368,7 +372,8 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 				}
 				if(resultArithmetic.toPlainString().length() > maximum) {
 					if(inputNumberField.getText().replaceAll("\\,", "").contains(".")) {
-						inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.16e", resultArithmetic)).stripTrailingZeros()));
+						inputNumberField.setText(String.valueOf(new BigDecimal(String.format(
+								"%.16e", resultArithmetic)).stripTrailingZeros()));
 						}
 					else{
 						inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.15e", resultArithmetic)).stripTrailingZeros()));

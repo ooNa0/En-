@@ -376,6 +376,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			System.out.println("operator =" + operator);
 			//BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", ""))).stripTrailingZeros();
 			BigDecimal big = new BigDecimal(inputNumberField.getText()).stripTrailingZeros();
+			System.out.println("big = " + big);
 			// if(big.scale() < 0) big = big.setScale(0);
 			// inputNumberField.setText(String.valueOf(big));
 			if (isFristInput) { // 첫 입력이었을때에는 아무것도 없어야 함,, 그냥 동일한 값 계속 출력
@@ -399,10 +400,19 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 				System.out.println("resultArithmetic = " + resultArithmeticString);
 				System.out.println(resultArithmeticString.length());
 				BigDecimal resultArithmetic = new BigDecimal(resultArithmeticString);
-				System.out.println("resultArithmetic = " + new BigDecimal("1e+32"));
-				System.out.println("resultArithmetic = " + new BigDecimal("1.e+32"));
-				if(resultArithmetic.toPlainString().length() > 16) {
-					inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.15e", resultArithmetic)).stripTrailingZeros()));
+				System.out.println("resultArithmetic = " + resultArithmetic);
+				System.out.println("resultArithmetic PlainString = " + resultArithmetic.toPlainString());
+				int maximum = 16;
+				if(inputNumberField.getText().replaceAll("\\,", "").contains(".")) {
+					maximum = 17;
+				}
+				if(resultArithmetic.toPlainString().length() > maximum) {
+					if(inputNumberField.getText().replaceAll("\\,", "").contains(".")) {
+						inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.16e", resultArithmetic)).stripTrailingZeros()));
+						}
+					else{
+						inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.15e", resultArithmetic)).stripTrailingZeros()));
+					}
 					//inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.15e", resultArithmetic.stripTrailingZeros())).stripTrailingZeros()));
 				}
 				else{
@@ -428,8 +438,10 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 				inputNumberField.setText(null);
 			}
 			isInputOperator = false;
-			if (inputNumberField.getText().replaceAll("\\,", "").length() < Constant.MAXIMUM_TEXT) {
-				System.out.println("0이랑 같은 지:" + inputNumberField.getText().replaceAll("\\,", "").equals(Constant.DEFAULT_VALUE));
+			int maximum = 16;
+			if(inputNumberField.getText().replaceAll("\\,", "").contains(".")) maximum = 17;
+			System.out.println(inputNumberField.getText().replaceAll("\\,", "").replaceAll("\\.", "").length());
+			if (inputNumberField.getText().replaceAll("\\,", "").replaceAll("\\.", "").length() < maximum) {//Constant.MAXIMUM_TEXT
 				if (inputNumberField.getText().replaceAll("\\,", "").equals(Constant.DEFAULT_VALUE)) {
 
 					inputNumberField.setText(null);

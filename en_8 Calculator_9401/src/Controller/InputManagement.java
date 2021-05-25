@@ -60,6 +60,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 	private CalculateManagement calculate;
 	private SetCalculator setting;
 	private String inputnegate = "";
+	private boolean isBackspace = true;
 
 	public InputManagement() {
 		calculate = new CalculateManagement();
@@ -256,6 +257,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			inputnegate = "";
 
 		} else if (e.getActionCommand().equals("\u2190")) { // 하나 지우기
+			System.out.println(isInputOperator);
 			if (!isInputOperator) {
 				if (lastInput == Constant.EQUAL_NUMBER) {
 
@@ -276,9 +278,12 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 					}
 				}
 			}
+			//1 뒤로가기 후 negate안먹어야 댐
+			isBackspace = true;
 
 		} else if (e.getActionCommand().equals(".")) { // 소수점 붙이기!
 			if (isInputOperator) {
+				if(negatecheck) calculationProcessField.setText(calculationProcessString + calculate.operatorConversion(operator));
 				inputNumberField.setText("0.");
 			}
 			if (!inputNumberField.getText().replaceAll("\\,", "").contains(".")) { // 텍스트 공간에 . 이 없을 경우에 추가가능!
@@ -295,7 +300,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			BigDecimal u = new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
 			System.out.println("u =" + operator);
 			// 앞에 연산자면 negate(~~) 필요하고, 아니라면 -만 붙었다 안붙었다//inputnegate
-			if(isFristInput) {
+			if(isFristInput && !isBackspace) {
 				isInputOperator = true;				
 			}
 			if (isInputOperator) {
@@ -314,7 +319,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 				}
 			}
 			inputNumberField.setText(String.valueOf(u.negate()));//// String.valueOf(u.multiply(BigDecimal.valueOf(-1))));
-			// isInputOperator = true; // . 에,,
+			//isInputOperator = true; // . 에,,
 			// isFristInput = false;
 
 		} 
@@ -440,6 +445,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 									// "")).stripTrailingZeros();
 				calculationProcessString += firstOperand;
 			} else if (operator != calculateOperator) { // 동일 연산자 입력이 아니라면
+				
 				firstOperand = big;// new BigDecimal(inputNumberField.getText().replaceAll("\\,",
 									// "")).stripTrailingZeros();
 				if (isFristInput)

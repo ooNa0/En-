@@ -202,69 +202,29 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 
 	public void keyReleased(KeyEvent e) {
 		if ((e.getModifiers() & 1) != 0) {
-			if (e.getKeyCode() == 61) {
-				buttons[15].doClick();
-			}
-			if (e.getKeyCode() == 56) {
-				buttons[7].doClick();
-			}
-		} else {
-			if (e.getKeyCode() == 56) {
-				buttons[5].doClick();
-			}
-		}
+			if (e.getKeyCode() == 61) { buttons[15].doClick(); }
+			if (e.getKeyCode() == 56) { buttons[7].doClick(); }
+		} else { if (e.getKeyCode() == 56) { buttons[5].doClick(); } }
 	}
 
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
-		case KeyEvent.VK_BACK_SPACE:
-			buttons[2].doClick(); // 뒤로가기.
-			break;
-		case KeyEvent.VK_ENTER: // 엔터
-			buttons[19].doClick();
-			break;
-		case 27: // esc
-			buttons[1].doClick(); // C
-			break;
-		case 127: // delete
-			buttons[0].doClick(); // CE
-			break;
-		case 45: // - 버튼
-			buttons[11].doClick();
-			break;
-		case 47: // / 버튼
-			buttons[3].doClick();
-			break;
-		case 46: // .
-			buttons[18].doClick();
-			break;
-		case 48: // 0
-			buttons[17].doClick();
-			break;
-		case 49:
-			buttons[12].doClick();
-			break;
-		case 50:
-			buttons[13].doClick();
-			break;
-		case 51:
-			buttons[14].doClick();
-			break;
-		case 52:
-			buttons[8].doClick();
-			break;
-		case 53:
-			buttons[9].doClick();
-			break;
-		case 54:
-			buttons[10].doClick();
-			break;
-		case 55:
-			buttons[4].doClick();
-			break;
-		case 57:
-			buttons[6].doClick();
-			break;
+		case KeyEvent.VK_BACK_SPACE: buttons[2].doClick(); break;// 뒤로가기.			
+		case KeyEvent.VK_ENTER: buttons[19].doClick(); break; // 엔터
+		case 27: buttons[1].doClick(); break; // esc// C
+		case 127: buttons[0].doClick(); break;// delete // CE
+		case 45: buttons[11].doClick();	break; // - 버튼
+		case 47: buttons[3].doClick(); break;// / 버튼
+		case 46: buttons[18].doClick(); break;// .
+		case 48: buttons[17].doClick(); break;
+		case 49: buttons[12].doClick();	break;
+		case 50: buttons[13].doClick();	break;
+		case 51: buttons[14].doClick();	break;
+		case 52: buttons[8].doClick();	break;
+		case 53: buttons[9].doClick();	break;
+		case 54: buttons[10].doClick();	break;
+		case 55: buttons[4].doClick();	break;
+		case 57: buttons[6].doClick();	break;
 		}
 	}
 
@@ -310,9 +270,9 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 
 					} else if (inputNumberField.getText().replaceAll("\\,", "").length() > Constant.MINIMUM_TEXT) {
 						String a = inputNumberField.getText().replaceAll("\\,", "").substring(0,inputNumberField.getText().replaceAll("\\,", "").length() - 1);
-						
+						//inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(a));
 						//String a = inputNumberField.getText().substring(0,inputNumberField.getText().length() - 1);
-						inputNumberField.setText(a);//new DecimalFormat("#,###,###,###,###.################").format(
+						inputNumberField.setText(a);//new DecimalFormat("#,###,###,###,###.################").format(a)
 					}
 				}
 			}
@@ -357,25 +317,19 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			// isInputOperator = true; // . 에,,
 			// isFristInput = false;
 
-		} else if (e.getActionCommand().equals("+")) {
-			fourRuleCalculation(1);
-
-		} else if (e.getActionCommand().equals("-")) {
-			fourRuleCalculation(2);
-
-		} else if (e.getActionCommand().equals("×")) {
-			fourRuleCalculation(3);
-
-		} else if (e.getActionCommand().equals("÷")) {
-			fourRuleCalculation(4);
-
-		} else if (e.getActionCommand().equals("=")) {
+		} 
+		else if (e.getActionCommand().equals("+")) { fourRuleCalculation(1); }
+		else if (e.getActionCommand().equals("-")) { fourRuleCalculation(2); } 
+		else if (e.getActionCommand().equals("×")) { fourRuleCalculation(3); }
+		else if (e.getActionCommand().equals("÷")) { fourRuleCalculation(4); }
+		else if (e.getActionCommand().equals("=")) {
 			String resultArithmeticString = null;
 			System.out.println("firstOperand =" + firstOperand);
 			System.out.println("secondOperand =" + secondOperand);
 			System.out.println("operator =" + operator);
 			//BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", ""))).stripTrailingZeros();
 			BigDecimal big = new BigDecimal(inputNumberField.getText().replaceAll("\\,", "")).stripTrailingZeros();
+			inputNumberField.setText(String.valueOf(big));
 			System.out.println("big = " + big);
 			// if(big.scale() < 0) big = big.setScale(0);
 			// inputNumberField.setText(String.valueOf(big));
@@ -475,7 +429,8 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		System.out.println("isInputOperator =" + isInputOperator);
 		System.out.println("firstOperand =" + firstOperand);
 		System.out.println("secondOperand =" + secondOperand);
-		BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", ""))).stripTrailingZeros();;
+		BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", ""))).stripTrailingZeros();
+		inputNumberField.setText(String.valueOf(big));
 		System.out.println("big =" + big);
 		// if(big.scale() < 0) big = big.setScale(0);		
 		//inputNumberField.setText(String.valueOf(big));

@@ -328,6 +328,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		else if (e.getActionCommand().equals("×")) { fourRuleCalculation(3); }
 		else if (e.getActionCommand().equals("÷")) { fourRuleCalculation(4); }
 		else if (e.getActionCommand().equals("=")) {
+			
 			String resultArithmeticString = null;
 			System.out.println("firstOperand =" + firstOperand);
 			System.out.println("secondOperand =" + secondOperand);
@@ -352,7 +353,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 				calculationProcessString = firstOperand + calculate.operatorConversion(operator) + secondOperand;
 				resultArithmeticString = calculate.arithmetic(operator, firstOperand, secondOperand, inputNumberField);
 			}
-			if (resultArithmeticString == null && isFristInput) {
+			if (resultArithmeticString == null) {// && isFristInput
 				System.out.println("2222222222222222222222222222222222222222222222222222222222222");
 				//inputNumberField.setText(String.valueOf(big));
 			} else {

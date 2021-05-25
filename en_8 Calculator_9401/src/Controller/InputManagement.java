@@ -375,7 +375,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			System.out.println("secondOperand =" + secondOperand);
 			System.out.println("operator =" + operator);
 			//BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", ""))).stripTrailingZeros();
-			BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText()));
+			BigDecimal big = new BigDecimal(inputNumberField.getText()).stripTrailingZeros();
 			// if(big.scale() < 0) big = big.setScale(0);
 			// inputNumberField.setText(String.valueOf(big));
 			if (isFristInput) { // 첫 입력이었을때에는 아무것도 없어야 함,, 그냥 동일한 값 계속 출력
@@ -399,13 +399,14 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 				System.out.println("resultArithmetic = " + resultArithmeticString);
 				System.out.println(resultArithmeticString.length());
 				BigDecimal resultArithmetic = new BigDecimal(resultArithmeticString);
-				//System.out.println("resultArithmetic = " + String.format("%.15E", resultArithmetic));
-				if(resultArithmeticString.length() > 16) {
-					inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.15e", resultArithmetic))));
+				System.out.println("resultArithmetic = " + new BigDecimal("1e+32"));
+				System.out.println("resultArithmetic = " + new BigDecimal("1.e+32"));
+				if(resultArithmetic.toPlainString().length() > 16) {
+					inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.15e", resultArithmetic)).stripTrailingZeros()));
 					//inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.15e", resultArithmetic.stripTrailingZeros())).stripTrailingZeros()));
 				}
 				else{
-					inputNumberField.setText(new DecimalFormat("###,###.##").format(resultArithmetic));
+					inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(resultArithmetic));
 				}
 				isFristInput = false;
 				lastInput = Constant.EQUAL_NUMBER;// operator = Constant.EQUAL_NUMBER;

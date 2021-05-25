@@ -12,6 +12,7 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.BoxLayout;
 
 public class scroll {
 
@@ -64,28 +65,10 @@ public class scroll {
 		JPanel panel = new JPanel();
 		
 		scrollPane = new JScrollPane();
-		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 254, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
-						.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))
-					.addContainerGap())
-		);
 		
 		table = new JTable();
 		scrollPane.setColumnHeaderView(table);
+		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.X_AXIS));
 		
 		textField = new JTextField();
 		textField.setColumns(10);
@@ -100,20 +83,20 @@ public class scroll {
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panel_1, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 232, Short.MAX_VALUE)
-						.addComponent(textField_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-						.addComponent(textField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE))
+						.addComponent(panel_1, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 297, Short.MAX_VALUE)
+						.addComponent(textField_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
+						.addComponent(textField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE))
 					.addGap(10))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(textField, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+					.addComponent(textField, GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+					.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		panel_1.setLayout(new GridLayout(0, 4, 0, 0));
@@ -142,6 +125,10 @@ public class scroll {
 		btnNewButton_7 = new JButton("New button");
 		panel_1.add(btnNewButton_7);
 		panel.setLayout(gl_panel);
-		frame.getContentPane().setLayout(groupLayout);
+		frame.getContentPane().add(panel);
+		frame.getContentPane().add(scrollPane);
+		
+		JButton btnNewButton_8 = new JButton("New button");
+		scrollPane.setViewportView(btnNewButton_8);
 	}
 }

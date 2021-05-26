@@ -245,7 +245,6 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			inputnegate = "";
 
 		} else if (e.getActionCommand().equals("\u2190")) { // 하나 지우기
-			System.out.println(isInputOperator);
 			if (!isInputOperator) {
 				if (lastInput == Constant.EQUAL_NUMBER) {
 
@@ -259,12 +258,15 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 						inputNumberField.setText(Constant.DEFAULT_VALUE);
 
 					} else { // .2 지우기하면 . 되어야 하는데, .도 같이 지워짐
-						//if(inputNumberField.getText().replaceAll("\\,", "").contains(".")) {
-						//	inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(inputNumberField.getText().replaceAll("\\,", "").substring(0,inputNumberField.getText().replaceAll("\\,", "").length() - 1))));
-						//}						
-						//else{
+						if(inputNumberField.getText().replaceAll("\\,", "").contains(".")) {
+							System.out.println("isInputOperator = " + isInputOperator);
+							System.out.println("inputNumberField.getText().replaceAll " + inputNumberField.getText().replaceAll("\\,", ""));
+							System.out.println("inputNumberField.getText().replaceAll Length " + inputNumberField.getText().replaceAll("\\,", "").length());
+							inputNumberField.setText(inputNumberField.getText().replaceAll("\\,", "").substring(0,inputNumberField.getText().replaceAll("\\,", "").length() - 1));
+						}						
+						else{
 							inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(inputNumberField.getText().replaceAll("\\,", "").substring(0,inputNumberField.getText().replaceAll("\\,", "").length() - 1))));
-						//}
+						}
 					}
 				}
 			}
@@ -319,7 +321,6 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			fourRuleCalculation(4);
 		} else if (e.getActionCommand().equals("=")) {
 
-			String resultArithmeticString = null;
 			BigDecimal big = new BigDecimal(inputNumberField.getText().replaceAll("\\,", "")).stripTrailingZeros();
 			//inputNumberField.setText(String.valueOf(big));
 			if (isFristInput) { // 첫 입력이었을때에는 아무것도 없어야 함,, 그냥 동일한 값 계속 출력
@@ -333,17 +334,16 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 				}
 				row[0] = firstOperand + calculate.operatorConversion(operator) + secondOperand;
 				calculationProcessString = firstOperand + calculate.operatorConversion(operator) + secondOperand;
-				System.out.println("calculationProcessString =" + calculationProcessString);
 			}
 				BigDecimal resultArithmetic = calculate.arithmetic(operator, firstOperand, secondOperand, inputNumberField);
 				System.out.println("resultArithmetic = " + resultArithmetic);
 				if(resultArithmetic != null) {
 					System.out.println("resultArithmetic PlainString = " + resultArithmetic);//.toPlainString()
-					int maximum = 16;
-					if (inputNumberField.getText().replaceAll("\\,", "").contains(".")) {
-						maximum = 17;
-					}
-					if (resultArithmetic.toPlainString().length() > maximum) {
+					//int maximum = 16;
+					//if (inputNumberField.getText().replaceAll("\\,", "").contains(".")) {
+					//	maximum = 17;
+					//}
+					if (resultArithmetic.toPlainString().length() > 16) {
 						if (inputNumberField.getText().replaceAll("\\,", "").contains(".")) {
 							inputNumberField.setText(String.valueOf(
 									new BigDecimal(String.format("%.17e", resultArithmetic)).stripTrailingZeros()));

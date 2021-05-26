@@ -322,7 +322,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			fourRuleCalculation(4);
 		} else if (e.getActionCommand().equals("=")) {
 
-			BigDecimal big = new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
+			BigDecimal big = new BigDecimal(inputNumberField.getText().replaceAll("\\,", "").replace("E", "e"));
 			System.out.println(big);
 			inputNumberField.setText(big.toPlainString());
 			if (isFristInput) { // 첫 입력이었을때에는 아무것도 없어야 함,, 그냥 동일한 값 계속 출력
@@ -352,9 +352,9 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 					}
 					if (resultArithmetic.toPlainString().length() > maximum) {
 						if (inputNumberField.getText().replaceAll("\\,", "").contains(".")) {
-							inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.17e", resultArithmetic)).stripTrailingZeros()));
+							inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.17e", resultArithmetic)).stripTrailingZeros()).replace("E", "e"));
 						} else {
-							inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.15e", resultArithmetic)).stripTrailingZeros()));
+							inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.15e", resultArithmetic)).stripTrailingZeros()).replace("E", "e"));
 						}
 					} else { inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(resultArithmetic.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros())); }
 				}

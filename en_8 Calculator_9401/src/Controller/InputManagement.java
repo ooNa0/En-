@@ -332,53 +332,49 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 					firstOperand = big;
 				}
 				row[0] = firstOperand + calculate.operatorConversion(operator) + secondOperand;
-				calculationProcessString = firstOperand + calculate.operatorConversion(operator);// + secondOperand;
+				calculationProcessString = firstOperand + calculate.operatorConversion(operator) + secondOperand;
+				System.out.println("calculationProcessString =" + calculationProcessString);
 			}
 				BigDecimal resultArithmetic = calculate.arithmetic(operator, firstOperand, secondOperand, inputNumberField);
+				System.out.println("resultArithmetic = " + resultArithmetic);
 				if(resultArithmetic != null) {
+					System.out.println("resultArithmetic PlainString = " + resultArithmetic);//.toPlainString()
 					int maximum = 16;
 					if (inputNumberField.getText().replaceAll("\\,", "").contains(".")) {
 						maximum = 17;
 					}
-					if (resultArithmetic.toPlainString().length() > 16) { //maximum
-						big = new BigDecimal(String.format("%.16e", resultArithmetic)).stripTrailingZeros();
-						/*
+					if (resultArithmetic.toPlainString().length() > maximum) {
 						if (inputNumberField.getText().replaceAll("\\,", "").contains(".")) {
-							big = new BigDecimal(String.format("%.17e", resultArithmetic)).stripTrailingZeros();
-							//inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.17e", resultArithmetic)).stripTrailingZeros()));
-						} 
-						else {
-							big = new BigDecimal(String.format("%.15e", resultArithmetic)).stripTrailingZeros();
-							//inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.15e", resultArithmetic)).stripTrailingZeros()));
-						}*/
-					} 
-					else {
-						big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", ""))).stripTrailingZeros();
-						inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(resultArithmetic));//.setScale(10, RoundingMode.HALF_UP)
+							inputNumberField.setText(String.valueOf(
+									new BigDecimal(String.format("%.17e", resultArithmetic)).stripTrailingZeros()));
+						} else {
+							inputNumberField.setText(String.valueOf(
+									new BigDecimal(String.format("%.15e", resultArithmetic)).stripTrailingZeros()));
+						}
+					} else {
+						inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(resultArithmetic.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros()));
 					}
-					inputNumberField.setText(String.valueOf(big));
-					//big = new BigDecimal(inputNumberField.getText().replaceAll("\\,", "")).stripTrailingZeros();
-					calculationProcessString += secondOperand;
-					row[0] += "=" + big;
-					calculationProcessString += "=";
 				}
-
-				
-			isFristInput = false;
-			lastInput = Constant.EQUAL_NUMBER;
-			isInputOperator = true;			
+				//big = new BigDecimal(String.valueOf(inputNumberField.getText()));
+				row[0] += "=" + inputNumberField.getText();
+				calculationProcessString += "=";
+			
+			isInputOperator = true;
+			System.out.println(calculationProcessString);
 			calculationProcessField.setText(calculationProcessString);
 			calculationProcessString = "";
 			model.addRow(row);
 			negatecheck = false;
+			//isFristInput = false;
+			lastInput = Constant.EQUAL_NUMBER;	
 
 		} else {
 			if (isInputOperator) { inputNumberField.setText(null); }
 			isInputOperator = false;
 			int maximum = 16;
-			if (inputNumberField.getText().replaceAll("\\,", "").contains("."))
-				maximum = 17;
-			System.out.println(inputNumberField.getText().replaceAll("\\,", "").replaceAll("\\.", "").length());
+			//if (inputNumberField.getText().replaceAll("\\,", "").contains("."))
+			//	maximum = 17;
+			System.out.println(inputNumberField.getText().replaceAll("\\,", "").length());
 			if (inputNumberField.getText().replaceAll("\\,", "").replaceAll("\\.", "").length() < maximum) {// Constant.MAXIMUM_TEXT
 				if (inputNumberField.getText().replaceAll("\\,", "").equals(Constant.DEFAULT_VALUE)) {
 

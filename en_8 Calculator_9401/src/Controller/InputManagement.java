@@ -333,23 +333,29 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 					if (inputNumberField.getText().replaceAll("\\,", "").contains(".")) {
 						maximum = 17;
 					}
-					if (resultArithmetic.toPlainString().length() > maximum) {
+					if (resultArithmetic.toPlainString().length() > 16) { //maximum
+						big = new BigDecimal(String.format("%.16e", resultArithmetic)).stripTrailingZeros();
+						/*
 						if (inputNumberField.getText().replaceAll("\\,", "").contains(".")) {
-							inputNumberField.setText(String.valueOf(
-									new BigDecimal(String.format("%.17e", resultArithmetic)).stripTrailingZeros()));
+							big = new BigDecimal(String.format("%.17e", resultArithmetic)).stripTrailingZeros();
+							//inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.17e", resultArithmetic)).stripTrailingZeros()));
 						} 
 						else {
-							inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.15e", resultArithmetic)).stripTrailingZeros()));
-						}
+							big = new BigDecimal(String.format("%.15e", resultArithmetic)).stripTrailingZeros();
+							//inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.15e", resultArithmetic)).stripTrailingZeros()));
+						}*/
 					} 
 					else {
-						inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(resultArithmetic.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros()));
+						big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", ""))).stripTrailingZeros();
+						inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(resultArithmetic));//.setScale(10, RoundingMode.HALF_UP)
 					}
+					inputNumberField.setText(String.valueOf(big));
+					//big = new BigDecimal(inputNumberField.getText().replaceAll("\\,", "")).stripTrailingZeros();
 					calculationProcessString += secondOperand;
-					big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", ""))).stripTrailingZeros();
 					row[0] += "=" + big;
 					calculationProcessString += "=";
 				}
+
 				
 			isFristInput = false;
 			lastInput = Constant.EQUAL_NUMBER;

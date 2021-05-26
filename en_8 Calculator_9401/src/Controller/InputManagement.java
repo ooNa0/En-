@@ -66,30 +66,16 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 	public InputManagement() {
 		calculate = new CalculateManagement();
 		setting = new SetCalculator();
-
-	}// calculate.operatorConversion(operator)
+	}
 
 	public void initialize() {
 		frame = new JFrame("나영's 계산기");
 		frame.pack();
 		frame.setBounds(100, 100, 458, 600);
+		frame.addComponentListener(this);
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setMinimumSize(new Dimension(458, 600));
-		// frame.setLocationRelativeTo(null); // 정중앙에 띄우기
-		/*
-		 * public AutoLabel() { setHorizontalAlignment(SwingConstants.CENTER);
-		 * setText("AutoLable"); addComponentListener(new ComponentAdapter() {
-		 * 
-		 * @Override public void componentResized(ComponentEvent e) { resize(); } }); }
-		 * 
-		 * void resize() { int j=0; while(true) { Font before = getFont(); Font font =
-		 * new Font(before.getName(), before.getStyle(), j); setFont(font);
-		 * if(getPreferredSize().getWidth()>getWidth() ||
-		 * getPreferredSize().getHeight()>getHeight()) { font = new
-		 * Font(before.getName(), before.getStyle(), j-1); setFont(font); break; } j++;
-		 * }
-		 */
 		JPanel panel = new JPanel();
 
 		String[] columnName = new String[] { "계산 기록" };

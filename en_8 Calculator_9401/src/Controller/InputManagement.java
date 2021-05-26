@@ -356,7 +356,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 						} else {
 							inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.15e", resultArithmetic)).stripTrailingZeros()).replace("E", "e"));
 						}
-					} else { inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(resultArithmetic.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros())); }
+					} else { inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(resultArithmetic.setScale(10, RoundingMode.HALF_UP))); }//.stripTrailingZeros()
 				}
 				//big = new BigDecimal(String.valueOf(inputNumberField.getText()));
 			row[0] += "=" + inputNumberField.getText();
@@ -398,7 +398,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 	}
 
 	void fourRuleCalculation(int calculateOperator) {
-		BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", ""))).stripTrailingZeros();
+		BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", "")));//.stripTrailingZeros();
 		inputNumberField.setText(String.valueOf(new DecimalFormat("#,###,###,###,###.################").format(big)));
 		System.out.println("--big =" + big);
 		System.out.println("3총사 =" + isFristInput);

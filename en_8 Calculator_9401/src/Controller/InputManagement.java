@@ -273,8 +273,10 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 				inputNumberField.setText("0.");
 			}
 			if (!inputNumberField.getText().replaceAll("\\,", "").contains(".")) { // 텍스트 공간에 . 이 없을 경우에 추가가능!
-				inputNumberField.setText(inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand());
+				//inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(inputNumberField.getText().replaceAll("\\,", "")) + e.getActionCommand()));
+				inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
 			}
+			isFristInput = true; // 0. 해주거 네게이트 시에 되어야 함.
 
 		} else if (e.getActionCommand().equals("±")) { // +/- 버튼
 

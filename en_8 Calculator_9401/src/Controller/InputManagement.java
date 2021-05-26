@@ -180,40 +180,29 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		panel.setLayout(bottonsGroupPanel);
 		frame.getContentPane().setLayout(groupLayout);
 		buttons[3].requestFocusInWindow();
-		frame.addComponentListener(this);
 		frame.setVisible(true);
 	}
-			public void componentResized(ComponentEvent e) {
-				System.out.println("222222222222");
-				resize();
-			}
-			@Override
-			public void componentHidden(ComponentEvent arg0) { // setVisible(false)되면 호출
-			System.out.println("componentHidden() 메서드 호출 - setVisible(false)되면 호출");
-			}
+			public void componentResized(ComponentEvent e) {resize();}
+			public void componentHidden(ComponentEvent arg0) {}
+			public void componentMoved(ComponentEvent arg0) {}
+			public void componentShown(ComponentEvent arg0) {}
 
-			@Override
-			public void componentMoved(ComponentEvent arg0) { // 컴포넌트가 이동될 때 호출
-			System.out.println("componentMoved() 메서드 호출 - 컴포넌트가 이동될 때 호출");
-			}
-			@Override
-			public void componentShown(ComponentEvent arg0) { // 호출 화면에 표시되면 호출
-			System.out.println("componentShown() 메서드 호출 - 호출 화면에 표시되면 호출");
-			}
-
-	void resize() {
-		int j = 0;
-		while (true) {
-			Font before = getFont();
-			Font font = new Font(before.getName(), before.getStyle(), j);
-			setFont(font);
-			if (getPreferredSize().getWidth() > getWidth() || getPreferredSize().getHeight() > getHeight()) {
-				font = new Font(before.getName(), before.getStyle(), j - 1);
-				setFont(font);
-				break;
-			}
+	private void resize() {
+		//while (true) {
+			Font before = inputNumberField.getFont();
+			int j = before.getSize();
+			System.out.println(before.getSize());
 			j++;
-		}
+			inputNumberField.setFont(new Font(before.getName(), before.getStyle(), j)); // buttons[i].setFont(new Font("굴림", Font.PLAIN, 30));
+
+			System.out.println(frame.getContentPane().getSize());
+			System.out.println(getHeight());
+			if (getPreferredSize().getWidth() > getWidth() || getPreferredSize().getHeight() > getHeight()) {
+				j--;
+				setFont(new Font(before.getName(), before.getStyle(), j - 1));
+				//break;
+			}
+		//}
 	}
 
 	public void keyTyped(KeyEvent e) {

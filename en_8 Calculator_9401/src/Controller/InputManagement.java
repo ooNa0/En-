@@ -235,72 +235,32 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 
 	public void keyReleased(KeyEvent e) {
 		if ((e.getModifiers() & 1) != 0) {
-			if (e.getKeyCode() == 61) {
-				buttons[15].doClick();
-			}
-			if (e.getKeyCode() == 56) {
-				buttons[7].doClick();
-			}
+			if (e.getKeyCode() == 61) { buttons[15].doClick(); }
+			if (e.getKeyCode() == 56) { buttons[7].doClick(); }
 		} else {
-			if (e.getKeyCode() == 56) {
-				buttons[5].doClick();
-			}
-			if (e.getKeyCode() == 61) {
-				buttons[19].doClick();
-			}
+			if (e.getKeyCode() == 56) { buttons[5].doClick(); }
+			if (e.getKeyCode() == 61) { buttons[19].doClick(); }
 		}
 	}
 
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
-		case KeyEvent.VK_BACK_SPACE:
-			buttons[2].doClick();
-			break;// 뒤로가기.
-		case KeyEvent.VK_ENTER:
-			buttons[19].doClick();
-			break; // 엔터
-		case 27:
-			buttons[1].doClick();
-			break; // esc// C
-		case 127:
-			buttons[0].doClick();
-			break;// delete // CE
-		case 45:
-			buttons[11].doClick();
-			break; // - 버튼
-		case 47:
-			buttons[3].doClick();
-			break;// / 버튼
-		case 46:
-			buttons[18].doClick();
-			break;// .
-		case 48:
-			buttons[17].doClick();
-			break;
-		case 49:
-			buttons[12].doClick();
-			break;
-		case 50:
-			buttons[13].doClick();
-			break;
-		case 51:
-			buttons[14].doClick();
-			break;
-		case 52:
-			buttons[8].doClick();
-			break;
-		case 53:
-			buttons[9].doClick();
-			break;
-		case 54:
-			buttons[10].doClick();
-			break;
-		case 55:
-			buttons[4].doClick();
-			break;
-		case 57:
-			buttons[6].doClick();
-			break;
+		case KeyEvent.VK_BACK_SPACE: buttons[2].doClick(); break;// 뒤로가기.
+		case KeyEvent.VK_ENTER: buttons[19].doClick(); break; // 엔터
+		case 27: buttons[1].doClick(); break; // esc// C
+		case 127: buttons[0].doClick(); break;// delete // CE
+		case 45: buttons[11].doClick();break; // - 버튼
+		case 47: buttons[3].doClick(); break;// / 버튼
+		case 46: buttons[18].doClick(); break;// .
+		case 48: buttons[17].doClick(); break;
+		case 49: buttons[12].doClick(); break;
+		case 50: buttons[13].doClick(); break;
+		case 51: buttons[14].doClick(); break;
+		case 52: buttons[8].doClick(); break;
+		case 53: buttons[9].doClick(); break;
+		case 54: buttons[10].doClick(); break;
+		case 55: buttons[4].doClick(); break;
+		case 57: buttons[6].doClick(); break;
 		}
 	}
 

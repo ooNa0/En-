@@ -87,23 +87,6 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		};
 		JTable table = new JTable(model);
 		JScrollPane scrollPane = new JScrollPane(table);
-		/*
-		 * GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		 * groupLayout .setHorizontalGroup(
-		 * groupLayout.createParallelGroup(Alignment.LEADING)
-		 * .addGroup(groupLayout.createSequentialGroup().addContainerGap()
-		 * .addComponent(panel, GroupLayout.PREFERRED_SIZE, 254, Short.MAX_VALUE)
-		 * .addPreferredGap(ComponentPlacement.RELATED).addComponent(scrollPane,
-		 * GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
-		 * .addContainerGap()));
-		 * groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.
-		 * LEADING).addGroup(Alignment.TRAILING,
-		 * groupLayout.createSequentialGroup().addContainerGap()
-		 * .addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-		 * .addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 241,
-		 * Short.MAX_VALUE) .addComponent(panel, Alignment.LEADING,
-		 * GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)) .addContainerGap()));
-		 */
 
 		JButton resetButton = new JButton("계산기록 초기화");
 		resetButton.addActionListener(this);
@@ -182,11 +165,11 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		buttons[3].requestFocusInWindow();
 		frame.setVisible(true);
 	}
-			public void componentResized(ComponentEvent e) {resize();}
-			public void componentHidden(ComponentEvent arg0) {}
-			public void componentMoved(ComponentEvent arg0) {}
-			public void componentShown(ComponentEvent arg0) {}
-
+			public void componentResized(ComponentEvent e) {}//resize();}
+			public void componentHidden(ComponentEvent e) {}
+			public void componentMoved(ComponentEvent e) {}
+			public void componentShown(ComponentEvent e) {}
+/*
 	private void resize() {
 		//while (true) {
 			Font before = inputNumberField.getFont();
@@ -203,7 +186,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 				//break;
 			}
 		//}
-	}
+	}*/
 
 	public void keyTyped(KeyEvent e) {
 	}
@@ -257,13 +240,8 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			model.setNumRows(0); // 기록 초기화
 
 		} else if (e.getActionCommand().equals("CE")) { // 연산자 기록은 그대로
-			// firstOperand = new
-			// BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,",
-			// ""))).stripTrailingZeros();
+			
 			inputNumberField.setText(Constant.DEFAULT_VALUE);
-			// firstOperand = BigDecimal.ZERO;
-			// calculationProcessString = "";
-			// calculationProcessField.setText(null);
 			inputnegate = "";
 
 		} else if (e.getActionCommand().equals("\u2190")) { // 하나 지우기
@@ -281,14 +259,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 						inputNumberField.setText(Constant.DEFAULT_VALUE);
 
 					} else if (inputNumberField.getText().replaceAll("\\,", "").length() > Constant.MINIMUM_TEXT) {
-						String a = inputNumberField.getText().replaceAll("\\,", "").substring(0,
-								inputNumberField.getText().replaceAll("\\,", "").length() - 1);
-						// inputNumberField.setText(new
-						// DecimalFormat("#,###,###,###,###.################").format(a));
-						// String a =
-						// inputNumberField.getText().substring(0,inputNumberField.getText().length() -
-						// 1);
-						inputNumberField.setText(a);// new DecimalFormat("#,###,###,###,###.################").format(a)
+						inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(inputNumberField.getText().replaceAll("\\,", "").substring(0,inputNumberField.getText().replaceAll("\\,", "").length() - 1))));
 					}
 				}
 			}
@@ -302,13 +273,6 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 				inputNumberField.setText("0.");
 			}
 			if (!inputNumberField.getText().replaceAll("\\,", "").contains(".")) { // 텍스트 공간에 . 이 없을 경우에 추가가능!
-				// String b = inputNumberField.getText().replaceAll("\\,", "");
-				// b += ".";
-				// b = new DecimalFormat("###,###.##").format(new BigDecimal(b));
-				// inputNumberField.setText(new
-				// DecimalFormat("#,###,###,###,###.################").format(new
-				// BigDecimal(b)));
-				// inputNumberField.setText(String.valueOf(new BigDecimal(b)));
 				inputNumberField.setText(inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand());
 			}
 
@@ -331,13 +295,10 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 				if (operator == 0) {
 					calculationProcessField.setText(inputnegate);
 				} else {
-					calculationProcessField
-							.setText(calculationProcessString + calculate.operatorConversion(operator) + inputnegate);
+					calculationProcessField.setText(calculationProcessString + calculate.operatorConversion(operator) + inputnegate);
 				}
 			}
-			inputNumberField.setText(String.valueOf(u.negate()));//// String.valueOf(u.multiply(BigDecimal.valueOf(-1))));
-			// isInputOperator = true; // . 에,,
-			// isFristInput = false;
+			inputNumberField.setText(String.valueOf(u.negate()));
 
 		} else if (e.getActionCommand().equals("+")) {
 			fourRuleCalculation(1);
@@ -350,76 +311,54 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		} else if (e.getActionCommand().equals("=")) {
 
 			String resultArithmeticString = null;
-			System.out.println("firstOperand =" + firstOperand);
-			System.out.println("secondOperand =" + secondOperand);
-			System.out.println("operator =" + operator);
-			// BigDecimal big = new
-			// BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,",
-			// ""))).stripTrailingZeros();
 			BigDecimal big = new BigDecimal(inputNumberField.getText().replaceAll("\\,", "")).stripTrailingZeros();
 			inputNumberField.setText(String.valueOf(big));
-			System.out.println("big = " + big);
-			// if(big.scale() < 0) big = big.setScale(0);
-			// inputNumberField.setText(String.valueOf(big));
 			if (isFristInput) { // 첫 입력이었을때에는 아무것도 없어야 함,, 그냥 동일한 값 계속 출력
 				row[0] = String.valueOf(big);
 				calculationProcessString = String.valueOf(big);
 			} else {
 				if (lastInput != Constant.EQUAL_NUMBER) {
-					secondOperand = big;// new BigDecimal(inputNumberField.getText().replaceAll("\\,", "")).setScale(0);
+					secondOperand = big;
 				} else {
-					firstOperand = big;// new BigDecimal(inputNumberField.getText().replaceAll("\\,", "")).setScale(0);
+					firstOperand = big;
 				}
-				row[0] = firstOperand + calculate.operatorConversion(operator) + secondOperand;// inputNumberField.getText().replaceAll("\\,",
-																								// "");
-				calculationProcessString = firstOperand + calculate.operatorConversion(operator) + secondOperand;
-				resultArithmeticString = calculate.arithmetic(operator, firstOperand, secondOperand, inputNumberField);
+				row[0] = firstOperand + calculate.operatorConversion(operator) + secondOperand;
+				calculationProcessString = firstOperand + calculate.operatorConversion(operator);// + secondOperand;
 			}
-			if (resultArithmeticString == null) {// && isFristInput
-				// inputNumberField.setText(String.valueOf(big));
-			} else {
-				System.out.println("resultArithmetic = " + resultArithmeticString);
-				System.out.println(resultArithmeticString.length());
-				BigDecimal resultArithmetic = new BigDecimal(resultArithmeticString);
-				System.out.println("resultArithmetic = " + resultArithmetic);
-				System.out.println("resultArithmetic PlainString = " + resultArithmetic.toPlainString());
-				int maximum = 16;
-				if (inputNumberField.getText().replaceAll("\\,", "").contains(".")) {
-					maximum = 17;
-				}
-				if (resultArithmetic.toPlainString().length() > maximum) {
+				BigDecimal resultArithmetic = calculate.arithmetic(operator, firstOperand, secondOperand, inputNumberField);
+				if(resultArithmetic != null) {
+					int maximum = 16;
 					if (inputNumberField.getText().replaceAll("\\,", "").contains(".")) {
-						inputNumberField.setText(String.valueOf(
-								new BigDecimal(String.format("%.17e", resultArithmetic)).stripTrailingZeros()));
-					} else {
-						inputNumberField.setText(String.valueOf(
-								new BigDecimal(String.format("%.15e", resultArithmetic)).stripTrailingZeros()));
+						maximum = 17;
 					}
-					// inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.15e",
-					// resultArithmetic.stripTrailingZeros())).stripTrailingZeros()));
-				} else {
-					inputNumberField
-							.setText(new DecimalFormat("#,###,###,###,###.################").format(resultArithmetic));
+					if (resultArithmetic.toPlainString().length() > maximum) {
+						if (inputNumberField.getText().replaceAll("\\,", "").contains(".")) {
+							inputNumberField.setText(String.valueOf(
+									new BigDecimal(String.format("%.17e", resultArithmetic)).stripTrailingZeros()));
+						} 
+						else {
+							inputNumberField.setText(String.valueOf(new BigDecimal(String.format("%.15e", resultArithmetic)).stripTrailingZeros()));
+						}
+					} 
+					else {
+						inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(resultArithmetic.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros()));
+					}
+					calculationProcessString += secondOperand;
+					big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", ""))).stripTrailingZeros();
+					row[0] += "=" + big;
+					calculationProcessString += "=";
 				}
-				isFristInput = false;
-				lastInput = Constant.EQUAL_NUMBER;// operator = Constant.EQUAL_NUMBER;
-				// if(isFristInput == false) isFristInput = true; else
-			}
-			isInputOperator = true;
-			big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", ""))).stripTrailingZeros();
-			row[0] += "=" + big;
-			calculationProcessString += "=";
-			System.out.println(calculationProcessString);
+				
+			isFristInput = false;
+			lastInput = Constant.EQUAL_NUMBER;
+			isInputOperator = true;			
 			calculationProcessField.setText(calculationProcessString);
-			// inputFloatingPoint(calculationProcessString);
 			calculationProcessString = "";
 			model.addRow(row);
 			negatecheck = false;
 
 		} else {
-			if (isInputOperator) {
-				inputNumberField.setText(null);
-			}
+			if (isInputOperator) { inputNumberField.setText(null); }
 			isInputOperator = false;
 			int maximum = 16;
 			if (inputNumberField.getText().replaceAll("\\,", "").contains("."))
@@ -429,31 +368,14 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 				if (inputNumberField.getText().replaceAll("\\,", "").equals(Constant.DEFAULT_VALUE)) {
 
 					inputNumberField.setText(null);
-					System.out.println(e.getActionCommand());
 					inputNumberField.setText(e.getActionCommand());
 
 				} else {
-					// NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.KOREA);
-					// nf.setMaximumFractionDigits(16);
 					if (inputNumberField.getText().contains(".")) { // 콤마가 있을경우에는 그냥
 						inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
 
 					} else {
-						// BigDecimal input = new
-						// BigDecimal(inputNumberField.getText().replaceAll("\\,", "") +
-						// e.getActionCommand());
-						// System.out.println("이거 뭐여 .이 안대." +
-						// inputNumberField.getText().replaceAll("\\,", "")+ e.getActionCommand());
-						// System.out.println("0이랑 같은 지:" + new BigDecimal(inputNumberField.getText() +
-						// e.getActionCommand()));
-						inputNumberField.setText(String.valueOf(new BigDecimal(
-								inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand())));
-						// inputNumberField.setText(String.valueOf(new
-						// BigDecimal(inputNumberField.getText().replaceAll("\\,", "") +
-						// e.getActionCommand())));
-						// inputNumberField.setText(String.format("%.15E", new
-						// BigDecimal(inputNumberField.getText().replaceAll("\\,", "") +
-						// e.getActionCommand())));
+						inputNumberField.setText(String.valueOf(new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand()))));
 					}
 				}
 			}
@@ -462,85 +384,39 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 	}
 
 	void fourRuleCalculation(int calculateOperator) {
-		System.out.println("isFristInput =" + isFristInput);
-		System.out.println("isInputOperator =" + isInputOperator);
-		System.out.println("firstOperand =" + firstOperand);
-		System.out.println("secondOperand =" + secondOperand);
-		BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", "")))
-				.stripTrailingZeros();
-		inputNumberField.setText(String.valueOf(big));
+		BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", ""))).stripTrailingZeros();
+		inputNumberField.setText(String.valueOf(new DecimalFormat("#,###,###,###,###.################").format(big)));
 		System.out.println("big =" + big);
-		// if(big.scale() < 0) big = big.setScale(0);
-		// inputNumberField.setText(String.valueOf(big));
 		if (isFristInput || isInputOperator || calculationProcessString == "") { // 첫입력이거나, 전에 연산자였는지
 			if (lastInput == Constant.EQUAL_NUMBER) {
-				firstOperand = big;// new BigDecimal(inputNumberField.getText().replaceAll("\\,",
-									// "")).stripTrailingZeros();
+				firstOperand = big;
 				calculationProcessString += firstOperand;
 			} else if (operator != calculateOperator) { // 동일 연산자 입력이 아니라면
 
-				firstOperand = big;// new BigDecimal(inputNumberField.getText().replaceAll("\\,",
-									// "")).stripTrailingZeros();
+				firstOperand = big;
 				if (isFristInput)
 					calculationProcessString += firstOperand;
 			}
 		} else { // 연산자를 입력받았는데, 앞에가 첫입력도 아닌데 숫자라면
-			secondOperand = big;// new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
+			secondOperand = big;
 			System.out.println("길이 : " + inputNumberField.getText().length());
 
-			inputNumberField.setText(calculate.arithmetic(operator, firstOperand, secondOperand, inputNumberField));// String.format("%.15E",
-
-			calculationProcessString = inputNumberField.getText();// .replaceAll("\\,", "");
+			inputNumberField.setText(String.valueOf(new DecimalFormat("#,###,###,###,###.##############").format(calculate.arithmetic(operator, firstOperand, secondOperand, inputNumberField))));
+			calculationProcessString = inputNumberField.getText();
 			if (lastInput != Constant.EQUAL_NUMBER) {
-				row[0] = firstOperand + calculate.operatorConversion(operator) + secondOperand + "="
-						+ inputNumberField.getText();// .replaceAll("\\,", "");
+				row[0] = firstOperand + calculate.operatorConversion(operator) + secondOperand + "=" + inputNumberField.getText();
 				model.addRow(row);
 			}
 		}
 		big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", ""))).stripTrailingZeros();
-		// if(big.scale() < 0) big = big.setScale(0);
 		System.out.println("firstOperand =" + firstOperand);
 		firstOperand = big;
 		System.out.println("firstOperand =" + firstOperand);
 		operator = calculateOperator;
-		calculationProcessField.setText(calculationProcessString + calculate.operatorConversion(operator));// String.format("%.15E",
+		calculationProcessField.setText(calculationProcessString + calculate.operatorConversion(operator));
 		isInputOperator = true;
 		isFristInput = false;
 		negatecheck = false;
 		lastInput = calculateOperator;
 	}
-	/*
-	 * String inputFloatingPoint(String replaceString) { // 지수로 변환 // <클때> int
-	 * exponentNumber = 16; BigDecimal replaceDecimal = new
-	 * BigDecimal(replaceString); BigDecimal dividNumber = new
-	 * BigDecimal("10000000000000000"); if (replaceDecimal.compareTo(dividNumber) >
-	 * -1) { // 100~000 보다 크거나 같을 경우 replaceDecimal.divide(secondOperand,
-	 * MathContext.DECIMAL64); while (replaceDecimal.divide(new
-	 * BigDecimal("10")).compareTo(new BigDecimal("0")) == 1) { // 0보다 클경우
-	 * exponentNumber += 1; } } // bigDecimal 값을 1 000 000 000 000 000 0 으로 나누기 //
-	 * 나눈 값이 만약에 1 > 이라면 ! // % 해서 나머지 System.out.println(replaceDecimal + "e+" +
-	 * exponentNumber); return String.valueOf(replaceDecimal) + "e+" +
-	 * exponentNumber; }
-	 * 
-	 * void setPanel() {
-	 * 
-	 * }
-	 */
 }
-/*
- * public class AutoLabel extends JLabel {
- * 
- * public AutoLabel() { setHorizontalAlignment(SwingConstants.CENTER);
- * setText("AutoLable"); addComponentListener(new ComponentAdapter() {
- * 
- * @Override public void componentResized(ComponentEvent e) { resize(); } }); }
- * 
- * void resize() { int i=0; while(true) { Font before = getFont(); Font font =
- * new Font(before.getName(), before.getStyle(), i); setFont(font);
- * if(getPreferredSize().getWidth()>getWidth() ||
- * getPreferredSize().getHeight()>getHeight()) { font = new
- * Font(before.getName(), before.getStyle(), i-1); setFont(font); break; } i++;
- * } }
- * 
- * }
- */

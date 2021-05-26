@@ -258,8 +258,13 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 
 						inputNumberField.setText(Constant.DEFAULT_VALUE);
 
-					} else if (inputNumberField.getText().replaceAll("\\,", "").length() > Constant.MINIMUM_TEXT) {
-						inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(inputNumberField.getText().replaceAll("\\,", "").substring(0,inputNumberField.getText().replaceAll("\\,", "").length() - 1))));
+					} else { // .2 지우기하면 . 되어야 하는데, .도 같이 지워짐
+						//if(inputNumberField.getText().replaceAll("\\,", "").contains(".")) {
+						//	inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(inputNumberField.getText().replaceAll("\\,", "").substring(0,inputNumberField.getText().replaceAll("\\,", "").length() - 1))));
+						//}						
+						//else{
+							inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(inputNumberField.getText().replaceAll("\\,", "").substring(0,inputNumberField.getText().replaceAll("\\,", "").length() - 1))));
+						//}
 					}
 				}
 			}
@@ -276,12 +281,14 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 				//inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(inputNumberField.getText().replaceAll("\\,", "")) + e.getActionCommand()));
 				inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
 			}
+			isInputOperator = false;
 			isFristInput = true; // 0. 해주거 네게이트 시에 되어야 함.
+			negatecheck = false;
 
 		} else if (e.getActionCommand().equals("±")) { // +/- 버튼
 
 			BigDecimal u = new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
-			System.out.println("u =" + operator);
+			//System.out.println("u =" + operator);
 			// 앞에 연산자면 negate(~~) 필요하고, 아니라면 -만 붙었다 안붙었다//inputnegate
 			if (isFristInput && !isBackspace) {
 				isInputOperator = true;
@@ -299,8 +306,8 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 				} else {
 					calculationProcessField.setText(calculationProcessString + calculate.operatorConversion(operator) + inputnegate);
 				}
-			}
-			inputNumberField.setText(String.valueOf(u.negate()));
+			} // e 나올 때 네게이트 부분			
+			inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(u.negate()));
 
 		} else if (e.getActionCommand().equals("+")) {
 			fourRuleCalculation(1);
@@ -314,10 +321,10 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 
 			String resultArithmeticString = null;
 			BigDecimal big = new BigDecimal(inputNumberField.getText().replaceAll("\\,", "")).stripTrailingZeros();
-			inputNumberField.setText(String.valueOf(big));
+			//inputNumberField.setText(String.valueOf(big));
 			if (isFristInput) { // 첫 입력이었을때에는 아무것도 없어야 함,, 그냥 동일한 값 계속 출력
-				row[0] = String.valueOf(big);
-				calculationProcessString = String.valueOf(big);
+				row[0] = String.valueOf(big);// + "=" + String.valueOf(big);
+				calculationProcessString = String.valueOf(big);// + "=";
 			} else {
 				if (lastInput != Constant.EQUAL_NUMBER) {
 					secondOperand = big;
@@ -393,7 +400,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 
 	void fourRuleCalculation(int calculateOperator) {
 		BigDecimal big = new BigDecimal(String.valueOf(inputNumberField.getText().replaceAll("\\,", ""))).stripTrailingZeros();
-		inputNumberField.setText(String.valueOf(new DecimalFormat("#,###,###,###,###.################").format(big)));
+		//inputNumberField.setText(String.valueOf(new DecimalFormat("#,###,###,###,###.################").format(big)));
 		System.out.println("big =" + big);
 		if (isFristInput || isInputOperator || calculationProcessString == "") { // 첫입력이거나, 전에 연산자였는지
 			if (lastInput == Constant.EQUAL_NUMBER) {

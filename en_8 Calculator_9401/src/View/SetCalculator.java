@@ -45,11 +45,11 @@ public class SetCalculator {
 		JTextField TextField = new JTextField(firstInput);
 		TextField.setHorizontalAlignment(SwingConstants.RIGHT);
 		TextField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-		if(fontSize == 20) {
-			TextField.setFont(new Font("±¼¸²", Font.BOLD, fontSize));			
+		if(firstInput == Constant.DEFAULT_VALUE) {
+			TextField.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, fontSize));			
 		}
 		else {
-			TextField.setFont(new Font("±¼¸²", Font.PLAIN, fontSize));			
+			TextField.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, fontSize));			
 		}
 		TextField.setColumns(10);
 		TextField.setEditable(false);

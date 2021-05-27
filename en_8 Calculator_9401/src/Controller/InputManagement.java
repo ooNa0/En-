@@ -412,21 +412,20 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			}
 			negatecheck = false;isRealFristInput = false;
 		}
-		BigDecimal input = new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
-		if(input.compareTo(overflow) >= 0) {
-			// || inputNumberField.getText().replaceAll("\\,", "").compareTo("1e+10000")
-			inputNumberField.setText("오버플로우");
-			calculationProcessString = "";
-			calculationProcessField.setText(null);
-		}
-		if(input.compareTo(underflow) <= 0) {
-			System.out.println(input);
-			System.out.println(underflow);
-			System.out.println("값 : " +input.compareTo(underflow));
-			inputNumberField.setText("언더플로우");
-			calculationProcessString = "";
-			calculationProcessField.setText(null);
-		}
+		if(isInputOperator) {
+			BigDecimal input = new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
+			if(input.compareTo(overflow) >= 0) {
+				// || inputNumberField.getText().replaceAll("\\,", "").compareTo("1e+10000")
+				inputNumberField.setText("오버플로우");
+				calculationProcessString = "";
+				calculationProcessField.setText(null);
+			}
+			if((input.compareTo(BigDecimal.ZERO) != 0) && (input.compareTo(underflow) <= 0)) {
+				inputNumberField.setText("언더플로우");
+				calculationProcessString = "";
+				calculationProcessField.setText(null);
+			}
+		}		
 	}
 
 	void fourRuleCalculation(int calculateOperator) {

@@ -142,24 +142,18 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 
 		buttonPanel.setLayout(new GridLayout(0, 4, 3, 3));
 
-		String[] str = { "CE", "C", "\u2190", "÷", "7", "8", "9", "×", "4", "5", "6", "-", "1", "2", "3", "+", "±", "0",
-				".", "=" };
+		String[] str = { "CE", "C", "\u2190", "÷", "7", "8", "9", "×", "4", "5", "6", "-", "1", "2", "3", "+", "±", "0", ".", "=" };
 		buttons = new JButton[20];
 		for (int i = 0; i < buttons.length; i++) {
 
 			buttons[i] = new JButton(str[i]);
-			buttons[i].setFont(new Font("굴림", Font.PLAIN, 30));
+			buttons[i].setFont(new Font("맑은 고닥", Font.PLAIN, 40));
 			if ((i == 4) || (i == 5) || (i == 6) || (i == 8) || (i == 9) || (i == 10) || (i == 12) || (i == 13)
 					|| (i == 14) || (i == 17)) {
 				buttons[i].setBackground(new Color(255, 255, 255));
 			} else {
 				buttons[i].setBackground(new Color(230, 230, 230));
 			}
-			/*
-			 * buttons[i].addActionListener(new ActionListener() { public void
-			 * actionPerformed(ActionEvent e) { //calculate.actionPerformed(e); } });
-			 */
-			// buttons[i].addActionListener(new EventHandler());
 			buttons[i].addActionListener(this);
 			buttons[i].addKeyListener(this);
 			buttonPanel.add(buttons[i]);

@@ -327,14 +327,14 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			inputNumberField.setText(big.toPlainString());
 			if (isFristInput) { // 첫 입력이었을때에는 아무것도 없어야 함,, 그냥 동일한 값 계속 출력
 				row[0] = String.valueOf(big);// + "=" + String.valueOf(big);
-				calculationProcessString = big.toPlainString();// + "=";
+				calculationProcessString = String.valueOf(big);//.toPlainString();// + "=";
 			} else {
 				if (lastInput != Constant.EQUAL_NUMBER) {
 					secondOperand = big;
 				} else {
 					firstOperand = big;
 				}
-				row[0] = firstOperand + calculate.operatorConversion(operator) + secondOperand;
+				//row[0] = firstOperand + calculate.operatorConversion(operator) + secondOperand;
 				if(negatecheck) {
 					calculationProcessString = firstOperand + calculate.operatorConversion(operator) + inputnegate;					
 				}
@@ -359,8 +359,8 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 					} else { inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(resultArithmetic.setScale(10, RoundingMode.HALF_UP))); }//.stripTrailingZeros()
 				}
 				//big = new BigDecimal(String.valueOf(inputNumberField.getText()));
-			row[0] += "=" + inputNumberField.getText();
 			calculationProcessString += "=";
+			row[0] = calculationProcessString + inputNumberField.getText();
 			isInputOperator = true;
 			System.out.println(calculationProcessString);
 			calculationProcessField.setText(calculationProcessString);

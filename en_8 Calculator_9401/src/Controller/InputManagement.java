@@ -208,9 +208,10 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_BACK_SPACE: buttons[2].doClick(); break;// 뒤로가기.
 		case KeyEvent.VK_ENTER: buttons[19].doClick(); break; // 엔터
+		case KeyEvent.VK_F9: buttons[16].doClick(); break; // 엔터
 		case 27: buttons[1].doClick(); break; // esc// C
 		case 127: buttons[0].doClick(); break;// delete // CE
-		case 45: buttons[11].doClick();break; // - 버튼
+		case 45: buttons[11].doClick(); break; // - 버튼
 		case 47: buttons[3].doClick(); break;// / 버튼
 		case 46: buttons[18].doClick(); break;// .
 		case 48: buttons[17].doClick(); break;

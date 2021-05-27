@@ -63,7 +63,6 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 	private SetCalculator setting;
 	private String inputnegate = "";
 	private boolean isBackspace = false;
-
 	public InputManagement() {
 		calculate = new CalculateManagement();
 		setting = new SetCalculator();
@@ -114,7 +113,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 								.addComponent(panel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 511,
 										Short.MAX_VALUE))));
 
-		inputNumberField = setting.setTextField(Constant.DEFAULT_VALUE, 20);
+		inputNumberField = setting.setTextField(Constant.DEFAULT_VALUE, 50);
 		calculationProcessField = setting.setTextField(" ", 15);
 
 		JPanel buttonPanel = new JPanel();
@@ -133,7 +132,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 						.addComponent(calculationProcessField, GroupLayout.PREFERRED_SIZE, 29,
 								GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(inputNumberField, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+						.addComponent(inputNumberField, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED)
 						.addComponent(buttonPanel, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE).addContainerGap()));
 
@@ -194,6 +193,16 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 	}
 
 	public void keyReleased(KeyEvent e) {
+		System.out.println("값 :" + inputNumberField.getText());
+		System.out.println("길이 :" + inputNumberField.getText().length());
+		if(inputNumberField.getText().length() > 13) {
+			//inputNumberField = setting.setTextField(inputNumberField.getText(), 40);
+			inputNumberField.setFont(new Font("맑은 고딕", Font.BOLD, 40));
+		}
+		else {
+			//inputNumberField = setting.setTextField(inputNumberField.getText(), 50);
+			inputNumberField.setFont(new Font("맑은 고딕", Font.BOLD, 50));	
+		}
 		if ((e.getModifiers() & 1) != 0) {
 			if (e.getKeyCode() == 61) { buttons[15].doClick(); }
 			if (e.getKeyCode() == 56) { buttons[7].doClick(); }
@@ -202,8 +211,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			if (e.getKeyCode() == 61) { buttons[19].doClick(); }
 		}
 	}
-
-	public void keyPressed(KeyEvent e) {
+	public void keyPressed(KeyEvent e) {		
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_BACK_SPACE: buttons[2].doClick(); break;// 뒤로가기.
 		case KeyEvent.VK_ENTER: buttons[19].doClick(); break; // 엔터

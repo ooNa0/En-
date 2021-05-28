@@ -22,7 +22,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class LoginPage{
+public class LoginPage extends JFrame{
 
 	private JFrame frame;
 	private Image background = new ImageIcon(LoginPage.class.getResource("3SEJONGLOGIN.png")).getImage(); //배경이미지
@@ -70,9 +70,8 @@ public class LoginPage{
 		frame.setResizable(false);//창의 크기를 변경하지 못하게
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		passwordField = new JPasswordField();
-		
-		textField = new JTextField();
+		passwordField = new JPasswordField(null);		
+		textField = new JTextField(null);
 		textField.setColumns(10);
 		
 		//int result= JOptionPane.showConfirmDialog(null, "아이디를 입력해주세요!");

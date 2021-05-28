@@ -1,5 +1,7 @@
 package View;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -42,6 +44,7 @@ public class LoginPage{
 
 	/**
 	 * Create the application.
+	 * @wbp.parser.entryPoint
 	 */
 	public LoginPage() {
 		//initialize();
@@ -58,17 +61,33 @@ public class LoginPage{
 		frame.setResizable(false);//창의 크기를 변경하지 못하게
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		
+		
 		JButton signUpButton = new JButton("회원가입");
 		signUpButton.addActionListener(new LoginService());
+		signUpButton.setContentAreaFilled(false);
+		signUpButton.setFocusPainted(false);
+		signUpButton.setFont(new Font("맑은 고딕", Font.PLAIN, 21));
 		
 		JButton findIdentityButton = new JButton("아이디 찾기");
 		findIdentityButton.addActionListener(new LoginService());
+		findIdentityButton.setContentAreaFilled(false);
+		findIdentityButton.setFocusPainted(false);
+		findIdentityButton.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
 		
 		JButton findPasswordButton = new JButton("비밀번호 찾기");
 		findPasswordButton.addActionListener(new LoginService());
+		//findPasswordButton.setBorderPainted(false);
+		findPasswordButton.setContentAreaFilled(false);
+		findPasswordButton.setFocusPainted(false);
+		findPasswordButton.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
 		
-		JButton loginButton = new JButton("로그인");
+		JButton loginButton = new JButton(" ");
 		loginButton.addActionListener(new LoginService());
+		//loginButton.setBackground(new Color(210, 0, 0));
+		loginButton.setContentAreaFilled(false);
+		loginButton.setBorderPainted(false);
+		loginButton.setFocusPainted(false);
 		
 		passwordField = new JPasswordField();
 		
@@ -86,13 +105,13 @@ public class LoginPage{
                 // Point p = scrollPane.getViewport().getViewPosition();
                 // g.drawImage(icon.getImage(), p.x, p.y, null);
                 setOpaque(false); //그림을 표시하게 설정,투명하게 조절
-                super.paintComponent(g);
+                //super.paintComponent(g);
             }
         };
-        frame.add(panel);
+        frame.getContentPane().add(panel);
 		
 		GroupLayout groupLayout = new GroupLayout(panel);
-		groupLayout.setHorizontalGroup(
+		groupLayout.setHorizontalGroup( // 가로
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(96)
@@ -111,7 +130,7 @@ public class LoginPage{
 					.addComponent(loginButton, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE) // 로그인 버튼
 					.addGap(55))
 		);
-		groupLayout.setVerticalGroup(
+		groupLayout.setVerticalGroup( // 세로
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -127,8 +146,8 @@ public class LoginPage{
 								.addComponent(loginButton, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED, 271, Short.MAX_VALUE) // 밑에 버튼
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(findPasswordButton, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-								.addComponent(findIdentityButton, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))))
+								.addComponent(findPasswordButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+								.addComponent(findIdentityButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))))
 					.addGap(60)) // 밑의 버튼 위아래 차이
 		);
 		panel.setLayout(groupLayout);

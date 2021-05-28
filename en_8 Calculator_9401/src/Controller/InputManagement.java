@@ -66,6 +66,8 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 	private boolean isBackspace = false;
 	private BigDecimal overflow = new BigDecimal("1e+10000");
 	private BigDecimal underflow = new BigDecimal("1e-10000");
+	private DecimalFormat decimalFormat = new DecimalFormat("#,###,###,###,###.################");
+	
 	
 	public InputManagement() {
 		calculate = new CalculateManagement();
@@ -73,6 +75,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 	}
 
 	public void initialize() {
+
 		frame = new JFrame("나영's 계산기");
 		frame.pack();
 		//frame.setBounds(100, 100, 458, 600);
@@ -91,6 +94,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			}
 		};
 		JTable table = new JTable(model);
+		table.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		JScrollPane scrollPane = new JScrollPane(table);
 
 		JButton resetButton = new JButton("계산기록 초기화");
@@ -117,7 +121,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 								.addComponent(panel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 511,
 										Short.MAX_VALUE))));
 
-		inputNumberField = setting.setTextField(Constant.DEFAULT_VALUE, 40);
+		inputNumberField = setting.setTextField(Constant.DEFAULT_VALUE, 35);
 		calculationProcessField = setting.setTextField(" ", 15);
 
 		JPanel buttonPanel = new JPanel();
@@ -147,7 +151,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		for (int i = 0; i < buttons.length; i++) {
 
 			buttons[i] = new JButton(str[i]);
-			buttons[i].setFont(new Font("맑은 고닥", Font.PLAIN, 40));
+			buttons[i].setFont(new Font("맑은 고딕", Font.PLAIN, 55));
 			if ((i == 4) || (i == 5) || (i == 6) || (i == 8) || (i == 9) || (i == 10) || (i == 12) || (i == 13)
 					|| (i == 14) || (i == 17)) {
 				buttons[i].setBackground(new Color(255, 255, 255));
@@ -164,37 +168,19 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		buttons[3].requestFocusInWindow();
 		frame.setVisible(true);
 	}
-			public void componentResized(ComponentEvent e) {}//resize();}
-			public void componentHidden(ComponentEvent e) {}
-			public void componentMoved(ComponentEvent e) {}
-			public void componentShown(ComponentEvent e) {}
-
-	/*private void resize() {
-			Font before = buttons[0].getFont();
-			int j = before.getSize();
-			System.out.println(before.getSize());
-			j++;
-			inputNumberField.setFont(new Font(before.getName(), before.getStyle(), j)); // buttons[i].setFont(new Font("굴림", Font.PLAIN, 30));
-
-			System.out.println("이전 사이즈" + frame.getPreferredSize());
-			if (getPreferredSize().getWidth() > getWidth() || getPreferredSize().getHeight() > getHeight()) {
-				j--;
-			}
-			else {
-				j--;
-			}
-			setFont(new Font(before.getName(), before.getStyle(), j));
-	}
-*/
-	public void keyTyped(KeyEvent e) {
-	}
+	public void componentResized(ComponentEvent e) {}
+	public void componentHidden(ComponentEvent e) {}
+	public void componentMoved(ComponentEvent e) {}
+	public void componentShown(ComponentEvent e) {}
+			
+	public void keyTyped(KeyEvent e) {}
 
 	public void keyReleased(KeyEvent e) {
 		if(inputNumberField.getText().length() > 13) {
-			inputNumberField.setFont(new Font("맑은 고딕", Font.BOLD, 35));
+			inputNumberField.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		}
 		else {
-			inputNumberField.setFont(new Font("맑은 고딕", Font.BOLD, 40));	
+			inputNumberField.setFont(new Font("맑은 고딕", Font.BOLD, 35));	
 		}
 		if ((e.getModifiers() & 1) != 0) {
 			if (e.getKeyCode() == 61) { buttons[15].doClick(); }
@@ -271,7 +257,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 							inputNumberField.setText(inputNumberField.getText().replaceAll("\\,", "").substring(0,inputNumberField.getText().replaceAll("\\,", "").length() - 1));
 						}						
 						else{
-							inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(inputNumberField.getText().replaceAll("\\,", "").substring(0,inputNumberField.getText().replaceAll("\\,", "").length() - 1))));
+							inputNumberField.setText(decimalFormat.format(new BigDecimal(inputNumberField.getText().replaceAll("\\,", "").substring(0,inputNumberField.getText().replaceAll("\\,", "").length() - 1))));
 						}
 					}
 				}
@@ -283,12 +269,9 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			if (isInputOperator) {
 				if (negatecheck)
 					calculationProcessField.setText(calculationProcessString + calculate.operatorConversion(operator));
-				calculationProcessString = "";
-				calculationProcessField.setText(calculationProcessString);
 				inputNumberField.setText("0.");
 			}
 			if (!inputNumberField.getText().replaceAll("\\,", "").contains(".")) { // 텍스트 공간에 . 이 없을 경우에 추가가능!
-				//inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(inputNumberField.getText().replaceAll("\\,", "")) + e.getActionCommand()));
 				inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
 			}
 			isInputOperator = false;
@@ -297,12 +280,9 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 
 		} else if (e.getActionCommand().equals("±")) { // +/- 버튼
 
-			System.out.println("firstOperand =" + firstOperand);
-			System.out.println("secondOperand =" + secondOperand);
 			BigDecimal u = new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));
-			System.out.println("u =" + u.compareTo(BigDecimal.ZERO));
-			// 앞에 연산자면 negate(~~) 필요하고, 아니라면 -만 붙었다 안붙었다//inputnegate
-			if (isFristInput && !isBackspace) {
+			// 앞에 연산자면 negate(~~) 필요하고, 아니라면 -만 붙었다 안붙었다
+			if ((isFristInput && !isBackspace) || isRealFristInput) {
 				isInputOperator = true;
 			}
 			if (isInputOperator) {
@@ -310,16 +290,16 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 					inputnegate = "negate(" + inputnegate + ")";
 				} else {
 					inputnegate = String.valueOf(u);
-					inputnegate = "negate(" + inputnegate + ")";// negatecheck
+					inputnegate = "negate(" + inputnegate + ")";
 					negatecheck = true;
 				}
-				if (lastInput == Constant.EQUAL_NUMBER || isRealFristInput) { // isRealFristInput = false;
+				if (lastInput == Constant.EQUAL_NUMBER || isRealFristInput) {
 					calculationProcessField.setText(inputnegate);
 				} else {
 					calculationProcessField.setText(calculationProcessString + calculate.operatorConversion(operator) + inputnegate);
 				}
 			} // e 나올 때 네게이트 부분
-			inputNumberField.setText(new DecimalFormat("#,###,###,###,###.################").format(u.negate()));
+			inputNumberField.setText(decimalFormat.format(u.negate()));
 
 		} else if (e.getActionCommand().equals("+")) {
 			fourRuleCalculation(1);
@@ -328,52 +308,67 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 		} else if (e.getActionCommand().equals("×")) {
 			fourRuleCalculation(3);
 		} else if (e.getActionCommand().equals("÷")) {
-			fourRuleCalculation(4);
+			if(secondOperand.compareTo(BigDecimal.ZERO) == 0 && !isFristInput && !isInputOperator && operator == 4) {
+				if(firstOperand.compareTo(BigDecimal.ZERO) == 0 && !isInputOperator) {
+						inputNumberField.setText("정의되지 않은 결과입니다.");
+				}
+				else{
+					inputNumberField.setText("0으로 나눌 수 없습니다.");		
+				}
+				setButtonEnabled(false);isException = true;
+			}
+			else {
+				fourRuleCalculation(4);
+			}
 		} else if (e.getActionCommand().equals("=")) {
 
 			BigDecimal big = new BigDecimal(Convertnumber(inputNumberField.getText()).replaceAll("\\,", ""));//new BigDecimal(inputNumberField.getText().replaceAll("\\,", ""));//.replace("E", "e")
 			String bigString = Convertnumber(inputNumberField.getText());
-			System.out.println("받아온 값 : " + big);
-			//inputNumberField.setText(big.toPlainString());
 			if (isFristInput) { // 첫 입력이었을때에는 아무것도 없어야 함,, 그냥 동일한 값 계속 출력
-				//row[0] = String.valueOf(big);// + "=" + String.valueOf(big);
-				calculationProcessString = bigString;//String.valueOf(big);//.toPlainString();// + "=";
-			} else {
+				calculationProcessString = bigString;
+			} 
+			else {
 				if (lastInput != Constant.EQUAL_NUMBER) {
 					secondOperand = big;
 				} else {
 					firstOperand = big;
 				}
 				calculationProcessString = Convertnumber(firstOperand.toPlainString()) + calculate.operatorConversion(operator);
-				//row[0] = firstOperand + calculate.operatorConversion(operator) + secondOperand;
 				if(negatecheck) {
 					calculationProcessString += inputnegate;					
 				}
 				else {
-					//if (lastInput == Constant.EQUAL_NUMBER) {
-					//	calculationProcessString = String.valueOf(firstOperand);// + calculate.operatorConversion(operator) + secondOperand;					
-					//}
-					//else {
-						calculationProcessString += Convertnumber(secondOperand.toPlainString());						
-					//}
+					calculationProcessString += Convertnumber(secondOperand.toPlainString());
 				}				
 			}
+			if(operator == 4) {
+				if(secondOperand.compareTo(BigDecimal.ZERO) == 0 && !isFristInput) {
+					if(firstOperand.compareTo(BigDecimal.ZERO) == 0) {
+						inputNumberField.setText("정의되지 않은 결과입니다.");
+					}
+					else{
+						inputNumberField.setText("0으로 나눌 수 없습니다.");		
+					}
+					setButtonEnabled(false); isException = true;
+				}
+			}
+			if(!isException) {
 				BigDecimal resultArithmetic = calculate.arithmetic(operator, firstOperand, secondOperand, inputNumberField);
-				System.out.println("resultArithmetic = " + resultArithmetic);
 				if(resultArithmetic != null) {
 					inputNumberField.setText(Convertnumber(resultArithmetic.toPlainString()));
+			}
 				}
+			if(!isException) {
 			calculationProcessString += "=";
 			row[0] = calculationProcessString + Convertnumber(inputNumberField.getText());
 			isInputOperator = true;
-			System.out.println(calculationProcessString);
 			calculationProcessField.setText(calculationProcessString.replace("E", "e"));
 			calculationProcessString = "";
 			model.addRow(row);
-			//isFristInput = false;
 			negatecheck = false;
 			lastInput = Constant.EQUAL_NUMBER;isRealFristInput = false;
 			//operator = 0; // 네게이트 할 때
+			}
 
 		} else {
 			if (isInputOperator) { inputNumberField.setText(null); }
@@ -381,8 +376,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 			int maximum = 16;
 			if (inputNumberField.getText().replaceAll("\\,", "").contains("."))
 				maximum = 17;
-			System.out.println(inputNumberField.getText().replaceAll("\\,", "").length());
-			if (inputNumberField.getText().replaceAll("\\,", "").replaceAll("\\.", "").length() < maximum) {// Constant.MAXIMUM_TEXT
+			if (inputNumberField.getText().replaceAll("\\,", "").replaceAll("\\.", "").length() < maximum) {
 				if (inputNumberField.getText().replaceAll("\\,", "").equals(Constant.DEFAULT_VALUE)) {
 
 					inputNumberField.setText(null);
@@ -393,7 +387,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 						inputNumberField.setText(inputNumberField.getText() + e.getActionCommand());
 
 					} else {
-						inputNumberField.setText(String.valueOf(new DecimalFormat("#,###,###,###,###.################").format(new BigDecimal(inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand()))));
+						inputNumberField.setText(String.valueOf(decimalFormat.format(new BigDecimal(inputNumberField.getText().replaceAll("\\,", "") + e.getActionCommand()))));
 					}
 				}
 			}
@@ -411,8 +405,6 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 	}
 
 	void fourRuleCalculation(int calculateOperator) {
-		System.out.println("firstOperand = " + firstOperand);
-		System.out.println("secondOperand = " + secondOperand);
 		String bigString = Convertnumber(inputNumberField.getText());
 		BigDecimal big = new BigDecimal(bigString.replaceAll("\\,", ""));
 		inputNumberField.setText(Convertnumber(inputNumberField.getText()));
@@ -426,6 +418,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 					calculationProcessString += Convertnumber(firstOperand.toPlainString());
 			}
 		} else { // 연산자를 입력받았는데, 앞에가 첫입력도 아닌데 숫자라면
+			big = new BigDecimal(bigString.replaceAll("\\,", ""));
 			secondOperand = big;
 			inputNumberField.setText(Convertnumber(calculate.arithmetic(operator, firstOperand, secondOperand, inputNumberField).toPlainString()));			
 			calculationProcessString = Convertnumber(inputNumberField.getText());
@@ -434,9 +427,7 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 				model.addRow(row);
 			}
 		}
-		System.out.println("firstOperand =" + firstOperand);
-		firstOperand = big;
-		System.out.println("firstOperand =" + firstOperand);
+		firstOperand = new BigDecimal(Convertnumber(inputNumberField.getText()).replaceAll("\\,", ""));
 		operator = calculateOperator;
 		calculationProcessField.setText(calculationProcessString + calculate.operatorConversion(operator));
 		isInputOperator = true;
@@ -446,16 +437,13 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 	}
 	
 	String Convertnumber(String getText) {
-		//BigDecimal returningNumber = new BigDecimal(getText.replaceAll("\\,", ""));//.replace("E", "e")
 		BigDecimal getTextBigDecimal = new BigDecimal(getText.replaceAll("\\,", ""));
 		getText = getTextBigDecimal.toPlainString();
-		System.out.println("getText =" + getText);
 		int maximum = 16;
 		
 		if (getText.contains(".")) {
 			maximum = 18;
 		}
-		System.out.println("getTextLength =" + getText.length());
 		if (getTextBigDecimal.toPlainString().length() > maximum) {
 			if (getText.contains(".")) {
 				getText = String.valueOf(new BigDecimal(String.format("%.18E", getTextBigDecimal)).stripTrailingZeros()).replace("E", "e");
@@ -463,13 +451,14 @@ public class InputManagement extends JFrame implements ActionListener, KeyListen
 				getText = String.valueOf(new BigDecimal(String.format("%.15E", getTextBigDecimal))).replace("E", "e");
 			}
 		} else {
+			decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
 			getText = decimalFormat.format(getTextBigDecimal); 
 		}
-
+		
 		return getText;
 	}
 	
-	void setButtonEnabled(boolean istrue) { //setButtonEnabled(false);
+	void setButtonEnabled(boolean istrue) {
 		buttons[3].setEnabled(istrue);
 		buttons[7].setEnabled(istrue);
 		buttons[15].setEnabled(istrue);

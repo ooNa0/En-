@@ -25,22 +25,13 @@ public class CalculateManagement{
 		return calculatorString;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public BigDecimal arithmetic(int operator, BigDecimal firstOperand, BigDecimal secondOperand, JTextField inputNumberField) {
 		switch (operator) { // Constant.SUBSTRACT_NUMBER 하면 case expressions must be constant expressions에러뜸 ㅠ
 		case 1: return firstOperand.add(secondOperand);//String.valueOf(
 		case 2: return firstOperand.subtract(secondOperand);//String.valueOf(
-		case 3: return (firstOperand.multiply(secondOperand));
-		case 4:
-			System.out.println("first = " + firstOperand);
-			System.out.println(secondOperand);
-			if(secondOperand.equals(BigDecimal.ZERO)) {
-				if(firstOperand.equals(BigDecimal.ZERO)) {
-					inputNumberField.setText("정의되지 않은 결과입니다.");return null;					
-				}
-				inputNumberField.setText("0으로 나눌 수 없습니다.");return null;		
-			}
-			else{
-				return firstOperand.divide(secondOperand, MathContext.DECIMAL64);}
+		case 3: return firstOperand.multiply(secondOperand);//new BigDecimal(decimalFormat.format(
+		case 4:	return firstOperand.divide(secondOperand, 1000, RoundingMode.HALF_EVEN);//, 20, RoundingMode.HALF_EVEN
 		}
 		return null;
 	}

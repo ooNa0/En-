@@ -8,6 +8,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.sun.tools.javac.Main;
+
+import Controller.LoginService;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -15,16 +18,16 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class LoginPage extends JFrame {
+public class LoginPage{
 
-	//private JFrame frame;
+	private JFrame frame;
 	private Image background = new ImageIcon(LoginPage.class.getResource("3SEJONGLOGIN.png")).getImage(); //배경이미지
 	private JPasswordField passwordField;
 	private JTextField textField;
 
 	/**
 	 * Launch the application.
-	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -35,49 +38,69 @@ public class LoginPage extends JFrame {
 				}
 			}
 		});
-	}
+	} */
 
 	/**
 	 * Create the application.
 	 */
 	public LoginPage() {
-		initialize();
+		//initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	@SuppressWarnings("serial")
-	private void initialize() {
-		//frame = new JFrame();
-		setTitle("세종대학교 로그인"); //타이틀
-		setBounds(100, 100, 834, 608);
-		setResizable(false);//창의 크기를 변경하지 못하게
-		setVisible(true);//창이 보이게	
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public void initialize() {
+		frame = new JFrame();
+		frame.setTitle("세종대학교 로그인"); //타이틀
+		frame.setBounds(100, 100, 834, 608);
+		frame.setResizable(false);//창의 크기를 변경하지 못하게
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JButton btnNewButton = new JButton("회원가입");
+		JButton signUpButton = new JButton("회원가입");
+		signUpButton.addActionListener(new LoginService());
 		
-		JButton btnNewButton_1 = new JButton("아이디 찾기");
+		JButton findIdentityButton = new JButton("아이디 찾기");
+		findIdentityButton.addActionListener(new LoginService());
 		
-		JButton btnNewButton_2 = new JButton("비밀번호 찾기");
+		JButton findPasswordButton = new JButton("비밀번호 찾기");
+		findPasswordButton.addActionListener(new LoginService());
 		
-		JButton btnNewButton_3 = new JButton("로그인");
+		JButton loginButton = new JButton("로그인");
+		loginButton.addActionListener(new LoginService());
 		
 		passwordField = new JPasswordField();
 		
 		textField = new JTextField();
 		textField.setColumns(10);
-		GroupLayout groupLayout = new GroupLayout(getContentPane());
+		
+		JPanel panel = new JPanel() {
+            public void paintComponent(Graphics g) {
+                // Approach 1: Dispaly image at at full size
+                g.drawImage(background, 0, 0, null);
+                // Approach 2: Scale image to size of component
+                // Dimension d = getSize();
+                // g.drawImage(icon.getImage(), 0, 0, d.width, d.height, null);
+                // Approach 3: Fix the image position in the scroll pane
+                // Point p = scrollPane.getViewport().getViewPosition();
+                // g.drawImage(icon.getImage(), p.x, p.y, null);
+                setOpaque(false); //그림을 표시하게 설정,투명하게 조절
+                super.paintComponent(g);
+            }
+        };
+        frame.add(panel);
+		
+		GroupLayout groupLayout = new GroupLayout(panel);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(96)
-					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
+					.addComponent(signUpButton, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
-					.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
+					.addComponent(findIdentityButton, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
 					.addGap(132)
-					.addComponent(btnNewButton_2, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
+					.addComponent(findPasswordButton, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
 					.addGap(106))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap(491, Short.MAX_VALUE)
@@ -85,8 +108,8 @@ public class LoginPage extends JFrame {
 						.addComponent(passwordField)
 						.addComponent(textField, GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED, 1, 1) // 로그인 버튼과 TEXT 필드와의 간격
-					.addComponent(btnNewButton_3, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE) // 로그인 버튼
-					.addGap(63))
+					.addComponent(loginButton, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE) // 로그인 버튼
+					.addGap(55))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -94,22 +117,24 @@ public class LoginPage extends JFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE))
+							.addComponent(signUpButton, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(116)
+							.addGap(149) // 위 버튼 위치하는 높이
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(textField, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
 									.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
-								.addComponent(btnNewButton_3, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED, 271, Short.MAX_VALUE)
+								.addComponent(loginButton, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED, 271, Short.MAX_VALUE) // 밑에 버튼
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnNewButton_2, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))))
-					.addGap(93))
+								.addComponent(findPasswordButton, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+								.addComponent(findIdentityButton, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))))
+					.addGap(60)) // 밑의 버튼 위아래 차이
 		);
-		getContentPane().setLayout(groupLayout);
+		panel.setLayout(groupLayout);
 		//JPanel panel = new JPanel()
+		
+		frame.setVisible(true);//창이 보이게	
 	}
 	public void paint(Graphics g) {//그리는 함수
 		g.drawImage(background, 0, 0, null);//background를 그려줌

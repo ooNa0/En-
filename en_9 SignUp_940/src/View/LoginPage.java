@@ -7,10 +7,12 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.sun.tools.javac.Main;
 
+import Controller.ActionProcessing;
 import Controller.LoginService;
 
 import javax.swing.GroupLayout;
@@ -50,6 +52,12 @@ public class LoginPage{
 		//initialize();
 	}
 
+	public LoginPage(JTextField textField, JPasswordField passwordField) {
+		// TODO Auto-generated constructor stub
+		this.textField = textField;
+		this.passwordField = passwordField;
+	}
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -62,38 +70,42 @@ public class LoginPage{
 		frame.setResizable(false);//창의 크기를 변경하지 못하게
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		passwordField = new JPasswordField();
 		
+		textField = new JTextField();
+		textField.setColumns(10);
+		
+		//int result= JOptionPane.showConfirmDialog(null, "아이디를 입력해주세요!");
+		//JOptionPane.showConfirmDialog(null, "제거하시겠습니까?", "종료", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 		
 		JButton signUpButton = new JButton("회원가입");
-		signUpButton.addActionListener(new LoginService());
+		signUpButton.addActionListener(new ActionProcessing());
 		signUpButton.setContentAreaFilled(false);
 		signUpButton.setFocusPainted(false);
 		signUpButton.setFont(new Font("맑은 고딕", Font.PLAIN, 21));
 		
 		JButton findIdentityButton = new JButton("아이디 찾기");
-		findIdentityButton.addActionListener(new LoginService());
+		findIdentityButton.addActionListener(new ActionProcessing());
 		findIdentityButton.setContentAreaFilled(false);
 		findIdentityButton.setFocusPainted(false);
 		findIdentityButton.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 		
 		JButton findPasswordButton = new JButton("비밀번호 찾기");
-		findPasswordButton.addActionListener(new LoginService());
+		findPasswordButton.addActionListener(new ActionProcessing());
 		//findPasswordButton.setBorderPainted(false);
 		findPasswordButton.setContentAreaFilled(false);
 		findPasswordButton.setFocusPainted(false);
 		findPasswordButton.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 		
 		JButton loginButton = new JButton("");
-		loginButton.addActionListener(new LoginService());
+		//loginButton.addActionListener(new ActionProcessing(String.valueOf(passwordField.getPassword()), textField.getText()));
+		loginButton.addActionListener(new ActionProcessing(textField, passwordField));
 		//loginButton.setBackground(new Color(210, 0, 0));
 		loginButton.setContentAreaFilled(false);
 		loginButton.setBorderPainted(false);
 		loginButton.setFocusPainted(false);
 		
-		passwordField = new JPasswordField();
-		
-		textField = new JTextField();
-		textField.setColumns(10);
+
 		
 		JPanel panel = new JPanel() {
             public void paintComponent(Graphics g) {

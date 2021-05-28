@@ -57,6 +57,7 @@ public class LoginPage{
 	public void initialize() {
 		frame = new JFrame();
 		frame.setTitle("세종대학교 로그인"); //타이틀
+		frame.setIconImage(new ImageIcon(LoginPage.class.getResource("sejongmark.jpeg")).getImage());
 		frame.setBounds(100, 100, 834, 608);
 		frame.setResizable(false);//창의 크기를 변경하지 못하게
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -73,16 +74,16 @@ public class LoginPage{
 		findIdentityButton.addActionListener(new LoginService());
 		findIdentityButton.setContentAreaFilled(false);
 		findIdentityButton.setFocusPainted(false);
-		findIdentityButton.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
+		findIdentityButton.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 		
 		JButton findPasswordButton = new JButton("비밀번호 찾기");
 		findPasswordButton.addActionListener(new LoginService());
 		//findPasswordButton.setBorderPainted(false);
 		findPasswordButton.setContentAreaFilled(false);
 		findPasswordButton.setFocusPainted(false);
-		findPasswordButton.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
+		findPasswordButton.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 		
-		JButton loginButton = new JButton(" ");
+		JButton loginButton = new JButton("");
 		loginButton.addActionListener(new LoginService());
 		//loginButton.setBackground(new Color(210, 0, 0));
 		loginButton.setContentAreaFilled(false);

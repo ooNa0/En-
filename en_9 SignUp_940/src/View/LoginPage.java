@@ -77,7 +77,7 @@ public class LoginPage extends JFrame{
 		//int result= JOptionPane.showConfirmDialog(null, "아이디를 입력해주세요!");
 		//JOptionPane.showConfirmDialog(null, "제거하시겠습니까?", "종료", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 		
-		JButton signUpButton = new JButton("회원가입");
+		JButton signUpButton = new JButton("학생가입");
 		signUpButton.addActionListener(new ActionProcessing());
 		signUpButton.setContentAreaFilled(false);
 		signUpButton.setFocusPainted(false);

@@ -28,14 +28,15 @@ import javax.swing.SwingConstants;
 import java.awt.Color;
 import java.awt.SystemColor;
 
-public class SignupPage {
+public class LoginPage {
 
 	private JFrame frame;
 	private URL url = getClass().getResource("LoginJhin.gif");
 	private JTextField identityTextField;
 	private JPasswordField passwordTextField;
 
-	public SignupPage() {
+	public LoginPage(JFrame frame) {
+		this.frame = frame;
 		initialize();
 	}
 
@@ -44,9 +45,6 @@ public class SignupPage {
 	 */
 	private void initialize() {
 		Icon icon = new ImageIcon(url);
-		frame = new JFrame();
-		frame.setBounds(100, 100, 1599, 900);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//frame.setUndecorated(true);
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
@@ -93,7 +91,7 @@ public class SignupPage {
 		signUpButton.setFocusPainted(false);
 		signUpButton.setFont(new Font("나눔고딕", Font.PLAIN, 14));
 		
-		JButton findIdentityButton = new JButton("아아디 찾기");
+		JButton findIdentityButton = new JButton("아이디 찾기");
 		findIdentityButton.setHorizontalAlignment(SwingConstants.LEFT);
 		findIdentityButton.addActionListener(new ActionProcessing());
 		findIdentityButton.setContentAreaFilled(false);
@@ -150,6 +148,6 @@ public class SignupPage {
 		//JLabel label = new JLabel(icon);
 		frame.getContentPane().add(label);
 		//frame.pack();
-		frame.setVisible(true);
+		//frame.setVisible(true);
 	}
 }

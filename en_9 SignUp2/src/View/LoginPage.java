@@ -27,6 +27,8 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class LoginPage {
 
@@ -37,13 +39,18 @@ public class LoginPage {
 
 	public LoginPage(JFrame frame) {
 		this.frame = frame;
-		initialize();
+		//initialize();
 	}
-
+	public LoginPage() {
+		//frame = new JFrame();
+		//frame.setBounds(100, 100, 1599, 900);
+		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//initialize();
+	}
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void Login() {
 		Icon icon = new ImageIcon(url);
 		//frame.setUndecorated(true);
 		JPanel panel = new JPanel();
@@ -80,16 +87,34 @@ public class LoginPage {
 		passwordTextField.setColumns(10);
 		
 		JButton nextButton = new JButton("->");
-		nextButton.addActionListener(new ActionProcessing());
+		//nextButton.addActionListener(new ActionProcessing());
+		nextButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				frame.setVisible(false);
+				//new SignupPage();
+			}
+            // 찾기 버튼이 눌러지면 발생하는 행동 정의
+		});
 		nextButton.setContentAreaFilled(false);
 		nextButton.setFocusPainted(false);
 		
 		JButton signUpButton = new JButton("회원가입");
 		signUpButton.setHorizontalAlignment(SwingConstants.LEFT);
-		signUpButton.addActionListener(new ActionProcessing(identityTextField, passwordTextField));
+		//signUpButton.addActionListener(new ActionProcessing(frame, identityTextField, passwordTextField));
 		signUpButton.setContentAreaFilled(false);
 		signUpButton.setFocusPainted(false);
 		signUpButton.setFont(new Font("나눔고딕", Font.PLAIN, 14));
+		signUpButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				frame.setVisible(false);
+				new SignupPage();
+			}
+            // 찾기 버튼이 눌러지면 발생하는 행동 정의
+		});
 		
 		JButton findIdentityButton = new JButton("아이디 찾기");
 		findIdentityButton.setHorizontalAlignment(SwingConstants.LEFT);
@@ -148,6 +173,6 @@ public class LoginPage {
 		//JLabel label = new JLabel(icon);
 		frame.getContentPane().add(label);
 		//frame.pack();
-		//frame.setVisible(true);
+		frame.setVisible(true);
 	}
 }

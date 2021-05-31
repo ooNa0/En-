@@ -20,6 +20,8 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import Controller.ActionProcessing;
 import Controller.LoginService;
+import Model.DataTransferObject;
+import Model.DateAccessObject;
 
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -37,7 +39,7 @@ public class LoginPage {
 	private URL url = getClass().getResource("LoginJhin.gif");
 	private JTextField identityTextField;
 	private JPasswordField passwordTextField;
-
+	private DataTransferObject data;
 	
 	/**
 	 * @wbp.parser.entryPoint
@@ -98,8 +100,15 @@ public class LoginPage {
 		nextButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				frame.setVisible(false);
+				if(new DateAccessObject().isaccessDataBase(identityTextField, passwordTextField, data)) {
+
+					frame.setVisible(false);
+					new UserPage();
+				}
+				else {
+					
+				}
+				
 				//new SignupPage();
 			}
             // 찾기 버튼이 눌러지면 발생하는 행동 정의

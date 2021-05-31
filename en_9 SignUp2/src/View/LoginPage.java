@@ -6,6 +6,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.net.URL;
 
 import javax.swing.JLabel;
@@ -136,6 +137,8 @@ public class LoginPage {
 		findPasswordButton.setFocusPainted(false);
 		findPasswordButton.setFont(new Font("³ª´®°íµñ", Font.PLAIN, 14));
 		
+		JLabel lblNewLabel_1 = new JLabel("", new ImageIcon(new ImageIcon(getClass().getResource("lol.png")).getImage().getScaledInstance(70, 70, Image.SCALE_AREA_AVERAGING)), 10);
+		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -149,16 +152,19 @@ public class LoginPage {
 								.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE)
 								.addComponent(signUpButton)
 								.addComponent(findIdentityButton)
-								.addComponent(findPasswordButton)))
+								.addComponent(findPasswordButton)
+								.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGap(143)
 							.addComponent(nextButton, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(73, Short.MAX_VALUE))
+					.addContainerGap(84, Short.MAX_VALUE))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(160)
+					.addGap(80)
+					.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
 					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
 					.addGap(27)
 					.addComponent(identityTextField, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)

@@ -74,8 +74,7 @@ public class DataBase {
         }
         if (connection != null) {
             System.out.println(result);
-        }
-        
+        }        
         return vector;
 	}
 	

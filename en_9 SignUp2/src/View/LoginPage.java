@@ -37,21 +37,27 @@ public class LoginPage {
 	private JTextField identityTextField;
 	private JPasswordField passwordTextField;
 
-	public LoginPage(JFrame frame) {
-		this.frame = frame;
-		//initialize();
-	}
+	
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	public LoginPage() {
 		//frame = new JFrame();
 		//frame.setBounds(100, 100, 1599, 900);
 		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//initialize();
+		//Login();
 	}
 	/**
 	 * Initialize the contents of the frame.
+	 * @wbp.parser.entryPoint
 	 */
-	private void Login() {
+	//new ImageIcon(getClass().getResource("lol.gif");)
+	public void Login() {
 		Icon icon = new ImageIcon(url);
+		frame = new JFrame();
+		frame.setIconImage(new ImageIcon(LoginPage.class.getResource("lol.png")).getImage());
+		frame.setBounds(100, 100, 1599, 900);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//frame.setUndecorated(true);
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);

@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -190,11 +191,19 @@ public class UserPage{
 		signupButton.setFocusPainted(false);
 		signupButton.setBackground(new Color(0, 0, 0, 123));
 		
-		JButton signupButton_1 = new JButton("회원정보 수정");
-		signupButton_1.setForeground(Color.WHITE);
-		signupButton_1.setFont(new Font("나눔고딕", Font.PLAIN, 14));
-		signupButton_1.setFocusPainted(false);
-		signupButton_1.setBackground(new Color(0, 0, 0, 123));
+		JButton editButton = new JButton("회원정보 수정");
+		editButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// 회원가입이 완료되었습니다!! 창 띄어야 하나?
+				data = new DateAccessObject().updateUserInfromation(nameTextField, brithTextField, identityTextField, passwordField, phoneTextField, emailTextField, addressTextField, data);
+	    		JOptionPane.showMessageDialog(null, "회원정보 수정이 완료되었습니다.");
+			}
+		});
+		editButton.setForeground(Color.WHITE);
+		editButton.setFont(new Font("나눔고딕", Font.PLAIN, 14));
+		editButton.setFocusPainted(false);
+		editButton.setBackground(new Color(0, 0, 0, 123));
 		
 		GroupLayout groupLayout = new GroupLayout(panel);
 		groupLayout.setHorizontalGroup(
@@ -207,7 +216,7 @@ public class UserPage{
 					.addContainerGap()
 					.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
 					.addGap(495)
-					.addComponent(signupButton_1, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
+					.addComponent(editButton, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, 563, Short.MAX_VALUE)
 					.addComponent(signupButton, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
@@ -222,7 +231,7 @@ public class UserPage{
 						.addComponent(signupButton, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 							.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
-							.addComponent(signupButton_1, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(editButton, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 

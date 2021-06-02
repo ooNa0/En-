@@ -25,7 +25,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import Controller.ActionProcessing;
 import Model.DataTransferObject;
-import Model.DateAccessObject;
+import Model.DataAccessObject;
 
 import java.awt.BorderLayout;
 import com.jgoodies.forms.layout.FormLayout;
@@ -80,7 +80,7 @@ public class UserPage{
 		};
 		frame.getContentPane().add(panel);
 
-		JLabel notice = new JLabel("개인 정보");
+		JLabel notice = new JLabel("나의 정보");
 		notice.setForeground(Color.WHITE);
 		notice.setBackground(Color.WHITE);
 		notice.setHorizontalAlignment(SwingConstants.CENTER);
@@ -143,11 +143,6 @@ public class UserPage{
 		addressTextField = new JTextField(data.getAddress());
 		addressTextField.setColumns(10);
 		
-		JLabel at = new JLabel("@");
-		at.setHorizontalAlignment(SwingConstants.RIGHT);
-		at.setForeground(Color.WHITE);
-		at.setFont(new Font("나눔고딕", Font.PLAIN, 21));
-		
 		//String emailAddress[] = {"naver.com", "gmail.com", "sju.ac.kr"};
 		//JComboBox emailAddresscomboBox = new JComboBox<String>(emailAddress);//
 		
@@ -174,7 +169,7 @@ public class UserPage{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				frame.setVisible(false); 
-				new DateAccessObject().deleteUser(identityTextField);
+				new DataAccessObject().deleteUser(identityTextField);
 				new LoginPage().Login();
 			}
 		});
@@ -183,7 +178,7 @@ public class UserPage{
 			public void actionPerformed(ActionEvent e) {
 				frame.setVisible(false); 
 				// 회원가입이 완료되었습니다!! 창 띄어야 하나?
-				new DateAccessObject().insertUserInfromation(nameTextField, brithTextField, identityTextField, passwordField, phoneTextField, emailTextField, addressTextField);
+				new DataAccessObject().insertUserInfromation(nameTextField, brithTextField, identityTextField, passwordField, phoneTextField, emailTextField, addressTextField);
 				new LoginPage().Login();
 			}
 		});
@@ -196,7 +191,7 @@ public class UserPage{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// 회원가입이 완료되었습니다!! 창 띄어야 하나?
-				data = new DateAccessObject().updateUserInfromation(nameTextField, brithTextField, identityTextField, passwordField, phoneTextField, emailTextField, addressTextField, data);
+				data = new DataAccessObject().updateUserInfromation(nameTextField, brithTextField, identityTextField, passwordField, phoneTextField, emailTextField, addressTextField, data);
 	    		JOptionPane.showMessageDialog(null, "회원정보 수정이 완료되었습니다.");
 			}
 		});
@@ -279,7 +274,7 @@ public class UserPage{
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
-					.addContainerGap(464, Short.MAX_VALUE)
+					.addContainerGap(553, Short.MAX_VALUE)
 					.addComponent(notice)
 					.addGap(493))
 				.addGroup(gl_panel_1.createSequentialGroup()
@@ -318,13 +313,6 @@ public class UserPage{
 										.addComponent(noticeInputName, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
 										.addComponent(noticeInputBirth, GroupLayout.PREFERRED_SIZE, 212, GroupLayout.PREFERRED_SIZE)))))
 						.addGroup(gl_panel_1.createSequentialGroup()
-							.addComponent(emailTextField, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(at)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							//.addComponent(emailAddresscomboBox, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE)
-							)
-						.addGroup(gl_panel_1.createSequentialGroup()
 							.addComponent(zeroOneZero)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(phoneTextField, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE)
@@ -333,7 +321,8 @@ public class UserPage{
 						.addGroup(gl_panel_1.createSequentialGroup()
 							.addComponent(addressTextField, GroupLayout.PREFERRED_SIZE, 280, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(noticeInputAddress)))
+							.addComponent(noticeInputAddress))
+						.addComponent(emailTextField, GroupLayout.PREFERRED_SIZE, 323, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(126, Short.MAX_VALUE))
 		);
 		gl_panel_1.setVerticalGroup(
@@ -379,10 +368,7 @@ public class UserPage{
 					.addGap(26)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
 						.addComponent(noticeEmail, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-						.addComponent(emailTextField, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false)
-							//.addComponent(emailAddresscomboBox, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(at, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)))
+						.addComponent(emailTextField, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
 					.addGap(26)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
 						.addComponent(noticeAddress, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)

@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import Model.DataTransferObject;
+import Model.MailSender;
 import Model.DataAccessObject;
 
 import javax.swing.JButton;
@@ -102,6 +103,7 @@ public class SearchPage extends JFrame{
 	JButton nextButton = new JButton("Ã£±â");
 	private informationPanel informationPanel;
 	private DataAccessObject data = new DataAccessObject();
+	private DataTransferObject dataTransfer;// = new DataTransferObject();
 
 	public SearchPage() {
 
@@ -223,7 +225,7 @@ public class SearchPage extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(data.returnIdentity(nameTextField,phonenumberTextField)!=null) {
-					new test(data.returnIdentity(nameTextField,phonenumberTextField));
+					new SearchIdentity(data.returnIdentity(nameTextField,phonenumberTextField));
 					frame.setVisible(false);
 				}
 				//new LoginPage().Login();
@@ -293,7 +295,23 @@ public class SearchPage extends JFrame{
 					.addComponent(nextButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
 					.addGap(100))
 		);
-
+		nextButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(data.returnIdentity(nameTextField,phonenumberTextField)!=null) {
+					dataTransfer = data.returnPassword(textField_3, nameTextField, phonenumberTextField);
+					new MailSender(dataTransfer.getPassword(), dataTransfer.getEmail());
+					
+					frame.setVisible(false);
+					
+				}
+				//new LoginPage().Login();
+				//panel.removeAll();
+				//panel.add(informationPanel);
+				//revalidate();
+				//repaint();
+			}
+		});
 		frame.getContentPane().setLayout(groupLayout);
 		frame.setVisible(true);
 	}

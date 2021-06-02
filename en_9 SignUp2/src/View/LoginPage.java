@@ -14,6 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 
 import java.awt.CardLayout;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -21,7 +25,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import Controller.ActionProcessing;
 import Controller.LoginService;
 import Model.DataTransferObject;
-import Model.DateAccessObject;
+import Model.DataAccessObject;
 
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -32,6 +36,12 @@ import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 
 public class LoginPage {
 
@@ -45,6 +55,34 @@ public class LoginPage {
 	 * @wbp.parser.entryPoint
 	 */
 	public LoginPage() {
+		
+		File file = null;
+		/*
+		 FileInputStream input;
+		try {
+			input = new FileInputStream(getClass().getResource("JhinSound.wav"));
+	        InputStreamReader reader;
+			try {
+				reader = new InputStreamReader(input,"UTF-8");
+		        BufferedReader in=new BufferedReader(reader);
+		        System.out.println(in.toString()); //true
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		try {
+			file = new File(new String(getClass().getResource("JhinSound.wav").toString().getBytes("iso-8859-1"), "utf-8"));
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		//
+        */
+		
 		//frame = new JFrame();
 		//frame.setBounds(100, 100, 1599, 900);
 		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -95,23 +133,21 @@ public class LoginPage {
 		passwordTextField = new JPasswordField();
 		passwordTextField.setColumns(10);
 		
-		JButton nextButton = new JButton("->");
+		JButton nextButton = new JButton(">");
+
+		nextButton.setFont(new Font("나눔고딕", Font.PLAIN, 30));
 		//nextButton.addActionListener(new ActionProcessing());
 		nextButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(new DateAccessObject().isaccessDataBase(identityTextField, passwordTextField, data)) {
-
+				if(new DataAccessObject().isaccessDataBase(identityTextField, passwordTextField, data) != null) {
 					frame.setVisible(false);
-					new UserPage();
+					//new DateAccessObject().insertUserInfromation(nameTextField, brithTextField, identityTextField, passwordField, phoneTextField, emailTextField, addressTextField);
+					new UserPage(new DataAccessObject().isaccessDataBase(identityTextField, passwordTextField, data));
 				}
-				else {
-					
+				else {					
 				}
-				
-				//new SignupPage();
 			}
-            // 찾기 버튼이 눌러지면 발생하는 행동 정의
 		});
 		nextButton.setContentAreaFilled(false);
 		nextButton.setFocusPainted(false);
@@ -125,11 +161,9 @@ public class LoginPage {
 		signUpButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				frame.setVisible(false);
 				new SignupPage();
 			}
-            // 찾기 버튼이 눌러지면 발생하는 행동 정의
 		});
 		
 		JButton findIdentityButton = new JButton("아이디 찾기");

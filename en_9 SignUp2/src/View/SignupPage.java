@@ -7,6 +7,10 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.net.URL;
 
 import javax.swing.GroupLayout;
@@ -23,6 +27,8 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import Controller.ActionProcessing;
+import Model.DataAccessObject;
+
 import java.awt.BorderLayout;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -35,13 +41,15 @@ public class SignupPage {
 	private JFrame frame;
 	private URL url = getClass().getResource("LoginJhin.gif");
 	private Image background = new ImageIcon(LoginPage.class.getResource("loginJhin.jpg")).getImage(); //배경이미지
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField nameTextField;
+	private JTextField brithTextField;
+	private JTextField identityTextField;
 	private JPasswordField passwordField;
-	private JPasswordField passwordField_1;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JPasswordField passwordCheckField;
+	private JTextField phoneTextField;
+	private JTextField emailTextField;
+	private JTextField addressTextField;
+	private JLabel noticeIdentity;
 
 	/**
 	 * Launch the application.
@@ -60,6 +68,7 @@ public class SignupPage {
 	public void initialize() {
 		Icon icon = new ImageIcon(url);
 		frame = new JFrame();
+		frame.setIconImage(new ImageIcon(LoginPage.class.getResource("lol.png")).getImage());
 		//frame.setIconImage(new ImageIcon(LoginPage.class.getResource("loginJhin.jpg")).getImage());
 		frame.setBounds(100, 100, 1599, 900);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,28 +79,96 @@ public class SignupPage {
 		        super.paint(g);
 			}
 		};
-		/*
-		//frame.pack();
-		JPanel panel = new JPanel() {
-            public void paintComponent(Graphics g) {
-                // Approach 1: Dispaly image at at full size
-                // Approach 2: Scale image to size of component
-                // Dimension d = getSize();
-            	g.drawImage(background, 0, 0, null);
-                // g.drawImage(icon.getImage(), 0, 0, d.width, d.height, null);
-                // Approach 3: Fix the image position in the scroll pane
-                // Point p = scrollPane.getViewport().getViewPosition();
-                // g.drawImage(icon.getImage(), p.x, p.y, null);
-                setOpaque(false); //그림을 표시하게 설정,투명하게 조절
-                //super.paintComponent(g);
-            }
-        };*/
-        //frame.getContentPane().add(panel, BorderLayout.WEST);
-        //frame.pack();
 		frame.getContentPane().add(panel);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(0, 0, 0, 123));
+		
+		JLabel notice = new JLabel("개인 정보 입력");
+		notice.setForeground(Color.WHITE);
+		notice.setBackground(Color.WHITE);
+		notice.setHorizontalAlignment(SwingConstants.CENTER);
+		notice.setFont(new Font("나눔고딕", Font.BOLD, 41));
+		
+		JLabel noticeName = new JLabel("이름 :");
+		noticeName.setHorizontalAlignment(SwingConstants.RIGHT);
+		noticeName.setFont(new Font("나눔고딕", Font.PLAIN, 21));
+		noticeName.setForeground(Color.WHITE);
+		
+		JLabel noticeBirth = new JLabel("\uC0DD\uB144\uC6D4\uC77C :");
+		noticeBirth.setHorizontalAlignment(SwingConstants.RIGHT);
+		noticeBirth.setForeground(Color.WHITE);
+		noticeBirth.setFont(new Font("나눔고딕", Font.PLAIN, 21));
+		
+		noticeIdentity = new JLabel("\uC544\uC774\uB514 :");
+		noticeIdentity.setHorizontalAlignment(SwingConstants.RIGHT);
+		noticeIdentity.setForeground(Color.WHITE);
+		noticeIdentity.setFont(new Font("나눔고딕", Font.PLAIN, 21));
+		
+		JLabel noticePassword = new JLabel("\uBE44\uBC00\uBC88\uD638 :");
+		noticePassword.setHorizontalAlignment(SwingConstants.RIGHT);
+		noticePassword.setForeground(Color.WHITE);
+		noticePassword.setFont(new Font("나눔고딕", Font.PLAIN, 21));
+		
+		JLabel noticePasswordCheck = new JLabel("\uBE44\uBC00\uBC88\uD638 \uD655\uC778 :");
+		noticePasswordCheck.setHorizontalAlignment(SwingConstants.RIGHT);
+		noticePasswordCheck.setForeground(Color.WHITE);
+		noticePasswordCheck.setFont(new Font("나눔고딕", Font.PLAIN, 21));
+		
+		JLabel noticePhoneNumber = new JLabel("\uC804\uD654\uBC88\uD638 :");
+		noticePhoneNumber.setHorizontalAlignment(SwingConstants.RIGHT);
+		noticePhoneNumber.setForeground(Color.WHITE);
+		noticePhoneNumber.setFont(new Font("나눔고딕", Font.PLAIN, 21));
+		
+		JLabel noticeEmail = new JLabel("\uC774\uBA54\uC77C :");
+		noticeEmail.setHorizontalAlignment(SwingConstants.RIGHT);
+		noticeEmail.setForeground(Color.WHITE);
+		noticeEmail.setFont(new Font("나눔고딕", Font.PLAIN, 21));
+		
+		nameTextField = new JTextField();
+		
+		/*
+		 * 
+		 * nameTextField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {			  
+			　　　　System.out.println("11111");			  
+			　　}
+		});
+		
+		nameTextField.addKeyListener(new KeyListener() { 
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(nameTextField.getText().length() > )
+			}
+			@Override
+			public void keyPressed(KeyEvent e) {}
+			public void keyReleased(KeyEvent e) {}
+		});*/
+		
+		nameTextField.setColumns(10);
+		
+		brithTextField = new JTextField();
+		brithTextField.setColumns(10);
+		
+		identityTextField = new JTextField();
+		identityTextField.setColumns(10);
+		
+		passwordField = new JPasswordField();
+		
+		passwordCheckField = new JPasswordField();
+		
+		phoneTextField = new JTextField();
+		phoneTextField.setColumns(10);
+		
+		emailTextField = new JTextField();
+		emailTextField.setColumns(10);
+
+		addressTextField = new JTextField();
+		addressTextField.setColumns(10);
+		
+		
+		
+		JPanel backgroundGray = new JPanel();
+		backgroundGray.setBackground(new Color(0, 0, 0, 123));
 		
 		JButton backButton = new JButton("Back");
 		backButton.addActionListener(new ActionListener() {
@@ -106,240 +183,267 @@ public class SignupPage {
 		backButton.setFont(new Font("나눔고딕", Font.PLAIN, 14));
 		backButton.setForeground(Color.WHITE);
 		
-		JButton backButton_1 = new JButton("회원가입 하기");
-		backButton_1.setForeground(Color.WHITE);
-		backButton_1.setFont(new Font("나눔고딕", Font.PLAIN, 14));
-		backButton_1.setFocusPainted(false);
-		backButton_1.setBackground(new Color(0, 0, 0, 123));
+		JButton signupButton = new JButton("회원가입 하기");
+		signupButton.setForeground(Color.WHITE);
+		signupButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//if(!matches(String regex))
+				// 회원가입이 완료되었습니다!! 창 띄어야 하나?
+				new DataAccessObject().insertUserInfromation(nameTextField, brithTextField, identityTextField, passwordField, phoneTextField, emailTextField, addressTextField);
+				frame.setVisible(false); 
+				new LoginPage().Login();
+			}
+		});
+		signupButton.setFont(new Font("나눔고딕", Font.PLAIN, 14));
+		signupButton.setFocusPainted(false);
+		signupButton.setBackground(new Color(0, 0, 0, 123));
 		
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
+		GroupLayout groupLayout = new GroupLayout(panel);
+		groupLayout.setHorizontalGroup(
+				groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(168)
-					.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 1213, Short.MAX_VALUE)
+					.addComponent(backgroundGray, GroupLayout.DEFAULT_SIZE, 1213, Short.MAX_VALUE)
 					.addGap(202))
-				.addGroup(gl_panel.createSequentialGroup()
+				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, 1225, Short.MAX_VALUE)
-					.addComponent(backButton_1, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
+					.addComponent(signupButton, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+		groupLayout.setVerticalGroup(
+				groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 					.addGap(116)
-					.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
+					.addComponent(backgroundGray, GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
 					.addGap(49)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(backButton_1, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(signupButton, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
 						.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		
-		JLabel lblNewLabel = new JLabel("\uAC1C\uC778 \uC815\uBCF4 \uC785\uB825");
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setBackground(Color.WHITE);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("나눔고딕", Font.BOLD, 41));
+		JLabel noticeInputPasswordcheck = new JLabel("확인을 위해 입력하신 비밀번호를 다시 한번 입력해 주세요.");
+		noticeInputPasswordcheck.setForeground(Color.WHITE);
+		noticeInputPasswordcheck.setFont(new Font("나눔고딕", Font.PLAIN, 12));
 		
-		JLabel lblNewLabel_1 = new JLabel("    \uC774\uB984 :");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1.setFont(new Font("나눔고딕", Font.PLAIN, 21));
-		lblNewLabel_1.setForeground(Color.WHITE);
+		JLabel noticeInputPassword = new JLabel("8\uC790 ~ 16\uC790\uC758 \uC22B\uC790, \uC601\uBB38\uC790 \uC870\uD569");
+		noticeInputPassword.setForeground(Color.WHITE);
+		noticeInputPassword.setFont(new Font("나눔고딕", Font.PLAIN, 12));
 		
-		JLabel lblNewLabel_1_1 = new JLabel("\uC0DD\uB144\uC6D4\uC77C :");
-		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1.setForeground(Color.WHITE);
-		lblNewLabel_1_1.setFont(new Font("나눔고딕", Font.PLAIN, 21));
+		JLabel noticeInputId = new JLabel("4자 ~ 15자의 영문 또는 숫자의 조합");
+		noticeInputId.setForeground(Color.WHITE);
+		noticeInputId.setFont(new Font("나눔고딕", Font.PLAIN, 12));
 		
-		JLabel lblNewLabel_1_1_1_1 = new JLabel("\uC544\uC774\uB514 :");
-		lblNewLabel_1_1_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1_1_1.setForeground(Color.WHITE);
-		lblNewLabel_1_1_1_1.setFont(new Font("나눔고딕", Font.PLAIN, 21));
+		JLabel noticeInputBirth = new JLabel("yymmdd로 입력해주세요. ex)010630");
+		noticeInputBirth.setForeground(Color.WHITE);
+		noticeInputBirth.setFont(new Font("나눔고딕", Font.PLAIN, 12));
 		
-		JLabel lblNewLabel_1_1_2 = new JLabel("\uBE44\uBC00\uBC88\uD638 :");
-		lblNewLabel_1_1_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1_2.setForeground(Color.WHITE);
-		lblNewLabel_1_1_2.setFont(new Font("나눔고딕", Font.PLAIN, 21));
+		JLabel noticeInputName = new JLabel("2자 ~ 5자 이내의 한글로만 입력해주세요.");
+		noticeInputName.setForeground(Color.WHITE);
+		noticeInputName.setFont(new Font("나눔고딕", Font.PLAIN, 12));
 		
-		JLabel lblNewLabel_1_1_2_1 = new JLabel("\uBE44\uBC00\uBC88\uD638 \uD655\uC778 :");
-		lblNewLabel_1_1_2_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1_2_1.setForeground(Color.WHITE);
-		lblNewLabel_1_1_2_1.setFont(new Font("나눔고딕", Font.PLAIN, 21));
+		JLabel zeroOneZero = new JLabel("010");
+		zeroOneZero.setHorizontalAlignment(SwingConstants.RIGHT);
+		zeroOneZero.setForeground(Color.WHITE);
+		zeroOneZero.setFont(new Font("나눔고딕", Font.PLAIN, 21));
 		
-		JLabel lblNewLabel_1_1_2_2 = new JLabel("\uC804\uD654\uBC88\uD638 :");
-		lblNewLabel_1_1_2_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1_2_2.setForeground(Color.WHITE);
-		lblNewLabel_1_1_2_2.setFont(new Font("나눔고딕", Font.PLAIN, 21));
+		JLabel noticeInputPhone = new JLabel("-을 제외하고 8자리로 입력해주세요.");
+		noticeInputPhone.setForeground(Color.WHITE);
+		noticeInputPhone.setFont(new Font("나눔고딕", Font.PLAIN, 12));
 		
-		JLabel lblNewLabel_1_1_1_1_1 = new JLabel("\uC774\uBA54\uC77C :");
-		lblNewLabel_1_1_1_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1_1_1_1.setForeground(Color.WHITE);
-		lblNewLabel_1_1_1_1_1.setFont(new Font("나눔고딕", Font.PLAIN, 21));
+		JLabel noticeAddress = new JLabel("주소 :");
+		noticeAddress.setHorizontalAlignment(SwingConstants.RIGHT);
+		noticeAddress.setForeground(Color.WHITE);
+		noticeAddress.setFont(new Font("나눔고딕", Font.PLAIN, 21));
 		
-		textField = new JTextField();
-		textField.setColumns(10);
+		JLabel noticeInputAddress = new JLabel("00\uC2DC/\uB3C4 00\uC2DC/\uAD6C 00\uB3D9 \uD615\uD0DC\uC758 \uC8FC\uC18C\uB85C \uC785\uB825\uD574\uC8FC\uC138\uC694.\r\n\uC608:\uCDA9\uCCAD\uB0A8\uB3C4 \uCC9C\uC548\uC2DC \uC11C\uBD81\uAD6C \uD55C\uB4E42\uB85C 88");
+		noticeInputAddress.setForeground(Color.WHITE);
+		noticeInputAddress.setFont(new Font("나눔고딕", Font.PLAIN, 12));
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
+		JLabel noticeInputEmail = new JLabel("~@naver.com, ~@gmail.com 형식으로 입력해주세요.");
+		noticeInputEmail.setForeground(Color.WHITE);
+		noticeInputEmail.setFont(new Font("나눔고딕", Font.PLAIN, 12));
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		
-		passwordField = new JPasswordField();
-		
-		passwordField_1 = new JPasswordField();
-		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		
-		JLabel lblNewLabel_1_1_1_1_1_1 = new JLabel("@");
-		lblNewLabel_1_1_1_1_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1_1_1_1_1.setForeground(Color.WHITE);
-		lblNewLabel_1_1_1_1_1_1.setFont(new Font("나눔고딕", Font.PLAIN, 21));
-		
-		JComboBox comboBox = new JComboBox();
-		
-		JLabel lblNewLabel_2 = new JLabel("확인을 위해 입력하신 비밀번호를 다시 한번 입력해 주세요.");
-		lblNewLabel_2.setForeground(Color.WHITE);
-		lblNewLabel_2.setFont(new Font("나눔고딕", Font.PLAIN, 12));
-		
-		JLabel lblNewLabel_2_1 = new JLabel("6자 ~ 16자의 숫자, 영문자, 공백을 제외한 조합으로 설정해주세요.");
-		lblNewLabel_2_1.setForeground(Color.WHITE);
-		lblNewLabel_2_1.setFont(new Font("나눔고딕", Font.PLAIN, 12));
-		
-		JLabel lblNewLabel_2_1_1 = new JLabel("4자 ~ 15자의 영문 또는 숫자의 조합");
-		lblNewLabel_2_1_1.setForeground(Color.WHITE);
-		lblNewLabel_2_1_1.setFont(new Font("나눔고딕", Font.PLAIN, 12));
-		
-		JLabel lblNewLabel_2_1_1_1 = new JLabel("yymmdd로 입력해주세요. ex)010630");
-		lblNewLabel_2_1_1_1.setForeground(Color.WHITE);
-		lblNewLabel_2_1_1_1.setFont(new Font("나눔고딕", Font.PLAIN, 12));
-		
-		JLabel lblNewLabel_2_1_1_1_1 = new JLabel("2자 ~ 5자 이내의 한글로만 입력해주세요.");
-		lblNewLabel_2_1_1_1_1.setForeground(Color.WHITE);
-		lblNewLabel_2_1_1_1_1.setFont(new Font("나눔고딕", Font.PLAIN, 12));
-		
-		JLabel lblNewLabel_1_1_2_2_1 = new JLabel("010");
-		lblNewLabel_1_1_2_2_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1_2_2_1.setForeground(Color.WHITE);
-		lblNewLabel_1_1_2_2_1.setFont(new Font("나눔고딕", Font.PLAIN, 21));
-		
-		JLabel lblNewLabel_2_2 = new JLabel("-을 제외하고 8자리로 입력해주세요.");
-		lblNewLabel_2_2.setForeground(Color.WHITE);
-		lblNewLabel_2_2.setFont(new Font("나눔고딕", Font.PLAIN, 12));
-		
-		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
+		GroupLayout gl_panel_1 = new GroupLayout(backgroundGray);
 		gl_panel_1.setHorizontalGroup(
-			gl_panel_1.createParallelGroup(Alignment.TRAILING)
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addContainerGap(464, Short.MAX_VALUE)
+					.addComponent(notice)
+					.addGap(493))
 				.addGroup(gl_panel_1.createSequentialGroup()
 					.addGap(163)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblNewLabel_1)
-						.addComponent(lblNewLabel_1_1, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel_1_1_1_1, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel_1_1_2, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel_1_1_2_1)
-						.addComponent(lblNewLabel_1_1_1_1_1, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel_1_1_2_2, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE))
+						.addComponent(noticeAddress, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
+						.addComponent(noticeName)
+						.addComponent(noticeBirth, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+						.addComponent(noticeIdentity, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+						.addComponent(noticePassword, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+						.addComponent(noticePasswordCheck)
+						.addComponent(noticeEmail, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+						.addComponent(noticePhoneNumber, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel_1.createSequentialGroup()
-							.addComponent(passwordField_1, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
+							.addComponent(passwordCheckField, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(lblNewLabel_2))
+							.addComponent(noticeInputPasswordcheck))
 						.addGroup(gl_panel_1.createSequentialGroup()
 							.addComponent(passwordField, 239, 239, 239)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(lblNewLabel_2_1, GroupLayout.PREFERRED_SIZE, 377, GroupLayout.PREFERRED_SIZE))
+							.addComponent(noticeInputPassword, GroupLayout.PREFERRED_SIZE, 377, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel_1.createSequentialGroup()
 							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(textField_2)
-								.addComponent(textField)
-								.addComponent(textField_1))
+								.addComponent(identityTextField)
+								.addComponent(nameTextField)
+								.addComponent(brithTextField))
 							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_panel_1.createSequentialGroup()
 									.addGap(20)
-									.addComponent(lblNewLabel_2_1_1, GroupLayout.PREFERRED_SIZE, 212, GroupLayout.PREFERRED_SIZE))
+									.addComponent(noticeInputId, GroupLayout.PREFERRED_SIZE, 212, GroupLayout.PREFERRED_SIZE))
 								.addGroup(gl_panel_1.createSequentialGroup()
 									.addGap(18)
 									.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblNewLabel_2_1_1_1_1, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblNewLabel_2_1_1_1, GroupLayout.PREFERRED_SIZE, 212, GroupLayout.PREFERRED_SIZE)))))
+										.addComponent(noticeInputName, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
+										.addComponent(noticeInputBirth, GroupLayout.PREFERRED_SIZE, 212, GroupLayout.PREFERRED_SIZE)))))
 						.addGroup(gl_panel_1.createSequentialGroup()
-							.addComponent(textField_4, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
+							.addComponent(zeroOneZero)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblNewLabel_1_1_1_1_1_1)
+							.addComponent(phoneTextField, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE))
+							.addComponent(noticeInputPhone, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel_1.createSequentialGroup()
-							.addComponent(lblNewLabel_1_1_2_2_1)
+							.addComponent(addressTextField, GroupLayout.PREFERRED_SIZE, 280, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE)
+							.addComponent(noticeInputAddress))
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addComponent(emailTextField, GroupLayout.PREFERRED_SIZE, 334, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(lblNewLabel_2_2, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(232, Short.MAX_VALUE))
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addContainerGap(464, Short.MAX_VALUE)
-					.addComponent(lblNewLabel)
-					.addGap(493))
+							.addComponent(noticeInputEmail, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(126, Short.MAX_VALUE))
 		);
 		gl_panel_1.setVerticalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
 					.addGap(37)
-					.addComponent(lblNewLabel)
+					.addComponent(notice)
 					.addGap(44)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel_1)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel_2_1_1_1_1, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+						.addComponent(noticeName)
+						.addComponent(nameTextField, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+						.addComponent(noticeInputName, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
 					.addGap(26)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblNewLabel_1_1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addComponent(noticeBirth, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-							.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblNewLabel_2_1_1_1, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(brithTextField, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+							.addComponent(noticeInputBirth, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)))
 					.addGap(26)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblNewLabel_1_1_1_1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addComponent(noticeIdentity, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-							.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblNewLabel_2_1_1, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(identityTextField, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+							.addComponent(noticeInputId, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)))
 					.addGap(18)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblNewLabel_1_1_2, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addComponent(noticePassword, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
 							.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblNewLabel_2_1, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(noticeInputPassword, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)))
 					.addGap(23)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblNewLabel_1_1_2_1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addComponent(noticePasswordCheck, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-							.addComponent(passwordField_1, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(passwordCheckField, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+							.addComponent(noticeInputPasswordcheck, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)))
 					.addGap(26)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel_1_1_2_2, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel_1_1_2_2_1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel_2_2, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+						.addComponent(noticePhoneNumber, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addComponent(zeroOneZero, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addComponent(phoneTextField, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+						.addComponent(noticeInputPhone, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
 					.addGap(26)
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblNewLabel_1_1_1_1_1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textField_4, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false)
-							.addComponent(comboBox, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblNewLabel_1_1_1_1_1_1, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)))
-					.addContainerGap(147, Short.MAX_VALUE))
+						.addComponent(noticeEmail, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+							.addComponent(emailTextField, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+							.addComponent(noticeInputEmail, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)))
+					.addGap(26)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
+						.addComponent(noticeAddress, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+							.addComponent(addressTextField, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+							.addComponent(noticeInputAddress, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(94, Short.MAX_VALUE))
 		);
-		panel_1.setLayout(gl_panel_1);
-		panel.setLayout(gl_panel);
+		backgroundGray.setLayout(gl_panel_1);
+		panel.setLayout(groupLayout);
 		frame.setVisible(true);
 	}
+	/*
+	private void FocusEvent() {
+		identityTextField.addFocusListener(new FocusListener() {
+			public void focusLost(FocusEvent e) {
+				if(identityTextField.getText().trim().length()==0) {
+					identityTextField.setText("아이디");
+				}
+			}
+			public void focusGained(FocusEvent e) {
+				if(identityTextField.getText().trim().equals("아이디")) {
+					identityTextField.setText("");
+				}
+			}
+		});
+		nameTextField.addFocusListener(new FocusListener() {
+			public void focusLost(FocusEvent e) {
+				if(nameTextField.getText().trim().length()==0) {
+					nameTextField.setText("이름");
+				}
+			}
+			public void focusGained(FocusEvent e) {
+				if(nameTextField.getText().trim().equals("이름")) {
+					nameTextField.setText("");
+				}
+			}
+		});
+		brithTextField.addFocusListener(new FocusListener() {
+			public void focusLost(FocusEvent e) {
+				if(brithTextField.getText().trim().length()==0) {
+					brithTextField.setText("생일 년도");
+				}
+			}
+			public void focusGained(FocusEvent e) {
+				if(brithTextField.getText().trim().equals("생일 년도")) {
+					brithTextField.setText("");
+				}
+			}
+		});
+		birthDayText.addFocusListener(new FocusListener() {
+			public void focusLost(FocusEvent e) {
+				if(birthDayText.getText().trim().length()==0) {
+					birthDayText.setText("생일 일자");
+				}
+			}
+			public void focusGained(FocusEvent e) {
+				if(birthDayText.getText().trim().equals("생일 일자")) {
+					birthDayText.setText("");
+				}
+			}
+		});
+		phoneNumberText.addFocusListener(new FocusListener() {
+			public void focusLost(FocusEvent e) {
+				if(phoneNumberText.getText().trim().length()==0) {
+					phoneNumberText.setText("핸드폰 번호");
+				}
+			}
+			public void focusGained(FocusEvent e) {
+				if(phoneNumberText.getText().trim().equals("핸드폰 번호")) {
+					phoneNumberText.setText("");
+				}
+			}
+		});
+		}*/
 }

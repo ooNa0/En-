@@ -7,19 +7,16 @@ import java.io.InputStreamReader;
 public class ApplyCommand {
 	
 	public String getVersion(){
-		BufferedReader br = null;
-		String outVertionInformation = null;
+		String outVertionInformation = "";
 		String i;
 		try {
 			//br = new BufferedReader(new InputStreamReader(Runtime.getRuntime().exec("cmd /c" + "cmd").getInputStream(), "EUC-KR"));
-			br = new BufferedReader(new InputStreamReader(new ProcessBuilder("cmd", "/c", "cmd").start().getInputStream()));
-			while ((i = br.readLine()) != null) {
-				outVertionInformation += i + "\n";
-				System.out.println("out = " + outVertionInformation);
-				
-			}
+			BufferedReader buffer = new BufferedReader(new InputStreamReader(new ProcessBuilder("cmd").start().getInputStream()));
+			//while (buffer.readLine() != null) {
+				outVertionInformation = buffer.readLine() + "\n";
+				outVertionInformation += buffer.readLine() + "\n";
+				outVertionInformation += buffer.readLine();
 		} catch (IOException e) {}
-		System.out.println("하 왜 안되냐");
 		return outVertionInformation;
 	}
 	/*

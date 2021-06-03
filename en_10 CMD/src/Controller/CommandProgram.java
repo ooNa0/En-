@@ -22,12 +22,14 @@ public class CommandProgram {
 	private InputManagement input;
 	private ShowResult result;
 	private dataManagement dataManagement = new dataManagement();
+	private String currentPath;
 
 	public CommandProgram() {
 		command = new ApplyCommand();
 		input = new InputManagement();
 		result = new ShowResult();
-		// System.out.println(command.getVolume());
+		currentPath = System.getProperty("user.home");
+		//System.out.println(System.getenv("SystemDrive"));
 		// showDirectory();
 		// clearScreen();
 		runProgram();
@@ -36,7 +38,7 @@ public class CommandProgram {
 
 	private void runProgram() {
 		//List<String> inputlist = new ArrayList<String>();
-		List<String> inputlist = dataManagement.splitString(input.startCommand(command.getVersion()));
+		List<String> inputlist = dataManagement.splitString(input.startCommand(command.getVersion(), currentPath));
 		//String firstsplittedString[] = dataManagement.splitString(input.startCommand(command.getVersion()));
 		while (true) {
 			if (inputlist.isEmpty()) { }
@@ -64,12 +66,77 @@ public class CommandProgram {
 				case "tree":
 					break;
 				default:
-					if(inputlist.get(0).contains("cd")) {
+					//System.out.println(inputlist.get(0).length());
+					if(inputlist.get(0).substring(0, 2).equals("cd")) {
+						if(inputlist.get(0).length() == 2) { // cd에 띄어쓰기
+							if(inputlist.get(1).isEmpty()) { // cd만 입력
+								System.out.println(currentPath); // 현재 경로 출력
+							}
+							else { // cd [값] 이런 식
+								String targetPath;
+								if(inputlist.get(1).contains(":")) {
+									targetPath = inputlist.get(1);
+								}
+								else {
+									targetPath = currentPath + "\\" +inputlist.get(1);
+								}
+								File targetFile = new File(targetPath);
+								if(targetFile.exists()) { // 파일이나 디렉토리 존재
+									if(targetFile.isFile()) {
+										System.out.println("디렉터리 이름이 올바르지 않습니다.");
+									}
+									else {
+										currentPath = targetPath;
+									}
+								}
+							}//C:\Users\구나영\Desktop
+						}
+						else { // cd에 띄어쓰기 안함
+							if(inputlist.get(0).length() == 3) {// cd. 이런식
+								if(inputlist.get(0).substring(2, 3).equals(".")) {
+									break;
+								}
+								if(inputlist.get(0).substring(2, 3).equals("/") || inputlist.get(0).substring(2, 3).equals("\\")) {
+									currentPath = System.getenv("SystemDrive") + "\\";
+								}
+								if(inputlist.get(0).substring(2, 3).equals(",") || inputlist.get(0).substring(2, 3).equals(";") || inputlist.get(0).substring(2, 3).equals("=")
+										|| inputlist.get(0).substring(2, 3).equals("&")) {
+									System.out.println(currentPath);
+								}
+								if(inputlist.get(0).substring(2, 3).equals(":")) {
+									System.out.println("파일 이름, 디렉터리 이름 또는 볼륨 레이블 구문이 잘못되었습니다.");
+								}
+								if(inputlist.get(0).substring(2, 3).equals("?") || inputlist.get(0).substring(2, 3).equals(";") || inputlist.get(0).substring(2, 3).equals("'")
+										|| inputlist.get(0).substring(2, 3).equals("\"") || inputlist.get(0).substring(2, 3).equals("-") || inputlist.get(0).substring(2, 3).equals("_")
+										|| inputlist.get(0).substring(2, 3).equals(")") || inputlist.get(0).substring(2, 3).equals("*")
+										|| inputlist.get(0).substring(2, 3).equals("%")|| inputlist.get(0).substring(2, 3).equals("$")
+										|| inputlist.get(0).substring(2, 3).equals("#")|| inputlist.get(0).substring(2, 3).equals("@")
+										|| inputlist.get(0).substring(2, 3).equals("!")|| inputlist.get(0).substring(2, 3).equals("~")
+										|| inputlist.get(0).substring(2, 3).equals("`")) {
+									// 'cd?'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는 배치 파일이 아닙니다.
+								}
+								if(inputlist.get(0).substring(2, 3).equals("|")) {
+									System.out.println("명령 구문이 올바르지 않습니다.");
+								}
+								if(inputlist.get(0).substring(2, 3).equals("+") || inputlist.get(0).substring(2, 3).equals("(")) {
+									System.out.println("지정된 경로를 찾을 수 없습니다.");
+								}
+								if(inputlist.get(0).substring(2, 3).equals("^")) {
+									System.out.print("More?");
+									String inputString = new Scanner(System.in).nextLine();
+									//'cd+more뒤에 입력한 값'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는 배치 파일이 아닙니다.
+								}
+							}
+							else {
+								
+							}
+						}
+						System.out.println(inputlist.get(0).length());
 						System.out.println(inputlist.get(0).substring(0, 2));
 					}
 					break;
 				}
-				inputlist = dataManagement.splitString(input.inputCommand());
+				inputlist = dataManagement.splitString(input.inputCommand(currentPath));
 				//String splittedString[] = dataManagement.splitString(input.startCommand(command.getVersion()));
 			}
 			// splittedString[] = (input.inputCommand()).split(" ");

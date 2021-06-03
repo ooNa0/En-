@@ -3,10 +3,10 @@ package View;
 import java.util.Scanner;
 
 public class InputManagement {
-	public String startCommand(String versionInformation) {
+	public String startCommand(String versionInformation, String currentPath) {
 		String inputString;
 		System.out.println(versionInformation);
-		System.out.print(System.getProperty("user.home") + ">");
+		System.out.print("\n" + currentPath + ">");
 
 		// 엔터를 기준으로 String으로 받는다.
 		inputString = new Scanner(System.in).nextLine();
@@ -16,9 +16,9 @@ public class InputManagement {
 		return inputString;
 	}
 	
-	public String inputCommand() {
+	public String inputCommand(String currentPath) {
 		String inputString;
-		System.out.print(System.getProperty("user.home") + ">");
+		System.out.print("\n" + currentPath + ">");
 
 		// 엔터를 기준으로 String으로 받는다.
 		inputString = new Scanner(System.in).nextLine();

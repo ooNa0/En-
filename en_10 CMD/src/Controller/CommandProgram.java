@@ -28,8 +28,14 @@ public class CommandProgram {
 		command = new ApplyCommand();
 		input = new InputManagement();
 		result = new ShowResult();
-		currentPath = System.getProperty("user.home");
-		//System.out.println(System.getenv("SystemDrive"));
+		currentPath = System.getProperty("user.home"); //getCanonicalPath()
+		File p = new File("C:\\Users\\..\\BFF");
+		try {
+			System.out.println(p.getCanonicalPath());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// showDirectory();
 		// clearScreen();
 		runProgram();

@@ -34,18 +34,16 @@ public class CommandProgram {
 
 	}
 
-	
-
 	private void runProgram() {
 		//List<String> inputlist = new ArrayList<String>();
 		List<String> inputlist = dataManagement.splitString(input.startCommand(command.getVersion()));
 		//String firstsplittedString[] = dataManagement.splitString(input.startCommand(command.getVersion()));
 		while (true) {
-			if (inputlist.isEmpty()) {
-			} else {
+			if (inputlist.isEmpty()) { }
+			else {
 				switch (inputlist.get(0)) {
-				case "cd":
-					break;
+				//case "cd":					
+				//	break;
 				case "dir":
 					System.out.println(command.getVolume());
 					result.showDirectory();
@@ -56,13 +54,19 @@ public class CommandProgram {
 				case "help":
 					result.helpCommand();
 					break;
-				case "copy":
+				case "copy": // ±Ì¿∫ ∫πªÁ
+					command.copy(inputlist.get(1), inputlist.get(2));
 					break;
 				case "move":
+					command.copy(inputlist.get(1), inputlist.get(2));
+					command.delete(inputlist.get(1));
 					break;
 				case "tree":
 					break;
-				case "exit":
+				default:
+					if(inputlist.get(0).contains("cd")) {
+						System.out.println(inputlist.get(0).substring(0, 2));
+					}
 					break;
 				}
 				inputlist = dataManagement.splitString(input.inputCommand());
@@ -73,5 +77,6 @@ public class CommandProgram {
 
 		// System.out.println(System.getProperty("file.separator"));
 	}
+
 
 }

@@ -21,7 +21,7 @@ import View.InputManagement;
 import View.ShowResult;
 
 public class CommandProgram {
-	private ApplyCommand command;
+	private CommandCalculation command;
 	private InputManagement input;
 	private ShowResult result;
 	private Exception exception;
@@ -30,11 +30,11 @@ public class CommandProgram {
 	private List<String> avoidCommasString;
 
 	public CommandProgram() {
-		command = new ApplyCommand();
+		command = new CommandCalculation();
 		input = new InputManagement();
 		result = new ShowResult();
 		dataManagement = new dataManagement();
-		exception = new Exception(command, result, dataManagement);
+		exception = new Exception(command, result, dataManagement, input);
 		
 		currentPath = Constant.START_POSITION_VALUE;
 		//System.out.println(p.getCanonicalPath());
@@ -75,12 +75,10 @@ public class CommandProgram {
 					result.helpCommand();
 					break;
 				case "copy": // ±Ì¿∫ ∫πªÁ
-					avoidCommasString = dataManagement.avoidCommasList(inputString);
-					exception.copyException(avoidCommasString, currentPath, false);	
+					exception.copyException(dataManagement.avoidCommasList(inputString), currentPath, false);	
 					break;
 				case "move":
-					avoidCommasString = dataManagement.avoidCommasList(inputString);
-					if(exception.copyException(avoidCommasString, currentPath, true))
+					if(exception.moveException(dataManagement.avoidCommasList(inputString), currentPath, true))
 						command.delete(avoidCommasString.get(1), currentPath);
 					break;
 				case "tree":

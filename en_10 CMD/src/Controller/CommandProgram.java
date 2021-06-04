@@ -37,7 +37,15 @@ public class CommandProgram {
 		dataManagement = new dataManagement();
 		exception = new Exception(command, result, dataManagement, input);
 		currentPath = Constant.START_POSITION_VALUE + "\\Desktop";
-
+		
+		File file = new File(Constant.START_POSITION_VALUE + "");
+		try {
+			System.out.println(file.getCanonicalFile());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		runProgram();
 	}
 

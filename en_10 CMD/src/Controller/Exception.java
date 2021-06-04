@@ -99,27 +99,10 @@ public class Exception {
 					case Constant.COVER_ALL:
 						break;
 					}
-					
-					/*
-					for (int index = 0; index < fileList.length; index++) {
-						if (isAsk) {
-							switch (input.isContinueAsking(toFile)) {
-							case 1: // Constant하면 case expressions must be constant expressions 에러
-								command.copy(fromPath, toPath);
-								break;
-							case 0:
-								isAsk = false;
-								break;
-							case 3:
-								index--;
-								continue;
-							}
-						}
-						System.out.println(fileList[index].getName());
-					}*/
 				}
 				else { // 대상이 디렉토리일 경우
-					if(fileList == null) { // 파일에서,,
+					if(fromFile.isFile()) { // 파일에서,,
+						command.copy(fromPath, toPath + "\\" + fromFile.getName());
 						copyNumber++;
 					}
 					else {
@@ -213,11 +196,16 @@ public class Exception {
 					}
 				}
 				else { // 대상이 디렉토리일 경우
+					if(fromFile.isFile()) { // 파일 -> 디렉토리
+						command.copy(fromPath, toPath + "\\" + fromFile.getName());
+						moveNumber++;
+					}
+					else { // 디렉토리 -> 파일
+						command.copy(fromPath, toPath);
+					}
 					// 디렉1 -> 디렉2
 					// 디렉2 안에 디렉1이 들어감, 만약에 디렉2안에 디렉1과 같은 이름 있음 덮어쓰겠습니까?
 					//command.copyDirectory(fromPath, toPath);
-					command.copy(fromPath, toPath);
-					moveNumber++;
 
 					// 파일 -> 디렉
 					// 디렉 안에 파일 넣기

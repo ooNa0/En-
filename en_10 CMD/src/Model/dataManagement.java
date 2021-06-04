@@ -26,4 +26,25 @@ public class dataManagement {
 		//String splittedString[] = inputString.split(" ");
 		return list;
 	}
+	
+	public String backPath(String currentPath) {
+		currentPath = currentPath.substring(0, currentPath.lastIndexOf("\\"));
+		if(currentPath.equals(Constant.DRIVE))
+			currentPath = Constant.TOP_LEVEL_PATH;
+		return currentPath;
+		/*
+		if(currentPath.equals(Constant.DRIVE) || currentPath.equals(Constant.TOP_LEVEL_PATH)) {
+			if(currentPath.equals(Constant.DRIVE))
+				return currentPath + "\\";
+			return currentPath;
+		}
+		else {
+			
+		}
+		if(!currentPath.substring(0, currentPath.lastIndexOf("\\")).equals(Constant.DRIVE)) {
+			return currentPath.substring(0, currentPath.lastIndexOf("\\")) + "\\";			
+		}
+		return currentPath;
+		*/
+	}
 }

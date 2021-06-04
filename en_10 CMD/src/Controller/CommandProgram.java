@@ -28,6 +28,7 @@ public class CommandProgram {
 	private dataManagement dataManagement;
 	private String currentPath;
 	private List<String> avoidCommasString;
+	private String searchPath;
 
 	public CommandProgram() {
 		command = new CommandCalculation();
@@ -50,7 +51,9 @@ public class CommandProgram {
 				switch (inputlist.get(0).toLowerCase()) {
 				case "dir":
 					System.out.println(command.getVolume());
-					result.showDirectory(currentPath);
+					if(inputlist.size() == 1) { searchPath = currentPath; }
+					else { searchPath = inputString.substring(4, inputString.length()); }
+					result.showDirectory(searchPath);
 					break;
 				case "cls":
 					result.clearScreen();
@@ -62,7 +65,7 @@ public class CommandProgram {
 					exception.copyException(dataManagement.avoidCommasList(inputString), currentPath, false);
 					break;
 				case "move":
-					System.out.println("값,,,자른거" + dataManagement.avoidCommasList(inputString).get(1));
+					//System.out.println("값,,,자른거" + dataManagement.avoidCommasList(inputString).get(1));
 					if (exception.moveException(dataManagement.avoidCommasList(inputString), currentPath, true))
 						command.delete(dataManagement.avoidCommasList(inputString).get(1), currentPath);
 					break;

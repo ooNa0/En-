@@ -1,8 +1,11 @@
 package Model;
 
 public class Constant {
+
+	public static int INPUT_YES = 1;
 	
 	public static String DIRECTORY_DATE_FORMAT = "yyyy-MM-dd a hh:mm";
+	public static String DIRECTORY_INFORMATION = "<DIR>";
 	public static String EMPTY_VALUE = "";
 	public static String START_POSITION_VALUE = System.getProperty("user.home");
 	

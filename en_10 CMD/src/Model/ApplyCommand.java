@@ -12,7 +12,7 @@ public class ApplyCommand {
 	
 	
 	public String getVersion() {
-		String outVertionInformation = "";
+		String outVertionInformation = Constant.EMPTY_VALUE;
 		try {
 			BufferedReader buffer = new BufferedReader(new InputStreamReader(new ProcessBuilder("cmd").start().getInputStream()));
 			outVertionInformation = buffer.readLine() + "\n";
@@ -23,7 +23,7 @@ public class ApplyCommand {
 	}
 	
 	public String getVolume() {
-		String outVolumeInformation = "";
+		String outVolumeInformation = Constant.EMPTY_VALUE;
 		try {
 			BufferedReader buffer = new BufferedReader(new InputStreamReader(new ProcessBuilder("cmd", "/c", "dir").start().getInputStream()));
 			outVolumeInformation = buffer.readLine() + "\n";
@@ -38,7 +38,7 @@ public class ApplyCommand {
         System.out.flush();
 	}
 	
-	public int copy(String originalFilePath, String copyFilePath) {
+	public boolean copy(String originalFilePath, String copyFilePath) {
 		File originalFile = new File(originalFilePath);
 		File copyFile = new File(copyFilePath);
 		
@@ -67,38 +67,38 @@ public class ApplyCommand {
 		} catch (Exception e) {
 			//파일 처리 실패시 -1를 리턴합니다.
 			System.out.println(e.getLocalizedMessage());
-			return -1;
+			return false;
 		}
 		//성공시에 메세지 출력후 1을 리턴합니다.
-		System.out.println("copy succeed !!");
-		return 1;
+		//System.out.println("copy succeed !!");
+		return true;
 	}
 
 	//삭제하는 메소드
-	public int delete(String originalFilePath) {
-		File file = new File(originalFilePath);
+	public int delete(String originalFilePath, String currentPath) {
 		
+		if(!originalFilePath.contains(Constant.TOP_LEVEL_PATH)) { // 상대 경로 -> 절대 경로
+			originalFilePath = currentPath + "\\" + originalFilePath;
+		}
+
 		//파일이 있는지 확인합니다.
 		//if (file.exists()) {
 			
-			//혹시난 디렉토리 인지도 확인합니다. 이면 그아래의 파일도 삭제합니다.
-			if (file.isDirectory()) {
-				File[] filelist = file.listFiles();
+			//디렉토리이면 그아래의 파일 삭제
+				deleteDirectoy(originalFilePath);
+				File file = new File(originalFilePath);
+				file.delete();
+				//File[] filelist = file.listFiles();
+				/*
 				for (int i = 0; i < filelist.length; i++) {
 					if (filelist[i].delete()) {
 						System.out.println(filelist[i].getName() + "Dirlist- delete succeed !!");
 					} else {
 						System.out.println(filelist[i].getName() + "Dirlist- delete error");
 					}
-				}
-			}
-			if (file.delete()) {
-				System.out.println("delete succeed !!");
-			} else {
-				//파일 삭제가 실패하면 에러메세지출력후 -1를 리턴합니다.
-				System.out.println("delete error");
-				return -1;
-			}
+				}*/
+			
+			
 			//파일이 존재하지 않으면 에러메세지를 보내고 -2를 리턴합니다.
 		//} else {
 		//	System.out.println("not exist !!!");
@@ -107,4 +107,38 @@ public class ApplyCommand {
 		//정상처리되면 1를 리턴합니다.
 		return 1;
 	}
-}
+
+	private void deleteDirectoy(String originalFilePath) {
+		File file = new File(originalFilePath);
+		//System.out.println(file);
+		File[] filelist = file.listFiles();
+
+		for (int i = 0; i < filelist.length; i++) {
+			System.out.println(filelist.length);
+			System.out.println("filelist = " + filelist[i].toString());
+			if (filelist[i].isDirectory()) {
+				deleteDirectoy(filelist[i].toString());//originalFilePath + "\\" + filelist[i].
+				filelist[i].delete();
+			} else {
+				filelist[i].delete();
+			}
+		}
+	}
+	
+	/*
+	private String deleteDirctoy(File[] filelist) {
+		
+		if(filelist != null) {
+			for (int i = 0; i < filelist.length; i++) {
+				System.out.println(filelist[i].getName());
+				if(filelist[i].isDirectory()) {
+					System.out.println("엥");
+					System.out.println(new File(filelist[i].getName()).listFiles());
+					deleteDirctoy(new File(filelist[i].getName()).listFiles());					
+				}
+				filelist[i].delete();
+			}
+		}		
+		return "";
+	}*/
+	}

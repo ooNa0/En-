@@ -35,35 +35,19 @@ public class CommandProgram {
 		result = new ShowResult();
 		dataManagement = new dataManagement();
 		exception = new Exception(command, result, dataManagement, input);
-		
-		currentPath = Constant.START_POSITION_VALUE;
-		//System.out.println(p.getCanonicalPath());
-		
-		/*
-		String pd = "C:\\Users";
-		File p = new File("C:\\Users");
-		System.out.println(pd.lastIndexOf("\\"));
-		try {
-			System.out.println(p.getCanonicalPath());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		//result.showDirectory();
-		// clearScreen();
-		runProgram();
+		currentPath = Constant.START_POSITION_VALUE + "\\Desktop";
 
+		runProgram();
 	}
 
 	private void runProgram() {
 		String inputString = input.startCommand(command.getVersion(), currentPath);
 		List<String> inputlist = dataManagement.splitString(inputString);
+
 		while (true) {
-			if (inputlist.isEmpty()) { }
-			else {
-				switch (inputlist.get(0)) {
-				//case "cd":					
-				//	break;
+			if (inputlist.isEmpty()) {
+			} else {
+				switch (inputlist.get(0).toLowerCase()) {
 				case "dir":
 					System.out.println(command.getVolume());
 					result.showDirectory(currentPath);
@@ -75,24 +59,30 @@ public class CommandProgram {
 					result.helpCommand();
 					break;
 				case "copy": // 깊은 복사
-					exception.copyException(dataManagement.avoidCommasList(inputString), currentPath, false);	
+					exception.copyException(dataManagement.avoidCommasList(inputString), currentPath, false);
 					break;
 				case "move":
-					if(exception.moveException(dataManagement.avoidCommasList(inputString), currentPath, true))
-						command.delete(avoidCommasString.get(1), currentPath);
+					System.out.println("값,,,자른거" + dataManagement.avoidCommasList(inputString).get(1));
+					if (exception.moveException(dataManagement.avoidCommasList(inputString), currentPath, true))
+						command.delete(dataManagement.avoidCommasList(inputString).get(1), currentPath);
 					break;
 				case "tree":
 					break;
-				default:
-					if(inputlist.get(0).substring(0, 2).equals("cd"))
-						currentPath = exception.changeDirectoryException(inputlist, currentPath);						
+				case "cmd":
+					runProgram();
 					break;
-				}
+				default:
+					if (inputlist.get(0).toLowerCase().substring(0, 2).equals("cd"))
+						currentPath = exception.changeDirectoryException(inputlist, currentPath);
+					else {
+						exception.otherInput(inputlist.get(0));
+					}
+					break;
+				}				
 				inputString = input.inputCommand(currentPath);
 				inputlist = dataManagement.splitString(inputString);
 			}
 		}
 	}
-
 
 }

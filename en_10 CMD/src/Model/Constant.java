@@ -1,6 +1,21 @@
 package Model;
 
 public class Constant {
+	
+	public static String DIRECTORY_DATE_FORMAT = "yyyy-MM-dd a hh:mm";
+	public static String EMPTY_VALUE = "";
+	public static String START_POSITION_VALUE = System.getProperty("user.home");
+	
+	public static String TOP_LEVEL_PATH = System.getenv("SystemDrive") + "\\";
+	public static String DRIVE = System.getenv("SystemDrive");
+	
+	public static String INFORMATION_DIRECTORY_NAME_INCORRECT= "디렉터리 이름이 올바르지 않습니다.";
+	public static String INFORMATION_FILE_DIRECTORY_VOLUME_NAME_INCORRECT= "파일 이름, 디렉터리 이름 또는 볼륨 레이블 구문이 잘못되었습니다.";
+
+	public static String INFORMATION_COMMAND_SYNTAX_INCORRECT = "명령 구문이 올바르지 않습니다.";
+	public static String INFORMATION_PATH_NOTFOUND = "지정된 경로를 찾을 수 없습니다.";
+	public static String INFORMATION_NOT_COMMAND_OPERABLE_PROGRAM_BATCHFILE = "'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는 배치 파일이 아닙니다.";
+	
 	public static String HELP_COMMAND_INFORMATION = "특정 명령어에 대한 자세한 내용이 필요하면 HELP 명령어 이름을 입력하십시오.\r\n"
 			+ "ASSOC    파일 확장명 연결을 보여주거나 수정합니다.\r\n"
 			+ "ATTRIB   파일 속성을 표시하거나 바꿉니다.\r\n"

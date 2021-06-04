@@ -32,64 +32,39 @@ public class CommandCalculation {
 	}
 	
 	public void copyDirectory(String fromPath, String toPath){ // 미완
-		File fromFile = new File(fromPath);
-		File toFile = new File(toPath);
-		File[] targetFile = fromFile.listFiles();
-		if(targetFile == null) {
-			FileInputStream fis = null;
-			FileOutputStream fos = null;
-			try {
-				fis = new FileInputStream(fromFile);
-				fos = new FileOutputStream(toFile) ;
-				byte[] b = new byte[4096];
-				int cnt = 0;
-				while((cnt=fis.read(b)) != -1){
-					fos.write(b, 0, cnt);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally{
+		File sourceF = new File(fromPath);
+		File targetF = new File(toPath);
+		File[] target_file = sourceF.listFiles();
+		for (File file : target_file) {
+			File temp = new File(targetF.getAbsolutePath() + File.separator + file.getName());
+			if(file.isDirectory()){
+				temp.mkdir();
+				copyDirectory(file.getPath(), temp.getPath());
+			} else {
+				FileInputStream fis = null;
+				FileOutputStream fos = null;
 				try {
-					fis.close();
-					fos.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}	
-			}
-		}
-		else {
-			for (File file : targetFile) {
-				File temp = new File(toFile.getAbsolutePath() + File.separator + file.getName());
-				if(file.isDirectory()){
-					//temp.mkdir();
-					copyDirectory(file.getPath(), temp.getPath());
-				} else {
-					FileInputStream fis = null;
-					FileOutputStream fos = null;
-					try {
-						fis = new FileInputStream(file);
-						fos = new FileOutputStream(temp) ;
-						byte[] b = new byte[4096];
-						int cnt = 0;
-						while((cnt=fis.read(b)) != -1){
-							fos.write(b, 0, cnt);
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					} finally{
-						try {
-							fis.close();
-							fos.close();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}	
+					fis = new FileInputStream(file);
+					fos = new FileOutputStream(temp) ;
+					byte[] b = new byte[4096];
+					int cnt = 0;
+					while((cnt=fis.read(b)) != -1){
+						fos.write(b, 0, cnt);
 					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally{
+					try {
+						fis.close();
+						fos.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}	
 				}
-			}	
-		} 
-	}
+			}
+		  }	
+	    }
 	
 	public boolean copy(String originalFilePath, String copyFilePath) {
 		File originalFile = new File(originalFilePath);
@@ -120,7 +95,6 @@ public class CommandCalculation {
 
 	//삭제하는 메소드
 	public void delete(String originalFilePath, String currentPath) {
-		
 		if (!originalFilePath.contains(Constant.TOP_LEVEL_PATH)) { // 상대 경로 -> 절대 경로
 			originalFilePath = currentPath + "\\" + originalFilePath;
 		}

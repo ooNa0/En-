@@ -7,16 +7,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class CommandCalculation {
-
-	
+public class CommandCalculation {	
 	
 	public String getVersion() {
 		String outVertionInformation = Constant.EMPTY_VALUE;
 		try {
-			BufferedReader buffer = new BufferedReader(new InputStreamReader(new ProcessBuilder("cmd").start().getInputStream()));
-			outVertionInformation = buffer.readLine() + "\n";
-			outVertionInformation += buffer.readLine() + "\n";
+			BufferedReader buffer = new BufferedReader(new InputStreamReader(new ProcessBuilder(Constant.EXECUTION_COMMAND).start().getInputStream()));
+			outVertionInformation = buffer.readLine() + Constant.PROGRAM_ENTER_FORMAT;
+			outVertionInformation += buffer.readLine() + Constant.PROGRAM_ENTER_FORMAT;
 			outVertionInformation += buffer.readLine();
 		} catch (IOException e) {}
 		return outVertionInformation;
@@ -25,27 +23,77 @@ public class CommandCalculation {
 	public String getVolume() {
 		String outVolumeInformation = Constant.EMPTY_VALUE;
 		try {
-			BufferedReader buffer = new BufferedReader(new InputStreamReader(new ProcessBuilder("cmd", "/c", "dir").start().getInputStream()));
-			outVolumeInformation = buffer.readLine() + "\n";
-			outVolumeInformation += buffer.readLine() + "\n";;
+			BufferedReader buffer = new BufferedReader(new InputStreamReader(new ProcessBuilder(Constant.EXECUTION_COMMAND, "/c", "dir").start().getInputStream()));
+			outVolumeInformation = buffer.readLine() + Constant.PROGRAM_ENTER_FORMAT;
+			outVolumeInformation += buffer.readLine() + Constant.PROGRAM_ENTER_FORMAT;
 			outVolumeInformation += buffer.readLine();
 		} catch (IOException e) {}
 		return outVolumeInformation;
 	}
 	
-	public void clsCommand() {
-		System.out.print("\033[H\033[2J");
-        System.out.flush();
+	public void copyDirectory(String fromPath, String toPath){ // 미완
+		File fromFile = new File(fromPath);
+		File toFile = new File(toPath);
+		File[] targetFile = fromFile.listFiles();
+		if(targetFile == null) {
+			FileInputStream fis = null;
+			FileOutputStream fos = null;
+			try {
+				fis = new FileInputStream(fromFile);
+				fos = new FileOutputStream(toFile) ;
+				byte[] b = new byte[4096];
+				int cnt = 0;
+				while((cnt=fis.read(b)) != -1){
+					fos.write(b, 0, cnt);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally{
+				try {
+					fis.close();
+					fos.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
+			}
+		}
+		else {
+			for (File file : targetFile) {
+				File temp = new File(toFile.getAbsolutePath() + File.separator + file.getName());
+				if(file.isDirectory()){
+					//temp.mkdir();
+					copyDirectory(file.getPath(), temp.getPath());
+				} else {
+					FileInputStream fis = null;
+					FileOutputStream fos = null;
+					try {
+						fis = new FileInputStream(file);
+						fos = new FileOutputStream(temp) ;
+						byte[] b = new byte[4096];
+						int cnt = 0;
+						while((cnt=fis.read(b)) != -1){
+							fos.write(b, 0, cnt);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					} finally{
+						try {
+							fis.close();
+							fos.close();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}	
+					}
+				}
+			}	
+		} 
 	}
 	
 	public boolean copy(String originalFilePath, String copyFilePath) {
 		File originalFile = new File(originalFilePath);
 		File copyFile = new File(copyFilePath);
-		
-		//복사될 장소의 디렉토리가 존재하지 않으면 만들어준다.
-		//if(!dirCopyFile.exists()) {
-		//	dirCopyFile.mkdirs();
-		//}
 		
 		try {
 			//파일의 내용을 읽어오기위한 준비
@@ -60,85 +108,41 @@ public class CommandCalculation {
 				fos.write(nRealByte);
 			}
 			
-			//파일스트림을 닫아줍니다.
+			//파일스트림 닫기
 			fis.close();
 			fos.close();
 
 		} catch (Exception e) {
-			//파일 처리 실패시 -1를 리턴합니다.
-			System.out.println(e.getLocalizedMessage());
 			return false;
 		}
-		//성공시에 메세지 출력후 1을 리턴합니다.
-		//System.out.println("copy succeed !!");
 		return true;
 	}
 
 	//삭제하는 메소드
-	public int delete(String originalFilePath, String currentPath) {
+	public void delete(String originalFilePath, String currentPath) {
 		
-		if(!originalFilePath.contains(Constant.TOP_LEVEL_PATH)) { // 상대 경로 -> 절대 경로
+		if (!originalFilePath.contains(Constant.TOP_LEVEL_PATH)) { // 상대 경로 -> 절대 경로
 			originalFilePath = currentPath + "\\" + originalFilePath;
 		}
-
-		//파일이 있는지 확인합니다.
-		//if (file.exists()) {
-			
-			//디렉토리이면 그아래의 파일 삭제
+		File file = new File(originalFilePath);
+		// 디렉토리이면 그아래의 파일 삭제
+		if(file.isDirectory())
 				deleteDirectoy(originalFilePath);
-				File file = new File(originalFilePath);
-				file.delete();
-				//File[] filelist = file.listFiles();
-				/*
-				for (int i = 0; i < filelist.length; i++) {
-					if (filelist[i].delete()) {
-						System.out.println(filelist[i].getName() + "Dirlist- delete succeed !!");
-					} else {
-						System.out.println(filelist[i].getName() + "Dirlist- delete error");
-					}
-				}*/
-			
-			
-			//파일이 존재하지 않으면 에러메세지를 보내고 -2를 리턴합니다.
-		//} else {
-		//	System.out.println("not exist !!!");
-		//	return -2;
-		//}
-		//정상처리되면 1를 리턴합니다.
-		return 1;
+		file.delete();
+
 	}
 
 	private void deleteDirectoy(String originalFilePath) {
 		File file = new File(originalFilePath);
-		//System.out.println(file);
 		File[] filelist = file.listFiles();
 
 		for (int i = 0; i < filelist.length; i++) {
-			System.out.println(filelist.length);
-			System.out.println("filelist = " + filelist[i].toString());
 			if (filelist[i].isDirectory()) {
-				deleteDirectoy(filelist[i].toString());//originalFilePath + "\\" + filelist[i].
+				deleteDirectoy(filelist[i].toString());
 				filelist[i].delete();
 			} else {
 				filelist[i].delete();
 			}
 		}
 	}
-	
-	/*
-	private String deleteDirctoy(File[] filelist) {
-		
-		if(filelist != null) {
-			for (int i = 0; i < filelist.length; i++) {
-				System.out.println(filelist[i].getName());
-				if(filelist[i].isDirectory()) {
-					System.out.println("엥");
-					System.out.println(new File(filelist[i].getName()).listFiles());
-					deleteDirctoy(new File(filelist[i].getName()).listFiles());					
-				}
-				filelist[i].delete();
-			}
-		}		
-		return "";
-	}*/
-	}
+}

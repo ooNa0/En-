@@ -1,6 +1,8 @@
 package Controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Scanner;
 
@@ -101,11 +103,13 @@ public class Exception {
 					}
 				}
 				else { // 대상이 디렉토리일 경우
-					if(fromFile.isFile()) { // 파일에서,,
+					if(fromFile.isFile()) { // 파일에서 -> 디렉토리
 						command.copy(fromPath, toPath + "\\" + fromFile.getName());
 						copyNumber++;
 					}
-					else {
+					else { // 디렉토리 -> 디렉토리
+						
+						// 예외처리 제대로 동작 X
 						for (index = 0; index < fileList.length; index++) {
 							isOverlap = false;
 							for (indexrow = 0; indexrow < toFile.listFiles().length; indexrow++) {
@@ -118,14 +122,14 @@ public class Exception {
 							if(indexrow == toFile.listFiles().length) {
 								//command.copyDirectory(fromFile, toFile);
 								//command.copyDirectory(fileList[index].getPath(), toFile.listFiles()[indexrow-1].getPath());
-								command.copy(fileList[index].getPath(), toFile.listFiles()[indexrow-1].getPath());
+								//command.copy(fileList[index].getPath(), toFile.listFiles()[indexrow-1].getPath());
 								//command.copy(fileList[index].getPath(), toFile.listFiles()[indexrow-1].getPath());
 								copyNumber++;								
 							}
 							if (isOverlap) {								
 								switch (input.isContinueAsking(fileList[index])) {
 								case 1: // Constant하면 case expressions must be constant expressions 에러
-									command.copyDirectory(fileList[index].getPath(), toFile.listFiles()[indexrow].getPath());
+									//command.copyDirectory(fileList[index].getPath(), toFile.listFiles()[indexrow].getPath());
 									//command.copy(fileList[index].getPath(), toFile.listFiles()[indexrow].getPath());
 									copyNumber++;
 									break;
@@ -135,6 +139,7 @@ public class Exception {
 								}
 							}
 						}
+						command.copyDirectory(fromFile.getPath(), toFile.getPath());
 					}					
 				}
 			}
@@ -197,11 +202,16 @@ public class Exception {
 				}
 				else { // 대상이 디렉토리일 경우
 					if(fromFile.isFile()) { // 파일 -> 디렉토리
+						// 겹치는거 덮어씌우는지 묻기 한번
 						command.copy(fromPath, toPath + "\\" + fromFile.getName());
 						moveNumber++;
 					}
-					else { // 디렉토리 -> 파일
-						command.copy(fromPath, toPath);
+					else { // 디렉토리 -> 디렉토리
+						new File(toPath + "\\" + fromFile.getName()).mkdir();
+						command.copyDirectory(fromPath, toPath + "\\" + fromFile.getName());
+						//command.copyDirectory(fromFile.getPath(), toFile.getPath());
+						
+						return false;
 					}
 					// 디렉1 -> 디렉2
 					// 디렉2 안에 디렉1이 들어감, 만약에 디렉2안에 디렉1과 같은 이름 있음 덮어쓰겠습니까?
@@ -250,6 +260,9 @@ public class Exception {
 				}
 				else if(inputlist.get(1).contains(":")) { // cd :
 					result.printMessage(Constant. INFORMATION_FILE_DIRECTORY_VOLUME_NAME_INCORRECT);
+				}
+				else if(inputlist.get(1).contains("../")){
+					
 				}
 				else if(inputlist.get(1).equals(Constant.PARENT_FOLDER_RELAIVE_PATH) && inputlist.size() == 2) {
 					currentPath = dataManagement.backPath(currentPath);

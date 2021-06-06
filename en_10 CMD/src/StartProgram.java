@@ -1,10 +1,10 @@
 import java.io.*;
 import java.util.*;
 
-import Controller.CommandProgram;
+import Mediator.Invoker;
 
 public class StartProgram {
 	public static void main(String[] args) {
-		new CommandProgram();
-	} // end-main
+		new Invoker();
+	}
 }

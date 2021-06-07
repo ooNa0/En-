@@ -1,10 +1,14 @@
-package Model;
+package Interaction.Data;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class dataManagement {
+public class DataManagement {
 	
 	
 	public List<String> splitString(String inputString) {
@@ -16,14 +20,6 @@ public class dataManagement {
 		for(int i=0; i<array.length; i++){
 		    list.add(array[i]);
 		}
-
-		
-		//System.out.println(array.length);
-		
-		//for(int i=0;i<array.length;i++) {
-		//System.out.println(array[i]);
-		
-		//String splittedString[] = inputString.split(" ");
 		return list;
 	}
 	
@@ -32,19 +28,42 @@ public class dataManagement {
 		if(currentPath.equals(Constant.DRIVE))
 			currentPath = Constant.TOP_LEVEL_PATH;
 		return currentPath;
-		/*
-		if(currentPath.equals(Constant.DRIVE) || currentPath.equals(Constant.TOP_LEVEL_PATH)) {
-			if(currentPath.equals(Constant.DRIVE))
-				return currentPath + "\\";
-			return currentPath;
+	}
+	
+	public String repdddlaceCurrentPath(String path) {
+		File file = new File(path);		
+		try {
+			return file.getCanonicalPath().replace("\\\\", "\\");
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		else {
-			
+		return null;
+	}
+	
+	public List<String> avoidCommasList(String inputString){
+		List<String> avoidCommasString = new ArrayList<String>();
+		Pattern regex = Pattern.compile(Constant.AVOID_COMMAS_PATTERN);
+		Matcher regexMatcher = regex.matcher(inputString);
+		while (regexMatcher.find()) {
+			avoidCommasString.add(regexMatcher.group().replace("\"", Constant.EMPTY_VALUE).replace("\'", Constant.EMPTY_VALUE));
 		}
-		if(!currentPath.substring(0, currentPath.lastIndexOf("\\")).equals(Constant.DRIVE)) {
-			return currentPath.substring(0, currentPath.lastIndexOf("\\")) + "\\";			
+		return avoidCommasString;
+	}
+	
+	public String replaceCurrentPath(String path, String currentPath) {
+		String convertPath = null;
+		
+		if(path.contains("."))
+			path = currentPath + path;
+		File file = new File(path);
+		try {
+			convertPath = file.getCanonicalPath();
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
-		return currentPath;
-		*/
+		if(!file.exists())
+			return null;
+		
+		return convertPath;
 	}
 }

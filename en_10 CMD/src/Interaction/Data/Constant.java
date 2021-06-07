@@ -1,22 +1,50 @@
-package Model;
+package Interaction.Data;
 
 public class Constant {
 
-	public static int INPUT_YES = 1;
+	public final static int COVER = 1;
+	public final static int NOT_COVER = 2;
+	public final static int WRONG_VALUE = 3;
+	public final static int COVER_ALL = 0;
+	
+	public static int NEED_EMPTY_SCREEN_SIZE = 50;
+	public static int INITIAL_SIZE = 0;
+	public static int INITIAL_DIRECTORY_SIZE = 2;
+
+	public static String EXECUTION_COMMAND = "cmd";
+	public static String PARENT_FOLDER_PATH = ".";
+	public static String PARENT_FOLDER_RELAIVE_PATH = "..";
+	public static String PATH_LAST_PART_FORMAT = ">";
+	public static String PROGRAM_ENTER_FORMAT = "\n";
+	
+
+	public static String INSERT_COMMAS_PATTERN = "#,###";
+	public static String AVOID_COMMAS_PATTERN = "[^\\s\"']+|\"[^\"]*\"|'[^']*'";
+	public static String DIRECTION_INFORMATION_PATTERN = "%s %5s %12s %s\n";
 	
 	public static String DIRECTORY_DATE_FORMAT = "yyyy-MM-dd a hh:mm";
-	public static String DIRECTORY_INFORMATION = "<DIR>";
+	public static String DIRECTORY_ABBREVIATION = "<DIR>";
 	public static String EMPTY_VALUE = "";
 	public static String START_POSITION_VALUE = System.getProperty("user.home");
 	
 	public static String TOP_LEVEL_PATH = System.getenv("SystemDrive") + "\\";
 	public static String DRIVE = System.getenv("SystemDrive");
 	
+	public static String INFORMATION_DONOT_COPY_SAMEFILE = "같은 파일로 복사할 수 없습니다.";
+	public static String INFORMATION_COPY_SUCCESS = "개 파일이 복사되었습니다.";
+	public static String INFORMATION_MOVE_SUCCESS = "개 파일을 이동했습니다.";
+	public static String INFORMATION_OVERWIRTE = "을(를) 덮어쓰시겠습니까? (Yes/No/All):";
+	
+	public static String DIRECTORY = " 디렉터리\n";
+	public static String FILE_INFORMATION = "              %d개 파일    %16s 바이트\n";
+	public static String DIRECTORY_INFORMATION = "              %d개 디렉토리 %16s 바이트 남음\n";
 	public static String INFORMATION_DIRECTORY_NAME_INCORRECT= "디렉터리 이름이 올바르지 않습니다.";
 	public static String INFORMATION_FILE_DIRECTORY_VOLUME_NAME_INCORRECT= "파일 이름, 디렉터리 이름 또는 볼륨 레이블 구문이 잘못되었습니다.";
 
+	public static String INFORMATION_PROCESSOR_RUNNING = "다른 프로세스가 파일을 사용 중이기 때문에 프로세스가 액세스 할 수 없습니다.";
 	public static String INFORMATION_COMMAND_SYNTAX_INCORRECT = "명령 구문이 올바르지 않습니다.";
-	public static String INFORMATION_PATH_NOTFOUND = "지정된 경로를 찾을 수 없습니다.";
+	public static String INFORMATION_PATH_NOTFOUND = "지정된 경로를 찾을 수 없습니다.";//
+	public static String INFORMATION_FILE_NOTFOUND = "지정된 파일를 찾을 수 없습니다.";
 	public static String INFORMATION_NOT_COMMAND_OPERABLE_PROGRAM_BATCHFILE = "'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는 배치 파일이 아닙니다.";
 	
 	public static String HELP_COMMAND_INFORMATION = "특정 명령어에 대한 자세한 내용이 필요하면 HELP 명령어 이름을 입력하십시오.\r\n"

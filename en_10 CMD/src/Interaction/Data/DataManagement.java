@@ -53,17 +53,18 @@ public class DataManagement {
 	public String replaceCurrentPath(String path, String currentPath) {
 		String convertPath = null;
 		
-		if(path.contains("."))
-			path = currentPath + path;
+		if(path.contains(".."))
+			path = currentPath + "\\" + path;
+		
 		File file = new File(path);
 		try {
 			convertPath = file.getCanonicalPath();
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+		
 		if(!file.exists())
 			return null;
-		
 		return convertPath;
 	}
 }
